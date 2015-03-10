@@ -30,7 +30,7 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+        if var scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
             let skView = self.view as SKView
             skView.showsFPS = true
@@ -38,9 +38,13 @@ class GameViewController: UIViewController {
             
             /* Sprite Kit applies additional optimizations to improve rendering performance */
             skView.ignoresSiblingOrder = true
-            
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = SKSceneScaleMode.AspectFit;
+            scene.size = UIScreen.mainScreen().applicationFrame.size;
+            scene.scaleMode = SKSceneScaleMode.ResizeFill;
+            scene.view?.layer.borderWidth = 1;
+            
+            NSLog(UIScreen.mainScreen().applicationFrame.size.description);
+            NSLog(scene.size.description);
             
             skView.presentScene(scene)
         }

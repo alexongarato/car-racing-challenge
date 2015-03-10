@@ -15,6 +15,7 @@
 		DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB2E84471AAD338D0009E321 /* Images.xcassets */; };
 		DB2E844B1AAD338D0009E321 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB2E84491AAD338D0009E321 /* LaunchScreen.xib */; };
 		DB2E84571AAD338E0009E321 /* Arcade_Car_RaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84561AAD338E0009E321 /* Arcade_Car_RaceTests.swift */; };
+		DB480D111AAE83C7001695E1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB480D101AAE83C7001695E1 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		DB2E84501AAD338E0009E321 /* Arcade Car RaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Arcade Car RaceTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB2E84551AAD338E0009E321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB2E84561AAD338E0009E321 /* Arcade_Car_RaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arcade_Car_RaceTests.swift; sourceTree = "<group>"; };
+		DB480D101AAE83C7001695E1 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 		DB2E842E1AAD338D0009E321 = {
 			isa = PBXGroup;
 			children = (
+				DB480D0F1AAE83C7001695E1 /* Extensions */,
 				DB2E84391AAD338D0009E321 /* Arcade Car Race */,
 				DB2E84531AAD338E0009E321 /* Arcade Car RaceTests */,
 				DB2E84381AAD338D0009E321 /* Products */,
@@ -116,6 +119,15 @@
 				DB2E84551AAD338E0009E321 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DB480D0F1AAE83C7001695E1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DB480D101AAE83C7001695E1 /* Extensions.swift */,
+			);
+			name = Extensions;
+			path = "Arcade Car Race/Extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -222,6 +234,7 @@
 				DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */,
 				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
+				DB480D111AAE83C7001695E1 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
