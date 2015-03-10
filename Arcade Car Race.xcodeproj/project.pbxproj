@@ -349,6 +349,7 @@
 				INFOPLIST_FILE = "Arcade Car Race/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -359,6 +360,7 @@
 				INFOPLIST_FILE = "Arcade Car Race/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -415,6 +417,7 @@
 				DB2E845C1AAD338E0009E321 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DB2E845D1AAD338E0009E321 /* Build configuration list for PBXNativeTarget "Arcade Car RaceTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +426,7 @@
 				DB2E845F1AAD338E0009E321 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

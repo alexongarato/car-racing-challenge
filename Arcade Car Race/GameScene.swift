@@ -8,15 +8,24 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
-    override func didMoveToView(view: SKView) {
+class GameScene: SKScene
+{
+    var buttonA:SKSpriteNode!;
+    var buttonB:SKSpriteNode!;
+    
+    override func didMoveToView(view: SKView)
+    {
         /* Setup your scene here */
+        
+//        buttonA = SKSpriteNode(
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
+    {
         /* Called when a touch begins */
         
-        for touch: AnyObject in touches {
+        for touch: AnyObject in touches
+        {
             let location = touch.locationInNode(self)
             
             let sprite = SKSpriteNode(imageNamed:"Spaceship")
@@ -45,7 +54,8 @@ class GameScene: SKScene {
     }
     */
    
-    override func update(currentTime: CFTimeInterval) {
+    override func update(currentTime: CFTimeInterval)
+    {
         /* Called before each frame is rendered */
     }
 }
