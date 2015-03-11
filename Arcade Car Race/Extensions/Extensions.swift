@@ -10,8 +10,10 @@ import Foundation
 import SpriteKit
 import UIKit
 //
-//extension SKSpriteNode
-//{
+extension SKSpriteNode
+{
+    
+}
 //    func addTarget(target:AnyObject, selector:Selector)
 //    {
 //        var gestureRec:UITapGestureRecognizer = UITapGestureRecognizer(target: target, action: selector);
@@ -24,4 +26,9 @@ import UIKit
 extension CGSize
 {
     var description: NSString { get { return "CGSize(width:\(self.width), height:\(self.height))";} };
+}
+
+extension CGFloat
+{
+    var half: CGFloat { get { return self * 0.5; } };
 }
