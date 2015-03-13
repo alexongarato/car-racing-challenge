@@ -12,41 +12,43 @@ class GameScene: SKScene
 {
     var buttonLeft              : SKSpriteNode!;
     var buttonRight             : SKSpriteNode!;
-    var mainCharacter           : SKSpriteNode!;
-    var enemiesArray            : Array<CustomEnemy>!;
-    var slideVelocity           : CGFloat = 0;
-    var currentVelocity         : CGFloat = 2;
+    var mainCharacter           : CustomSpriteNode!;
+    var enemiesArray            : Array<CustomSpriteNode>!;
+    var currentEnemyVelocity    : CGFloat = 20;
     var currentLevel            : CGFloat = 1;
-    var controlButtonsSize      : CGFloat = 0;
-    var enemySize               : CGFloat = 0;
+    var buttonSize              : CGSize = CGSize();
+    var charactersSize          : CGSize = CGSize();
     var levelTriggerCounter     : Int = 1;
     var enemyTriggerCounter     : Int = 0;
     var distBetweenEnemies      : Int = 0;
-    var mainCharacterRadius     : CGFloat = 0;
     var totalLifes              : Int = 10;
     var isGameOver              : Bool = false;
     
     /**/
     let distBetweenLevels       : Int = 700;
-    let totalColumns            : Int = 4;
+    let totalColumns            : Int = 6;
     let velocityIncrement       : CGFloat = 1;
     
     
     override func didMoveToView(view: SKView)
     {
-        enemiesArray = Array<CustomEnemy>();
-        enemySize = self.size.width / CGFloat(totalColumns);
-        controlButtonsSize = self.size.width * 0.5;
+        enemiesArray = Array<CustomSpriteNode>();
+        
+        charactersSize.width = self.size.width / CGFloat(totalColumns);
+        charactersSize.height = charactersSize.width * 1.5;
+        
+        buttonSize.width = self.size.width.half;
+        buttonSize.height = buttonSize.width.half;
         
         //set main controll buttons
         buttonLeft = self.childNodeWithName("bt_left") as SKSpriteNode;
         buttonRight = self.childNodeWithName("bt_right") as SKSpriteNode;
         
-        buttonLeft.size.width = controlButtonsSize;
-        buttonLeft.size.height = controlButtonsSize.half;
+        buttonLeft.size = buttonSize;
+        buttonRight.size = buttonSize;
         
-        buttonRight.size.width = controlButtonsSize;
-        buttonRight.size.height = controlButtonsSize.half;
+        buttonLeft.alpha = 0.5;
+        buttonRight.alpha = 0.5;
         
         buttonLeft.position.x = buttonLeft.size.width.half;
         buttonLeft.position.y = buttonLeft.size.height.half;
@@ -55,20 +57,15 @@ class GameScene: SKScene
         buttonRight.position.y = buttonRight.size.height.half;
         
         //set main character
-        mainCharacter = SKSpriteNode();
-        mainCharacter.color = UIColor.greenColor();
-        mainCharacter.size.width = enemySize.half;
-        mainCharacter.size.height = enemySize;
-        mainCharacter.position.x = self.size.width.half;
-        mainCharacter.position.y = buttonRight.size.height + mainCharacter.size.height;
-        
-        //
-        mainCharacterRadius = mainCharacter.size.height;
+        mainCharacter = CustomSpriteNode();
+        mainCharacter.color = UIColor.blackColor();
+        mainCharacter.alpha = 0.5;
+        mainCharacter.size = charactersSize;
+        mainCharacter.position.x = mainCharacter.size.width.half;
+        mainCharacter.position.y = buttonSize.height + charactersSize.height.half;
+//        mainCharacter.showHitArea();
         
         self.addChild(mainCharacter);
-        
-        //set variables
-        slideVelocity = (self.size.width - mainCharacter.size.width) / CGFloat(totalColumns);
         
         addNewEnemy();
         
@@ -86,11 +83,7 @@ class GameScene: SKScene
             {
                 if(mainCharacter.position.x > mainCharacter.size.width.half)
                 {
-                    mainCharacter.position.x -= slideVelocity;
-                    if(mainCharacter.position.x < mainCharacter.size.width.half)
-                    {
-                        mainCharacter.position.x = mainCharacter.size.width.half;
-                    }
+                    mainCharacter.position.x -= mainCharacter.size.width;
                 }
             }
             
@@ -98,11 +91,7 @@ class GameScene: SKScene
             {
                 if(mainCharacter.position.x < self.size.width - mainCharacter.size.width.half)
                 {
-                    mainCharacter.position.x += slideVelocity;
-                    if(mainCharacter.position.x > self.size.width - mainCharacter.size.width.half)
-                    {
-                        mainCharacter.position.x = self.size.width - mainCharacter.size.width.half;
-                    }
+                    mainCharacter.position.x += mainCharacter.size.width;
                 }
             }
             
@@ -132,7 +121,7 @@ class GameScene: SKScene
         
         self.addChild(myLabel)
     }
-
+    
     override func update(currentTime: CFTimeInterval)
     {
         if(isGameOver)
@@ -143,7 +132,7 @@ class GameScene: SKScene
         levelTriggerCounter++;
         enemyTriggerCounter++;
         
-        distBetweenEnemies = Int(enemySize * 3) / Int(currentLevel);
+        distBetweenEnemies = Int(charactersSize.height * 3) / Int(currentLevel);
         
         if(enemyTriggerCounter > distBetweenEnemies)
         {
@@ -153,26 +142,24 @@ class GameScene: SKScene
         
         for enemyBlock in enemiesArray
         {
-            if(enemyBlock.position.x == mainCharacter.position.x)
+            if(enemyBlock.hits(mainCharacter))
             {
-                if(enemyBlock.position.y <= (mainCharacter.position.y + mainCharacterRadius) && enemyBlock.position.y >= (mainCharacter.position.y - mainCharacterRadius))
+                if(!enemyBlock.isTouched)
                 {
-                    if(!enemyBlock.isTouched)
+                    enemyBlock.isTouched = true;
+                    enemyBlock.color = UIColor.blueColor();
+                    totalLifes--;
+                    printStatus();
+                    if(totalLifes == 0)
                     {
-                        enemyBlock.isTouched = true;
-                        enemyBlock.color = UIColor.blueColor();
-                        totalLifes--;
-                        printStatus();
-                        if(totalLifes == 0)
-                        {
-                            isGameOver = true;
-                            showGameOverMessage();
-                        }
+                        isGameOver = true;
+                        showGameOverMessage();
                     }
+                    
                 }
             }
             
-            enemyBlock.position.y -= currentVelocity;
+            enemyBlock.position.y -= currentEnemyVelocity;
             
             if(enemyBlock.position.y + enemyBlock.size.height.half < 0)//end on enemy life
             {
@@ -184,9 +171,9 @@ class GameScene: SKScene
             if(levelTriggerCounter > distBetweenLevels)
             {
                 currentLevel++;
-                currentVelocity += velocityIncrement;
+                currentEnemyVelocity += velocityIncrement;
                 levelTriggerCounter = 0;
-//                addNewEnemy()//add bonus enemy
+                //                addNewEnemy()//add bonus enemy
                 printStatus();
             }
         }
@@ -194,11 +181,10 @@ class GameScene: SKScene
     
     func addNewEnemy()
     {
-        var newEnemy:CustomEnemy = CustomEnemy();
-        newEnemy.size.width = enemySize.half;
-        newEnemy.size.height = enemySize;
+        var newEnemy:CustomSpriteNode = CustomSpriteNode();
+        newEnemy.size = charactersSize;
         newEnemy.color = UIColor.redColor();
-        newEnemy.position.x = newEnemy.size.width.half + (slideVelocity * CGFloat(random(totalColumns)));
+        newEnemy.position.x = newEnemy.size.width.half + (charactersSize.width * CGFloat(random(totalColumns-1)));
         newEnemy.position.y = self.size.height + newEnemy.size.height.half;
         enemiesArray.append(newEnemy);
         self.addChild(newEnemy);
@@ -212,11 +198,40 @@ class GameScene: SKScene
     
     func printStatus()
     {
-        NSLog("level:\(currentLevel) - life:\(totalLifes) - velocity:\(currentVelocity)");
+        NSLog("level:\(currentLevel) - life:\(totalLifes) - velocity:\(currentEnemyVelocity)");
     }
 }
 
-class CustomEnemy:SKSpriteNode
+class CustomSpriteNode:SKSpriteNode
 {
-    var isTouched:Bool = false;
+    //constants
+    let hitRadius           : CGFloat = 1;
+    
+    //properties
+    var isTouched           : Bool = false;
+    var right               : CGFloat { get { return (self.position.x + (self.size.width.half * self.hitRadius));} };
+    var left                : CGFloat { get { return (self.position.x - (self.size.width.half * self.hitRadius));} };
+    var top                 : CGFloat { get { return (self.position.y + (self.size.height.half * self.hitRadius));} };
+    var bottom              : CGFloat { get { return (self.position.y - (self.size.height.half * self.hitRadius));} };
+    
+    func hits(sprite:CustomSpriteNode) -> Bool
+    {
+        if(self.right > sprite.left && self.left < sprite.right)
+        {
+            if(self.top > sprite.bottom && self.bottom < sprite.top)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    func showHitArea()
+    {
+        var hit:CustomSpriteNode = CustomSpriteNode();
+        self.addChild(hit);
+        hit.color = UIColor.yellowColor();
+        hit.size.width = (right - self.position.x) * 2;
+        hit.size.height = (top - self.position.y) * 2;
+    }
 }
