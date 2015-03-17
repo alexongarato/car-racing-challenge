@@ -10,6 +10,12 @@ import SpriteKit
 
 class GameScene: SKScene
 {
+    /* constants */
+    let distBetweenLevels       : Int = 700;
+    let totalColumns            : Int = 6;
+    let velocityIncrement       : CGFloat = 1;
+    
+    /* variables */
     var buttonLeft              : SKSpriteNode!;
     var buttonRight             : SKSpriteNode!;
     var mainCharacter           : CustomSpriteNode!;
@@ -20,29 +26,49 @@ class GameScene: SKScene
     var charactersSize          : CGSize = CGSize();
     var levelTriggerCounter     : Int = 1;
     var enemyTriggerCounter     : Int = 0;
-    var distBetweenEnemies      : Int = 0;
+    var distBetweenEnemies      : Int = -1;
     var totalLifes              : Int = 10;
     var isGameOver              : Bool = false;
     var gameStatus              : SKLabelNode!;
-    
-    /**/
-    let distBetweenLevels       : Int = 700;
-    let totalColumns            : Int = 6;
-    let velocityIncrement       : CGFloat = 1;
-    
+    var pixelWidth              : CGFloat = 0;
     
     override func didMoveToView(view: SKView)
     {
-        //bg
-        self.backgroundColor = UIColor(patternImage: UIImage(named: "Custom/background.png")!);
+        //background
+        var bg:SKSpriteNode = SKSpriteNode(imageNamed: "Background");
+        self.addChild(bg);
+        bg.zPosition = 0;
+        bg.anchorPoint.x = 0;
+        bg.anchorPoint.y = 0;
         
+        //pixels
+        pixelWidth = ((self.width) / (totalColumns.floatValue * 3));
+        NSLog("pixelWidth:\(pixelWidth)");
+        
+        var pixelSize:CGRect = CGRect(x: -2, y: 0, width: pixelWidth, height: pixelWidth);
+        var pixelCGImage:CGImageRef = UIImage(named:"PixelOff")!.CGImage;
+        
+        UIGraphicsBeginImageContext(self.size);
+        var context:CGContextRef = UIGraphicsGetCurrentContext();
+        CGContextDrawTiledImage(context, pixelSize, pixelCGImage);
+        var tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        var pixelTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage);
+        var pixelsNode:SKSpriteNode = SKSpriteNode(texture: pixelTexture);
+        self.addChild(pixelsNode);
+        pixelsNode.zPosition = 1;
+        pixelsNode.anchorPoint.x = 0;
+        pixelsNode.anchorPoint.y = 0;
+        
+        //
         enemiesArray = Array<CustomSpriteNode>();
         
-        charactersSize.width = self.size.width / CGFloat(totalColumns);
-        charactersSize.height = charactersSize.width * 1.5;
+        charactersSize.width = self.width.roundValue / totalColumns.floatValue;
+        charactersSize.height = (charactersSize.width * 1.5).roundValue;
         
-        buttonSize.width = self.size.width.half;
-        buttonSize.height = buttonSize.width.half;
+        buttonSize.width = self.width.half.roundValue;
+        buttonSize.height = buttonSize.width.half.roundValue;
         
         //set main controll buttons
         buttonLeft = self.childNodeWithName("bt_left") as! SKSpriteNode;
@@ -54,29 +80,32 @@ class GameScene: SKScene
         buttonLeft.alpha = 0.5;
         buttonRight.alpha = 0.5;
         
-        buttonLeft.position.x = buttonLeft.size.width.half;
-        buttonLeft.position.y = buttonLeft.size.height.half;
+        buttonLeft.x = buttonLeft.width.half;
+        buttonLeft.y = buttonLeft.height.half;
         
-        buttonRight.position.x = self.size.width - buttonRight.size.width.half;
-        buttonRight.position.y = buttonRight.size.height.half;
+        buttonRight.x = self.width - buttonRight.width.half;
+        buttonRight.y = buttonRight.height.half;
         
         //set main character
         mainCharacter = CustomSpriteNode();
         mainCharacter.color = UIColor.blackColor();
         mainCharacter.alpha = 0.5;
         mainCharacter.size = charactersSize;
-        mainCharacter.position.x = mainCharacter.size.width.half;
-        mainCharacter.position.y = buttonSize.height + charactersSize.height.half;
-        mainCharacter.showHitArea();
+        mainCharacter.x = mainCharacter.width.half;
+        mainCharacter.y = buttonSize.height + charactersSize.height.half;
         
         self.addChild(mainCharacter);
+        
+        self.mainCharacter.zPosition = 20;
+        self.buttonLeft.zPosition = 21;
+        self.buttonRight.zPosition = 22;
         
         addNewEnemy();
         
         
         self.gameStatus = SKLabelNode();
-        self.gameStatus.position.x = self.size.width.half;
-        self.gameStatus.position.y = self.size.height - 25;
+        self.gameStatus.x = self.width.half;
+        self.gameStatus.y = self.height - 25;
         self.gameStatus.fontSize = 25;
         self.gameStatus.text = "initializing...";
         
@@ -93,17 +122,17 @@ class GameScene: SKScene
             var node:SKNode = self.nodeAtPoint(location);
             if(node.name == "bt_left")
             {
-                if(mainCharacter.position.x > mainCharacter.size.width)
+                if(mainCharacter.x > mainCharacter.width)
                 {
-                    mainCharacter.position.x -= mainCharacter.size.width;
+                    mainCharacter.x -= mainCharacter.width;
                 }
             }
             
             if(node.name == "bt_right")
             {
-                if(mainCharacter.position.x < self.size.width - mainCharacter.size.width)
+                if(mainCharacter.x < self.width - mainCharacter.width)
                 {
-                    mainCharacter.position.x += mainCharacter.size.width;
+                    mainCharacter.x += mainCharacter.width;
                 }
             }
         }
@@ -140,7 +169,7 @@ class GameScene: SKScene
         
         for enemyBlock in enemiesArray
         {
-            if(enemyBlock.hits(mainCharacter))
+            if(enemyBlock.intersectsNode(mainCharacter))
             {
                 if(!enemyBlock.isTouched)
                 {
@@ -152,16 +181,17 @@ class GameScene: SKScene
                     {
                         isGameOver = true;
                         showGameOverMessage();
+                        return;
                     }
                     
                 }
             }
             
-            enemyBlock.position.y -= currentEnemyVelocity;
+            enemyBlock.y -= currentEnemyVelocity;
             
-            if(enemyBlock.position.y + enemyBlock.size.height.half < 0)//end on enemy life
+            if(enemyBlock.y + enemyBlock.size.height.half < 0)//end on enemy life
             {
-                enemyBlock.position.y = self.size.height + enemyBlock.size.height.half;
+                enemyBlock.y = self.height + enemyBlock.height.half;
                 enemyBlock.removeFromParent();
                 enemiesArray.removeAtIndex(0);
             }
@@ -181,12 +211,13 @@ class GameScene: SKScene
     {
         var newEnemy:CustomSpriteNode = CustomSpriteNode();
         newEnemy.size = charactersSize;
+        newEnemy.width -= 0.1;
         newEnemy.color = UIColor.redColor();
-        newEnemy.position.x = newEnemy.size.width.half + (charactersSize.width * CGFloat(random(totalColumns-1)));
-        newEnemy.position.y = self.size.height + newEnemy.size.height.half;
+        newEnemy.x = mainCharacter.width.half + (charactersSize.width * random(totalColumns-1).floatValue);
+        newEnemy.y = self.height + newEnemy.height.half;
         enemiesArray.append(newEnemy);
         self.addChild(newEnemy);
-        newEnemy.zPosition = -1;
+        newEnemy.zPosition = 10;
     }
     
     func random(i:Int) -> Int
@@ -199,39 +230,13 @@ class GameScene: SKScene
         self.gameStatus.text = "level:\(Int(currentLevel))  |  life:\(totalLifes)  |  vel.:\(currentEnemyVelocity)";
         NSLog(self.gameStatus.text);
     }
+    
 }
 
 class CustomSpriteNode:SKSpriteNode
 {
-    //constants
-    let hitRadius           : CGFloat = 0.9;
-    
     //properties
-    var isTouched           : Bool = false;
-    var right               : CGFloat { get { return (self.position.x + (self.size.width.half * self.hitRadius));} };
-    var left                : CGFloat { get { return (self.position.x - (self.size.width.half * self.hitRadius));} };
-    var top                 : CGFloat { get { return (self.position.y + (self.size.height.half * self.hitRadius));} };
-    var bottom              : CGFloat { get { return (self.position.y - (self.size.height.half * 0.5));} };
-    
-    func hits(sprite:CustomSpriteNode) -> Bool
-    {
-        if(self.right > sprite.left && self.left < sprite.right)
-        {
-            if(self.top > sprite.bottom && self.bottom < sprite.top)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    func showHitArea()
-    {
-        var hit:CustomSpriteNode = CustomSpriteNode();
-        self.addChild(hit);
-        hit.color = UIColor.yellowColor();
-        hit.size.width = (right - self.position.x) * 2;
-        hit.size.height = self.position.y - top + bottom;
-        hit.position.y = hit.size.height.half;
-    }
+    var isTouched:Bool = false;
 }
+
+
