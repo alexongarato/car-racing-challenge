@@ -11,12 +11,12 @@ import SpriteKit
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
+        if let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks") {
             var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
             var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
+            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
             archiver.finishDecoding()
             return scene
         } else {
@@ -30,9 +30,12 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        var bg:UIImageView = UIImageView(image: UIImage(contentsOfFile: "background.png"));
+//        self.view.addSubview(bg);
+        
         if var scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
-            let skView = self.view as SKView
+            let skView = self.view as! SKView
             skView.showsFPS = true
             skView.showsNodeCount = true
             
@@ -43,8 +46,8 @@ class GameViewController: UIViewController {
             scene.scaleMode = SKSceneScaleMode.ResizeFill;
             scene.view?.layer.borderWidth = 1;
             
-            NSLog(UIScreen.mainScreen().applicationFrame.size.description);
-            NSLog(scene.size.description);
+            NSLog(UIScreen.mainScreen().applicationFrame.size.description as String);
+            NSLog(scene.size.description as String);
             
             skView.presentScene(scene)
         }

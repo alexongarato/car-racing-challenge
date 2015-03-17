@@ -14,7 +14,7 @@ class GameScene: SKScene
     var buttonRight             : SKSpriteNode!;
     var mainCharacter           : CustomSpriteNode!;
     var enemiesArray            : Array<CustomSpriteNode>!;
-    var currentEnemyVelocity    : CGFloat = 20;
+    var currentEnemyVelocity    : CGFloat = 1;
     var currentLevel            : CGFloat = 1;
     var buttonSize              : CGSize = CGSize();
     var charactersSize          : CGSize = CGSize();
@@ -23,6 +23,7 @@ class GameScene: SKScene
     var distBetweenEnemies      : Int = 0;
     var totalLifes              : Int = 10;
     var isGameOver              : Bool = false;
+    var gameStatus              : SKLabelNode!;
     
     /**/
     let distBetweenLevels       : Int = 700;
@@ -32,6 +33,9 @@ class GameScene: SKScene
     
     override func didMoveToView(view: SKView)
     {
+        //bg
+        self.backgroundColor = UIColor(patternImage: UIImage(named: "Custom/background.png")!);
+        
         enemiesArray = Array<CustomSpriteNode>();
         
         charactersSize.width = self.size.width / CGFloat(totalColumns);
@@ -41,8 +45,8 @@ class GameScene: SKScene
         buttonSize.height = buttonSize.width.half;
         
         //set main controll buttons
-        buttonLeft = self.childNodeWithName("bt_left") as SKSpriteNode;
-        buttonRight = self.childNodeWithName("bt_right") as SKSpriteNode;
+        buttonLeft = self.childNodeWithName("bt_left") as! SKSpriteNode;
+        buttonRight = self.childNodeWithName("bt_right") as! SKSpriteNode;
         
         buttonLeft.size = buttonSize;
         buttonRight.size = buttonSize;
@@ -63,16 +67,24 @@ class GameScene: SKScene
         mainCharacter.size = charactersSize;
         mainCharacter.position.x = mainCharacter.size.width.half;
         mainCharacter.position.y = buttonSize.height + charactersSize.height.half;
-//        mainCharacter.showHitArea();
+        mainCharacter.showHitArea();
         
         self.addChild(mainCharacter);
         
         addNewEnemy();
         
+        
+        self.gameStatus = SKLabelNode();
+        self.gameStatus.position.x = self.size.width.half;
+        self.gameStatus.position.y = self.size.height - 25;
+        self.gameStatus.fontSize = 25;
+        self.gameStatus.text = "initializing...";
+        
+        self.addChild(self.gameStatus);
         printStatus();
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent)
     {
         /* Called when a touch begins */
         for touch: AnyObject in touches
@@ -81,7 +93,7 @@ class GameScene: SKScene
             var node:SKNode = self.nodeAtPoint(location);
             if(node.name == "bt_left")
             {
-                if(mainCharacter.position.x > mainCharacter.size.width.half)
+                if(mainCharacter.position.x > mainCharacter.size.width)
                 {
                     mainCharacter.position.x -= mainCharacter.size.width;
                 }
@@ -89,25 +101,11 @@ class GameScene: SKScene
             
             if(node.name == "bt_right")
             {
-                if(mainCharacter.position.x < self.size.width - mainCharacter.size.width.half)
+                if(mainCharacter.position.x < self.size.width - mainCharacter.size.width)
                 {
                     mainCharacter.position.x += mainCharacter.size.width;
                 }
             }
-            
-            /*
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)*/
-            
         }
     }
     
@@ -198,21 +196,22 @@ class GameScene: SKScene
     
     func printStatus()
     {
-        NSLog("level:\(currentLevel) - life:\(totalLifes) - velocity:\(currentEnemyVelocity)");
+        self.gameStatus.text = "level:\(Int(currentLevel))  |  life:\(totalLifes)  |  vel.:\(currentEnemyVelocity)";
+        NSLog(self.gameStatus.text);
     }
 }
 
 class CustomSpriteNode:SKSpriteNode
 {
     //constants
-    let hitRadius           : CGFloat = 1;
+    let hitRadius           : CGFloat = 0.9;
     
     //properties
     var isTouched           : Bool = false;
     var right               : CGFloat { get { return (self.position.x + (self.size.width.half * self.hitRadius));} };
     var left                : CGFloat { get { return (self.position.x - (self.size.width.half * self.hitRadius));} };
     var top                 : CGFloat { get { return (self.position.y + (self.size.height.half * self.hitRadius));} };
-    var bottom              : CGFloat { get { return (self.position.y - (self.size.height.half * self.hitRadius));} };
+    var bottom              : CGFloat { get { return (self.position.y - (self.size.height.half * 0.5));} };
     
     func hits(sprite:CustomSpriteNode) -> Bool
     {
@@ -232,6 +231,7 @@ class CustomSpriteNode:SKSpriteNode
         self.addChild(hit);
         hit.color = UIColor.yellowColor();
         hit.size.width = (right - self.position.x) * 2;
-        hit.size.height = (top - self.position.y) * 2;
+        hit.size.height = self.position.y - top + bottom;
+        hit.position.y = hit.size.height.half;
     }
 }
