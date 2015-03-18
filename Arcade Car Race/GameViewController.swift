@@ -32,7 +32,6 @@ class GameViewController: UIViewController {
 
 //        var bg:UIImageView = UIImageView(image: UIImage(contentsOfFile: "background.png"));
 //        self.view.addSubview(bg);
-        
         if var scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
             let skView = self.view as! SKView
