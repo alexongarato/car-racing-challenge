@@ -10,27 +10,25 @@ import SpriteKit
 
 class GameScene: SKScene
 {
-    /* constants */
-    let distBetweenLevels       : Int = 700;
-    let totalColumns            : Int = 6;
-    let velocityIncrement       : CGFloat = 1;
-    
-    /* variables */
+    /* main game */
     var buttonLeft              : SKSpriteNode!;
     var buttonRight             : SKSpriteNode!;
     var mainCharacter           : CustomSpriteNode!;
     var enemiesArray            : Array<CustomSpriteNode>!;
-    var currentEnemyVelocity    : CGFloat = 1;
-    var currentLevel            : CGFloat = 1;
     var buttonSize              : CGSize = CGSize();
     var charactersSize          : CGSize = CGSize();
-    var levelTriggerCounter     : Int = 1;
-    var enemyTriggerCounter     : Int = 0;
-    var distBetweenEnemies      : Int = -1;
-    var totalLifes              : Int = 10;
-    var isGameOver              : Bool = false;
     var gameStatus              : SKLabelNode!;
     var pixelWidth              : CGFloat = 0;
+    
+    
+    /* configs */
+    let totalColumns            : Int = 6;
+    let heartBeatIncrement      : CFTimeInterval = 0.01;
+    //
+    var currentLevel            : CGFloat = 1;
+    var totalLifes              : Int = 10;
+    var isGameOver              : Bool = false;
+    
     
     override func didMoveToView(view: SKView)
     {
@@ -100,9 +98,6 @@ class GameScene: SKScene
         self.buttonLeft.zPosition = 21;
         self.buttonRight.zPosition = 22;
         
-        addNewEnemy();
-        
-        
         self.gameStatus = SKLabelNode();
         self.gameStatus.x = self.width.half;
         self.gameStatus.y = self.height - 25;
@@ -111,6 +106,75 @@ class GameScene: SKScene
         
         self.addChild(self.gameStatus);
         printStatus();
+    }
+    
+    /* registers */
+    var lastTime                : CFTimeInterval = 0;
+    var mainTrigger             : CFTimeInterval = 0.01;
+    var currentSecond           : CFTimeInterval = 0;
+    var enemyTimeCounter        : CFTimeInterval = 1;
+    var enemyInterval           : CFTimeInterval = 0.1;
+    
+    override func update(currentTime: CFTimeInterval)
+    {
+        if(isGameOver)
+        {
+            NSLog("GAME OVER");
+            return;
+        }
+        
+        currentSecond = (currentTime - lastTime);
+        
+        if(currentSecond > enemyTimeCounter)
+        {
+            enemyTimeCounter += enemyInterval;
+            addNewEnemy();
+        }
+        
+        for enemyBlock in enemiesArray
+        {
+            if(currentSecond > mainTrigger)
+            {
+                //------------------------------------------
+                enemyBlock.y -= pixelWidth;
+                
+                if(enemyBlock.y + enemyBlock.size.height.half < 0)//end on enemy life
+                {
+                    enemyBlock.y = self.height + enemyBlock.height.half;
+                    enemyBlock.removeFromParent();
+                    enemiesArray.removeAtIndex(0);
+                }
+                
+//                if(counter > currentHeartBeat)
+//                {
+//                    currentHeartBeat -= heartBeatIncrement;
+//                    currentLevel++;
+//                    levelTriggerCounter = 0;
+//                    printStatus();
+//                }
+                
+                lastTime = currentTime;
+                
+                //------------------------------------------
+            }
+            
+            if(enemyBlock.intersectsNode(mainCharacter))
+            {
+                if(!enemyBlock.isTouched)
+                {
+                    enemyBlock.isTouched = true;
+                    enemyBlock.color = UIColor.blueColor();
+                    totalLifes--;
+                    printStatus();
+                    if(totalLifes == 0)
+                    {
+                        isGameOver = true;
+                        showGameOverMessage();
+                        return;
+                    }
+                }
+            }
+        }
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent)
@@ -138,7 +202,6 @@ class GameScene: SKScene
         }
     }
     
-    
     func showGameOverMessage()
     {
         let myLabel = SKLabelNode(fontNamed:"Chalkduster");
@@ -147,64 +210,6 @@ class GameScene: SKScene
         myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         
         self.addChild(myLabel)
-    }
-    
-    override func update(currentTime: CFTimeInterval)
-    {
-        if(isGameOver)
-        {
-            return;
-        }
-        
-        levelTriggerCounter++;
-        enemyTriggerCounter++;
-        
-        distBetweenEnemies = Int(charactersSize.height * 3) / Int(currentLevel);
-        
-        if(enemyTriggerCounter > distBetweenEnemies)
-        {
-            enemyTriggerCounter = 0;
-            addNewEnemy();
-        }
-        
-        for enemyBlock in enemiesArray
-        {
-            if(enemyBlock.intersectsNode(mainCharacter))
-            {
-                if(!enemyBlock.isTouched)
-                {
-                    enemyBlock.isTouched = true;
-                    enemyBlock.color = UIColor.blueColor();
-                    totalLifes--;
-                    printStatus();
-                    if(totalLifes == 0)
-                    {
-                        isGameOver = true;
-                        showGameOverMessage();
-                        return;
-                    }
-                    
-                }
-            }
-            
-            enemyBlock.y -= currentEnemyVelocity;
-            
-            if(enemyBlock.y + enemyBlock.size.height.half < 0)//end on enemy life
-            {
-                enemyBlock.y = self.height + enemyBlock.height.half;
-                enemyBlock.removeFromParent();
-                enemiesArray.removeAtIndex(0);
-            }
-            
-            if(levelTriggerCounter > distBetweenLevels)
-            {
-                currentLevel++;
-                currentEnemyVelocity += velocityIncrement;
-                levelTriggerCounter = 0;
-                //                addNewEnemy()//add bonus enemy
-                printStatus();
-            }
-        }
     }
     
     func addNewEnemy()
@@ -227,7 +232,7 @@ class GameScene: SKScene
     
     func printStatus()
     {
-        self.gameStatus.text = "level:\(Int(currentLevel))  |  life:\(totalLifes)  |  vel.:\(currentEnemyVelocity)";
+        self.gameStatus.text = "level:\(Int(currentLevel))  |  life:\(totalLifes)";
         NSLog(self.gameStatus.text);
     }
     

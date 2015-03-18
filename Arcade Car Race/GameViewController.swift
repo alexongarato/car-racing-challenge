@@ -36,6 +36,7 @@ class GameViewController: UIViewController {
         if var scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
             let skView = self.view as! SKView
+//            skView.frameInterval = 0;
             skView.showsFPS = true
             skView.showsNodeCount = true
             
@@ -49,7 +50,7 @@ class GameViewController: UIViewController {
             NSLog(UIScreen.mainScreen().applicationFrame.size.description as String);
             NSLog(scene.size.description as String);
             
-            skView.presentScene(scene)
+            skView.presentScene(scene);
         }
     }
 
