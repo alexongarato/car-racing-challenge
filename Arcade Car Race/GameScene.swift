@@ -10,21 +10,37 @@ import SpriteKit
 
 class GameScene: SKScene
 {
-    /* main game */
+    //-- main game --
     var buttonLeft              : SKSpriteNode!;
     var buttonRight             : SKSpriteNode!;
     var mainCharacter           : CustomSpriteNode!;
     var enemiesArray            : Array<CustomSpriteNode>!;
+    /** 
+    tamanho da area dos controles baseada no tamanho da tela. 
+    */
     var buttonSize              : CGSize = CGSize();
+    /** 
+    tamanho dos personagens de acordo com a quantidade de colunas. 
+    */
     var charactersSize          : CGSize = CGSize();
+    /** 
+    texto com as informacoes do jogo.
+    */
     var gameStatus              : SKLabelNode!;
-    var pixelWidth              : CGFloat = 0;
+    /** 
+    tamanho dos pixels quadrados. 
+    */
+    var pixelSize               : CGFloat = 0;
     
-    
-    /* configs */
+    //-- configs --
+    /** 
+    quantidade de pistas no jogo.
+    */
     let totalColumns            : Int = 6;
+    /** 
+    diferenca de velocidade entre os levels.
+    */
     let heartBeatIncrement      : CFTimeInterval = 0.01;
-    //
     var currentLevel            : CGFloat = 1;
     var totalLifes              : Int = 10;
     var isGameOver              : Bool = false;
@@ -32,23 +48,33 @@ class GameScene: SKScene
     
     override func didMoveToView(view: SKView)
     {
-        //background
+        enemiesArray            = Array<CustomSpriteNode>();
+        pixelSize               = ((self.width) / (totalColumns.floatValue * 3));
+        charactersSize.width    = self.width.roundValue / totalColumns.floatValue;
+        charactersSize.height   = (charactersSize.width * 1.5).roundValue;
+        buttonSize.width        = self.width.half.roundValue;
+        buttonSize.height       = buttonSize.width.half.roundValue;
+        
+        
+        /**
+        criar textura de LCD
+        */
         var bg:SKSpriteNode = SKSpriteNode(imageNamed: "Background");
         self.addChild(bg);
         bg.zPosition = 0;
         bg.anchorPoint.x = 0;
         bg.anchorPoint.y = 0;
         
-        //pixels
-        pixelWidth = ((self.width) / (totalColumns.floatValue * 3));
-        NSLog("pixelWidth:\(pixelWidth)");
         
-        var pixelSize:CGRect = CGRect(x: -2, y: 0, width: pixelWidth, height: pixelWidth);
+        /**
+        criar malha de pixels de acordo com a quantidade de pistas.
+        */
+        var pixelFrame:CGRect = CGRect(x: -2, y: 0, width: pixelSize, height: pixelSize);
         var pixelCGImage:CGImageRef = UIImage(named:"PixelOff")!.CGImage;
         
         UIGraphicsBeginImageContext(self.size);
         var context:CGContextRef = UIGraphicsGetCurrentContext();
-        CGContextDrawTiledImage(context, pixelSize, pixelCGImage);
+        CGContextDrawTiledImage(context, pixelFrame, pixelCGImage);
         var tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
@@ -59,61 +85,73 @@ class GameScene: SKScene
         pixelsNode.anchorPoint.x = 0;
         pixelsNode.anchorPoint.y = 0;
         
-        //
-        enemiesArray = Array<CustomSpriteNode>();
+        NSLog("pixelWidth:\(pixelSize)");
         
-        charactersSize.width = self.width.roundValue / totalColumns.floatValue;
-        charactersSize.height = (charactersSize.width * 1.5).roundValue;
         
-        buttonSize.width = self.width.half.roundValue;
-        buttonSize.height = buttonSize.width.half.roundValue;
-        
-        //set main controll buttons
-        buttonLeft = self.childNodeWithName("bt_left") as! SKSpriteNode;
-        buttonRight = self.childNodeWithName("bt_right") as! SKSpriteNode;
-        
-        buttonLeft.size = buttonSize;
-        buttonRight.size = buttonSize;
-        
-        buttonLeft.alpha = 0.5;
-        buttonRight.alpha = 0.5;
-        
-        buttonLeft.x = buttonLeft.width.half;
-        buttonLeft.y = buttonLeft.height.half;
-        
-        buttonRight.x = self.width - buttonRight.width.half;
-        buttonRight.y = buttonRight.height.half;
-        
-        //set main character
+        /** 
+        cria os personagens do jogo
+        */
         mainCharacter = CustomSpriteNode();
         mainCharacter.color = UIColor.blackColor();
         mainCharacter.alpha = 0.5;
         mainCharacter.size = charactersSize;
         mainCharacter.x = mainCharacter.width.half;
         mainCharacter.y = buttonSize.height + charactersSize.height.half;
-        
         self.addChild(mainCharacter);
         
+        
+        /** 
+        cria os controles do jogo
+        */
+        buttonLeft = self.childNodeWithName("bt_left") as! SKSpriteNode;
+        buttonLeft.size = buttonSize;
+        buttonLeft.alpha = 0.5;
+        buttonLeft.x = buttonLeft.width.half;
+        buttonLeft.y = buttonLeft.height.half;
+        
+        buttonRight = self.childNodeWithName("bt_right") as! SKSpriteNode;
+        buttonRight.size = buttonSize;
+        buttonRight.alpha = 0.5;
+        buttonRight.x = self.width - buttonRight.width.half;
+        buttonRight.y = buttonRight.height.half;
+        
+        
+        /** 
+        configurar posicao z da interface
+        */
         self.mainCharacter.zPosition = 20;
         self.buttonLeft.zPosition = 21;
         self.buttonRight.zPosition = 22;
         
+        
+        /** 
+        configurar painel do jogo
+        */
         self.gameStatus = SKLabelNode();
         self.gameStatus.x = self.width.half;
         self.gameStatus.y = self.height - 25;
         self.gameStatus.fontSize = 25;
         self.gameStatus.text = "initializing...";
-        
         self.addChild(self.gameStatus);
         printStatus();
     }
     
-    /* registers */
+    //-- registers --
     var lastTime                : CFTimeInterval = 0;
-    var mainTrigger             : CFTimeInterval = 0.01;
     var currentSecond           : CFTimeInterval = 0;
-    var enemyTimeCounter        : CFTimeInterval = 1;
-    var enemyInterval           : CFTimeInterval = 0.1;
+    /**
+    quanto menor, maior a velocidade do jogo
+    */
+    var mainTrigger             : CFTimeInterval = 0.01;
+    /**
+    intervalo entre os inimigos
+    */
+    var enemyTrigger            : CFTimeInterval = 1;
+    /**
+    aumenta intervalo entre os inimigos
+    */
+    var enemyTriggerIncrement   : CFTimeInterval = 0.1;
+    //--------------
     
     override func update(currentTime: CFTimeInterval)
     {
@@ -123,11 +161,14 @@ class GameScene: SKScene
             return;
         }
         
+        //---------
         currentSecond = (currentTime - lastTime);
+        //---------
         
-        if(currentSecond > enemyTimeCounter)
+        
+        if(currentSecond > enemyTrigger)
         {
-            enemyTimeCounter += enemyInterval;
+            enemyTrigger += enemyTriggerIncrement;
             addNewEnemy();
         }
         
@@ -136,7 +177,7 @@ class GameScene: SKScene
             if(currentSecond > mainTrigger)
             {
                 //------------------------------------------
-                enemyBlock.y -= pixelWidth;
+                enemyBlock.y -= pixelSize;
                 
                 if(enemyBlock.y + enemyBlock.size.height.half < 0)//end on enemy life
                 {
