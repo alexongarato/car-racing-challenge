@@ -48,13 +48,17 @@ class GameScene: SKScene
     
     override func didMoveToView(view: SKView)
     {
-        enemiesArray            = Array<CustomSpriteNode>();
-        pixelSize               = ((self.width) / (totalColumns.floatValue * 3));
-        charactersSize.width    = self.width.roundValue / totalColumns.floatValue;
-        charactersSize.height   = (charactersSize.width * 1.5).roundValue;
-        buttonSize.width        = self.width.half.roundValue;
-        buttonSize.height       = buttonSize.width.half.roundValue;
+        /** 
+        inicializar variaveis
+        */
+        self.enemiesArray            = Array<CustomSpriteNode>();
+        self.pixelSize               = ((self.width) / (self.totalColumns.floatValue * 3));
+        self.charactersSize.width    = self.width.roundValue / self.totalColumns.floatValue;
+        self.charactersSize.height   = (self.charactersSize.width * 1.5).roundValue;
+        self.buttonSize.width        = self.width.half.roundValue;
+        self.buttonSize.height       = self.buttonSize.width.half.roundValue;
         
+        NSLog("pixelSize:\(self.pixelSize)");
         
         /**
         criar textura de LCD
@@ -69,7 +73,7 @@ class GameScene: SKScene
         /**
         criar malha de pixels de acordo com a quantidade de pistas.
         */
-        var pixelFrame:CGRect = CGRect(x: -2, y: 0, width: pixelSize, height: pixelSize);
+        var pixelFrame:CGRect = CGRect(x: -2, y: 0, width: self.pixelSize, height: self.pixelSize);
         var pixelCGImage:CGImageRef = UIImage(named:"PixelOff")!.CGImage;
         
         UIGraphicsBeginImageContext(self.size);
@@ -85,35 +89,33 @@ class GameScene: SKScene
         pixelsNode.anchorPoint.x = 0;
         pixelsNode.anchorPoint.y = 0;
         
-        NSLog("pixelWidth:\(pixelSize)");
-        
         
         /** 
         cria os personagens do jogo
         */
-        mainCharacter = CustomSpriteNode();
-        mainCharacter.color = UIColor.blackColor();
-        mainCharacter.alpha = 0.5;
-        mainCharacter.size = charactersSize;
-        mainCharacter.x = mainCharacter.width.half;
-        mainCharacter.y = buttonSize.height + charactersSize.height.half;
-        self.addChild(mainCharacter);
+        self.mainCharacter = CustomSpriteNode();
+        self.mainCharacter.color = UIColor.blackColor();
+        self.mainCharacter.alpha = 0.5;
+        self.mainCharacter.size = self.charactersSize;
+        self.mainCharacter.x = self.mainCharacter.width.half;
+        self.mainCharacter.y = self.buttonSize.height + self.charactersSize.height.half;
+        self.addChild(self.mainCharacter);
         
         
         /** 
         cria os controles do jogo
         */
-        buttonLeft = self.childNodeWithName("bt_left") as! SKSpriteNode;
-        buttonLeft.size = buttonSize;
-        buttonLeft.alpha = 0.5;
-        buttonLeft.x = buttonLeft.width.half;
-        buttonLeft.y = buttonLeft.height.half;
+        self.buttonLeft = self.childNodeWithName("bt_left") as! SKSpriteNode;
+        self.buttonLeft.size = self.buttonSize;
+        self.buttonLeft.alpha = 0.5;
+        self.buttonLeft.x = self.buttonLeft.width.half;
+        self.buttonLeft.y = self.buttonLeft.height.half;
         
-        buttonRight = self.childNodeWithName("bt_right") as! SKSpriteNode;
-        buttonRight.size = buttonSize;
-        buttonRight.alpha = 0.5;
-        buttonRight.x = self.width - buttonRight.width.half;
-        buttonRight.y = buttonRight.height.half;
+        self.buttonRight = self.childNodeWithName("bt_right") as! SKSpriteNode;
+        self.buttonRight.size = self.buttonSize;
+        self.buttonRight.alpha = 0.5;
+        self.buttonRight.x = self.width - self.buttonRight.width.half;
+        self.buttonRight.y = self.buttonRight.height.half;
         
         
         /** 
@@ -133,10 +135,12 @@ class GameScene: SKScene
         self.gameStatus.fontSize = 25;
         self.gameStatus.text = "initializing...";
         self.addChild(self.gameStatus);
-        printStatus();
+        self.printStatus();
     }
     
-    //-- registers --
+    /**
+    registers
+    */
     var lastTime                : CFTimeInterval = 0;
     var currentSecond           : CFTimeInterval = 0;
     /**
@@ -151,7 +155,7 @@ class GameScene: SKScene
     aumenta intervalo entre os inimigos
     */
     var enemyTriggerIncrement   : CFTimeInterval = 0.1;
-    //--------------
+    
     
     override func update(currentTime: CFTimeInterval)
     {
@@ -243,6 +247,31 @@ class GameScene: SKScene
         }
     }
     
+    func addNewEnemy()
+    {
+        var newEnemy:CustomSpriteNode = CustomSpriteNode();
+        newEnemy.size = self.charactersSize;
+        self.enemiesArray.append(newEnemy);
+        self.addChild(newEnemy);
+        
+        
+        //customizacao
+        newEnemy.color = UIColor.redColor();
+        
+        
+        //configuracoes
+        newEnemy.width -= 0.1;
+        newEnemy.x = self.charactersSize.width.half + (self.charactersSize.width * Utils.random(self.totalColumns-1).floatValue);
+        newEnemy.y = self.height + newEnemy.height.half;
+        newEnemy.zPosition = 10;
+    }
+    
+    func printStatus()
+    {
+        self.gameStatus.text = "level:\(Int(self.currentLevel))  |  life:\(self.totalLifes)";
+        NSLog(self.gameStatus.text);
+    }
+    
     func showGameOverMessage()
     {
         let myLabel = SKLabelNode(fontNamed:"Chalkduster");
@@ -252,36 +281,10 @@ class GameScene: SKScene
         
         self.addChild(myLabel)
     }
-    
-    func addNewEnemy()
-    {
-        var newEnemy:CustomSpriteNode = CustomSpriteNode();
-        newEnemy.size = charactersSize;
-        newEnemy.width -= 0.1;
-        newEnemy.color = UIColor.redColor();
-        newEnemy.x = mainCharacter.width.half + (charactersSize.width * random(totalColumns-1).floatValue);
-        newEnemy.y = self.height + newEnemy.height.half;
-        enemiesArray.append(newEnemy);
-        self.addChild(newEnemy);
-        newEnemy.zPosition = 10;
-    }
-    
-    func random(i:Int) -> Int
-    {
-        return Int(arc4random_uniform(UInt32(1+i)));
-    }
-    
-    func printStatus()
-    {
-        self.gameStatus.text = "level:\(Int(currentLevel))  |  life:\(totalLifes)";
-        NSLog(self.gameStatus.text);
-    }
-    
 }
 
 class CustomSpriteNode:SKSpriteNode
 {
-    //properties
     var isTouched:Bool = false;
 }
 

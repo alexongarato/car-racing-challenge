@@ -7,5 +7,11 @@
 //
 
 import Foundation
-import UIKit
+class Utils
+{
+    class func random(i:Int) -> Int
+    {
+        return Int(arc4random_uniform(UInt32(1+i)));
+    }
+}
 
