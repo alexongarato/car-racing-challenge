@@ -40,7 +40,7 @@ class GameScene: SKScene
     /**
     diferenca de velocidade entre os levels.
     */
-    let scoresToLevelUp         : Int = 5;
+    let levelUpFloor         : Int = 5;
     var currentLevel            : CGFloat = 1;
     var totalLifes              : Int = 10;
     var isGameOver              : Bool = false;
@@ -48,15 +48,17 @@ class GameScene: SKScene
     /**
     quanto menor, maior a velocidade do jogo
     */
-    var mainTrigger             : CFTimeInterval = -1;
-    var mainTriggerIncrement    : CFTimeInterval = 0.01;
+//    var mainTrigger             : CFTimeInterval = -1;
+//    var mainTriggerIncrement    : CFTimeInterval = 0.01;
     
-    var enemyTrigger            : CFTimeInterval = -1;
-    var enemyTriggerIncrement   : CFTimeInterval = -1;
+//    var enemyTrigger            : CFTimeInterval = -1;
+//    var enemyTriggerIncrement   : CFTimeInterval = -1;
+    
     var totalEnemiesAvoided     : Int = 0;
-    var scoresToLevelUpCounter  : Int = 0;
+    var levelUpCounter  : Int = 0;
+    
     var enemyVerticalPath       : Array<SKAction>!;
-    var enemyVelocityTime       : CFTimeInterval = 0.5;
+    var intervalBetweenEnemies  : CFTimeInterval = 4;
     
     
     
@@ -72,7 +74,7 @@ class GameScene: SKScene
         self.buttonSize.width        = self.width.half.roundValue;
         self.buttonSize.height       = self.buttonSize.width.half.roundValue;
         self.enemyVerticalPath       = Array<SKAction>();
-        self.updateEnemyVector();
+        self.updateEnemiesVector();
         
         /**
         criar malha de pixels de acordo com a quantidade de pistas.
@@ -150,32 +152,27 @@ class GameScene: SKScene
         start game
         */
         
-        Utils.delayedCall(0.5, target: self, selector: Selector("heartBeat"), repeats: true);
+//        Utils.delayedCall(0.5, target: self, selector: Selector("heartBeat"), repeats: true);
         addNewEnemy();
     }
-    
+    /*
     func heartBeat()
     {
         NSLog("heart beat");
     }
-    
+    */
     override func update(currentTime: CFTimeInterval)
     {
-        if(isGameOver)
-        {
-            return;
-        }
-        
-        enemyTriggerIncrement = mainTriggerIncrement * 500;
+//        enemyTriggerIncrement = mainTriggerIncrement * 500;
         
         /**
         adiciona um novo inimigo na cena
         */
-        if(currentTime >= enemyTrigger)
-        {
-            enemyTrigger = currentTime + enemyTriggerIncrement;
-            addNewEnemy();
-        }
+//        if(currentTime >= enemyTrigger)
+//        {
+//            enemyTrigger = currentTime + enemyTriggerIncrement;
+//            addNewEnemy();
+//        }
         
         /**
         processa cada inimigo individualmente
@@ -240,8 +237,7 @@ class GameScene: SKScene
                     mainCharacter.x -= mainCharacter.width;
                 }
             }
-            
-            if(node.name == "bt_right")
+            else if(node.name == "bt_right")
             {
                 if(mainCharacter.x < self.width - mainCharacter.width)
                 {
@@ -253,6 +249,13 @@ class GameScene: SKScene
     
     func addNewEnemy()
     {
+        if(isGameOver)
+        {
+            return;
+        }
+        
+        Utils.delayedCall(self.intervalBetweenEnemies, target: self, selector: Selector("addNewEnemy"), repeats: false);
+        
         var newEnemy:CustomSpriteNode = CustomSpriteNode();
         newEnemy.size = self.charactersSize;
         self.enemiesArray.append(newEnemy);
@@ -273,12 +276,14 @@ class GameScene: SKScene
         {
             if(!newEnemy.isTouched)
             {
-                totalEnemiesAvoided++;
-                self.scoresToLevelUpCounter++;
-                if(self.scoresToLevelUpCounter > self.scoresToLevelUp)
+                self.totalEnemiesAvoided++;
+                self.levelUpCounter++;
+                if(self.levelUpCounter > self.levelUpFloor)
                 {
-                    self.scoresToLevelUpCounter = 0;
+                    self.levelUpCounter = 0;
                     self.currentLevel++;
+                    self.intervalBetweenEnemies -= 0.01;
+                    self.updateEnemiesVector();
                 }
             }
             
@@ -292,7 +297,7 @@ class GameScene: SKScene
         NSLog("new enemy");
     }
     
-    func updateEnemyVector()
+    func updateEnemiesVector()
     {
         func timing(value:Float) -> Float
         {
@@ -302,7 +307,7 @@ class GameScene: SKScene
         var total:Int = Int(self.height / self.pixelSize);
         for(var i:Int = 0; i <  total; i++)
         {
-            act = SKAction.moveToY(self.pixelSize * CGFloat(total - i), duration: self.enemyVelocityTime);
+            act = SKAction.moveToY(self.pixelSize * CGFloat(total - i), duration: self.intervalBetweenEnemies * 0.08);
             act.timingFunction = timing;
             self.enemyVerticalPath.append(act);
         }
