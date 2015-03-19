@@ -36,11 +36,11 @@ class GameScene: SKScene
     /**
     quantidade de pistas no jogo.
     */
-    let totalColumns            : Int = 5;
+    let totalColumns            : Int = 6;
     /**
     diferenca de velocidade entre os levels.
     */
-    let scoresToLevelUp         : Int = 2;
+    let scoresToLevelUp         : Int = 5;
     var currentLevel            : CGFloat = 1;
     var totalLifes              : Int = 10;
     var isGameOver              : Bool = false;
@@ -55,6 +55,8 @@ class GameScene: SKScene
     var enemyTriggerIncrement   : CFTimeInterval = -1;
     var totalEnemiesAvoided     : Int = 0;
     var scoresToLevelUpCounter  : Int = 0;
+    var enemyVerticalPath       : Array<SKAction>!;
+    var enemyVelocityTime       : CFTimeInterval = 0.5;
     
     
     
@@ -65,26 +67,17 @@ class GameScene: SKScene
         */
         self.enemiesArray            = Array<CustomSpriteNode>();
         self.pixelSize               = ((self.width) / (self.totalColumns.floatValue * 3));
-        self.charactersSize.width    = self.width.roundValue / self.totalColumns.floatValue;
-        self.charactersSize.height   = (self.charactersSize.width * 1.5).roundValue;
+        self.charactersSize.width    = self.pixelSize * 3;
+        self.charactersSize.height   = self.pixelSize * 4;
         self.buttonSize.width        = self.width.half.roundValue;
         self.buttonSize.height       = self.buttonSize.width.half.roundValue;
+        self.enemyVerticalPath       = Array<SKAction>();
+        self.updateEnemyVector();
         
-        NSLog("pixelSize:\(self.pixelSize)");
-        
-        /**
-        criar textura de LCD
-        */
-        
-//        var bg:SKSpriteNode = SKSpriteNode(imageNamed: "Background");
-//        self.addChild(bg);
-//        bg.zPosition = 0;
-//        bg.anchorPoint.x = 0;
-//        bg.anchorPoint.y = 0;
-
         /**
         criar malha de pixels de acordo com a quantidade de pistas.
         */
+        
         
         var pixelFrame:CGRect = CGRect(x: -2, y: 0, width: self.pixelSize, height: self.pixelSize);
         var pixelCGImage:CGImageRef = UIImage(named:"PixelOff")!.CGImage;
@@ -114,7 +107,7 @@ class GameScene: SKScene
         self.mainCharacter.alpha = 0.5;
         self.mainCharacter.size = self.charactersSize;
         self.mainCharacter.x = self.mainCharacter.width.half;
-        self.mainCharacter.y = self.buttonSize.height + self.charactersSize.height.half;
+        self.mainCharacter.y = self.pixelSize * 7;
         self.addChild(self.mainCharacter);
         
         
@@ -157,7 +150,13 @@ class GameScene: SKScene
         start game
         */
         
+        Utils.delayedCall(0.5, target: self, selector: Selector("heartBeat"), repeats: true);
         addNewEnemy();
+    }
+    
+    func heartBeat()
+    {
+        NSLog("heart beat");
     }
     
     override func update(currentTime: CFTimeInterval)
@@ -167,7 +166,7 @@ class GameScene: SKScene
             return;
         }
         
-        enemyTriggerIncrement = mainTriggerIncrement * 100;
+        enemyTriggerIncrement = mainTriggerIncrement * 500;
         
         /**
         adiciona um novo inimigo na cena
@@ -186,7 +185,7 @@ class GameScene: SKScene
             /**
             novo heart beat
             */
-            if(currentTime >= mainTrigger || true)
+            /*if(currentTime >= mainTrigger)
             {
                 //-----------
                 mainTrigger = currentTime + mainTriggerIncrement;
@@ -196,7 +195,7 @@ class GameScene: SKScene
                 move o inimigo para baixo
                 */
                 enemyBlock.y -= pixelSize;
-            }
+            }*/
             
            
             if(enemyBlock.intersectsNode(mainCharacter))
@@ -223,27 +222,6 @@ class GameScene: SKScene
                         return;
                     }
                 }
-            }
-            
-            /**
-            quando o inimigo sai da tela. end of life.
-            */
-            if(enemyBlock.y + enemyBlock.size.height.half < 0)
-            {
-                if(!enemyBlock.isTouched)
-                {
-                    totalEnemiesAvoided++;
-                    self.scoresToLevelUpCounter++;
-                    if(self.scoresToLevelUpCounter > self.scoresToLevelUp)
-                    {
-                        self.scoresToLevelUpCounter = 0;
-                        self.currentLevel++;
-                    }
-                }
-                
-                self.removeChildrenInArray([enemyBlock]);
-                enemiesArray.removeAtIndex(0);
-                self.printStatus();
             }
         }
     }
@@ -291,13 +269,50 @@ class GameScene: SKScene
         newEnemy.y = self.height// + newEnemy.height.half;
         newEnemy.zPosition = 10;
         
+        func completion()
+        {
+            if(!newEnemy.isTouched)
+            {
+                totalEnemiesAvoided++;
+                self.scoresToLevelUpCounter++;
+                if(self.scoresToLevelUpCounter > self.scoresToLevelUp)
+                {
+                    self.scoresToLevelUpCounter = 0;
+                    self.currentLevel++;
+                }
+            }
+            
+            self.removeChildrenInArray([newEnemy]);
+            enemiesArray.removeAtIndex(0);
+            self.printStatus();
+        }
+        var act:SKAction = SKAction.sequence(self.enemyVerticalPath);
+        newEnemy.runAction(act, completion: completion);
+        
         NSLog("new enemy");
+    }
+    
+    func updateEnemyVector()
+    {
+        func timing(value:Float) -> Float
+        {
+            return value < 1 ? 0 : value;
+        }
+        var act:SKAction!;
+        var total:Int = Int(self.height / self.pixelSize);
+        for(var i:Int = 0; i <  total; i++)
+        {
+            act = SKAction.moveToY(self.pixelSize * CGFloat(total - i), duration: self.enemyVelocityTime);
+            act.timingFunction = timing;
+            self.enemyVerticalPath.append(act);
+        }
     }
     
     func printStatus()
     {
         self.gameStatus.text = "level:\(Int(self.currentLevel))  |  life:\(self.totalLifes)  |  score:\(self.totalEnemiesAvoided)";
         NSLog(self.gameStatus.text);
+        self.gameStatus.zPosition = 10000;
     }
     
     func showGameOverMessage()
@@ -309,6 +324,7 @@ class GameScene: SKScene
         myLabel.fontSize = 35;
         myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         self.addChild(myLabel)
+        myLabel.zPosition = 10000;
     }
 }
 

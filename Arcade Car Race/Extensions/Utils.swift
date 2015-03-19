@@ -13,5 +13,10 @@ class Utils
     {
         return Int(arc4random_uniform(UInt32(1+i)));
     }
+    
+    class func delayedCall(interval:NSTimeInterval, target:AnyObject, selector:Selector, repeats:Bool) -> NSTimer
+    {
+        return NSTimer.scheduledTimerWithTimeInterval(interval, target: target, selector: selector, userInfo: nil, repeats: repeats);
+    }
 }
 

@@ -46,7 +46,7 @@ class GameViewController: UIViewController {
             scene.scaleMode = SKSceneScaleMode.ResizeFill;
             scene.view?.layer.borderWidth = 1;
             
-            NSLog(UIScreen.mainScreen().applicationFrame.size.description as String);
+//            NSLog(UIScreen.mainScreen().applicationFrame.size.description as String);
             NSLog(scene.size.description as String);
             
             skView.presentScene(scene);
