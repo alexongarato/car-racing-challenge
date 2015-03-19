@@ -90,13 +90,13 @@ class GameScene: SKScene
         /**
         cria os controles do jogo
         */
-        self.buttonLeft = self.childNodeWithName("bt_left") as! SKSpriteNode;
+        self.buttonLeft = self.childNodeWithName("bt_left") as SKSpriteNode;
         self.buttonLeft.size = self.buttonSize;
         self.buttonLeft.alpha = 0.5;
         self.buttonLeft.x = self.buttonLeft.width.half;
         self.buttonLeft.y = self.buttonLeft.height.half;
         
-        self.buttonRight = self.childNodeWithName("bt_right") as! SKSpriteNode;
+        self.buttonRight = self.childNodeWithName("bt_right") as SKSpriteNode;
         self.buttonRight.size = self.buttonSize;
         self.buttonRight.alpha = 0.5;
         self.buttonRight.x = self.width - self.buttonRight.width.half;
@@ -219,7 +219,7 @@ class GameScene: SKScene
         }
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent)
+    override func touchesBegan(touches: (NSSet!), withEvent event: UIEvent)
     {
         /* Called when a touch begins */
         for touch: AnyObject in touches
@@ -254,6 +254,62 @@ class GameScene: SKScene
         
         //customizacao
         newEnemy.color = UIColor.redColor();
+        
+        var pixelFrame:CGRect = CGRect(x: 0, y: 0, width: self.pixelSize, height: self.pixelSize);
+        var pixelOn:CGImageRef = UIImage(named:"PixelOn")!.CGImage;
+        var pixelOff:CGImageRef = UIImage(named:"PixelOff")!.CGImage;
+        
+        var pixelsVect:Array<CGImageRef> = Array<CGImageRef>();
+        pixelsVect.append(pixelOff);
+        pixelsVect.append(pixelOn);
+        pixelsVect.append(pixelOff);
+        
+        pixelsVect.append(pixelOn);
+        pixelsVect.append(pixelOn);
+        pixelsVect.append(pixelOn);
+        
+        pixelsVect.append(pixelOff);
+        pixelsVect.append(pixelOn);
+        pixelsVect.append(pixelOff);
+        
+        pixelsVect.append(pixelOn);
+        pixelsVect.append(pixelOff);
+        pixelsVect.append(pixelOn);
+        
+        var posVect:Array<CGPoint> = Array<CGPoint>();
+        posVect.append(CGPoint(x: 0,                    y: 0));
+        posVect.append(CGPoint(x: self.pixelSize,       y: 0));
+        posVect.append(CGPoint(x: self.pixelSize * 2,   y: 0));
+        
+        posVect.append(CGPoint(x: 0,                    y: self.pixelSize));
+        posVect.append(CGPoint(x: self.pixelSize,       y: self.pixelSize));
+        posVect.append(CGPoint(x: self.pixelSize * 2,   y: self.pixelSize));
+        
+        posVect.append(CGPoint(x: 0,                    y: self.pixelSize * 2));
+        posVect.append(CGPoint(x: self.pixelSize,       y: self.pixelSize * 2));
+        posVect.append(CGPoint(x: self.pixelSize * 2,   y: self.pixelSize * 2));
+        
+        posVect.append(CGPoint(x: 0,                    y: self.pixelSize * 3));
+        posVect.append(CGPoint(x: self.pixelSize,       y: self.pixelSize * 3));
+        posVect.append(CGPoint(x: self.pixelSize * 2,   y: self.pixelSize * 3));
+        
+        UIGraphicsBeginImageContext(self.size);
+        var context:CGContextRef = UIGraphicsGetCurrentContext();
+        for(var i:Int = 0; i < pixelsVect.count; i++)
+        {
+            CGContextDrawImage
+            CGContextDrawImage(context, posVect[i], pixelsVect[i]);
+        }
+        var tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        var pixelTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage);
+        var pixelsNode:SKSpriteNode = SKSpriteNode(texture: pixelTexture);
+        self.addChild(pixelsNode);
+        pixelsNode.zPosition = 1;
+        pixelsNode.anchorPoint.x = 0;
+        pixelsNode.anchorPoint.y = 0;
+        pixelsNode.y = 2;
         
         
         //configuracoes
