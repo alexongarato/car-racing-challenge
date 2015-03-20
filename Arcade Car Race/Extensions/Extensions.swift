@@ -9,7 +9,6 @@
 import Foundation
 import SpriteKit
 import UIKit
-//
 
 extension SKNode
 {
@@ -22,13 +21,13 @@ extension SKSpriteNode
     var height:CGFloat{get{return self.size.height;} set(value){self.size.height = value;}};
     var width:CGFloat{get{return self.size.width;} set(value){self.size.width = value;}};
 }
-
+/*
 extension SKScene
 {
     var height:CGFloat{get{return self.size.height;} set(value){self.size.height = value;}};
     var width:CGFloat{get{return self.size.width;} set(value){self.size.width = value;}};
 }
-
+*/
 extension CGSize
 {
     var description: NSString { get { return "CGSize(width:\(self.width), height:\(self.height))";} };
@@ -47,7 +46,6 @@ extension Int
 }
 
 //utils
-
 extension UIImage
 {
     var height:CGFloat{get{return self.size.height;}};
@@ -90,4 +88,23 @@ extension UIImage
         
         return newImage;
     }
+}
+
+class Pixel
+{
+    var active:Bool = false;
+    var x:CGFloat = 0;
+    var y:CGFloat = 0;
+    
+    init(x:CGFloat, y:CGFloat, active:Bool)
+    {
+        self.x = x;
+        self.y = y;
+        self.active = active;
+    }
+}
+
+class CustomSpriteNode:SKSpriteNode
+{
+    var isTouched:Bool = false;
 }

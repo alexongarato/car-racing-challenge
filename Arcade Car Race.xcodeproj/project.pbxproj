@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB00660A1ABCCC38008D4ED3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DB0066091ABCCC38008D4ED3 /* GameScene.sks */; };
 		DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E843C1AAD338D0009E321 /* AppDelegate.swift */; };
 		DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84401AAD338D0009E321 /* GameScene.swift */; };
 		DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84421AAD338D0009E321 /* GameViewController.swift */; };
 		DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB2E84471AAD338D0009E321 /* Images.xcassets */; };
 		DB2E84571AAD338E0009E321 /* Arcade_Car_RaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84561AAD338E0009E321 /* Arcade_Car_RaceTests.swift */; };
+		DB4028781ABCA9C600263C3D /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4028771ABCA9C600263C3D /* Configs.swift */; };
+		DB40287A1ABCAEAB00263C3D /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4028791ABCAEAB00263C3D /* Trace.swift */; };
 		DB480D111AAE83C7001695E1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB480D101AAE83C7001695E1 /* Extensions.swift */; };
 		DB54AA181AB7F63D00E57FF5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB54AA171AB7F63D00E57FF5 /* Utils.swift */; };
 /* End PBXBuildFile section */
@@ -27,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DB0066091ABCCC38008D4ED3 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = "Arcade Car Race/GameScene.sks"; sourceTree = "<group>"; };
 		DB2E84371AAD338D0009E321 /* Arcade Car Race.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Arcade Car Race.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB2E843B1AAD338D0009E321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB2E843C1AAD338D0009E321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +40,8 @@
 		DB2E84501AAD338E0009E321 /* Arcade Car RaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Arcade Car RaceTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB2E84551AAD338E0009E321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB2E84561AAD338E0009E321 /* Arcade_Car_RaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arcade_Car_RaceTests.swift; sourceTree = "<group>"; };
+		DB4028771ABCA9C600263C3D /* Configs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
+		DB4028791ABCAEAB00263C3D /* Trace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trace.swift; sourceTree = "<group>"; };
 		DB480D101AAE83C7001695E1 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DB54AA171AB7F63D00E57FF5 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,6 +67,7 @@
 		DB2E842E1AAD338D0009E321 = {
 			isa = PBXGroup;
 			children = (
+				DB0066091ABCCC38008D4ED3 /* GameScene.sks */,
 				DB480D0F1AAE83C7001695E1 /* Extensions */,
 				DB2E84391AAD338D0009E321 /* Arcade Car Race */,
 				DB2E84531AAD338E0009E321 /* Arcade Car RaceTests */,
@@ -119,6 +126,8 @@
 			children = (
 				DB480D101AAE83C7001695E1 /* Extensions.swift */,
 				DB54AA171AB7F63D00E57FF5 /* Utils.swift */,
+				DB4028771ABCA9C600263C3D /* Configs.swift */,
+				DB4028791ABCAEAB00263C3D /* Trace.swift */,
 			);
 			name = Extensions;
 			path = "Arcade Car Race/Extensions";
@@ -204,6 +213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB00660A1ABCCC38008D4ED3 /* GameScene.sks in Resources */,
 				DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -226,7 +236,9 @@
 				DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */,
 				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
+				DB40287A1ABCAEAB00263C3D /* Trace.swift in Sources */,
 				DB480D111AAE83C7001695E1 /* Extensions.swift in Sources */,
+				DB4028781ABCA9C600263C3D /* Configs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +347,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Arcade Car Race/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
@@ -350,6 +363,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Arcade Car Race/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
