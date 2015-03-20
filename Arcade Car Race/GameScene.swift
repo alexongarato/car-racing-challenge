@@ -19,6 +19,7 @@ class GameScene: SKScene
     var charactersSize          : CGSize = CGSize();
     var gameStatus              : SKLabelNode!;
     var pixelSize               : CGFloat = 0;
+    var pixelsNode              : SKSpriteNode!;
     
     //-- configs --
     let totalColumns            : Int = 6;
@@ -28,6 +29,8 @@ class GameScene: SKScene
     var enemiesAvoidedCounter   : Int = 0;
     var levelUpCounter          : Int = 0;
     let totalAvoidedToLevelUp   : Int = 1;
+    let IDBtLeft                : String = "bt_left";
+    let IDBtRight               : String = "bt_right";
     
     /**
     quanto menor, maior a velocidade do jogo
@@ -42,20 +45,28 @@ class GameScene: SKScene
     
     override func didMoveToView(view: SKView)
     {
+        self.build();
+    }
+    
+    func build()
+    {
+        self.removeAllChildren();
+        
         /**
         inicializar variaveis
         */
         self.enemiesArray            = Array<CustomSpriteNode>();
-        self.pixelSize               = ((self.width) / (self.totalColumns.floatValue * 3));
+        self.pixelSize               = CGFloat(self.width.intValue / (self.totalColumns * 3));
         self.charactersSize.width    = self.pixelSize * 3;
         self.charactersSize.height   = self.pixelSize * 4;
         self.buttonSize.width        = self.width.half.roundValue;
         self.buttonSize.height       = self.buttonSize.width.half.roundValue;
         
+        NSLog("pixelSize:\(self.pixelSize)");
+        
         /**
         criar malha de pixels de acordo com a quantidade de pistas.
         */
-        
         var pixelFrame:CGRect = CGRect(x: -2, y: 0, width: self.pixelSize, height: self.pixelSize);
         var pixelCGImage:CGImageRef = UIImage(named:"PixelOff")!.CGImage;
         
@@ -67,41 +78,48 @@ class GameScene: SKScene
         UIGraphicsEndImageContext();
         
         var pixelTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage);
-        var pixelsNode:SKSpriteNode = SKSpriteNode(texture: pixelTexture);
+        
+        pixelsNode = SKSpriteNode(texture: pixelTexture);
         self.addChild(pixelsNode);
         pixelsNode.zPosition = 1;
         pixelsNode.anchorPoint.x = 0;
-        pixelsNode.anchorPoint.y = 0;
-        pixelsNode.y = 2;
-        
+        pixelsNode.anchorPoint.y = -1;
+        pixelsNode.x = 2;
+        pixelsNode.y = -self.size.height;
         
         /**
         cria os personagens do jogo
         */
-        self.mainCharacter = CustomSpriteNode();
-        self.mainCharacter.color = UIColor.blackColor();
-        self.mainCharacter.alpha = 0.5;
+        self.mainCharacter = CustomSpriteNode(texture: Utils.createCarTexture(self.charactersSize, pixelWidth: self.pixelSize, pixelHeight: self.pixelSize));
         self.mainCharacter.size = self.charactersSize;
         self.mainCharacter.x = self.mainCharacter.width.half;
-        self.mainCharacter.y = self.pixelSize * 7;
+        var totalPixelsV:CGFloat = self.size.height / self.pixelSize;
+        var vPixelsAlign:CGFloat = (self.pixelSize * (totalPixelsV - totalPixelsV.roundValue)) - 1;//encontra o alinhamento vertical do mainchar com a malha de pixels.
+        self.mainCharacter.y = (self.pixelSize * 2) + vPixelsAlign;
         self.addChild(self.mainCharacter);
         
+        NSLog("total pixels v:\(Int(self.size.height / self.pixelSize))");
         
         /**
         cria os controles do jogo
         */
-        self.buttonLeft = self.childNodeWithName("bt_left") as SKSpriteNode;
+        self.buttonLeft = SKSpriteNode();
         self.buttonLeft.size = self.buttonSize;
+        self.buttonLeft.color = UIColor.yellowColor();
         self.buttonLeft.alpha = 0.5;
         self.buttonLeft.x = self.buttonLeft.width.half;
         self.buttonLeft.y = self.buttonLeft.height.half;
+        self.buttonLeft.name = self.IDBtLeft;
+        self.addChild(self.buttonLeft);
         
-        self.buttonRight = self.childNodeWithName("bt_right") as SKSpriteNode;
+        self.buttonRight = SKSpriteNode();
         self.buttonRight.size = self.buttonSize;
+        self.buttonRight.color = UIColor.redColor();
         self.buttonRight.alpha = 0.5;
         self.buttonRight.x = self.width - self.buttonRight.width.half;
         self.buttonRight.y = self.buttonRight.height.half;
-        
+        self.buttonRight.name = self.IDBtRight;
+        self.addChild(self.buttonRight);
         
         /**
         configurar posicao z da interface
@@ -109,7 +127,6 @@ class GameScene: SKScene
         self.mainCharacter.zPosition = 20;
         self.buttonLeft.zPosition = 21;
         self.buttonRight.zPosition = 22;
-        
         
         /**
         configurar painel do jogo
@@ -122,7 +139,7 @@ class GameScene: SKScene
         self.addChild(self.gameStatus);
         self.printStatus();
         
-        
+        //
         addNewEnemy();
     }
     
@@ -183,7 +200,6 @@ class GameScene: SKScene
             }
         }
         
-        
         for enemyBlock in enemiesArray
         {
             if(enemyBlock.intersectsNode(mainCharacter))
@@ -215,18 +231,23 @@ class GameScene: SKScene
         
         if(self.intervalBetweenLoops > 0.03)
         {
-            self.intervalBetweenLoops -= 0.001;
+//            self.intervalBetweenLoops -= 0.003;
         }
     }
     
     override func touchesBegan(touches: (NSSet!), withEvent event: UIEvent)
     {
+        if(isGameOver)
+        {
+            return;
+        }
+        
         /* Called when a touch begins */
         for touch: AnyObject in touches
         {
             let location = touch.locationInNode(self)
             var node:SKNode = self.nodeAtPoint(location);
-            if(node.name == "bt_left")
+            if(node.name == self.IDBtLeft)
             {
                 if(mainCharacter.x > mainCharacter.width)
                 {
@@ -234,7 +255,7 @@ class GameScene: SKScene
                 }
             }
             
-            if(node.name == "bt_right")
+            if(node.name == self.IDBtRight)
             {
                 if(mainCharacter.x < self.width - mainCharacter.width)
                 {
@@ -246,71 +267,10 @@ class GameScene: SKScene
     
     func addNewEnemy()
     {
-        var newEnemy:CustomSpriteNode = CustomSpriteNode();
+        var newEnemy:CustomSpriteNode = CustomSpriteNode(texture: Utils.createCarTexture(self.charactersSize, pixelWidth: self.pixelSize, pixelHeight: self.pixelSize), size: self.charactersSize);
         newEnemy.size = self.charactersSize;
         self.enemiesArray.append(newEnemy);
         self.addChild(newEnemy);
-        
-        
-        //customizacao
-        newEnemy.color = UIColor.redColor();
-        
-        var pixelFrame:CGRect = CGRect(x: 0, y: 0, width: self.pixelSize, height: self.pixelSize);
-        var pixelOn:CGImageRef = UIImage(named:"PixelOn")!.CGImage;
-        var pixelOff:CGImageRef = UIImage(named:"PixelOff")!.CGImage;
-        
-        var pixelsVect:Array<CGImageRef> = Array<CGImageRef>();
-        pixelsVect.append(pixelOff);
-        pixelsVect.append(pixelOn);
-        pixelsVect.append(pixelOff);
-        
-        pixelsVect.append(pixelOn);
-        pixelsVect.append(pixelOn);
-        pixelsVect.append(pixelOn);
-        
-        pixelsVect.append(pixelOff);
-        pixelsVect.append(pixelOn);
-        pixelsVect.append(pixelOff);
-        
-        pixelsVect.append(pixelOn);
-        pixelsVect.append(pixelOff);
-        pixelsVect.append(pixelOn);
-        
-        var posVect:Array<CGPoint> = Array<CGPoint>();
-        posVect.append(CGPoint(x: 0,                    y: 0));
-        posVect.append(CGPoint(x: self.pixelSize,       y: 0));
-        posVect.append(CGPoint(x: self.pixelSize * 2,   y: 0));
-        
-        posVect.append(CGPoint(x: 0,                    y: self.pixelSize));
-        posVect.append(CGPoint(x: self.pixelSize,       y: self.pixelSize));
-        posVect.append(CGPoint(x: self.pixelSize * 2,   y: self.pixelSize));
-        
-        posVect.append(CGPoint(x: 0,                    y: self.pixelSize * 2));
-        posVect.append(CGPoint(x: self.pixelSize,       y: self.pixelSize * 2));
-        posVect.append(CGPoint(x: self.pixelSize * 2,   y: self.pixelSize * 2));
-        
-        posVect.append(CGPoint(x: 0,                    y: self.pixelSize * 3));
-        posVect.append(CGPoint(x: self.pixelSize,       y: self.pixelSize * 3));
-        posVect.append(CGPoint(x: self.pixelSize * 2,   y: self.pixelSize * 3));
-        
-        UIGraphicsBeginImageContext(self.size);
-        var context:CGContextRef = UIGraphicsGetCurrentContext();
-        for(var i:Int = 0; i < pixelsVect.count; i++)
-        {
-            CGContextDrawImage
-            CGContextDrawImage(context, posVect[i], pixelsVect[i]);
-        }
-        var tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        var pixelTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage);
-        var pixelsNode:SKSpriteNode = SKSpriteNode(texture: pixelTexture);
-        self.addChild(pixelsNode);
-        pixelsNode.zPosition = 1;
-        pixelsNode.anchorPoint.x = 0;
-        pixelsNode.anchorPoint.y = 0;
-        pixelsNode.y = 2;
-        
         
         //configuracoes
         newEnemy.width -= 0.1;
@@ -336,6 +296,20 @@ class GameScene: SKScene
         myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         self.addChild(myLabel);
         myLabel.zPosition = 1000;
+    }
+}
+
+class Pixel
+{
+    var active:Bool = false;
+    var x:CGFloat = 0;
+    var y:CGFloat = 0;
+    
+    init(x:CGFloat, y:CGFloat, active:Bool)
+    {
+        self.x = x;
+        self.y = y;
+        self.active = active;
     }
 }
 

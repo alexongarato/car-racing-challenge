@@ -8,7 +8,7 @@
 
 import UIKit
 import SpriteKit
-
+/*
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks") {
@@ -24,39 +24,39 @@ extension SKNode {
         }
     }
 }
+*/
 
-class GameViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-//        var bg:UIImageView = UIImageView(image: UIImage(contentsOfFile: "background.png"));
-//        self.view.addSubview(bg);
-        if var scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
-            // Configure the view.
-            let skView = self.view as SKView
-//            skView.frameInterval = 0;
-            skView.showsFPS = true
-            skView.showsNodeCount = true
-            
-            /* Sprite Kit applies additional optimizations to improve rendering performance */
-            skView.ignoresSiblingOrder = true
-            /* Set the scale mode to scale to fit the window */
-            scene.size = UIScreen.mainScreen().applicationFrame.size;
-            scene.scaleMode = SKSceneScaleMode.ResizeFill;
-            scene.view?.layer.borderWidth = 1;
-            
-//            NSLog(UIScreen.mainScreen().applicationFrame.size.description as String);
-            NSLog(scene.size.description as String);
-            
-            skView.presentScene(scene);
-        }
+class GameViewController: UIViewController
+{
+    override func viewDidLoad()
+    {
+        super.viewDidLoad();
+        //        var bg:UIImageView = UIImageView(image: UIImage(contentsOfFile: "background.png"));
+        //        self.view.addSubview(bg);
+        var scene = GameScene();
+        // Configure the view.
+        let skView = self.view as SKView
+        //            skView.frameInterval = 0;
+        skView.showsFPS = true
+        skView.showsNodeCount = true
+        
+        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        skView.ignoresSiblingOrder = true
+        /* Set the scale mode to scale to fit the window */
+        scene.size = UIScreen.mainScreen().applicationFrame.size;
+        scene.scaleMode = SKSceneScaleMode.ResizeFill;
+        scene.view?.layer.borderWidth = 1;
+        
+        //            NSLog(UIScreen.mainScreen().applicationFrame.size.description as String);
+        NSLog(scene.size.description as String);
+        
+        skView.presentScene(scene);
     }
-
+    
     override func shouldAutorotate() -> Bool {
         return true
     }
-
+    
     override func supportedInterfaceOrientations() -> Int {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
             return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
@@ -64,12 +64,12 @@ class GameViewController: UIViewController {
             return Int(UIInterfaceOrientationMask.All.rawValue)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Release any cached data, images, etc that aren't in use.
     }
-
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
