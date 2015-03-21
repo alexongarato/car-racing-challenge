@@ -16,17 +16,19 @@ class GameViewController: UIViewController
     {
         super.viewDidLoad();
         
-        
-        self.scene                      = GameScene();
-        let skView                      = self.view as SKView;
-        skView.showsFPS                 = Configs.DEBUG_MODE;
-        skView.showsNodeCount           = Configs.DEBUG_MODE;
-        skView.ignoresSiblingOrder      = true;
-        scene.size                      = UIScreen.mainScreen().applicationFrame.size;
-        scene.scaleMode                 = SKSceneScaleMode.ResizeFill;
-        scene.view?.layer.borderWidth   = 1;
-        scene.updateStatusHandler       = self.gameStatusUpdateHandler;
-        scene.gameOverHandler           = self.gameOverHandler;
+        self.scene = GameScene();
+        scene.size = UIScreen.mainScreen().applicationFrame.size;
+//        scene.size.width -= 20;
+        scene.size.height -= 40;
+//        scene.scaleMode = SKSceneScaleMode.AspectFit;
+        scene.updateStatusHandler = self.gameStatusUpdateHandler;
+        scene.gameOverHandler = self.gameOverHandler;
+        scene.levelUpHandler = self.levelUpHandler;
+        scene.finalSceneHandler = self.finalSceneHandler;
+        let skView:SKView = self.view as! SKView;
+        skView.showsFPS = Configs.DEBUG_MODE;
+        skView.showsNodeCount = Configs.DEBUG_MODE;
+        skView.ignoresSiblingOrder = true;
         skView.presentScene(scene);
         
         scene.build();
@@ -43,6 +45,20 @@ class GameViewController: UIViewController
     func gameOverHandler()
     {
         Trace.log("GAME OVER");
+        scene.stop();
+    }
+    
+    func levelUpHandler()
+    {
+        Trace.log("LEVEL UP");
+        scene.setTotalColumns(scene.currentColumns() + 1);
+        //        scene.start();
+    }
+    
+    func finalSceneHandler()
+    {
+        Trace.log("VICTORY");
+        scene.stop();
     }
     
     override func shouldAutorotate() -> Bool
@@ -52,14 +68,7 @@ class GameViewController: UIViewController
     
     override func supportedInterfaceOrientations() -> Int
     {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone
-        {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue);
-        }
-        else
-        {
-            return Int(UIInterfaceOrientationMask.All.rawValue);
-        }
+        return Int(UIInterfaceOrientationMask.Portrait.rawValue);
     }
     
     override func didReceiveMemoryWarning()
@@ -70,6 +79,6 @@ class GameViewController: UIViewController
     
     override func prefersStatusBarHidden() -> Bool
     {
-        return false;
+        return true;
     }
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DB00660A1ABCCC38008D4ED3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = DB0066091ABCCC38008D4ED3 /* GameScene.sks */; };
 		DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E843C1AAD338D0009E321 /* AppDelegate.swift */; };
 		DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84401AAD338D0009E321 /* GameScene.swift */; };
 		DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84421AAD338D0009E321 /* GameViewController.swift */; };
@@ -17,6 +16,7 @@
 		DB40287A1ABCAEAB00263C3D /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4028791ABCAEAB00263C3D /* Trace.swift */; };
 		DB480D111AAE83C7001695E1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB480D101AAE83C7001695E1 /* Extensions.swift */; };
 		DB54AA181AB7F63D00E57FF5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB54AA171AB7F63D00E57FF5 /* Utils.swift */; };
+		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +30,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		DB0066091ABCCC38008D4ED3 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = GameScene.sks; path = "Arcade Car Race/GameScene.sks"; sourceTree = "<group>"; };
 		DB2E84371AAD338D0009E321 /* Arcade Car Race.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Arcade Car Race.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB2E843B1AAD338D0009E321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB2E843C1AAD338D0009E321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +43,7 @@
 		DB4028791ABCAEAB00263C3D /* Trace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trace.swift; sourceTree = "<group>"; };
 		DB480D101AAE83C7001695E1 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DB54AA171AB7F63D00E57FF5 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +67,6 @@
 		DB2E842E1AAD338D0009E321 = {
 			isa = PBXGroup;
 			children = (
-				DB0066091ABCCC38008D4ED3 /* GameScene.sks */,
 				DB480D0F1AAE83C7001695E1 /* Extensions */,
 				DB2E84391AAD338D0009E321 /* Arcade Car Race */,
 				DB2E84531AAD338E0009E321 /* Arcade Car RaceTests */,
@@ -87,6 +86,7 @@
 		DB2E84391AAD338D0009E321 /* Arcade Car Race */ = {
 			isa = PBXGroup;
 			children = (
+				DB6FF61C1ABD272700F7B073 /* Main.storyboard */,
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
 				DB2E84401AAD338D0009E321 /* GameScene.swift */,
 				DB2E84421AAD338D0009E321 /* GameViewController.swift */,
@@ -213,8 +213,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB00660A1ABCCC38008D4ED3 /* GameScene.sks in Resources */,
 				DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */,
+				DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +259,17 @@
 			targetProxy = DB2E84511AAD338E0009E321 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DB6FF61C1ABD272700F7B073 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB6FF61D1ABD272700F7B073 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DB2E84581AAD338E0009E321 /* Debug */ = {
@@ -352,7 +363,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -367,7 +378,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
