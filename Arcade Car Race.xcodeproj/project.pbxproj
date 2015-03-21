@@ -14,7 +14,19 @@
 		DB2E84571AAD338E0009E321 /* Arcade_Car_RaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84561AAD338E0009E321 /* Arcade_Car_RaceTests.swift */; };
 		DB4028781ABCA9C600263C3D /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4028771ABCA9C600263C3D /* Configs.swift */; };
 		DB40287A1ABCAEAB00263C3D /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4028791ABCAEAB00263C3D /* Trace.swift */; };
-		DB480D111AAE83C7001695E1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB480D101AAE83C7001695E1 /* Extensions.swift */; };
+		DB480D111AAE83C7001695E1 /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB480D101AAE83C7001695E1 /* SKExtensions.swift */; };
+		DB525E771ABDEF5F00959D26 /* digital_7_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E731ABDEF5F00959D26 /* digital_7_italic.ttf */; };
+		DB525E781ABDEF5F00959D26 /* digital_7_mono_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E741ABDEF5F00959D26 /* digital_7_mono_italic.ttf */; };
+		DB525E791ABDEF5F00959D26 /* digital_7_mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E751ABDEF5F00959D26 /* digital_7_mono.ttf */; };
+		DB525E7A1ABDEF5F00959D26 /* digital_7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E761ABDEF5F00959D26 /* digital_7.ttf */; };
+		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
+		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
+		DB525E831ABDF6E800959D26 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E821ABDF6E800959D26 /* GameOverView.swift */; };
+		DB525E871ABDF6FD00959D26 /* LevelUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E861ABDF6FD00959D26 /* LevelUpView.swift */; };
+		DB525E891ABDF9DB00959D26 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E881ABDF9DB00959D26 /* UIExtensions.swift */; };
+		DB525E8B1ABDF9F600959D26 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E8A1ABDF9F600959D26 /* Extensions.swift */; };
+		DB525E8D1ABDFAC300959D26 /* UICustomDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E8C1ABDFAC300959D26 /* UICustomDevice.swift */; };
+		DB525E8F1ABE015D00959D26 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E8E1ABE015D00959D26 /* Animation.swift */; };
 		DB54AA181AB7F63D00E57FF5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB54AA171AB7F63D00E57FF5 /* Utils.swift */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
 /* End PBXBuildFile section */
@@ -41,7 +53,19 @@
 		DB2E84561AAD338E0009E321 /* Arcade_Car_RaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arcade_Car_RaceTests.swift; sourceTree = "<group>"; };
 		DB4028771ABCA9C600263C3D /* Configs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
 		DB4028791ABCAEAB00263C3D /* Trace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trace.swift; sourceTree = "<group>"; };
-		DB480D101AAE83C7001695E1 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DB480D101AAE83C7001695E1 /* SKExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKExtensions.swift; sourceTree = "<group>"; };
+		DB525E731ABDEF5F00959D26 /* digital_7_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7_italic.ttf; path = Fonts/digital_7_italic.ttf; sourceTree = "<group>"; };
+		DB525E741ABDEF5F00959D26 /* digital_7_mono_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7_mono_italic.ttf; path = Fonts/digital_7_mono_italic.ttf; sourceTree = "<group>"; };
+		DB525E751ABDEF5F00959D26 /* digital_7_mono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7_mono.ttf; path = Fonts/digital_7_mono.ttf; sourceTree = "<group>"; };
+		DB525E761ABDEF5F00959D26 /* digital_7.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7.ttf; path = Fonts/digital_7.ttf; sourceTree = "<group>"; };
+		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
+		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		DB525E821ABDF6E800959D26 /* GameOverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		DB525E861ABDF6FD00959D26 /* LevelUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelUpView.swift; sourceTree = "<group>"; };
+		DB525E881ABDF9DB00959D26 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
+		DB525E8A1ABDF9F600959D26 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DB525E8C1ABDFAC300959D26 /* UICustomDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICustomDevice.swift; sourceTree = "<group>"; };
+		DB525E8E1ABE015D00959D26 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		DB54AA171AB7F63D00E57FF5 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,7 +114,12 @@
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
 				DB2E84401AAD338D0009E321 /* GameScene.swift */,
 				DB2E84421AAD338D0009E321 /* GameViewController.swift */,
+				DB525E801ABDF69900959D26 /* MenuView.swift */,
+				DB525E861ABDF6FD00959D26 /* LevelUpView.swift */,
+				DB525E821ABDF6E800959D26 /* GameOverView.swift */,
 				DB2E84471AAD338D0009E321 /* Images.xcassets */,
+				DB525E721ABDEF5500959D26 /* Fonts */,
+				DB525E7B1ABDEFDC00959D26 /* Constants */,
 				DB2E843A1AAD338D0009E321 /* Supporting Files */,
 			);
 			path = "Arcade Car Race";
@@ -124,13 +153,37 @@
 		DB480D0F1AAE83C7001695E1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DB480D101AAE83C7001695E1 /* Extensions.swift */,
+				DB525E8A1ABDF9F600959D26 /* Extensions.swift */,
+				DB480D101AAE83C7001695E1 /* SKExtensions.swift */,
+				DB525E881ABDF9DB00959D26 /* UIExtensions.swift */,
+				DB525E8C1ABDFAC300959D26 /* UICustomDevice.swift */,
 				DB54AA171AB7F63D00E57FF5 /* Utils.swift */,
 				DB4028771ABCA9C600263C3D /* Configs.swift */,
 				DB4028791ABCAEAB00263C3D /* Trace.swift */,
+				DB525E8E1ABE015D00959D26 /* Animation.swift */,
 			);
 			name = Extensions;
 			path = "Arcade Car Race/Extensions";
+			sourceTree = "<group>";
+		};
+		DB525E721ABDEF5500959D26 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DB525E7E1ABDF19F00959D26 /* Fonts.swift */,
+				DB525E731ABDEF5F00959D26 /* digital_7_italic.ttf */,
+				DB525E741ABDEF5F00959D26 /* digital_7_mono_italic.ttf */,
+				DB525E751ABDEF5F00959D26 /* digital_7_mono.ttf */,
+				DB525E761ABDEF5F00959D26 /* digital_7.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		DB525E7B1ABDEFDC00959D26 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Constants;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +267,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */,
+				DB525E7A1ABDEF5F00959D26 /* digital_7.ttf in Resources */,
+				DB525E791ABDEF5F00959D26 /* digital_7_mono.ttf in Resources */,
+				DB525E771ABDEF5F00959D26 /* digital_7_italic.ttf in Resources */,
+				DB525E781ABDEF5F00959D26 /* digital_7_mono_italic.ttf in Resources */,
 				DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,12 +289,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB525E8D1ABDFAC300959D26 /* UICustomDevice.swift in Sources */,
+				DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */,
 				DB54AA181AB7F63D00E57FF5 /* Utils.swift in Sources */,
+				DB525E831ABDF6E800959D26 /* GameOverView.swift in Sources */,
+				DB525E891ABDF9DB00959D26 /* UIExtensions.swift in Sources */,
 				DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */,
 				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
 				DB40287A1ABCAEAB00263C3D /* Trace.swift in Sources */,
-				DB480D111AAE83C7001695E1 /* Extensions.swift in Sources */,
+				DB525E8B1ABDF9F600959D26 /* Extensions.swift in Sources */,
+				DB525E811ABDF69900959D26 /* MenuView.swift in Sources */,
+				DB480D111AAE83C7001695E1 /* SKExtensions.swift in Sources */,
+				DB525E871ABDF6FD00959D26 /* LevelUpView.swift in Sources */,
+				DB525E8F1ABE015D00959D26 /* Animation.swift in Sources */,
 				DB4028781ABCA9C600263C3D /* Configs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

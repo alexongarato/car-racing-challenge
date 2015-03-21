@@ -60,5 +60,20 @@ class Utils
         
         return SKTexture(CGImage: tiledPixels.CGImage);
     }
+    
+    class func printFontNames()
+    {
+        #if DEBUG
+        for family:AnyObject in UIFont.familyNames()
+        {
+            Trace.log("Font family: \(family as? String)");
+            
+            for name:AnyObject in UIFont.fontNamesForFamilyName(family as! String)
+            {
+                Trace.log("  - Font name: \(name as! String)");
+            }
+        }
+        #endif
+    }
 }
 

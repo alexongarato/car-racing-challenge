@@ -36,7 +36,7 @@ class GameScene: SKScene
     private var currentMainCharColumn   : Int = -1;
     
     //-- configs --
-    private let maximunColumns          : Int = 4;
+    private let maximunColumns          : Int = 6;
     private let minimumColumns          : Int = 3;
     private let scoreToLevelUp          : Int = 1000;
     private let IDBtLeft                : String = "bt_left";
@@ -82,12 +82,12 @@ class GameScene: SKScene
         self.removeAllChildren();
         
         self.size = self.defaultFrame.size;
-        self.position = self.defaultFrame.origin;
+//        self.position = self.defaultFrame.origin;
         
         /**
         inicializar variaveis
         */
-        self.totalColumns               = totalColumns == -1 ? self.maximunColumns : totalColumns;
+        self.totalColumns               = self.totalColumns == -1 ? self.maximunColumns : self.totalColumns;
         self.lifesCounter               = self.defaultTotalLifes;
         var totalPixelsX:Int            = Int((self.totalColumns * 3) + 2);
         self.enemiesArray               = Array<CustomSpriteNode>();
@@ -187,6 +187,17 @@ class GameScene: SKScene
         
         
         self.builded = true;
+    }
+    
+    func reset()
+    {
+        self.totalColumns = -1;
+        self.lifesCounter = self.defaultTotalLifes;
+        self.ready = false;
+        self.builded = false;
+        self.pixelDistanceCounter = -1;
+        self.currentMainCharColumn = -1;
+        self.intervalBetweenLoops = 0.5;
     }
     
     func stop()

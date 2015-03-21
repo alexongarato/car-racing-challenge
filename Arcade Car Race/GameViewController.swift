@@ -11,20 +11,22 @@ import SpriteKit
 
 class GameViewController: UIViewController
 {
-    var scene:GameScene!;
+    var scene           : GameScene!;
+    var menuView       : MenuView!;
+    
     override func viewDidLoad()
     {
         super.viewDidLoad();
         
         self.scene = GameScene();
         scene.size = UIScreen.mainScreen().applicationFrame.size;
-//        scene.size.width -= 20;
-        scene.size.height -= 40;
-//        scene.scaleMode = SKSceneScaleMode.AspectFit;
         scene.updateStatusHandler = self.gameStatusUpdateHandler;
         scene.gameOverHandler = self.gameOverHandler;
         scene.levelUpHandler = self.levelUpHandler;
         scene.finalSceneHandler = self.finalSceneHandler;
+        
+        Trace.log(scene.size.description as String);
+        
         let skView:SKView = self.view as! SKView;
         skView.showsFPS = Configs.DEBUG_MODE;
         skView.showsNodeCount = Configs.DEBUG_MODE;
@@ -32,9 +34,57 @@ class GameViewController: UIViewController
         skView.presentScene(scene);
         
         scene.build();
-        scene.start();
         
-        Trace.log(scene.size.description as String);
+        showMenu("ARCADE CAR RACE", desc: "Infinite score. How far can you go?", action: "START", selector: Selector("startGame"));
+    }
+    
+    func showMenu(msg:String, desc:String, action:String, selector:Selector)
+    {
+        menuView = MenuView();
+        menuView.animationStyle = AnimationStyle.Scale;
+        self.view.addSubview(menuView);
+        menuView.setTitle(msg);
+        menuView.setDescription(desc);
+        menuView.setAction(action, target: self, selector: selector);
+        menuView.present(nil);
+    }
+    
+    func startGame()
+    {
+        menuView.disableAction();
+        
+        func complete(animated:Bool)
+        {
+            if(self.menuView != nil)
+            {
+                self.menuView.removeFromSuperview();
+                self.menuView = nil;
+            }
+            
+            scene.start();
+        }
+        
+        self.menuView.dismiss(complete);
+    }
+    
+    func restartGame()
+    {
+        menuView.disableAction();
+        
+        func complete(animated:Bool)
+        {
+            if(self.menuView != nil)
+            {
+                self.menuView.removeFromSuperview();
+                self.menuView = nil;
+            }
+            
+            scene.reset();
+            scene.build();
+            scene.start();
+        }
+        
+        self.menuView.dismiss(complete);
     }
     
     func gameStatusUpdateHandler()
@@ -46,6 +96,7 @@ class GameViewController: UIViewController
     {
         Trace.log("GAME OVER");
         scene.stop();
+        showMenu("GAME OVER", desc: "SCORE: \(scene.currentScore())", action: "TRY AGAIN", selector: Selector("restartGame"));
     }
     
     func levelUpHandler()
@@ -61,6 +112,7 @@ class GameViewController: UIViewController
         scene.stop();
     }
     
+    //
     override func shouldAutorotate() -> Bool
     {
         return true;
