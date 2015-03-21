@@ -51,8 +51,8 @@ class GameViewController: UIViewController
     func levelUpHandler()
     {
         Trace.log("LEVEL UP");
-        scene.setTotalColumns(scene.currentColumns() + 1);
-        //        scene.start();
+        scene.setTotalColumns(scene.currentColumns() - 1);
+        scene.start();
     }
     
     func finalSceneHandler()

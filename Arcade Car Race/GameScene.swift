@@ -23,30 +23,26 @@ class GameScene: SKScene
     var levelUpHandler                  : (()->Void)!;
     var finalSceneHandler               : (()->Void)!;
     private var defaultFrame            : CGRect!;
-    
-    //-- configs --
-    private let maximunColumns          : Int = 7;
-    private var totalColumns            : Int = 3;
+    private var totalColumns            : Int = -1;
     private var totalScoreCounter       : Int = 0;
-    private let scoreToLevelUp          : Int = 1000;
     private var currentScoreCounter     : Int = 0;
     private var lifesCounter            : Int = -1;
     private var defaultTotalLifes       : Int = 1;
-    private var isGameOver              : Bool = false;
-    private let IDBtLeft                : String = "bt_left";
-    private let IDBtRight               : String = "bt_right";
     private var ready                   : Bool = false;
     private var builded                 : Bool = false;
-    
-    /**
-    quanto menor, maior a velocidade do jogo
-    */
-    private let intervalBetweenLevels   : CFTimeInterval = 0.01;
     private var loopsTimeCounter        : CFTimeInterval = -1;
     private var intervalBetweenLoops    : CFTimeInterval = 0.5;
+    private var pixelDistanceCounter    : Int = -1;
+    private var currentMainCharColumn   : Int = -1;
     
-    private let pixelDistanceBtwEnemies : Int = 12;
-    private var pixelDistanceCounter    : Int = 12;
+    //-- configs --
+    private let maximunColumns          : Int = 4;
+    private let minimumColumns          : Int = 3;
+    private let scoreToLevelUp          : Int = 1000;
+    private let IDBtLeft                : String = "bt_left";
+    private let IDBtRight               : String = "bt_right";
+    private let intervalBetweenLevels   : CFTimeInterval = 0.01;
+    private let pixelDistanceBtwEnemies : Int = 15;
     
     func currentColumns() -> Int
     {
@@ -55,17 +51,15 @@ class GameScene: SKScene
     
     func setTotalColumns(value:Int)
     {
-        self.build();
-        
-        if(value >= 3 && value <= self.maximunColumns)
+        if(value >= self.minimumColumns && value <= self.maximunColumns)
         {
             self.totalColumns = value;
+            self.build();
         }
         else
         {
             Trace.error("INVALID COLUMN NUMBER (\(value))");
         }
-        
     }
     
     func currentScore() -> Int
@@ -90,11 +84,10 @@ class GameScene: SKScene
         self.size = self.defaultFrame.size;
         self.position = self.defaultFrame.origin;
         
-        self.isGameOver = false;
-        
         /**
         inicializar variaveis
         */
+        self.totalColumns               = totalColumns == -1 ? self.maximunColumns : totalColumns;
         self.lifesCounter               = self.defaultTotalLifes;
         var totalPixelsX:Int            = Int((self.totalColumns * 3) + 2);
         self.enemiesArray               = Array<CustomSpriteNode>();
@@ -104,6 +97,9 @@ class GameScene: SKScene
         self.charactersSize.height      = self.pixelSize * 4;
         self.buttonSize.width           = self.size.width.half.roundValue;
         self.buttonSize.height          = self.pixelSize * 3;
+        self.currentMainCharColumn      = self.totalColumns / 2;
+        self.pixelDistanceCounter       = self.pixelDistanceBtwEnemies;
+        
         
         Trace.log("pixelSize:\(self.pixelSize)");
         
@@ -154,8 +150,7 @@ class GameScene: SKScene
         self.mainCharacter.size = self.charactersSize;
         self.mainCharacter.anchorPoint.x = 0;
         self.mainCharacter.anchorPoint.y = 1;
-        self.mainCharacter.y = self.size.height + self.charactersSize.height;
-        self.mainCharacter.x = self.pixelSize;
+        self.mainCharacter.x = self.pixelSize + (self.charactersSize.width * self.currentMainCharColumn.floatValue);
         self.addChild(self.mainCharacter);
         
         /**
@@ -213,7 +208,7 @@ class GameScene: SKScene
     
     override func update(currentTime: CFTimeInterval)
     {
-        if(isGameOver || !self.ready)
+        if(!self.ready)
         {
             return;
         }
@@ -259,7 +254,7 @@ class GameScene: SKScene
                         {
                             self.currentScoreCounter = 0;
                             
-                            if(self.totalColumns >= self.maximunColumns)
+                            if(self.totalColumns < self.minimumColumns)
                             {
                                 self.finalSceneHandler();
                             }
@@ -282,7 +277,9 @@ class GameScene: SKScene
         
         for enemyBlock in enemiesArray
         {
-            if(enemyBlock.intersectsNode(mainCharacter)/* && !Configs.DEBUG_MODE*/)
+//            if(enemyBlock.intersectsNode(mainCharacter)/* && !Configs.DEBUG_MODE*/)
+            if(enemyBlock.x >= mainCharacter.x - 1 && enemyBlock.x <= mainCharacter.x + 1
+                && enemyBlock.y - charactersSize.height < mainCharacter.y && enemyBlock.y > mainCharacter.y - charactersSize.height + 2)
             {
                 if(!enemyBlock.isTouched)
                 {
@@ -299,11 +296,9 @@ class GameScene: SKScene
                     */
                     lifesCounter--;
                     self.updateStatusHandler();
-                    if(lifesCounter == 0)
+                    if(lifesCounter <= 0)
                     {
-                        isGameOver = true;
                         self.gameOverHandler();
-                        return;
                     }
                 }
             }
@@ -317,7 +312,7 @@ class GameScene: SKScene
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent)
     {
-        if(isGameOver || !self.ready)
+        if(!self.ready)
         {
             return;
         }
@@ -329,21 +324,23 @@ class GameScene: SKScene
             var node:SKNode = self.nodeAtPoint(location);
             if(node.name == self.IDBtLeft)
             {
-                self.mainCharacter.x -= self.charactersSize.width;
-                if(mainCharacter.x < self.pixelSize)
+                self.currentMainCharColumn--;
+                if(self.currentMainCharColumn < 0)
                 {
-                    self.mainCharacter.x = self.pixelSize;
+                    self.currentMainCharColumn = 0;
                 }
             }
             
             if(node.name == self.IDBtRight)
             {
-                self.mainCharacter.x += self.charactersSize.width;
-                if(self.mainCharacter.x + self.charactersSize.width > self.size.width - self.charactersSize.width - self.pixelSize)
+                self.currentMainCharColumn++;
+                if(self.currentMainCharColumn > self.totalColumns - 1)
                 {
-                    self.mainCharacter.x = self.size.width - self.charactersSize.width - self.pixelSize;
+                    self.currentMainCharColumn = self.totalColumns - 1;
                 }
             }
+            
+            self.mainCharacter.x = self.pixelSize + (self.charactersSize.width * self.currentMainCharColumn.floatValue);
         }
     }
     
@@ -356,7 +353,7 @@ class GameScene: SKScene
         newEnemy.x = self.pixelSize + (self.charactersSize.width * Utils.random(self.totalColumns - 1).floatValue);
         newEnemy.y = self.size.height + self.charactersSize.height;
         newEnemy.zPosition = 10;
-        newEnemy.width -= 0.01;//resolve o bug do intersectsNode
+//        newEnemy.width -= 0.01;//resolve o bug do intersectsNode
         self.addChild(newEnemy);
         self.enemiesArray.append(newEnemy);
     }
