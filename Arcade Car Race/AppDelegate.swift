@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Arcade Car Race
+//  Infinity Car Race
 //
 //  Created by Alex Ongarato on 08/03/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.
@@ -16,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
 //        Utils.printFontNames();
-        
+        DataProvider.applicationDidLaunch();
+        GameCenterController.start();
         return true;
     }
 
@@ -28,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        GameCenterController.setReadyStatus(false);
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

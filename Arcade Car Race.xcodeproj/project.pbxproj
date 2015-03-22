@@ -21,14 +21,16 @@
 		DB525E7A1ABDEF5F00959D26 /* digital_7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E761ABDEF5F00959D26 /* digital_7.ttf */; };
 		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
 		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
-		DB525E831ABDF6E800959D26 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E821ABDF6E800959D26 /* GameOverView.swift */; };
-		DB525E871ABDF6FD00959D26 /* LevelUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E861ABDF6FD00959D26 /* LevelUpView.swift */; };
 		DB525E891ABDF9DB00959D26 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E881ABDF9DB00959D26 /* UIExtensions.swift */; };
 		DB525E8B1ABDF9F600959D26 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E8A1ABDF9F600959D26 /* Extensions.swift */; };
 		DB525E8D1ABDFAC300959D26 /* UICustomDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E8C1ABDFAC300959D26 /* UICustomDevice.swift */; };
 		DB525E8F1ABE015D00959D26 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E8E1ABE015D00959D26 /* Animation.swift */; };
 		DB54AA181AB7F63D00E57FF5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB54AA171AB7F63D00E57FF5 /* Utils.swift */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
+		DBB20A491ABE2E590050AA36 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A481ABE2E590050AA36 /* DataProvider.swift */; };
+		DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */; };
+		DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */; };
+		DBB20A501ABE5D900050AA36 /* GameCenterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4F1ABE5D900050AA36 /* GameCenterController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,14 +62,17 @@
 		DB525E761ABDEF5F00959D26 /* digital_7.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7.ttf; path = Fonts/digital_7.ttf; sourceTree = "<group>"; };
 		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
 		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
-		DB525E821ABDF6E800959D26 /* GameOverView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
-		DB525E861ABDF6FD00959D26 /* LevelUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelUpView.swift; sourceTree = "<group>"; };
 		DB525E881ABDF9DB00959D26 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
 		DB525E8A1ABDF9F600959D26 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DB525E8C1ABDFAC300959D26 /* UICustomDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICustomDevice.swift; sourceTree = "<group>"; };
 		DB525E8E1ABE015D00959D26 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
 		DB54AA171AB7F63D00E57FF5 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DBB20A481ABE2E590050AA36 /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatusView.swift; sourceTree = "<group>"; };
+		DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		DBB20A4E1ABE5C060050AA36 /* Arcade Car Race.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Arcade Car Race.entitlements"; sourceTree = "<group>"; };
+		DBB20A4F1ABE5D900050AA36 /* GameCenterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +97,7 @@
 		DB2E842E1AAD338D0009E321 = {
 			isa = PBXGroup;
 			children = (
+				DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */,
 				DB480D0F1AAE83C7001695E1 /* Extensions */,
 				DB2E84391AAD338D0009E321 /* Arcade Car Race */,
 				DB2E84531AAD338E0009E321 /* Arcade Car RaceTests */,
@@ -110,13 +117,13 @@
 		DB2E84391AAD338D0009E321 /* Arcade Car Race */ = {
 			isa = PBXGroup;
 			children = (
+				DBB20A4E1ABE5C060050AA36 /* Arcade Car Race.entitlements */,
 				DB6FF61C1ABD272700F7B073 /* Main.storyboard */,
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
 				DB2E84401AAD338D0009E321 /* GameScene.swift */,
 				DB2E84421AAD338D0009E321 /* GameViewController.swift */,
 				DB525E801ABDF69900959D26 /* MenuView.swift */,
-				DB525E861ABDF6FD00959D26 /* LevelUpView.swift */,
-				DB525E821ABDF6E800959D26 /* GameOverView.swift */,
+				DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */,
 				DB2E84471AAD338D0009E321 /* Images.xcassets */,
 				DB525E721ABDEF5500959D26 /* Fonts */,
 				DB525E7B1ABDEFDC00959D26 /* Constants */,
@@ -153,6 +160,7 @@
 		DB480D0F1AAE83C7001695E1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DBB20A481ABE2E590050AA36 /* DataProvider.swift */,
 				DB525E8A1ABDF9F600959D26 /* Extensions.swift */,
 				DB480D101AAE83C7001695E1 /* SKExtensions.swift */,
 				DB525E881ABDF9DB00959D26 /* UIExtensions.swift */,
@@ -161,6 +169,7 @@
 				DB4028771ABCA9C600263C3D /* Configs.swift */,
 				DB4028791ABCAEAB00263C3D /* Trace.swift */,
 				DB525E8E1ABE015D00959D26 /* Animation.swift */,
+				DBB20A4F1ABE5D900050AA36 /* GameCenterController.swift */,
 			);
 			name = Extensions;
 			path = "Arcade Car Race/Extensions";
@@ -235,6 +244,15 @@
 				TargetAttributes = {
 					DB2E84361AAD338D0009E321 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 85HJEQ8RZV;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 0;
+							};
+						};
 					};
 					DB2E844F1AAD338E0009E321 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -289,10 +307,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */,
 				DB525E8D1ABDFAC300959D26 /* UICustomDevice.swift in Sources */,
 				DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */,
+				DBB20A491ABE2E590050AA36 /* DataProvider.swift in Sources */,
+				DBB20A501ABE5D900050AA36 /* GameCenterController.swift in Sources */,
 				DB54AA181AB7F63D00E57FF5 /* Utils.swift in Sources */,
-				DB525E831ABDF6E800959D26 /* GameOverView.swift in Sources */,
 				DB525E891ABDF9DB00959D26 /* UIExtensions.swift in Sources */,
 				DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */,
 				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
@@ -301,7 +321,6 @@
 				DB525E8B1ABDF9F600959D26 /* Extensions.swift in Sources */,
 				DB525E811ABDF69900959D26 /* MenuView.swift in Sources */,
 				DB480D111AAE83C7001695E1 /* SKExtensions.swift in Sources */,
-				DB525E871ABDF6FD00959D26 /* LevelUpView.swift in Sources */,
 				DB525E8F1ABE015D00959D26 /* Animation.swift in Sources */,
 				DB4028781ABCA9C600263C3D /* Configs.swift in Sources */,
 			);
@@ -422,10 +441,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Arcade Car Race/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Arcade Car Race";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -438,10 +461,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "Arcade Car Race/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Arcade Car Race";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -461,7 +488,7 @@
 				);
 				INFOPLIST_FILE = "Arcade Car RaceTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Arcade Car RaceTests";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Arcade Car Race.app/Arcade Car Race";
 			};
 			name = Debug;
@@ -476,7 +503,7 @@
 				);
 				INFOPLIST_FILE = "Arcade Car RaceTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Arcade Car RaceTests";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Arcade Car Race.app/Arcade Car Race";
 			};
 			name = Release;

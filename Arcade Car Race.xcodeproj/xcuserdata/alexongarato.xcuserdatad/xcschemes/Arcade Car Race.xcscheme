@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-               BuildableName = "Arcade Car Race.app"
+               BuildableName = "Infinity Car Race.app"
                BlueprintName = "Arcade Car Race"
                ReferencedContainer = "container:Arcade Car Race.xcodeproj">
             </BuildableReference>
@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DB2E844F1AAD338E0009E321"
-               BuildableName = "Arcade Car RaceTests.xctest"
+               BuildableName = "Infinity Car RaceTests.xctest"
                BlueprintName = "Arcade Car RaceTests"
                ReferencedContainer = "container:Arcade Car Race.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DB2E844F1AAD338E0009E321"
-               BuildableName = "Arcade Car RaceTests.xctest"
+               BuildableName = "Infinity Car RaceTests.xctest"
                BlueprintName = "Arcade Car RaceTests"
                ReferencedContainer = "container:Arcade Car Race.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-            BuildableName = "Arcade Car Race.app"
+            BuildableName = "Infinity Car Race.app"
             BlueprintName = "Arcade Car Race"
             ReferencedContainer = "container:Arcade Car Race.xcodeproj">
          </BuildableReference>
@@ -72,11 +72,12 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-            BuildableName = "Arcade Car Race.app"
+            BuildableName = "Infinity Car Race.app"
             BlueprintName = "Arcade Car Race"
             ReferencedContainer = "container:Arcade Car Race.xcodeproj">
          </BuildableReference>
@@ -90,11 +91,12 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-            BuildableName = "Arcade Car Race.app"
+            BuildableName = "Infinity Car Race.app"
             BlueprintName = "Arcade Car Race"
             ReferencedContainer = "container:Arcade Car Race.xcodeproj">
          </BuildableReference>

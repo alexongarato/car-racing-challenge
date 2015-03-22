@@ -1,6 +1,6 @@
 //
 //  GameScene.swift
-//  Arcade Car Race
+//  Infinity Car Race
 //
 //  Created by Alex Ongarato on 08/03/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.
@@ -21,7 +21,6 @@ class GameScene: SKScene
     var updateStatusHandler             : (()->Void)!;
     var gameOverHandler                 : (()->Void)!;
     var levelUpHandler                  : (()->Void)!;
-    var finalSceneHandler               : (()->Void)!;
     private var defaultFrame            : CGRect!;
     private var totalColumns            : Int = -1;
     private var totalScoreCounter       : Int = 0;
@@ -34,11 +33,14 @@ class GameScene: SKScene
     private var intervalBetweenLoops    : CFTimeInterval = 0.5;
     private var pixelDistanceCounter    : Int = -1;
     private var currentMainCharColumn   : Int = -1;
+    private var currentLevelCounter     : Int = 1;
+    private var sidesNode               : SKSpriteNode!;
+    private var sideNodeFlag            : Bool = false;
     
     //-- configs --
     private let maximunColumns          : Int = 6;
     private let minimumColumns          : Int = 3;
-    private let scoreToLevelUp          : Int = 1000;
+    private let scoreToLevelUp          : Int = 2;
     private let IDBtLeft                : String = "bt_left";
     private let IDBtRight               : String = "bt_right";
     private let intervalBetweenLevels   : CFTimeInterval = 0.01;
@@ -70,6 +72,16 @@ class GameScene: SKScene
     func currentLifes() -> Int
     {
         return self.lifesCounter;
+    }
+    
+    func currentLevel() -> Int
+    {
+        return self.currentLevelCounter;
+    }
+    
+    func maximunLevel() -> Int
+    {
+        return self.maximunColumns - self.minimumColumns;
     }
     
     func build()
@@ -114,8 +126,9 @@ class GameScene: SKScene
         bg.y = bg.height;
         self.addChild(bg);
         
-        var malha:UIView! = UIView();
-        malha.frame.size = self.size;
+        //cria malha temporaria que sera desenhada no context
+        var tempContent:UIView! = UIView();
+        tempContent.frame.size = self.size;
         var tempPixel:UIImageView!;
         for(var x:Int = 0; x < totalPixelsX; x++)
         {
@@ -124,15 +137,17 @@ class GameScene: SKScene
                 tempPixel = UIImageView(image: UIImage(named: "PixelOff")?.imageScaled(fitToWidth: self.pixelSize));
                 tempPixel.frame.origin.x = self.pixelSize * x.floatValue;
                 tempPixel.frame.origin.y = self.pixelSize * y.floatValue;
-                malha.addSubview(tempPixel);
+                tempContent.addSubview(tempPixel);
             }
         }
-        UIGraphicsBeginImageContext(malha.frame.size);
+        
+        //desenha a malha no context
+        UIGraphicsBeginImageContext(tempContent.frame.size);
         var context:CGContextRef = UIGraphicsGetCurrentContext();
-        malha.layer.renderInContext(context);
-        var malhaImage:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        tempContent.layer.renderInContext(context);
+        var tempCGImage:UIImage! = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        var pixelTexture:SKTexture = SKTexture(CGImage: malhaImage.CGImage);
+        var pixelTexture:SKTexture = SKTexture(CGImage: tempCGImage.CGImage);
         var pixelsNode:SKSpriteNode = SKSpriteNode(texture: pixelTexture);
         self.addChild(pixelsNode);
         pixelsNode.zPosition = 1;
@@ -140,7 +155,54 @@ class GameScene: SKScene
         pixelsNode.anchorPoint.y = 1;
         pixelsNode.x = 0;
         pixelsNode.y = self.size.height;
-        malha = nil;
+        tempContent = nil;
+        tempCGImage = nil;
+        tempPixel = nil;
+        
+        
+        //cria as laterias temporarias que serao desenhadas no context
+        tempContent = UIView();
+        tempContent.frame.size = self.size;
+        for(var x:Int = 0; x < totalPixelsX; x += totalPixelsX - 1)
+        {
+            for(var y:Int = 0; y < totalPixelsY; y++)
+            {
+                
+                    tempPixel = UIImageView(image: UIImage(named: "PixelOn")?.imageScaled(fitToWidth: self.pixelSize));
+                    tempPixel.frame.origin.x = self.pixelSize * x.floatValue;
+                    tempPixel.frame.origin.y = self.pixelSize * y.floatValue;
+                    tempContent.addSubview(tempPixel);
+                    
+                    y++;
+                    
+//                    tempPixel = UIImageView(image: UIImage(named: "PixelOn")?.imageScaled(fitToWidth: self.pixelSize));
+//                    tempPixel.frame.origin.x = self.pixelSize * x.floatValue;
+//                    tempPixel.frame.origin.y = self.pixelSize * y.floatValue;
+//                    tempContent.addSubview(tempPixel);
+//                    
+//                    y++;
+                
+            }
+        }
+        
+        //desenha a malha no context
+        UIGraphicsBeginImageContext(tempContent.frame.size);
+        context = UIGraphicsGetCurrentContext();
+        tempContent.layer.renderInContext(context);
+        tempCGImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        var sidesTexture:SKTexture = SKTexture(CGImage: tempCGImage.CGImage);
+        sidesNode = SKSpriteNode(texture: sidesTexture);
+        self.addChild(sidesNode);
+        sidesNode.zPosition = 1;
+        sidesNode.anchorPoint.x = 0;
+        sidesNode.anchorPoint.y = 1;
+        sidesNode.x = 0;
+        sidesNode.y = self.size.height;
+        
+        tempContent = nil;
+        tempCGImage = nil;
+        tempPixel = nil;
         
         
         /**
@@ -198,12 +260,14 @@ class GameScene: SKScene
         self.pixelDistanceCounter = -1;
         self.currentMainCharColumn = -1;
         self.intervalBetweenLoops = 0.5;
+        self.currentLevelCounter = 1;
     }
     
     func stop()
     {
-        self.builded = false;
+//        self.builded = false;
         self.ready = false;
+        self.paused = true;
     }
     
     func start()
@@ -215,6 +279,8 @@ class GameScene: SKScene
         }
         
         self.ready = true;
+        self.paused = false;
+        self.updateStatusHandler();
     }
     
     override func update(currentTime: CFTimeInterval)
@@ -244,12 +310,24 @@ class GameScene: SKScene
                 addNewEnemy();
             }
             
+            if(!sideNodeFlag)
+            {
+                sideNodeFlag = true;
+                sidesNode.y = self.size.height - pixelSize;
+            }
+            else
+            {
+                sideNodeFlag = false;
+                sidesNode.y = self.size.height;
+            }
+            
             for enemyBlock in enemiesArray
             {
                 /**
                 move o inimigo para baixo
                 */
                 enemyBlock.y -= pixelSize;
+                
                 
                 /**
                 quando o inimigo sai da tela. end of life.
@@ -259,20 +337,12 @@ class GameScene: SKScene
                     if(!enemyBlock.isTouched)
                     {
                         self.totalScoreCounter++;
-                        
                         self.currentScoreCounter++;
                         if(self.currentScoreCounter >= self.scoreToLevelUp)
                         {
                             self.currentScoreCounter = 0;
-                            
-                            if(self.totalColumns < self.minimumColumns)
-                            {
-                                self.finalSceneHandler();
-                            }
-                            else
-                            {
-                                self.levelUpHandler();
-                            }
+                            self.currentLevelCounter++;
+                            self.levelUpHandler();
                         }
                     }
                     

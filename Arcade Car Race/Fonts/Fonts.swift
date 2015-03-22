@@ -1,6 +1,6 @@
 //
 //  Fonts.swift
-//  Arcade Car Race
+//  Infinity Car Race
 //
 //  Created by Alex Ongarato on 21/03/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.
@@ -19,6 +19,14 @@ class Fonts
 
 struct FontSize
 {
+    /**
+    8px
+    */
+    static var Tiny        : CGFloat = 8;
+    /**
+    15px
+    */
+    static var Small        : CGFloat = 15;
     /** 
     20px 
     */

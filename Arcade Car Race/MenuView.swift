@@ -1,6 +1,6 @@
 //
 //  MenuView.swift
-//  Arcade Car Race
+//  Infinity Car Race
 //
 //  Created by Alex Ongarato on 21/03/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.
@@ -11,7 +11,7 @@ import UIKit
 
 class MenuView: AbstractView
 {
-    private var desc        : UILabel!;
+    private var desc        : UITextView!;
     private var title       : UILabel!;
     private var action      : UILabel!;
     private var fontColor   : UIColor = UIColor.blackColor();
@@ -19,13 +19,13 @@ class MenuView: AbstractView
     override func didMoveToSuperview()
     {
         super.didMoveToSuperview();
-        self.enableBlur();
+        self.enableBlur(UIBlurEffectStyle.Light);
         
         self.title = UILabel();
         self.title.textColor = fontColor;
         self.addSubview(self.title);
         
-        self.desc = UILabel();
+        self.desc = UITextView();
         self.desc.textColor = fontColor;
         self.addSubview(self.desc);
         
@@ -47,12 +47,12 @@ class MenuView: AbstractView
     {
         self.desc.text = text;
         self.desc.font = Fonts.Digital7Italic(FontSize.Default);
-        self.desc.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+        self.desc.textAlignment = NSTextAlignment.Center;
+        self.desc.backgroundColor = UIColor.clearColor();
         self.desc.width = self.width - 30;
-        self.desc.layer.borderWidth = 1;
-//        self.desc.sizeToFit();
+        self.desc.height = 100;
         self.desc.center = self.center;
-        self.desc.y = self.center.y
+        self.desc.y = self.center.y  - (self.height * 0.1);
     }
     
     func setAction(text:String, target:AnyObject, selector:Selector)
@@ -61,7 +61,7 @@ class MenuView: AbstractView
         self.action.font = Fonts.Digital7Italic(FontSize.Medium);
         self.action.sizeToFit();
         self.action.center = self.center;
-        self.action.y = self.center.y + (self.height * 0.3);
+        self.action.y = self.center.y + (self.height * 0.2);
         self.action.addTarget(target, selector: selector);
     }
     

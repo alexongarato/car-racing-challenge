@@ -1,6 +1,6 @@
 //
 //  Arcade_Car_RaceTests.swift
-//  Arcade Car RaceTests
+//  Infinity Car RaceTests
 //
 //  Created by Alex Ongarato on 08/03/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.

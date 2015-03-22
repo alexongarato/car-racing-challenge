@@ -1,6 +1,6 @@
 //
 //  UIExtensions.swift
-//  Arcade Car Race
+//  Infinity Car Race
 //
 //  Created by Alex Ongarato on 21/03/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.
@@ -203,11 +203,22 @@ extension UIView
         self.gestureRecognizers?.removeAll(keepCapacity: false);
     }
     
-    func enableBlur()
+    func enableBlur(style:UIBlurEffectStyle)
     {
-//        self.backgroundColor = UIColor.blackColor().alpha(0.9);
-        
         //only apply the blur if the user hasn't disabled transparency effects
+        if(!UICustomDevice.isIOS8OrHigher())
+        {
+            self.backgroundColor = UIColor.whiteColor().alpha(0.9);
+            return;
+        }
+        
+        var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: style)) as UIVisualEffectView;
+        visualEffectView.frame = self.bounds;
+        self.addSubview(visualEffectView)
+    }
+    
+    func enableGaussianBlur()
+    {
         if(!UICustomDevice.isIOS8OrHigher())
         {
             self.backgroundColor = UIColor.blackColor().alpha(0.9);
@@ -216,23 +227,7 @@ extension UIView
         
         if !UIAccessibilityIsReduceTransparencyEnabled()
         {
-            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light);
-            let blurEffectView = UIVisualEffectView(effect: blurEffect);
-//            blurEffectView.alpha = 0.8;
-            blurEffectView.frame = self.bounds; //view is self.view in a UIViewController
-            self.insertSubview(blurEffectView, atIndex:0);
-            //if you have more UIViews on screen, use insertSubview:belowSubview: to place it underneath the lowest view
             
-            //add auto layout constraints so that the blur fills the screen upon rotating device
-            blurEffectView.setTranslatesAutoresizingMaskIntoConstraints(false);
-            
-            var multiplier:CGFloat = 1;
-            var constant:CGFloat = 0;
-            
-            self.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Top, multiplier: multiplier, constant: constant));
-            self.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Bottom, multiplier: multiplier, constant: constant));
-            self.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Leading, multiplier: multiplier, constant: constant));
-            self.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: self, attribute: NSLayoutAttribute.Trailing, multiplier: multiplier, constant: constant));
         }
         else
         {
