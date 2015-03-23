@@ -1,6 +1,6 @@
 //
 //  Utils.swift
-//  Arcade Car Race
+//  Infinity Car Race
 //
 //  Created by Alex Ongarato on 17/03/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.
@@ -59,6 +59,21 @@ class Utils
         UIGraphicsEndImageContext();
         
         return SKTexture(CGImage: tiledPixels.CGImage);
+    }
+    
+    class func printFontNames()
+    {
+//        #if DEBUG
+        for family:AnyObject in UIFont.familyNames()
+        {
+            Trace.log("Font family: \(family as? String)");
+            
+            for name:AnyObject in UIFont.fontNamesForFamilyName(family as! String)
+            {
+                Trace.log("  - Font name: \(name as! String)");
+            }
+        }
+//        #endif
     }
 }
 

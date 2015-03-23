@@ -1,6 +1,6 @@
 //
 //  Trace.swift
-//  Arcade Car Race
+//  Infinity Car Race
 //
 //  Created by Alex Ongarato on 3/20/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.
@@ -11,16 +11,31 @@ class Trace
 {
     class func warning(value:String)
     {
-        NSLog("WARNING -> \(value)");
+//        #if DEBUG
+        if(Configs.DEBUG_MODE)
+        {
+            NSLog("WARNING -> \(value)");
+        }
+//        #endif
     }
     
     class func error(value:String)
     {
-        NSLog("ERROR -> \(value)");
+//        #if DEBUG
+        if(Configs.DEBUG_MODE)
+        {
+            NSLog("ERROR -> \(value)");
+        }
+//        #endif
     }
     
     class func log(value:String)
     {
-        NSLog(value);
+//        #if DEBUG
+        if(Configs.DEBUG_MODE)
+        {
+            NSLog(value);
+        }
+//        #endif
     }
 }
