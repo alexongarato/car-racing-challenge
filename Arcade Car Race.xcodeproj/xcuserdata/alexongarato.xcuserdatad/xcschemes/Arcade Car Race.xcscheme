@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-               BuildableName = "Infinity Car Race.app"
+               BuildableName = "Arcade Car Race.app"
                BlueprintName = "Arcade Car Race"
                ReferencedContainer = "container:Arcade Car Race.xcodeproj">
             </BuildableReference>
@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DB2E844F1AAD338E0009E321"
-               BuildableName = "Infinity Car RaceTests.xctest"
+               BuildableName = "Arcade Car RaceTests.xctest"
                BlueprintName = "Arcade Car RaceTests"
                ReferencedContainer = "container:Arcade Car Race.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DB2E844F1AAD338E0009E321"
-               BuildableName = "Infinity Car RaceTests.xctest"
+               BuildableName = "Arcade Car RaceTests.xctest"
                BlueprintName = "Arcade Car RaceTests"
                ReferencedContainer = "container:Arcade Car Race.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-            BuildableName = "Infinity Car Race.app"
+            BuildableName = "Arcade Car Race.app"
             BlueprintName = "Arcade Car Race"
             ReferencedContainer = "container:Arcade Car Race.xcodeproj">
          </BuildableReference>
@@ -77,7 +77,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-            BuildableName = "Infinity Car Race.app"
+            BuildableName = "Arcade Car Race.app"
             BlueprintName = "Arcade Car Race"
             ReferencedContainer = "container:Arcade Car Race.xcodeproj">
          </BuildableReference>
@@ -96,7 +96,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-            BuildableName = "Infinity Car Race.app"
+            BuildableName = "Arcade Car Race.app"
             BlueprintName = "Arcade Car Race"
             ReferencedContainer = "container:Arcade Car Race.xcodeproj">
          </BuildableReference>

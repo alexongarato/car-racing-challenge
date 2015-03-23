@@ -12,8 +12,11 @@ import SpriteKit
 class GameViewController: UIViewController
 {
     var scene           : GameScene!;
+    var sceneView       : SKView!;
     var menuView        : MenuView!;
     var statusView      : GameStatusView!;
+    var snapshotView    : UIImageView!;
+    var bestScoreEver   : NSInteger = 0;
     
     override func viewDidLoad()
     {
@@ -28,23 +31,37 @@ class GameViewController: UIViewController
         Trace.log(scene.size.description as String);
         
         //
-        let skView:SKView = self.view as! SKView;
-        skView.showsFPS = Configs.DEBUG_MODE;
-        skView.showsNodeCount = Configs.DEBUG_MODE;
-        skView.ignoresSiblingOrder = true;
-        skView.presentScene(scene);
+        sceneView = SKView();
+        sceneView.frame = self.view.frame;
+        sceneView.showsFPS = Configs.DEBUG_MODE;
+        sceneView.showsNodeCount = Configs.DEBUG_MODE;
+        sceneView.ignoresSiblingOrder = true;
+        sceneView.presentScene(scene);
+        self.view.addSubview(sceneView);
         
         //
         self.statusView = GameStatusView();
         self.view.addSubview(self.statusView);
         
+        let data:NSString = DataProvider.getString(SuiteNames.GameBestScoreSuite, key: SuiteNames.GameBestScoreKey) as NSString;
+        if(data == "")
+        {
+            Trace.log("oops. best score not restored.");
+        }
+         else
+        {
+            self.bestScoreEver = NSInteger(data.floatValue);
+            Trace.log("best score restored: \(self.bestScoreEver)");
+        }
+        
         //
         scene.build();
-        showMenu("INFINITY CAR RACE", desc: "no score limit!\nHow far can you go?", action: "START", selector: Selector("startGame"));
+        showMenu("car racing\nchallenge", desc: "limitless score!\nHow far can you go?", action: "PRESS TO START", selector: Selector("startGame"));
     }
     
     func showMenu(msg:String, desc:String, action:String, selector:Selector)
     {
+        scene.paused = true;
         statusView.hide();
         menuView = MenuView();
         menuView.animationStyle = AnimationStyle.Scale;
@@ -57,7 +74,7 @@ class GameViewController: UIViewController
     
     func gameStatusUpdateHandler()
     {
-        self.statusView.update(self.scene.currentLevel(), score: self.scene.currentScore(), totalLevels: self.scene.maximunLevel());
+        self.statusView.update(self.scene.currentLevel(), score: self.scene.currentScore(), nextScore: self.scene.currentScoreToLevelUp());
     }
     
     func startGame()
@@ -102,27 +119,36 @@ class GameViewController: UIViewController
     
     func gameOverHandler()
     {
+        if(scene.currentScore() > self.bestScoreEver)
+        {
+            self.bestScoreEver = scene.currentScore();
+            DataProvider.saveData(SuiteNames.GameBestScoreSuite, key: SuiteNames.GameBestScoreKey, string: "\(self.bestScoreEver)");
+        }
+        
         scene.stop();
-        showMenu("GAME OVER", desc: "SCORE: \(scene.currentScore())", action: "TRY AGAIN", selector: Selector("restartGame"));
+        showMenu("\nGAME OVER", desc: "current SCORE: \(scene.currentScore())\n\nBEST SCORE EVER:\(self.bestScoreEver)", action: "TRY AGAIN", selector: Selector("restartGame"));
     }
     
     func levelUpHandler()
     {
         Trace.log("LEVEL UP");
         
+        var desc:String!;
         if(scene.currentLevel() <= scene.maximunLevel())
         {
-            scene.stop();
-            var desc:String = "Less cars and more speed.\nbe careful!";
-            showMenu("LEVEL \(scene.currentLevel())", desc: desc, action: "READY, SET, GO!", selector: Selector("resumeLevelUp"));
+            desc = "Less cars but more speed.\ndrive carefully!";
         }
         else if(scene.currentLevel() == scene.maximunLevel() + 1)
         {
-            scene.stop();
-            var desc:String = "the road is yours!\nIt will fit \(self.scene.currentColumns()) cars\nand your car is faster\nthen ever with infinite score and level.\n good luck!";
-            showMenu("LEVEL \(scene.currentLevel())", desc: desc, action: "READY, SET, GO!", selector: Selector("resumeLevelUp"));
+            desc = "you've reached the outside road. \nIt will fit \(self.scene.currentColumns()) cars\nand your car is faster\nthen ever with infinite score and level.\n good luck!";
         }
         
+        if(desc != nil)
+        {
+            scene.stop();
+            showMenu("\nLEVEL \(scene.currentLevel())", desc: desc, action: "GO!", selector: Selector("resumeLevelUp"));
+            scene.setTotalColumns(scene.currentColumns() - 1);
+        }
         
     }
     
@@ -139,7 +165,6 @@ class GameViewController: UIViewController
                 self.menuView = nil;
             }
             
-            scene.setTotalColumns(scene.currentColumns() - 1);
             scene.start();
         }
         

@@ -12,7 +12,7 @@ import UIKit
 class MenuView: AbstractView
 {
     private var desc        : UITextView!;
-    private var title       : UILabel!;
+    private var title       : UITextView!;
     private var action      : UILabel!;
     private var fontColor   : UIColor = UIColor.blackColor();
     
@@ -21,13 +21,15 @@ class MenuView: AbstractView
         super.didMoveToSuperview();
         self.enableBlur(UIBlurEffectStyle.Light);
         
-        self.title = UILabel();
+        self.title = UITextView();
         self.title.textColor = fontColor;
         self.addSubview(self.title);
+        self.title.editable = false;
         
         self.desc = UITextView();
         self.desc.textColor = fontColor;
         self.addSubview(self.desc);
+        self.desc.editable = false;
         
         self.action = UILabel();
         self.action.textColor = fontColor;
@@ -37,10 +39,12 @@ class MenuView: AbstractView
     func setTitle(text:String)
     {
         self.title.text = text;
-        self.title.font = Fonts.Digital7Italic(FontSize.Medium);
+        self.title.font = Fonts.Digital7Italic(FontSize.Big);
+        self.title.textAlignment = NSTextAlignment.Center;
+        self.title.backgroundColor = UIColor.clearColor();
         self.title.sizeToFit();
         self.title.center = self.center;
-        self.title.y = self.center.y - (self.height * 0.3);
+        self.title.y = self.center.y - (self.height * 0.4);
     }
     
     func setDescription(text:String)
@@ -49,10 +53,8 @@ class MenuView: AbstractView
         self.desc.font = Fonts.Digital7Italic(FontSize.Default);
         self.desc.textAlignment = NSTextAlignment.Center;
         self.desc.backgroundColor = UIColor.clearColor();
-        self.desc.width = self.width - 30;
-        self.desc.height = 100;
+        self.desc.sizeToFit();
         self.desc.center = self.center;
-        self.desc.y = self.center.y  - (self.height * 0.1);
     }
     
     func setAction(text:String, target:AnyObject, selector:Selector)
@@ -61,7 +63,7 @@ class MenuView: AbstractView
         self.action.font = Fonts.Digital7Italic(FontSize.Medium);
         self.action.sizeToFit();
         self.action.center = self.center;
-        self.action.y = self.center.y + (self.height * 0.2);
+        self.action.y = self.center.y + (self.height * 0.3);
         self.action.addTarget(target, selector: selector);
     }
     

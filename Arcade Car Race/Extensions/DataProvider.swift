@@ -115,3 +115,9 @@ class DataProvider
         Trace.warning("DataProvider -> Cache cleaned.");
     }
 }
+
+struct SuiteNames
+{
+    static var GameBestScoreSuite   : String = "game_score_suite";
+    static var GameBestScoreKey     : String = "game_score_key";
+}

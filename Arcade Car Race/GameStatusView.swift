@@ -52,13 +52,12 @@ class GameStatusView:AbstractView
             }, completion: nil);
     }
     
-    func update(level:Int, score:Int, totalLevels:Int)
+    func update(level:Int, score:Int, nextScore:Int)
     {
-        var levelStr:String = level >= totalLevels ? "FINAL" : "\(level)";
-        self.levelField.text = "LEVEL: \(levelStr)";
+        self.levelField.text = "LEVEL: \(level)";
         self.levelField.sizeToFit();
         
-        self.scoreField.text = "SCORE: \(score)";
+        self.scoreField.text = "SCORE: \(score)/\(nextScore * level)";
         self.scoreField.sizeToFit();
     }
 }

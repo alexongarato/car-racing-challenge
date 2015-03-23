@@ -270,7 +270,9 @@ extension UIColor
 
 extension CGSize
 {
-    var description: NSString { get { return "CGSize(width:\(self.width), height:\(self.height))";} };
+    var description : NSString { get { return "CGSize(width:\(self.width), height:\(self.height))"; } };
+    var doubleValue : CGSize { get { return CGSize(width: self.width * 2, height: self.height * 2); } };
+    var halfValue   : CGSize { get { return CGSize(width: self.width * 0.5, height: self.height * 0.5); } };
 }
 
 extension CGFloat

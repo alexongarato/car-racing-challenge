@@ -36,15 +36,22 @@ class GameScene: SKScene
     private var currentLevelCounter     : Int = 1;
     private var sidesNode               : SKSpriteNode!;
     private var sideNodeFlag            : Bool = false;
+    private var sideNodeVelCounter      : CFTimeInterval = 0;
     
     //-- configs --
-    private let maximunColumns          : Int = 6;
+    private let maximunColumns          : Int = 7;
     private let minimumColumns          : Int = 3;
     private let scoreToLevelUp          : Int = 2;
     private let IDBtLeft                : String = "bt_left";
     private let IDBtRight               : String = "bt_right";
     private let intervalBetweenLevels   : CFTimeInterval = 0.01;
     private let pixelDistanceBtwEnemies : Int = 15;
+    
+    
+    func currentScoreToLevelUp() -> Int
+    {
+        return self.scoreToLevelUp;
+    }
     
     func currentColumns() -> Int
     {
@@ -92,9 +99,8 @@ class GameScene: SKScene
         }
         
         self.removeAllChildren();
-        
+        self.sidesNode = nil;
         self.size = self.defaultFrame.size;
-//        self.position = self.defaultFrame.origin;
         
         /**
         inicializar variaveis
@@ -159,7 +165,6 @@ class GameScene: SKScene
         tempCGImage = nil;
         tempPixel = nil;
         
-        
         //cria as laterias temporarias que serao desenhadas no context
         tempContent = UIView();
         tempContent.frame.size = self.size;
@@ -185,7 +190,7 @@ class GameScene: SKScene
             }
         }
         
-        //desenha a malha no context
+        //desenha as laterais no context
         UIGraphicsBeginImageContext(tempContent.frame.size);
         context = UIGraphicsGetCurrentContext();
         tempContent.layer.renderInContext(context);
@@ -261,6 +266,8 @@ class GameScene: SKScene
         self.currentMainCharColumn = -1;
         self.intervalBetweenLoops = 0.5;
         self.currentLevelCounter = 1;
+        self.currentScoreCounter = 0;
+        self.totalScoreCounter = 0;
     }
     
     func stop()
@@ -280,6 +287,7 @@ class GameScene: SKScene
         
         self.ready = true;
         self.paused = false;
+        self.intervalBetweenLoops = 0.5;
         self.updateStatusHandler();
     }
     
@@ -290,25 +298,9 @@ class GameScene: SKScene
             return;
         }
         
-        /**
-        processa cada inimigo individualmente
-        */
-        if(currentTime >= loopsTimeCounter)
+        if(currentTime >= self.sideNodeVelCounter)
         {
-            /**
-            novo heart beat
-            */
-            
-            //-----------
-            loopsTimeCounter = currentTime + intervalBetweenLoops;
-            //-----------
-            
-            self.pixelDistanceCounter++;
-            if(self.pixelDistanceCounter >= self.pixelDistanceBtwEnemies)
-            {
-                self.pixelDistanceCounter = 0;
-                addNewEnemy();
-            }
+            self.sideNodeVelCounter = currentTime + intervalBetweenLoops * 0.5;
             
             if(!sideNodeFlag)
             {
@@ -319,6 +311,20 @@ class GameScene: SKScene
             {
                 sideNodeFlag = false;
                 sidesNode.y = self.size.height;
+            }
+        }
+        
+        if(currentTime >= loopsTimeCounter)
+        {
+            //-----------
+            loopsTimeCounter = currentTime + intervalBetweenLoops;
+            //-----------
+            
+            self.pixelDistanceCounter++;
+            if(self.pixelDistanceCounter >= self.pixelDistanceBtwEnemies)
+            {
+                self.pixelDistanceCounter = 0;
+                addNewEnemy();
             }
             
             for enemyBlock in enemiesArray
@@ -354,6 +360,10 @@ class GameScene: SKScene
                     self.updateStatusHandler();
                 }
             }
+        }
+        else
+        {
+            
         }
         
         for enemyBlock in enemiesArray
