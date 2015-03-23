@@ -1,6 +1,6 @@
 //
-//  Arcade_Car_RaceTests.swift
-//  Infinity Car RaceTests
+//  Car_Racing_ChallengeTests.swift
+//  Car Racing ChallengeTests
 //
 //  Created by Alex Ongarato on 08/03/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.
@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class Arcade_Car_RaceTests: XCTestCase {
+class Car_Racing_ChallengeTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

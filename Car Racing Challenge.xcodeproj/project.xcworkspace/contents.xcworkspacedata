@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Arcade Car Race.xcodeproj">
+      location = "self:Car Racing Challenge.xcodeproj">
    </FileRef>
 </Workspace>

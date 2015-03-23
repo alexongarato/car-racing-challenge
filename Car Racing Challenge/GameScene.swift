@@ -1,6 +1,6 @@
 //
 //  GameScene.swift
-//  Infinity Car Race
+//  Car Racing Challenge
 //
 //  Created by Alex Ongarato on 08/03/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.

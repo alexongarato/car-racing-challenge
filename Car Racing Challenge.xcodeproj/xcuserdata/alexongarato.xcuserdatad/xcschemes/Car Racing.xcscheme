@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-               BuildableName = "Arcade Car Race.app"
-               BlueprintName = "Arcade Car Race"
-               ReferencedContainer = "container:Arcade Car Race.xcodeproj">
+               BuildableName = "Car Racing.app"
+               BlueprintName = "Car Racing Challenge"
+               ReferencedContainer = "container:Car Racing Challenge.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DB2E844F1AAD338E0009E321"
-               BuildableName = "Arcade Car RaceTests.xctest"
-               BlueprintName = "Arcade Car RaceTests"
-               ReferencedContainer = "container:Arcade Car Race.xcodeproj">
+               BuildableName = "Car Racing ChallengeTests.xctest"
+               BlueprintName = "Car Racing ChallengeTests"
+               ReferencedContainer = "container:Car Racing Challenge.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DB2E844F1AAD338E0009E321"
-               BuildableName = "Arcade Car RaceTests.xctest"
-               BlueprintName = "Arcade Car RaceTests"
-               ReferencedContainer = "container:Arcade Car Race.xcodeproj">
+               BuildableName = "Car Racing ChallengeTests.xctest"
+               BlueprintName = "Car Racing ChallengeTests"
+               ReferencedContainer = "container:Car Racing Challenge.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-            BuildableName = "Arcade Car Race.app"
-            BlueprintName = "Arcade Car Race"
-            ReferencedContainer = "container:Arcade Car Race.xcodeproj">
+            BuildableName = "Car Racing.app"
+            BlueprintName = "Car Racing Challenge"
+            ReferencedContainer = "container:Car Racing Challenge.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-            BuildableName = "Arcade Car Race.app"
-            BlueprintName = "Arcade Car Race"
-            ReferencedContainer = "container:Arcade Car Race.xcodeproj">
+            BuildableName = "Car Racing.app"
+            BlueprintName = "Car Racing Challenge"
+            ReferencedContainer = "container:Car Racing Challenge.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "DB2E84361AAD338D0009E321"
-            BuildableName = "Arcade Car Race.app"
-            BlueprintName = "Arcade Car Race"
-            ReferencedContainer = "container:Arcade Car Race.xcodeproj">
+            BuildableName = "Car Racing.app"
+            BlueprintName = "Car Racing Challenge"
+            ReferencedContainer = "container:Car Racing Challenge.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
