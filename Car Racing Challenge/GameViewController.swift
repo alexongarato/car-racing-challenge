@@ -21,6 +21,9 @@ class GameViewController: UIViewController
     override func viewDidLoad()
     {
         super.viewDidLoad();
+        
+        (UIApplication.sharedApplication().delegate as! AppDelegate).gameController = self;
+        
         //
         self.scene = GameScene();
         scene.size = UIScreen.mainScreen().applicationFrame.size;
@@ -100,7 +103,7 @@ class GameViewController: UIViewController
                 self.menuView = nil;
             }
             
-            scene.start();
+            self.scene.start();
         }
         
         self.menuView.dismiss(complete);
@@ -121,9 +124,9 @@ class GameViewController: UIViewController
                 self.menuView = nil;
             }
             
-            scene.reset();
-            scene.build();
-            scene.start();
+            self.scene.reset();
+            self.scene.build();
+            self.scene.start();
         }
         
         self.menuView.dismiss(complete);
@@ -182,13 +185,22 @@ class GameViewController: UIViewController
                 self.menuView = nil;
             }
             
-            scene.start();
+            self.scene.start();
         }
         
         self.menuView.dismiss(complete);
     }
     
-    //
+    func applicationWillResignActive()
+    {
+        if(!self.scene.paused)
+        {
+            self.scene.stop();
+            showMenu("\nRESUME", desc: "when you're ready.", action: "GO!", selector: Selector("resumeLevelUp"));
+        }
+    }
+    
+    //################### PRAGMA
     override func shouldAutorotate() -> Bool
     {
         return true;

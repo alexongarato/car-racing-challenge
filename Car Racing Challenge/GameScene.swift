@@ -126,6 +126,7 @@ class GameScene: SKScene
         self.currentMainCharColumn      = self.totalColumns / 2;
         self.pixelDistanceCounter       = self.pixelDistanceBtwEnemies;
         self.currentVelSound            = 0;
+        self.intervalBetweenLoops       = 0.5;
 //        self.currentLifeCounter         = self.scoreToEarnLife;
         
         
@@ -141,83 +142,28 @@ class GameScene: SKScene
         bg.x = 0;
         bg.y = bg.height;
         self.addChild(bg);
-        
-        //cria malha temporaria que sera desenhada no context
-        var tempContent:UIView! = UIView();
-        tempContent.frame.size = self.size;
-        var tempPixel:UIImageView!;
-        for(var x:Int = 0; x < totalPixelsX; x++)
-        {
-            for(var y:Int = 0; y < totalPixelsY; y++)
-            {
-                tempPixel = UIImageView(image: UIImage(named: "PixelOff")?.imageScaled(fitToWidth: self.pixelSize));
-                tempPixel.frame.origin.x = self.pixelSize * x.floatValue;
-                tempPixel.frame.origin.y = self.pixelSize * y.floatValue;
-                tempContent.addSubview(tempPixel);
-            }
-        }
+        //---------------------
         
         //desenha a malha no context
-        UIGraphicsBeginImageContext(tempContent.frame.size);
-        var context:CGContextRef = UIGraphicsGetCurrentContext();
-        tempContent.layer.renderInContext(context);
-        var tempCGImage:UIImage! = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        var pixelTexture:SKTexture = SKTexture(CGImage: tempCGImage.CGImage);
-        var pixelsNode:SKSpriteNode = SKSpriteNode(texture: pixelTexture);
+        var pixelsNode:SKSpriteNode = SKSpriteNode(texture: Utils.createPixelsGrid(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
         self.addChild(pixelsNode);
         pixelsNode.zPosition = 1;
         pixelsNode.anchorPoint.x = 0;
         pixelsNode.anchorPoint.y = 1;
         pixelsNode.x = 0;
         pixelsNode.y = self.size.height;
-        tempContent = nil;
-        tempCGImage = nil;
-        tempPixel = nil;
+        //---------------------
+        
         
         //cria as laterias temporarias que serao desenhadas no context
-        tempContent = UIView();
-        tempContent.frame.size = self.size;
-        for(var x:Int = 0; x < totalPixelsX; x += totalPixelsX - 1)
-        {
-            for(var y:Int = 0; y < totalPixelsY; y++)
-            {
-                
-                    tempPixel = UIImageView(image: UIImage(named: "PixelOn")?.imageScaled(fitToWidth: self.pixelSize));
-                    tempPixel.frame.origin.x = self.pixelSize * x.floatValue;
-                    tempPixel.frame.origin.y = self.pixelSize * y.floatValue;
-                    tempContent.addSubview(tempPixel);
-                    
-                    y++;
-                    
-                    tempPixel = UIImageView(image: UIImage(named: "PixelOn")?.imageScaled(fitToWidth: self.pixelSize));
-                    tempPixel.frame.origin.x = self.pixelSize * x.floatValue;
-                    tempPixel.frame.origin.y = self.pixelSize * y.floatValue;
-                    tempContent.addSubview(tempPixel);
-                    
-                    y++;
-                
-            }
-        }
-        
-        //desenha as laterais no context
-        UIGraphicsBeginImageContext(tempContent.frame.size);
-        context = UIGraphicsGetCurrentContext();
-        tempContent.layer.renderInContext(context);
-        tempCGImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        var sidesTexture:SKTexture = SKTexture(CGImage: tempCGImage.CGImage);
-        sidesNode = SKSpriteNode(texture: sidesTexture);
+        sidesNode = SKSpriteNode(texture: Utils.createRoadPixels(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
         self.addChild(sidesNode);
         sidesNode.zPosition = 1;
         sidesNode.anchorPoint.x = 0;
         sidesNode.anchorPoint.y = 1;
         sidesNode.x = 0;
         sidesNode.y = self.size.height;
-        
-        tempContent = nil;
-        tempCGImage = nil;
-        tempPixel = nil;
+        //---------------------
         
         
         /**
@@ -301,7 +247,6 @@ class GameScene: SKScene
         
         self.ready = true;
         self.paused = false;
-        self.intervalBetweenLoops = 0.5;
         self.updateStatusHandler();
     }
     

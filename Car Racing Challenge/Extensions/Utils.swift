@@ -58,7 +58,75 @@ class Utils
         var tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
-        return SKTexture(CGImage: tiledPixels.CGImage);
+        var tempTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage);
+        tempTexture.filteringMode = SKTextureFilteringMode.Nearest;
+        
+        return tempTexture;
+    }
+    
+    class func createPixelsGrid(size:CGSize, totalPixelsX:Int, totalPixelsY:Int, pixelSize:CGFloat) -> SKTexture
+    {
+        var pixelFrame:CGRect = CGRect(x: 0, y: 0, width: pixelSize, height: pixelSize);
+        var pixelOff:CGImageRef = UIImage(named:"PixelOff")!.CGImage;
+        
+        UIGraphicsBeginImageContext(size);
+        var context:CGContextRef = UIGraphicsGetCurrentContext();
+        
+        for(var x:Int = 0; x < totalPixelsX; x++)
+        {
+            for(var y:Int = 0; y < totalPixelsY; y++)
+            {
+                var pnt:CGPoint = CGPoint(x: pixelSize * x.floatValue, y:pixelSize * y.floatValue);
+                var rect:CGRect = CGRect(origin: pnt, size: CGSize(width: pixelSize, height: pixelSize));
+                CGContextDrawImage(context, rect, pixelOff);
+            }
+        }
+        
+        var tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        var tempTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage);
+        tempTexture.filteringMode = SKTextureFilteringMode.Nearest;
+        
+        return tempTexture;
+    }
+    
+    class func createRoadPixels(size:CGSize, totalPixelsX:Int, totalPixelsY:Int, pixelSize:CGFloat) -> SKTexture
+    {
+        var pixelFrame:CGRect = CGRect(x: 0, y: 0, width: pixelSize, height: pixelSize);
+        var pixelOn:CGImageRef = UIImage(named:"PixelOn")!.CGImage;
+        
+        UIGraphicsBeginImageContext(size);
+        var context:CGContextRef = UIGraphicsGetCurrentContext();
+        var pnt:CGPoint!;
+        var rect:CGRect!;
+        for(var x:Int = 0; x < totalPixelsX; x += totalPixelsX - 1)
+        {
+            for(var y:Int = 0; y < totalPixelsY; y++)
+            {
+                
+                pnt = CGPoint(x: pixelSize * x.floatValue, y:pixelSize * y.floatValue);
+                rect = CGRect(origin: pnt, size: CGSize(width: pixelSize, height: pixelSize));
+                CGContextDrawImage(context, rect, pixelOn);
+                
+                y++;
+                
+                pnt = CGPoint(x: pixelSize * x.floatValue, y:pixelSize * y.floatValue);
+                rect = CGRect(origin: pnt, size: CGSize(width: pixelSize, height: pixelSize));
+                CGContextDrawImage(context, rect, pixelOn);
+                
+                y++;
+                
+            }
+        }
+        
+        var tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        var tempTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage);
+        tempTexture.filteringMode = SKTextureFilteringMode.Nearest;
+        
+        return tempTexture;
     }
     
     class func printFontNames()

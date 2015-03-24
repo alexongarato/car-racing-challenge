@@ -43,6 +43,7 @@ class MenuView: AbstractView
         self.title.textAlignment = NSTextAlignment.Center;
         self.title.backgroundColor = UIColor.clearColor();
         self.title.sizeToFit();
+        self.title.width = self.width - 10;
         self.title.center = self.center;
         self.title.y = self.center.y - (self.height * 0.4);
     }
@@ -54,6 +55,7 @@ class MenuView: AbstractView
         self.desc.textAlignment = NSTextAlignment.Center;
         self.desc.backgroundColor = UIColor.clearColor();
         self.desc.sizeToFit();
+        self.desc.width = self.width - 10;
         self.desc.center = self.center;
     }
     
@@ -61,7 +63,9 @@ class MenuView: AbstractView
     {
         self.action.text = text;
         self.action.font = Fonts.Digital7Italic(FontSize.Medium);
+        self.action.textAlignment = NSTextAlignment.Center;
         self.action.sizeToFit();
+        self.action.width = self.width - 10;
         self.action.center = self.center;
         self.action.y = self.center.y + (self.height * 0.3);
         self.action.addTarget(target, selector: selector);

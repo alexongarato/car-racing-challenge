@@ -64,7 +64,7 @@ class GameCenterController
             if (localPlayer.authenticated)
             {
                 // Enable Game Center Functionality
-                setReadyStatus(true);
+                self.setReadyStatus(true);
                 currentPlayerID = localPlayer.playerID;
                 
                 Trace.log("GameCenterController -> user authenticated (\(currentPlayerID))");
