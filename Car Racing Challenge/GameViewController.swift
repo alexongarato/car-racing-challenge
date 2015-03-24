@@ -56,7 +56,10 @@ class GameViewController: UIViewController
         
         //
         scene.build();
+        
         showMenu("car racing\nchallenge", desc: "limitless score!\nHow far can you go?", action: "PRESS TO START", selector: Selector("startGame"));
+        
+        AudioHelper.playSound(AudioHelper.EntranceSound);
     }
     
     func showMenu(msg:String, desc:String, action:String, selector:Selector)
@@ -70,6 +73,8 @@ class GameViewController: UIViewController
         menuView.setDescription(desc);
         menuView.setAction(action, target: self, selector: selector);
         menuView.present(nil);
+        
+        AudioHelper.playSound(AudioHelper.MenuOpenSound);
     }
     
     func gameStatusUpdateHandler()
@@ -94,6 +99,8 @@ class GameViewController: UIViewController
         }
         
         self.menuView.dismiss(complete);
+        
+        AudioHelper.playSound(AudioHelper.SelectSound);
     }
     
     func restartGame()
@@ -115,6 +122,8 @@ class GameViewController: UIViewController
         }
         
         self.menuView.dismiss(complete);
+        
+        AudioHelper.playSound(AudioHelper.StartGameSound);
     }
     
     func gameOverHandler()
@@ -127,6 +136,8 @@ class GameViewController: UIViewController
         
         scene.stop();
         showMenu("\nGAME OVER", desc: "current SCORE: \(scene.currentScore())\n\nBEST SCORE EVER:\(self.bestScoreEver)", action: "TRY AGAIN", selector: Selector("restartGame"));
+        
+        AudioHelper.playSound(AudioHelper.GameOverSound);
     }
     
     func levelUpHandler()
@@ -150,6 +161,7 @@ class GameViewController: UIViewController
             scene.setTotalColumns(scene.currentColumns() - 1);
         }
         
+        AudioHelper.playSound(AudioHelper.LevelUpSound);
     }
     
     func resumeLevelUp()

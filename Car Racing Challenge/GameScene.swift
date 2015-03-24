@@ -25,7 +25,8 @@ class GameScene: SKScene
     private var totalColumns            : Int = -1;
     private var totalScoreCounter       : Int = 0;
     private var currentScoreCounter     : Int = 0;
-    private var lifesCounter            : Int = -1;
+    private var totalLifesCounter       : Int = -1;
+    private var currentLifeCounter      : Int = 0;
     private var defaultTotalLifes       : Int = 1;
     private var ready                   : Bool = false;
     private var builded                 : Bool = false;
@@ -37,11 +38,13 @@ class GameScene: SKScene
     private var sidesNode               : SKSpriteNode!;
     private var sideNodeFlag            : Bool = false;
     private var sideNodeVelCounter      : CFTimeInterval = 0;
+    private var currentVelSound         : Float = 0;
     
     //-- configs --
-    private let maximunColumns          : Int = 7;
-    private let minimumColumns          : Int = 3;
-    private let scoreToLevelUp          : Int = 2;
+    private let scoreToLevelUp          : Int = 300;
+    private var scoreToEarnLife         : Int = 100;
+    private let maximunColumns          : Int = 6;
+    private let minimumColumns          : Int = 4;
     private let IDBtLeft                : String = "bt_left";
     private let IDBtRight               : String = "bt_right";
     private let intervalBetweenLevels   : CFTimeInterval = 0.01;
@@ -78,7 +81,7 @@ class GameScene: SKScene
     
     func currentLifes() -> Int
     {
-        return self.lifesCounter;
+        return self.totalLifesCounter;
     }
     
     func currentLevel() -> Int
@@ -101,12 +104,14 @@ class GameScene: SKScene
         self.removeAllChildren();
         self.sidesNode = nil;
         self.size = self.defaultFrame.size;
+        self.currentVelSound = 0;
+        AudioHelper.stopSound(AudioHelper.Vel4Sound);
         
         /**
         inicializar variaveis
         */
         self.totalColumns               = self.totalColumns == -1 ? self.maximunColumns : self.totalColumns;
-        self.lifesCounter               = self.defaultTotalLifes;
+        self.totalLifesCounter               = self.defaultTotalLifes;
         var totalPixelsX:Int            = Int((self.totalColumns * 3) + 2);
         self.enemiesArray               = Array<CustomSpriteNode>();
         self.pixelSize                  = CGFloat(self.size.width / totalPixelsX.floatValue);
@@ -180,12 +185,12 @@ class GameScene: SKScene
                     
                     y++;
                     
-//                    tempPixel = UIImageView(image: UIImage(named: "PixelOn")?.imageScaled(fitToWidth: self.pixelSize));
-//                    tempPixel.frame.origin.x = self.pixelSize * x.floatValue;
-//                    tempPixel.frame.origin.y = self.pixelSize * y.floatValue;
-//                    tempContent.addSubview(tempPixel);
-//                    
-//                    y++;
+                    tempPixel = UIImageView(image: UIImage(named: "PixelOn")?.imageScaled(fitToWidth: self.pixelSize));
+                    tempPixel.frame.origin.x = self.pixelSize * x.floatValue;
+                    tempPixel.frame.origin.y = self.pixelSize * y.floatValue;
+                    tempContent.addSubview(tempPixel);
+                    
+                    y++;
                 
             }
         }
@@ -259,7 +264,7 @@ class GameScene: SKScene
     func reset()
     {
         self.totalColumns = -1;
-        self.lifesCounter = self.defaultTotalLifes;
+        self.totalLifesCounter = self.defaultTotalLifes;
         self.ready = false;
         self.builded = false;
         self.pixelDistanceCounter = -1;
@@ -275,6 +280,7 @@ class GameScene: SKScene
 //        self.builded = false;
         self.ready = false;
         self.paused = true;
+        AudioHelper.stopSound(AudioHelper.Vel4Sound);
     }
     
     func start()
@@ -284,6 +290,8 @@ class GameScene: SKScene
             Trace.error("GAME IS NOT READY!");
             return;
         }
+        
+        AudioHelper.playSound("vel_\(Int(self.currentVelSound)).wav");
         
         self.ready = true;
         self.paused = false;
@@ -316,6 +324,11 @@ class GameScene: SKScene
         
         if(currentTime >= loopsTimeCounter)
         {
+            if(self.currentVelSound < 4)
+            {
+                self.currentVelSound += 0.5;
+                AudioHelper.playSound("vel_\(Int(self.currentVelSound)).wav");
+            }
             //-----------
             loopsTimeCounter = currentTime + intervalBetweenLoops;
             //-----------
@@ -334,7 +347,6 @@ class GameScene: SKScene
                 */
                 enemyBlock.y -= pixelSize;
                 
-                
                 /**
                 quando o inimigo sai da tela. end of life.
                 */
@@ -344,6 +356,15 @@ class GameScene: SKScene
                     {
                         self.totalScoreCounter++;
                         self.currentScoreCounter++;
+                        self.currentLifeCounter++;
+                        
+                        if(self.currentLifeCounter >= self.scoreToEarnLife)
+                        {
+                            self.currentLifeCounter = 0;
+                            self.totalLifesCounter++;
+                            AudioHelper.playSound(AudioHelper.PickupCoinSound);
+                        }
+                        
                         if(self.currentScoreCounter >= self.scoreToLevelUp)
                         {
                             self.currentScoreCounter = 0;
@@ -360,10 +381,6 @@ class GameScene: SKScene
                     self.updateStatusHandler();
                 }
             }
-        }
-        else
-        {
-            
         }
         
         for enemyBlock in enemiesArray
@@ -385,10 +402,11 @@ class GameScene: SKScene
                     /**
                     atualizacao das variaveis do jogo
                     */
-                    lifesCounter--;
+                    totalLifesCounter--;
                     self.updateStatusHandler();
-                    if(lifesCounter <= 0)
+                    if(totalLifesCounter <= 0)
                     {
+                        AudioHelper.stopSound(AudioHelper.Vel4Sound);
                         self.gameOverHandler();
                     }
                 }
@@ -415,6 +433,8 @@ class GameScene: SKScene
             var node:SKNode = self.nodeAtPoint(location);
             if(node.name == self.IDBtLeft)
             {
+                AudioHelper.playSound(AudioHelper.SelectSound);
+                
                 self.currentMainCharColumn--;
                 if(self.currentMainCharColumn < 0)
                 {
@@ -424,6 +444,8 @@ class GameScene: SKScene
             
             if(node.name == self.IDBtRight)
             {
+                AudioHelper.playSound(AudioHelper.SelectSound);
+                
                 self.currentMainCharColumn++;
                 if(self.currentMainCharColumn > self.totalColumns - 1)
                 {

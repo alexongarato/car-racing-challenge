@@ -11,26 +11,41 @@
 		DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84401AAD338D0009E321 /* GameScene.swift */; };
 		DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84421AAD338D0009E321 /* GameViewController.swift */; };
 		DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB2E84471AAD338D0009E321 /* Images.xcassets */; };
-		DB384BF61AC0D83E00C2BB32 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = DB384BF51AC0D83E00C2BB32 /* Sounds */; };
-		DB4028781ABCA9C600263C3D /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4028771ABCA9C600263C3D /* Configs.swift */; };
-		DB40287A1ABCAEAB00263C3D /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4028791ABCAEAB00263C3D /* Trace.swift */; };
-		DB480D111AAE83C7001695E1 /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB480D101AAE83C7001695E1 /* SKExtensions.swift */; };
+		DB384C071AC0D86C00C2BB32 /* Blip_Select.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BF91AC0D86C00C2BB32 /* Blip_Select.wav */; };
+		DB384C081AC0D86C00C2BB32 /* entrance.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFA1AC0D86C00C2BB32 /* entrance.wav */; };
+		DB384C091AC0D86C00C2BB32 /* entrance2.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFB1AC0D86C00C2BB32 /* entrance2.wav */; };
+		DB384C0A1AC0D86C00C2BB32 /* Explosion2.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFC1AC0D86C00C2BB32 /* Explosion2.wav */; };
+		DB384C0B1AC0D86C00C2BB32 /* level_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFD1AC0D86C00C2BB32 /* level_up.wav */; };
+		DB384C0C1AC0D86C00C2BB32 /* pato.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFE1AC0D86C00C2BB32 /* pato.wav */; };
+		DB384C0D1AC0D86C00C2BB32 /* Pickup_Coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFF1AC0D86C00C2BB32 /* Pickup_Coin.wav */; };
+		DB384C0E1AC0D86C00C2BB32 /* Randomize.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C001AC0D86C00C2BB32 /* Randomize.wav */; };
+		DB384C0F1AC0D86C00C2BB32 /* menu_open.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C011AC0D86C00C2BB32 /* menu_open.wav */; };
+		DB384C101AC0D86C00C2BB32 /* vel_0.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C021AC0D86C00C2BB32 /* vel_0.wav */; };
+		DB384C111AC0D86C00C2BB32 /* vel_1.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C031AC0D86C00C2BB32 /* vel_1.wav */; };
+		DB384C121AC0D86C00C2BB32 /* vel_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C041AC0D86C00C2BB32 /* vel_2.wav */; };
+		DB384C131AC0D86C00C2BB32 /* vel_3.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C051AC0D86C00C2BB32 /* vel_3.wav */; };
+		DB384C141AC0D86C00C2BB32 /* vel_4.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C061AC0D86C00C2BB32 /* vel_4.wav */; };
+		DB384C211AC0D90E00C2BB32 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C171AC0D90E00C2BB32 /* Animation.swift */; };
+		DB384C221AC0D90E00C2BB32 /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C181AC0D90E00C2BB32 /* Configs.swift */; };
+		DB384C231AC0D90E00C2BB32 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C191AC0D90E00C2BB32 /* DataProvider.swift */; };
+		DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1A1AC0D90E00C2BB32 /* Extensions.swift */; };
+		DB384C251AC0D90E00C2BB32 /* GameCenterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */; };
+		DB384C261AC0D90E00C2BB32 /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1C1AC0D90E00C2BB32 /* SKExtensions.swift */; };
+		DB384C271AC0D90E00C2BB32 /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1D1AC0D90E00C2BB32 /* Trace.swift */; };
+		DB384C281AC0D90E00C2BB32 /* UICustomDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */; };
+		DB384C291AC0D90E00C2BB32 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */; };
+		DB384C2A1AC0D90E00C2BB32 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C201AC0D90E00C2BB32 /* Utils.swift */; };
+		DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */; };
+		DB384C341AC0DA3500C2BB32 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */; };
 		DB525E771ABDEF5F00959D26 /* digital_7_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E731ABDEF5F00959D26 /* digital_7_italic.ttf */; };
 		DB525E781ABDEF5F00959D26 /* digital_7_mono_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E741ABDEF5F00959D26 /* digital_7_mono_italic.ttf */; };
 		DB525E791ABDEF5F00959D26 /* digital_7_mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E751ABDEF5F00959D26 /* digital_7_mono.ttf */; };
 		DB525E7A1ABDEF5F00959D26 /* digital_7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E761ABDEF5F00959D26 /* digital_7.ttf */; };
 		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
 		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
-		DB525E891ABDF9DB00959D26 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E881ABDF9DB00959D26 /* UIExtensions.swift */; };
-		DB525E8B1ABDF9F600959D26 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E8A1ABDF9F600959D26 /* Extensions.swift */; };
-		DB525E8D1ABDFAC300959D26 /* UICustomDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E8C1ABDFAC300959D26 /* UICustomDevice.swift */; };
-		DB525E8F1ABE015D00959D26 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E8E1ABE015D00959D26 /* Animation.swift */; };
-		DB54AA181AB7F63D00E57FF5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB54AA171AB7F63D00E57FF5 /* Utils.swift */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
-		DBB20A491ABE2E590050AA36 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A481ABE2E590050AA36 /* DataProvider.swift */; };
 		DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */; };
 		DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */; };
-		DBB20A501ABE5D900050AA36 /* GameCenterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4F1ABE5D900050AA36 /* GameCenterController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,29 +55,42 @@
 		DB2E84401AAD338D0009E321 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		DB2E84421AAD338D0009E321 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		DB2E84471AAD338D0009E321 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		DB2E84551AAD338E0009E321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DB2E84561AAD338E0009E321 /* Car_Racing_ChallengeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car_Racing_ChallengeTests.swift; sourceTree = "<group>"; };
-		DB384BF51AC0D83E00C2BB32 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
-		DB4028771ABCA9C600263C3D /* Configs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configs.swift; sourceTree = "<group>"; };
-		DB4028791ABCAEAB00263C3D /* Trace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trace.swift; sourceTree = "<group>"; };
-		DB480D101AAE83C7001695E1 /* SKExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKExtensions.swift; sourceTree = "<group>"; };
+		DB384BF91AC0D86C00C2BB32 /* Blip_Select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Blip_Select.wav; path = Sounds/Blip_Select.wav; sourceTree = "<group>"; };
+		DB384BFA1AC0D86C00C2BB32 /* entrance.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = entrance.wav; path = Sounds/entrance.wav; sourceTree = "<group>"; };
+		DB384BFB1AC0D86C00C2BB32 /* entrance2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = entrance2.wav; path = Sounds/entrance2.wav; sourceTree = "<group>"; };
+		DB384BFC1AC0D86C00C2BB32 /* Explosion2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Explosion2.wav; path = Sounds/Explosion2.wav; sourceTree = "<group>"; };
+		DB384BFD1AC0D86C00C2BB32 /* level_up.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = level_up.wav; path = Sounds/level_up.wav; sourceTree = "<group>"; };
+		DB384BFE1AC0D86C00C2BB32 /* pato.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pato.wav; path = Sounds/pato.wav; sourceTree = "<group>"; };
+		DB384BFF1AC0D86C00C2BB32 /* Pickup_Coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Pickup_Coin.wav; path = Sounds/Pickup_Coin.wav; sourceTree = "<group>"; };
+		DB384C001AC0D86C00C2BB32 /* Randomize.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Randomize.wav; path = Sounds/Randomize.wav; sourceTree = "<group>"; };
+		DB384C011AC0D86C00C2BB32 /* menu_open.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = menu_open.wav; path = Sounds/menu_open.wav; sourceTree = "<group>"; };
+		DB384C021AC0D86C00C2BB32 /* vel_0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = vel_0.wav; path = Sounds/vel_0.wav; sourceTree = "<group>"; };
+		DB384C031AC0D86C00C2BB32 /* vel_1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = vel_1.wav; path = Sounds/vel_1.wav; sourceTree = "<group>"; };
+		DB384C041AC0D86C00C2BB32 /* vel_2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = vel_2.wav; path = Sounds/vel_2.wav; sourceTree = "<group>"; };
+		DB384C051AC0D86C00C2BB32 /* vel_3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = vel_3.wav; path = Sounds/vel_3.wav; sourceTree = "<group>"; };
+		DB384C061AC0D86C00C2BB32 /* vel_4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = vel_4.wav; path = Sounds/vel_4.wav; sourceTree = "<group>"; };
+		DB384C171AC0D90E00C2BB32 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Animation.swift; path = Extensions/Animation.swift; sourceTree = "<group>"; };
+		DB384C181AC0D90E00C2BB32 /* Configs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configs.swift; path = Extensions/Configs.swift; sourceTree = "<group>"; };
+		DB384C191AC0D90E00C2BB32 /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataProvider.swift; path = Extensions/DataProvider.swift; sourceTree = "<group>"; };
+		DB384C1A1AC0D90E00C2BB32 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Extensions/Extensions.swift; sourceTree = "<group>"; };
+		DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameCenterController.swift; path = Extensions/GameCenterController.swift; sourceTree = "<group>"; };
+		DB384C1C1AC0D90E00C2BB32 /* SKExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SKExtensions.swift; path = Extensions/SKExtensions.swift; sourceTree = "<group>"; };
+		DB384C1D1AC0D90E00C2BB32 /* Trace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Trace.swift; path = Extensions/Trace.swift; sourceTree = "<group>"; };
+		DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UICustomDevice.swift; path = Extensions/UICustomDevice.swift; sourceTree = "<group>"; };
+		DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIExtensions.swift; path = Extensions/UIExtensions.swift; sourceTree = "<group>"; };
+		DB384C201AC0D90E00C2BB32 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Extensions/Utils.swift; sourceTree = "<group>"; };
+		DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHelper.swift; sourceTree = "<group>"; };
+		DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DB525E731ABDEF5F00959D26 /* digital_7_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7_italic.ttf; path = Fonts/digital_7_italic.ttf; sourceTree = "<group>"; };
 		DB525E741ABDEF5F00959D26 /* digital_7_mono_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7_mono_italic.ttf; path = Fonts/digital_7_mono_italic.ttf; sourceTree = "<group>"; };
 		DB525E751ABDEF5F00959D26 /* digital_7_mono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7_mono.ttf; path = Fonts/digital_7_mono.ttf; sourceTree = "<group>"; };
 		DB525E761ABDEF5F00959D26 /* digital_7.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7.ttf; path = Fonts/digital_7.ttf; sourceTree = "<group>"; };
 		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
 		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
-		DB525E881ABDF9DB00959D26 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
-		DB525E8A1ABDF9F600959D26 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		DB525E8C1ABDFAC300959D26 /* UICustomDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICustomDevice.swift; sourceTree = "<group>"; };
-		DB525E8E1ABE015D00959D26 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
-		DB54AA171AB7F63D00E57FF5 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		DBB20A481ABE2E590050AA36 /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatusView.swift; sourceTree = "<group>"; };
 		DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		DBB20A4E1ABE5C060050AA36 /* Car Racing Challenge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Car Racing Challenge.entitlements"; sourceTree = "<group>"; };
-		DBB20A4F1ABE5D900050AA36 /* GameCenterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameCenterController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */,
+				DB384C341AC0DA3500C2BB32 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,10 +109,7 @@
 		DB2E842E1AAD338D0009E321 = {
 			isa = PBXGroup;
 			children = (
-				DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */,
-				DB480D0F1AAE83C7001695E1 /* Extensions */,
 				DB2E84391AAD338D0009E321 /* Car Racing Challenge */,
-				DB2E84531AAD338E0009E321 /* Car Racing ChallengeTests */,
 				DB2E84381AAD338D0009E321 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,7 +125,7 @@
 		DB2E84391AAD338D0009E321 /* Car Racing Challenge */ = {
 			isa = PBXGroup;
 			children = (
-				DB384BF51AC0D83E00C2BB32 /* Sounds */,
+				DB384C161AC0D90500C2BB32 /* Extensions */,
 				DBB20A4E1ABE5C060050AA36 /* Car Racing Challenge.entitlements */,
 				DB6FF61C1ABD272700F7B073 /* Main.storyboard */,
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
@@ -108,8 +134,10 @@
 				DB525E801ABDF69900959D26 /* MenuView.swift */,
 				DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */,
 				DB2E84471AAD338D0009E321 /* Images.xcassets */,
+				DB384BF81AC0D86000C2BB32 /* Sounds */,
 				DB525E721ABDEF5500959D26 /* Fonts */,
 				DB525E7B1ABDEFDC00959D26 /* Constants */,
+				DB384C151AC0D87F00C2BB32 /* Libs */,
 				DB2E843A1AAD338D0009E321 /* Supporting Files */,
 			);
 			path = "Car Racing Challenge";
@@ -123,39 +151,53 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		DB2E84531AAD338E0009E321 /* Car Racing ChallengeTests */ = {
+		DB384BF81AC0D86000C2BB32 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				DB2E84561AAD338E0009E321 /* Car_Racing_ChallengeTests.swift */,
-				DB2E84541AAD338E0009E321 /* Supporting Files */,
+				DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */,
+				DB384BF91AC0D86C00C2BB32 /* Blip_Select.wav */,
+				DB384BFA1AC0D86C00C2BB32 /* entrance.wav */,
+				DB384BFB1AC0D86C00C2BB32 /* entrance2.wav */,
+				DB384BFC1AC0D86C00C2BB32 /* Explosion2.wav */,
+				DB384BFD1AC0D86C00C2BB32 /* level_up.wav */,
+				DB384BFE1AC0D86C00C2BB32 /* pato.wav */,
+				DB384BFF1AC0D86C00C2BB32 /* Pickup_Coin.wav */,
+				DB384C001AC0D86C00C2BB32 /* Randomize.wav */,
+				DB384C011AC0D86C00C2BB32 /* menu_open.wav */,
+				DB384C021AC0D86C00C2BB32 /* vel_0.wav */,
+				DB384C031AC0D86C00C2BB32 /* vel_1.wav */,
+				DB384C041AC0D86C00C2BB32 /* vel_2.wav */,
+				DB384C051AC0D86C00C2BB32 /* vel_3.wav */,
+				DB384C061AC0D86C00C2BB32 /* vel_4.wav */,
 			);
-			path = "Car Racing ChallengeTests";
+			name = Sounds;
 			sourceTree = "<group>";
 		};
-		DB2E84541AAD338E0009E321 /* Supporting Files */ = {
+		DB384C151AC0D87F00C2BB32 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				DB2E84551AAD338E0009E321 /* Info.plist */,
+				DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */,
+				DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */,
 			);
-			name = "Supporting Files";
+			name = Libs;
+			path = ..;
 			sourceTree = "<group>";
 		};
-		DB480D0F1AAE83C7001695E1 /* Extensions */ = {
+		DB384C161AC0D90500C2BB32 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DBB20A481ABE2E590050AA36 /* DataProvider.swift */,
-				DB525E8A1ABDF9F600959D26 /* Extensions.swift */,
-				DB480D101AAE83C7001695E1 /* SKExtensions.swift */,
-				DB525E881ABDF9DB00959D26 /* UIExtensions.swift */,
-				DB525E8C1ABDFAC300959D26 /* UICustomDevice.swift */,
-				DB54AA171AB7F63D00E57FF5 /* Utils.swift */,
-				DB4028771ABCA9C600263C3D /* Configs.swift */,
-				DB4028791ABCAEAB00263C3D /* Trace.swift */,
-				DB525E8E1ABE015D00959D26 /* Animation.swift */,
-				DBB20A4F1ABE5D900050AA36 /* GameCenterController.swift */,
+				DB384C171AC0D90E00C2BB32 /* Animation.swift */,
+				DB384C181AC0D90E00C2BB32 /* Configs.swift */,
+				DB384C191AC0D90E00C2BB32 /* DataProvider.swift */,
+				DB384C1A1AC0D90E00C2BB32 /* Extensions.swift */,
+				DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */,
+				DB384C1C1AC0D90E00C2BB32 /* SKExtensions.swift */,
+				DB384C1D1AC0D90E00C2BB32 /* Trace.swift */,
+				DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */,
+				DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */,
+				DB384C201AC0D90E00C2BB32 /* Utils.swift */,
 			);
 			name = Extensions;
-			path = "Car Racing Challenge/Extensions";
 			sourceTree = "<group>";
 		};
 		DB525E721ABDEF5500959D26 /* Fonts */ = {
@@ -245,13 +287,26 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB384C0C1AC0D86C00C2BB32 /* pato.wav in Resources */,
+				DB384C0B1AC0D86C00C2BB32 /* level_up.wav in Resources */,
+				DB384C081AC0D86C00C2BB32 /* entrance.wav in Resources */,
 				DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */,
+				DB384C121AC0D86C00C2BB32 /* vel_2.wav in Resources */,
+				DB384C111AC0D86C00C2BB32 /* vel_1.wav in Resources */,
 				DB525E7A1ABDEF5F00959D26 /* digital_7.ttf in Resources */,
 				DB525E791ABDEF5F00959D26 /* digital_7_mono.ttf in Resources */,
 				DB525E771ABDEF5F00959D26 /* digital_7_italic.ttf in Resources */,
+				DB384C091AC0D86C00C2BB32 /* entrance2.wav in Resources */,
 				DB525E781ABDEF5F00959D26 /* digital_7_mono_italic.ttf in Resources */,
+				DB384C071AC0D86C00C2BB32 /* Blip_Select.wav in Resources */,
+				DB384C141AC0D86C00C2BB32 /* vel_4.wav in Resources */,
+				DB384C0E1AC0D86C00C2BB32 /* Randomize.wav in Resources */,
+				DB384C0F1AC0D86C00C2BB32 /* menu_open.wav in Resources */,
+				DB384C101AC0D86C00C2BB32 /* vel_0.wav in Resources */,
 				DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */,
-				DB384BF61AC0D83E00C2BB32 /* Sounds in Resources */,
+				DB384C131AC0D86C00C2BB32 /* vel_3.wav in Resources */,
+				DB384C0D1AC0D86C00C2BB32 /* Pickup_Coin.wav in Resources */,
+				DB384C0A1AC0D86C00C2BB32 /* Explosion2.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,22 +333,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB384C281AC0D90E00C2BB32 /* UICustomDevice.swift in Sources */,
 				DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */,
-				DB525E8D1ABDFAC300959D26 /* UICustomDevice.swift in Sources */,
+				DB384C271AC0D90E00C2BB32 /* Trace.swift in Sources */,
+				DB384C291AC0D90E00C2BB32 /* UIExtensions.swift in Sources */,
+				DB384C221AC0D90E00C2BB32 /* Configs.swift in Sources */,
+				DB384C251AC0D90E00C2BB32 /* GameCenterController.swift in Sources */,
 				DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */,
-				DBB20A491ABE2E590050AA36 /* DataProvider.swift in Sources */,
-				DBB20A501ABE5D900050AA36 /* GameCenterController.swift in Sources */,
-				DB54AA181AB7F63D00E57FF5 /* Utils.swift in Sources */,
-				DB525E891ABDF9DB00959D26 /* UIExtensions.swift in Sources */,
+				DB384C2A1AC0D90E00C2BB32 /* Utils.swift in Sources */,
 				DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */,
 				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
+				DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */,
+				DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */,
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
-				DB40287A1ABCAEAB00263C3D /* Trace.swift in Sources */,
-				DB525E8B1ABDF9F600959D26 /* Extensions.swift in Sources */,
+				DB384C231AC0D90E00C2BB32 /* DataProvider.swift in Sources */,
+				DB384C211AC0D90E00C2BB32 /* Animation.swift in Sources */,
 				DB525E811ABDF69900959D26 /* MenuView.swift in Sources */,
-				DB480D111AAE83C7001695E1 /* SKExtensions.swift in Sources */,
-				DB525E8F1ABE015D00959D26 /* Animation.swift in Sources */,
-				DB4028781ABCA9C600263C3D /* Configs.swift in Sources */,
+				DB384C261AC0D90E00C2BB32 /* SKExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
