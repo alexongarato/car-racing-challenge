@@ -35,7 +35,7 @@ class GameCenterController
         return isGameCenterAuthenticationComplete;
     }
     
-    class func start()
+    class func authenticate(callback:(()->Void!)!)
     {
         localPlayer = GKLocalPlayer.localPlayer();
         setReadyStatus(false);
@@ -61,11 +61,21 @@ class GameCenterController
             Trace.log("GameCenterController -> auth complete.");
             
             // If there is an error, do not assume local player is not authenticated.
-            if (localPlayer.authenticated)
+            if (view != nil)
+            {
+                //showAuthenticationDialogWhenReasonable: is an example method name. Create your own method that displays an authentication view when appropriate for your app.
+                (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.showViewController(view, sender: nil);
+            }
+            else if (localPlayer.authenticated)
             {
                 // Enable Game Center Functionality
                 self.setReadyStatus(true);
                 currentPlayerID = localPlayer.playerID;
+                
+                if(callback != nil)
+                {
+                    callback();
+                }
                 
                 Trace.log("GameCenterController -> user authenticated (\(currentPlayerID))");
             }
@@ -77,5 +87,29 @@ class GameCenterController
         
         Trace.log("GameCenterController -> authenticating...")
         localPlayer.authenticateHandler = handler;
+    }
+    
+    class func loadLeaderboardInfo()
+    {
+        func completion(leaderboards:[AnyObject]!, error:NSError!)
+        {
+            
+        }
+        
+        GKLeaderboard.loadLeaderboardsWithCompletionHandler(completion);
+    }
+    
+    class func reportScore(score:Int)
+    {
+        var scoreReporter:GKScore = GKScore(leaderboardIdentifier: "car_racing_challenge");
+        scoreReporter.value = Int64(score);
+        scoreReporter.context = 0;
+        
+        func completion(error:NSError!)
+        {
+            Trace.log("score reported:\(score)");
+        }
+        
+        GKScore.reportScores([scoreReporter], withCompletionHandler: completion);
     }
 }

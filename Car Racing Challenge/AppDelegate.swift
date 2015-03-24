@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     {
 //        Utils.printFontNames();
         DataProvider.applicationDidLaunch();
-        GameCenterController.start();
+        GameCenterController.authenticate(nil);
         AudioHelper.start();
         return true;
     }

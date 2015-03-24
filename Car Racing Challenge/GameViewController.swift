@@ -144,6 +144,14 @@ class GameViewController: UIViewController
         {
             self.bestScoreEver = scene.currentScore();
             DataProvider.saveData(SuiteNames.GameBestScoreSuite, key: SuiteNames.GameBestScoreKey, string: "\(self.bestScoreEver)");
+            if(!GameCenterController.isReady())
+            {
+                GameCenterController.authenticate({ GameCenterController.reportScore(self.bestScoreEver); });
+            }
+            else
+            {
+                GameCenterController.reportScore(self.bestScoreEver);
+            }
         }
         
         scene.stop();
