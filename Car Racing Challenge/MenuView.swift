@@ -31,13 +31,13 @@ class MenuView: AbstractView
         self.desc.textColor = fontColor;
         self.addSubview(self.desc);
         self.desc.editable = false;
-        self.desc.layer.borderWidth = 1;
+//        self.desc.layer.borderWidth = 1;
         
         self.instructs = UITextView();
         self.instructs.textColor = fontColor;
         self.addSubview(self.instructs);
         self.instructs.editable = false;
-        self.instructs.layer.borderWidth = 1;
+//        self.instructs.layer.borderWidth = 1;
         
         self.action = UILabel();
         self.action.textColor = fontColor;
@@ -66,7 +66,7 @@ class MenuView: AbstractView
         self.desc.width = self.width - 10;
         self.desc.center = self.center;
         
-        self.instructs.text = "instructions\nscore \(scoreToLifeUp) = 1 life each\nscore \(scoreToLevelUp) = level up";
+        self.instructs.text = "-instructions-\nscore \(scoreToLifeUp) = life up\nscore \(scoreToLevelUp) = level up";
         self.instructs.font = Fonts.Digital7Italic(FontSize.Small);
         self.instructs.textAlignment = NSTextAlignment.Center;
         self.instructs.backgroundColor = UIColor.clearColor();

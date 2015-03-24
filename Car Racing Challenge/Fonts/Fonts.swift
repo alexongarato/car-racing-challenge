@@ -26,7 +26,7 @@ struct FontSize
     /**
     15px
     */
-    static var Small        : CGFloat = 15;
+    static var Small        : CGFloat = 13;
     /** 
     20px 
     */
