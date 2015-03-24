@@ -55,9 +55,14 @@ class GameScene: SKScene
         return self.currentLifeCounter;
     }
     
-    func currentScoreToLevelUp() -> Int
+    func levelUpScore() -> Int
     {
         return self.scoreToLevelUp;
+    }
+    
+    func lifeUpScore() -> Int
+    {
+        return self.scoreToEarnLife;
     }
     
     func currentColumns() -> Int

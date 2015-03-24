@@ -74,7 +74,7 @@ class GameViewController: UIViewController
         menuView.animationStyle = AnimationStyle.Scale;
         self.view.addSubview(menuView);
         menuView.setTitle(msg);
-        menuView.setDescription(desc);
+        menuView.setDescription(desc, scoreToLifeUp: self.scene.lifeUpScore(), scoreToLevelUp: self.scene.levelUpScore());
         menuView.setAction(action, target: self, selector: selector);
         menuView.present(nil);
         
@@ -85,7 +85,7 @@ class GameViewController: UIViewController
     {
         self.statusView.update(self.scene.currentLevel(),
             score: self.scene.currentScore(),
-            nextScore: self.scene.currentScoreToLevelUp(),
+            nextScore: self.scene.levelUpScore(),
             lifes:scene.currentLifes(),
             scoreNextLife:self.scene.currentScoreToNextLife());
     }
@@ -155,11 +155,11 @@ class GameViewController: UIViewController
         var desc:String!;
         if(scene.currentLevel() <= scene.maximunLevel())
         {
-            desc = "Less cars but more speed.\ndrive carefully!";
+            desc = "congratulations!";
         }
         else if(scene.currentLevel() == scene.maximunLevel() + 1)
         {
-            desc = "you've reached the outside road. \nIt will fit \(self.scene.currentColumns()) cars\nand your car is faster\nthen ever with infinite score and level.\n good luck!";
+            desc = "This is the infinite highest level.\ngood luck!";
         }
         
         if(desc != nil)
