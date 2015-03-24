@@ -11,7 +11,7 @@ import UIKit
 class GameStatusView:AbstractView
 {
     private var scoreField:UILabel!;
-    private var levelField:UILabel!;
+    private var statusField:UILabel!;
     
     override func didMoveToSuperview()
     {
@@ -21,19 +21,12 @@ class GameStatusView:AbstractView
         self.y = -self.height;
         self.backgroundColor = UIColor.whiteColor().alpha(0.3);
         
-        self.levelField = UILabel();
-        self.addSubview(self.levelField);
-        self.levelField.y = 5
-        self.levelField.x = 30;
-        self.levelField.font = Fonts.Digital7Italic(FontSize.Small);
-        self.levelField.textColor = UIColor.blackColor();
-        
-        self.scoreField = UILabel();
-        self.addSubview(self.scoreField);
-        self.scoreField.y = 5;
-        self.scoreField.x = self.center.x;
-        self.scoreField.font = Fonts.Digital7Italic(FontSize.Small);
-        self.scoreField.textColor = UIColor.blackColor();
+        self.statusField = UILabel();
+        self.addSubview(self.statusField);
+        self.statusField.y = 5
+        self.statusField.font = Fonts.Digital7Italic(FontSize.Small);
+        self.statusField.textColor = UIColor.blackColor();
+        self.statusField.textAlignment = NSTextAlignment.Center;
     }
     
     func show()
@@ -52,12 +45,10 @@ class GameStatusView:AbstractView
             }, completion: nil);
     }
     
-    func update(level:Int, score:Int, nextScore:Int)
+    func update(level:Int, score:Int, nextScore:Int, lifes:Int, scoreNextLife:Int)
     {
-        self.levelField.text = "LEVEL: \(level)";
-        self.levelField.sizeToFit();
-        
-        self.scoreField.text = "SCORE: \(score)/\(nextScore * level)";
-        self.scoreField.sizeToFit();
+        self.statusField.text = "LEVEL:\(level)  LIFES:\(lifes)  SCORE:\(score)/\(nextScore * level)";
+        self.statusField.sizeToFit();
+        self.statusField.center.x = self.center.x;
     }
 }

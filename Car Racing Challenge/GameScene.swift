@@ -26,7 +26,7 @@ class GameScene: SKScene
     private var totalScoreCounter       : Int = 0;
     private var currentScoreCounter     : Int = 0;
     private var totalLifesCounter       : Int = -1;
-    private var currentLifeCounter      : Int = 0;
+    private var currentLifeCounter      : Int = -1;
     private var defaultTotalLifes       : Int = 1;
     private var ready                   : Bool = false;
     private var builded                 : Bool = false;
@@ -41,7 +41,7 @@ class GameScene: SKScene
     private var currentVelSound         : Float = 0;
     
     //-- configs --
-    private let scoreToLevelUp          : Int = 300;
+    private let scoreToLevelUp          : Int = 500;
     private var scoreToEarnLife         : Int = 100;
     private let maximunColumns          : Int = 6;
     private let minimumColumns          : Int = 4;
@@ -50,6 +50,10 @@ class GameScene: SKScene
     private let intervalBetweenLevels   : CFTimeInterval = 0.01;
     private let pixelDistanceBtwEnemies : Int = 15;
     
+    func currentScoreToNextLife() -> Int
+    {
+        return self.currentLifeCounter;
+    }
     
     func currentScoreToLevelUp() -> Int
     {
@@ -104,14 +108,13 @@ class GameScene: SKScene
         self.removeAllChildren();
         self.sidesNode = nil;
         self.size = self.defaultFrame.size;
-        self.currentVelSound = 0;
         AudioHelper.stopSound(AudioHelper.Vel4Sound);
         
         /**
         inicializar variaveis
         */
         self.totalColumns               = self.totalColumns == -1 ? self.maximunColumns : self.totalColumns;
-        self.totalLifesCounter               = self.defaultTotalLifes;
+//        self.totalLifesCounter          = self.defaultTotalLifes;
         var totalPixelsX:Int            = Int((self.totalColumns * 3) + 2);
         self.enemiesArray               = Array<CustomSpriteNode>();
         self.pixelSize                  = CGFloat(self.size.width / totalPixelsX.floatValue);
@@ -122,6 +125,8 @@ class GameScene: SKScene
         self.buttonSize.height          = self.pixelSize * 3;
         self.currentMainCharColumn      = self.totalColumns / 2;
         self.pixelDistanceCounter       = self.pixelDistanceBtwEnemies;
+        self.currentVelSound            = 0;
+//        self.currentLifeCounter         = self.scoreToEarnLife;
         
         
         Trace.log("pixelSize:\(self.pixelSize)");
@@ -273,6 +278,7 @@ class GameScene: SKScene
         self.currentLevelCounter = 1;
         self.currentScoreCounter = 0;
         self.totalScoreCounter = 0;
+        self.currentLifeCounter = self.scoreToEarnLife;
     }
     
     func stop()
@@ -356,11 +362,11 @@ class GameScene: SKScene
                     {
                         self.totalScoreCounter++;
                         self.currentScoreCounter++;
-                        self.currentLifeCounter++;
+                        self.currentLifeCounter--;
                         
-                        if(self.currentLifeCounter >= self.scoreToEarnLife)
+                        if(self.currentLifeCounter < 0)
                         {
-                            self.currentLifeCounter = 0;
+                            self.currentLifeCounter = self.scoreToEarnLife;
                             self.totalLifesCounter++;
                             AudioHelper.playSound(AudioHelper.PickupCoinSound);
                         }
@@ -402,11 +408,13 @@ class GameScene: SKScene
                     /**
                     atualizacao das variaveis do jogo
                     */
-                    totalLifesCounter--;
+                    AudioHelper.playSound(AudioHelper.lostLifeSound);
+                    
+                    self.totalLifesCounter--;
                     self.updateStatusHandler();
-                    if(totalLifesCounter <= 0)
+                    if(self.totalLifesCounter < 0)
                     {
-                        AudioHelper.stopSound(AudioHelper.Vel4Sound);
+                        self.totalLifesCounter = 0;
                         self.gameOverHandler();
                     }
                 }

@@ -25,13 +25,14 @@ class AudioHelper
     static var Vel4Sound        : String = "vel_4.wav";
     static var MenuOpenSound    : String = "menu_open.wav";
     static var StartGameSound   : String = "entrance2.wav";
+    static var lostLifeSound    : String = "Randomize.wav";
     
     class func start()
     {
         buildAudio(EntranceSound,   volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(SelectSound,     volume: 0.15, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(GameOverSound,   volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
-        buildAudio(PickupCoinSound, volume: 0.05, timeStart: 0, rate: 1.0, loops: 0);
+        buildAudio(PickupCoinSound, volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(LevelUpSound,    volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(Vel0Sound,       volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(Vel1Sound,       volume: 0.3, timeStart: 0, rate: 1.0, loops: 0);
@@ -40,6 +41,7 @@ class AudioHelper
         buildAudio(Vel4Sound,       volume: 0.05, timeStart: 0, rate: 1.0, loops: -1);
         buildAudio(MenuOpenSound,   volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(StartGameSound,  volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
+        buildAudio(lostLifeSound,   volume: 0.2, timeStart: 0, rate: 1.0, loops: 0);
     }
     
     private class func buildAudio(name:String, volume:Float, timeStart:NSTimeInterval, rate:Float, loops:Int)

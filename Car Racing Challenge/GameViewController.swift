@@ -55,6 +55,7 @@ class GameViewController: UIViewController
         }
         
         //
+        scene.reset();
         scene.build();
         
         showMenu("car racing\nchallenge", desc: "limitless score!\nHow far can you go?", action: "PRESS TO START", selector: Selector("startGame"));
@@ -79,7 +80,11 @@ class GameViewController: UIViewController
     
     func gameStatusUpdateHandler()
     {
-        self.statusView.update(self.scene.currentLevel(), score: self.scene.currentScore(), nextScore: self.scene.currentScoreToLevelUp());
+        self.statusView.update(self.scene.currentLevel(),
+            score: self.scene.currentScore(),
+            nextScore: self.scene.currentScoreToLevelUp(),
+            lifes:scene.currentLifes(),
+            scoreNextLife:self.scene.currentScoreToNextLife());
     }
     
     func startGame()
