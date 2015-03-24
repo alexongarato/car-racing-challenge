@@ -61,12 +61,12 @@ class GameViewController: UIViewController
         scene.reset();
         scene.build();
         
-        showMenu("car racing\nchallenge", desc: "limitless score!\nHow far can you go?", action: "PRESS TO START", selector: Selector("startGame"));
+        showMenu("car racing\nchallenge", desc: "limitless score!\nHow far can you go?", action: "PRESS TO START", selector: Selector("startGame"), showInstructions:true);
         
         AudioHelper.playSound(AudioHelper.EntranceSound);
     }
     
-    func showMenu(msg:String, desc:String, action:String, selector:Selector)
+    func showMenu(msg:String, desc:String, action:String, selector:Selector, showInstructions:Bool = false)
     {
         scene.paused = true;
         statusView.hide();
@@ -74,7 +74,11 @@ class GameViewController: UIViewController
         menuView.animationStyle = AnimationStyle.Scale;
         self.view.addSubview(menuView);
         menuView.setTitle(msg);
-        menuView.setDescription(desc, scoreToLifeUp: self.scene.lifeUpScore(), scoreToLevelUp: self.scene.levelUpScore());
+        menuView.setDescription(desc);
+        if(showInstructions)
+        {
+            menuView.setInstructions(self.scene.lifeUpScore(), scoreToLevelUp: self.scene.levelUpScore());
+        }
         menuView.setAction(action, target: self, selector: selector);
         menuView.present(nil);
         
@@ -143,7 +147,7 @@ class GameViewController: UIViewController
         }
         
         scene.stop();
-        showMenu("\nGAME OVER", desc: "current SCORE: \(scene.currentScore())\n\nBEST SCORE EVER:\(self.bestScoreEver)", action: "TRY AGAIN", selector: Selector("restartGame"));
+        showMenu("\nGAME OVER", desc: "current SCORE: \(scene.currentScore())\nBEST SCORE EVER:\(self.bestScoreEver)", action: "TRY AGAIN", selector: Selector("restartGame"));
         
         AudioHelper.playSound(AudioHelper.GameOverSound);
     }

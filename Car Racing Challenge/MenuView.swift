@@ -56,7 +56,7 @@ class MenuView: AbstractView
         self.title.y = self.center.y - (self.height * 0.4);
     }
     
-    func setDescription(text:String, scoreToLifeUp:Int, scoreToLevelUp:Int)
+    func setDescription(text:String)
     {
         self.desc.text = text;
         self.desc.font = Fonts.Digital7Italic(FontSize.Default);
@@ -65,7 +65,10 @@ class MenuView: AbstractView
         self.desc.sizeToFit();
         self.desc.width = self.width - 10;
         self.desc.center = self.center;
-        
+    }
+    
+    func setInstructions(scoreToLifeUp:Int, scoreToLevelUp:Int)
+    {
         self.instructs.text = "-instructions-\nscore \(scoreToLifeUp) = life up\nscore \(scoreToLevelUp) = level up";
         self.instructs.font = Fonts.Digital7Italic(FontSize.Small);
         self.instructs.textAlignment = NSTextAlignment.Center;
