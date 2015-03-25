@@ -64,11 +64,12 @@ class MenuView: AbstractView
         self.desc.sizeToFit();
         self.desc.width = self.width - 10;
         self.desc.center = self.center;
+        self.desc.y -= 40;
     }
     
     func setInstructions(scoreToLifeUp:Int, scoreToLevelUp:Int)
     {
-        self.instructs.text = "-instructions-\nscore \(scoreToLifeUp) = life up\nscore \(scoreToLevelUp) = level up";
+        self.instructs.text = "-instructions-\n\navoid crashing by moving\nto left or right\n\nscore \(scoreToLifeUp) = life up\nscore \(scoreToLevelUp) = level up\n\n--";
         self.instructs.font = Fonts.Digital7Italic(FontSize.Small);
         self.instructs.textAlignment = NSTextAlignment.Center;
         self.instructs.backgroundColor = UIColor.clearColor();

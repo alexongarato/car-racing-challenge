@@ -43,8 +43,8 @@ class GameScene: SKScene
     //-- configs --
     private let scoreToLevelUp          : Int = 500;
     private var scoreToEarnLife         : Int = 100;
-    private let maximunColumns          : Int = 6;
-    private let minimumColumns          : Int = 4;
+    private let maximunColumns          : Int = 5;
+    private let minimumColumns          : Int = 3;
     private let IDBtLeft                : String = "bt_left";
     private let IDBtRight               : String = "bt_right";
     private let intervalBetweenLevels   : CFTimeInterval = 0.01;
@@ -101,6 +101,15 @@ class GameScene: SKScene
     func maximunLevel() -> Int
     {
         return self.maximunColumns - self.minimumColumns;
+    }
+    
+    func isGamePaused() -> Bool
+    {
+        if let thisView = self.view
+        {
+            return thisView.paused;
+        }
+        return false;
     }
     
     func build()
@@ -236,7 +245,7 @@ class GameScene: SKScene
     {
 //        self.builded = false;
         self.ready = false;
-        self.paused = true;
+        self.view?.paused = true;
         AudioHelper.stopSound(AudioHelper.Vel4Sound);
     }
     
@@ -251,7 +260,7 @@ class GameScene: SKScene
         AudioHelper.playSound("vel_\(Int(self.currentVelSound)).wav");
         
         self.ready = true;
-        self.paused = false;
+        self.view?.paused = false;
         self.updateStatusHandler();
     }
     

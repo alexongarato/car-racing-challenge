@@ -56,6 +56,7 @@ class GameViewController: UIViewController
         {
             self.bestScoreEver = NSInteger(data.floatValue);
             Trace.log("best score restored: \(self.bestScoreEver)");
+            GameCenterController.reportScore(self.bestScoreEver);
         }
         
         //
@@ -69,7 +70,7 @@ class GameViewController: UIViewController
     
     func showMenu(msg:String, desc:String, action:String, selector:Selector, showInstructions:Bool = false)
     {
-        scene.paused = true;
+        scene.stop();
         statusView.hide();
         menuView = MenuView();
         menuView.animationStyle = AnimationStyle.Scale;
@@ -156,7 +157,7 @@ class GameViewController: UIViewController
         }
         
         scene.stop();
-        showMenu("\nGAME OVER", desc: "current SCORE: \(scene.currentScore())\nBEST SCORE EVER:\(self.bestScoreEver)", action: "TRY AGAIN", selector: Selector("restartGame"));
+        showMenu("\nGAME OVER", desc: "SCORE: \(scene.currentScore())\nBEST:\(self.bestScoreEver)", action: "TRY AGAIN", selector: Selector("restartGame"));
         
         AudioHelper.playSound(AudioHelper.GameOverSound);
     }
@@ -206,10 +207,10 @@ class GameViewController: UIViewController
     
     func applicationWillResignActive()
     {
-        if(!self.scene.paused)
+        if(!self.scene.isGamePaused())
         {
             self.scene.stop();
-            showMenu("\nRESUME", desc: "when you're ready.", action: "GO!", selector: Selector("resumeLevelUp"));
+            showMenu("\nRESUME", desc: "are you ready?", action: "yes!", selector: Selector("resumeLevelUp"));
         }
     }
     

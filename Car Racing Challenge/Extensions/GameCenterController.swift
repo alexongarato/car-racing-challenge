@@ -13,13 +13,14 @@ import GameKit
 private var currentPlayerID                     : NSString!;
 private var isGameCenterAuthenticationComplete  : Bool = false;
 private var localPlayer                         : GKLocalPlayer!;
+private var leaderBoardID                       : String = "car_racing_challenge";
 
 class GameCenterController
 {
     // Check for the availability of Game Center API.
     class func isGameCenterAPIAvailable() -> Bool
     {
-    // Check for presence of GKLocalPlayer API.
+        // Check for presence of GKLocalPlayer API.
         var gcClass:AnyClass! = NSClassFromString("GKLocalPlayer");
         var systemVersion:NSString = UIDevice.currentDevice().systemVersion;
         return (gcClass != nil && systemVersion.floatValue >= 4.1);
@@ -35,13 +36,33 @@ class GameCenterController
         return isGameCenterAuthenticationComplete;
     }
     
+    private class func leaderboardHandler(error:NSError!)
+    {
+        if(error != nil)
+        {
+            Trace.error("GameCenterController -> set default leaderboard ID FAILED!")
+        }
+        else
+        {
+            Trace.warning("GameCenterController -> set default leaderboard ID SUCCEED!")
+        }
+    }
+    
     class func authenticate(callback:(()->Void!)!)
     {
-        localPlayer = GKLocalPlayer.localPlayer();
-        setReadyStatus(false);
+        if(!GameCenterController.isGameCenterAPIAvailable())
+        {
+            Trace.error("GameCenterController -> GKLocalPlayer NOT READY!")
+            return;
+        }
         
         Trace.log("GameCenterController -> start");
+        localPlayer = GKLocalPlayer.localPlayer();
+        setReadyStatus(false);
+        localPlayer.setDefaultLeaderboardIdentifier(leaderBoardID, completionHandler: leaderboardHandler);
         
+        
+        Trace.log("GameCenterController -> authenticating...")
         /*
         The authenticateWithCompletionHandler method is like all completion handler methods and runs a block
         of code after completing its task. The difference with this method is that it does not release the
@@ -63,7 +84,8 @@ class GameCenterController
             // If there is an error, do not assume local player is not authenticated.
             if (view != nil)
             {
-                //showAuthenticationDialogWhenReasonable: is an example method name. Create your own method that displays an authentication view when appropriate for your app.
+                //showAuthenticationDialogWhenReasonable: is an example method name. 
+                //Create your own method that displays an authentication view when appropriate for your app.
                 (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.showViewController(view, sender: nil);
             }
             else if (localPlayer.authenticated)
@@ -81,11 +103,11 @@ class GameCenterController
             }
             else
             {
-                Trace.log("GameCenterController ->auth error");
+                Trace.error("GameCenterController -> auth error");
+                Utils.showAlert(title: "Game Center Settings", message: "Offline mode alert.\n\nTo make your scores available\nto your friends, please check\nGame Center permissions\nunder Settings.");
             }
         }
         
-        Trace.log("GameCenterController -> authenticating...")
         localPlayer.authenticateHandler = handler;
     }
     
@@ -101,7 +123,7 @@ class GameCenterController
     
     class func reportScore(score:Int)
     {
-        var scoreReporter:GKScore = GKScore(leaderboardIdentifier: "car_racing_challenge");
+        var scoreReporter:GKScore = GKScore(leaderboardIdentifier: leaderBoardID);
         scoreReporter.value = Int64(score);
         scoreReporter.context = 0;
         
