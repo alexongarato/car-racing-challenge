@@ -39,6 +39,8 @@ class GameScene: SKScene
     private var sideNodeFlag            : Bool = false;
     private var sideNodeVelCounter      : CFTimeInterval = 0;
     private var currentVelSound         : Float = 0;
+    private var pixelsNode              : SKSpriteNode!;
+    private var bg                      : SKSpriteNode!;
     
     //-- configs --
     private let scoreToLevelUp          : Int = 500;
@@ -143,13 +145,19 @@ class GameScene: SKScene
         self.intervalBetweenLoops       = 0.5;
 //        self.currentLifeCounter         = self.scoreToEarnLife;
         
+        self.bg = nil;
+        self.pixelsNode = nil;
+        self.sidesNode = nil;
+        self.mainCharacter = nil;
+        self.buttonLeft = nil;
+        self.buttonRight = nil;
         
         Trace.log("pixelSize:\(self.pixelSize)");
         
         /**
         criar malha de pixels de acordo com a quantidade de pistas.
         */
-        var bg:SKSpriteNode = SKSpriteNode(imageNamed: ImagesNames.Background);
+        bg = SKSpriteNode(imageNamed: ImagesNames.Background);
         bg.size = self.size;
         bg.anchorPoint.x = 0;
         bg.anchorPoint.y = 1;
@@ -159,7 +167,7 @@ class GameScene: SKScene
         //---------------------
         
         //desenha a malha no context
-        var pixelsNode:SKSpriteNode = SKSpriteNode(texture: Utils.createPixelsGrid(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
+        pixelsNode = SKSpriteNode(texture: Utils.createPixelsGrid(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
         self.addChild(pixelsNode);
         pixelsNode.zPosition = 1;
         pixelsNode.anchorPoint.x = 0;

@@ -74,6 +74,11 @@ class GameViewController: UIViewController
         (UIApplication.sharedApplication().delegate as! AppDelegate).startGameCenter();
     }
     
+    override func viewDidDisappear(animated: Bool)
+    {
+        super.viewDidDisappear(animated);
+    }
+    
     func showMenu(msg:String, desc:String, action:String, selector:Selector, showInstructions:Bool = false)
     {
         scene.stop();
@@ -163,7 +168,7 @@ class GameViewController: UIViewController
         }
         
         scene.stop();
-        showMenu("\nGAME OVER", desc: "SCORE: \(scene.currentScore())\nBEST:\(self.bestScoreEver)", action: "TRY AGAIN", selector: Selector("restartGame"));
+        showMenu("\nGAME OVER", desc: "SCORE:\(scene.currentScore())\nBEST:\(self.bestScoreEver)", action: "TRY AGAIN", selector: Selector("restartGame"));
         
         AudioHelper.playSound(AudioHelper.GameOverSound);
     }

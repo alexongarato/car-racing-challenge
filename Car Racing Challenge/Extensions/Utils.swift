@@ -45,7 +45,8 @@ class Utils
         pixelVect.append(Pixel(x: pixelWidth * 2,   y: pixelHeight * 3,  active: true));
         
         UIGraphicsBeginImageContext(size);
-        var context:CGContextRef = UIGraphicsGetCurrentContext();
+        var context:CGContextRef = UIGraphicsGetCurrentContext()
+        
         for(var i:Int = 0; i < pixelVect.count; i++)
         {
             if(pixelVect[i].active)
@@ -60,6 +61,7 @@ class Utils
         
         var tempTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage);
         tempTexture.filteringMode = SKTextureFilteringMode.Nearest;
+//        tempTexture.usesMipmaps = true;
         
         return tempTexture;
     }
