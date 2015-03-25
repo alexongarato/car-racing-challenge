@@ -140,7 +140,7 @@ class GameScene: SKScene
         /**
         criar malha de pixels de acordo com a quantidade de pistas.
         */
-        var bg:SKSpriteNode = SKSpriteNode(imageNamed: "Background");
+        var bg:SKSpriteNode = SKSpriteNode(imageNamed: ImagesNames.Background);
         bg.size = self.size;
         bg.anchorPoint.x = 0;
         bg.anchorPoint.y = 1;

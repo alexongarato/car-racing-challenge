@@ -17,10 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
 //        Utils.printFontNames();
-        DataProvider.applicationDidLaunch();
-        GameCenterController.authenticate(nil);
-        AudioHelper.start();
+        DataProvider.didFinishLaunchingWithOptions();
+        AudioHelper.didFinishLaunchingWithOptions();
         return true;
+    }
+    
+    func startGameCenter()
+    {
+        GameCenterController.authenticate(nil);
     }
 
     func applicationWillResignActive(application: UIApplication)

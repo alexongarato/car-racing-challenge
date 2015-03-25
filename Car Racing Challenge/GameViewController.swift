@@ -23,6 +23,7 @@ class GameViewController: UIViewController
         super.viewDidLoad();
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).gameController = self;
+        (UIApplication.sharedApplication().delegate as! AppDelegate).startGameCenter();
         
         //
         self.scene = GameScene();

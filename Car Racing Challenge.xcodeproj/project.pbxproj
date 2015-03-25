@@ -44,6 +44,7 @@
 		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
 		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
+		DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */; };
 		DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */; };
 		DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */; };
 /* End PBXBuildFile section */
@@ -88,6 +89,7 @@
 		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
 		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatusView.swift; sourceTree = "<group>"; };
 		DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		DBB20A4E1ABE5C060050AA36 /* Car Racing Challenge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Car Racing Challenge.entitlements"; sourceTree = "<group>"; };
@@ -125,7 +127,6 @@
 		DB2E84391AAD338D0009E321 /* Car Racing Challenge */ = {
 			isa = PBXGroup;
 			children = (
-				DB384C161AC0D90500C2BB32 /* Extensions */,
 				DBB20A4E1ABE5C060050AA36 /* Car Racing Challenge.entitlements */,
 				DB6FF61C1ABD272700F7B073 /* Main.storyboard */,
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
@@ -134,9 +135,10 @@
 				DB525E801ABDF69900959D26 /* MenuView.swift */,
 				DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */,
 				DB2E84471AAD338D0009E321 /* Images.xcassets */,
+				DB525E7B1ABDEFDC00959D26 /* Constants */,
+				DB384C161AC0D90500C2BB32 /* Extensions */,
 				DB384BF81AC0D86000C2BB32 /* Sounds */,
 				DB525E721ABDEF5500959D26 /* Fonts */,
-				DB525E7B1ABDEFDC00959D26 /* Constants */,
 				DB384C151AC0D87F00C2BB32 /* Libs */,
 				DB2E843A1AAD338D0009E321 /* Supporting Files */,
 			);
@@ -196,6 +198,7 @@
 				DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */,
 				DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */,
 				DB384C201AC0D90E00C2BB32 /* Utils.swift */,
+				DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */,
 				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
 				DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */,
+				DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */,
 				DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */,
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
 				DB384C231AC0D90E00C2BB32 /* DataProvider.swift in Sources */,

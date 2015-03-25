@@ -27,7 +27,7 @@ class AudioHelper
     static var StartGameSound   : String = "entrance2.wav";
     static var lostLifeSound    : String = "Randomize.wav";
     
-    class func start()
+    class func didFinishLaunchingWithOptions()
     {
         buildAudio(EntranceSound,   volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(SelectSound,     volume: 0.15, timeStart: 0, rate: 1.0, loops: 0);

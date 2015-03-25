@@ -20,7 +20,8 @@ class MenuView: AbstractView
     override func didMoveToSuperview()
     {
         super.didMoveToSuperview();
-        self.enableBlur(UIBlurEffectStyle.Light);
+//        self.enableBlur(UIBlurEffectStyle.Light);
+        self.backgroundColor = UIColor(patternImage: UIImage(named: ImagesNames.Background)!);
         
         self.title = UITextView();
         self.title.textColor = fontColor;
@@ -31,13 +32,11 @@ class MenuView: AbstractView
         self.desc.textColor = fontColor;
         self.addSubview(self.desc);
         self.desc.editable = false;
-//        self.desc.layer.borderWidth = 1;
         
         self.instructs = UITextView();
         self.instructs.textColor = fontColor;
         self.addSubview(self.instructs);
         self.instructs.editable = false;
-//        self.instructs.layer.borderWidth = 1;
         
         self.action = UILabel();
         self.action.textColor = fontColor;

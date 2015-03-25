@@ -25,7 +25,7 @@ class Utils
     class func createCarTexture(size:CGSize, pixelWidth:CGFloat, pixelHeight:CGFloat) -> SKTexture
     {
         var pixelFrame:CGRect = CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight);
-        var pixelOn:CGImageRef = UIImage(named:"PixelOn")!.CGImage;
+        var pixelOn:CGImageRef = UIImage(named:ImagesNames.PixelOn)!.CGImage;
         
         var pixelVect:Array<Pixel> = Array<Pixel>();
         pixelVect.append(Pixel(x: 0,                y: 0,                active: false));
@@ -67,7 +67,7 @@ class Utils
     class func createPixelsGrid(size:CGSize, totalPixelsX:Int, totalPixelsY:Int, pixelSize:CGFloat) -> SKTexture
     {
         var pixelFrame:CGRect = CGRect(x: 0, y: 0, width: pixelSize, height: pixelSize);
-        var pixelOff:CGImageRef = UIImage(named:"PixelOff")!.CGImage;
+        var pixelOff:CGImageRef = UIImage(named:ImagesNames.PixelOff)!.CGImage;
         
         UIGraphicsBeginImageContext(size);
         var context:CGContextRef = UIGraphicsGetCurrentContext();
@@ -94,7 +94,7 @@ class Utils
     class func createRoadPixels(size:CGSize, totalPixelsX:Int, totalPixelsY:Int, pixelSize:CGFloat) -> SKTexture
     {
         var pixelFrame:CGRect = CGRect(x: 0, y: 0, width: pixelSize, height: pixelSize);
-        var pixelOn:CGImageRef = UIImage(named:"PixelOn")!.CGImage;
+        var pixelOn:CGImageRef = UIImage(named:ImagesNames.PixelOn)!.CGImage;
         
         UIGraphicsBeginImageContext(size);
         var context:CGContextRef = UIGraphicsGetCurrentContext();

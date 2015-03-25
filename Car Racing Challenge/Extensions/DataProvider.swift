@@ -13,7 +13,7 @@ private var _private_nsuser_defaults    : NSUserDefaults!;
 private var _private_domain             : String = ".cacheDomain";
 class DataProvider
 {
-    class func applicationDidLaunch()
+    class func didFinishLaunchingWithOptions()
     {
         
         if let bundle = NSBundle.mainBundle().bundleIdentifier
