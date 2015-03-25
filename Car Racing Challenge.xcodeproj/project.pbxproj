@@ -125,7 +125,6 @@
 		DB2E84391AAD338D0009E321 /* Car Racing Challenge */ = {
 			isa = PBXGroup;
 			children = (
-				DB384C161AC0D90500C2BB32 /* Extensions */,
 				DBB20A4E1ABE5C060050AA36 /* Car Racing Challenge.entitlements */,
 				DB6FF61C1ABD272700F7B073 /* Main.storyboard */,
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
@@ -134,6 +133,7 @@
 				DB525E801ABDF69900959D26 /* MenuView.swift */,
 				DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */,
 				DB2E84471AAD338D0009E321 /* Images.xcassets */,
+				DB384C161AC0D90500C2BB32 /* Extensions */,
 				DB384BF81AC0D86000C2BB32 /* Sounds */,
 				DB525E721ABDEF5500959D26 /* Fonts */,
 				DB525E7B1ABDEFDC00959D26 /* Constants */,

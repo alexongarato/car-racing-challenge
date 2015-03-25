@@ -215,6 +215,7 @@ extension UIView
         var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: style)) as UIVisualEffectView;
         visualEffectView.frame = self.bounds;
         self.addSubview(visualEffectView)
+        visualEffectView.alpha = 0.9;
     }
     
     func enableGaussianBlur()
