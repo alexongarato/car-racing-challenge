@@ -84,9 +84,16 @@ class GameCenterController
             // If there is an error, do not assume local player is not authenticated.
             if (view != nil)
             {
-                //showAuthenticationDialogWhenReasonable: is an example method name. 
-                //Create your own method that displays an authentication view when appropriate for your app.
-                (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.showViewController(view, sender: nil);
+                if(UICustomDevice.isIOS8OrHigher())
+                {
+                    //showAuthenticationDialogWhenReasonable: is an example method name.
+                    //Create your own method that displays an authentication view when appropriate for your app.
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.showViewController(view, sender: nil);
+                }
+                else
+                {
+                    
+                }
             }
             else if (localPlayer.authenticated)
             {

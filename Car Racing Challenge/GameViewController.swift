@@ -23,7 +23,6 @@ class GameViewController: UIViewController
         super.viewDidLoad();
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).gameController = self;
-        (UIApplication.sharedApplication().delegate as! AppDelegate).startGameCenter();
         
         //
         self.scene = GameScene();
@@ -66,6 +65,13 @@ class GameViewController: UIViewController
         showMenu("car racing\nchallenge", desc: "limitless score!\nHow far can you go?", action: "PRESS TO START", selector: Selector("startGame"), showInstructions:true);
         
         AudioHelper.playSound(AudioHelper.EntranceSound);
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        super.viewDidAppear(animated);
+        
+        (UIApplication.sharedApplication().delegate as! AppDelegate).startGameCenter();
     }
     
     func showMenu(msg:String, desc:String, action:String, selector:Selector, showInstructions:Bool = false)
