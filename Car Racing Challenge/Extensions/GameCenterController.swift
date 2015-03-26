@@ -86,10 +86,11 @@ class GameCenterController
             {
                 if(UICustomDevice.isIOS8OrHigher())
                 {
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
                     //showAuthenticationDialogWhenReasonable: is an example method name.
                     //Create your own method that displays an authentication view when appropriate for your app.
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.showViewController(view, sender: nil);
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(view, animated: true, completion: {
+                        (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
+                    })
                 }
                 else
                 {

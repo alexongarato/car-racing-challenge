@@ -205,7 +205,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         }
         else if(scene.currentLevel() == scene.maximunLevel() + 1)
         {
-            desc = "-\n\nThis is the highest level!";
+            desc = "-\n\nThis is the highest racing track level!";
         }
         
         if(desc != nil)
