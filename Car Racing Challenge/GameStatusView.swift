@@ -12,6 +12,7 @@ class GameStatusView:AbstractView
 {
     private var scoreField:UILabel!;
     private var statusField:UILabel!;
+    private var defaultBgColor:UIColor = UIColor(patternImage: ImageHelper.imageWithName(ImagesNames.Background)).alpha(0.8);
     
     override func didMoveToSuperview()
     {
@@ -19,12 +20,12 @@ class GameStatusView:AbstractView
         self.alpha = 0;
         self.height = 22;
         self.y = -self.height;
-        self.backgroundColor = UIColor.whiteColor().alpha(0.3);
+        self.backgroundColor = defaultBgColor;
         
         self.statusField = UILabel();
         self.addSubview(self.statusField);
-        self.statusField.y = 5
-        self.statusField.font = Fonts.Digital7Italic(FontSize.Small);
+        self.statusField.y = 5;
+        self.statusField.font = Fonts.DefaultFont(FontSize.Small);
         self.statusField.textColor = UIColor.blackColor();
         self.statusField.textAlignment = NSTextAlignment.Center;
     }
@@ -50,5 +51,37 @@ class GameStatusView:AbstractView
         self.statusField.text = "LEVEL:\(level)  LIFES:\(lifes)  SCORE:\(score)/\(nextScore * level)";
         self.statusField.sizeToFit();
         self.statusField.center.x = self.center.x;
+    }
+    
+    func showSuccessAnimation()
+    {
+        self.backgroundColor = defaultBgColor;
+        
+        func completion(animated:Bool)
+        {
+            UIView.animateWithDuration(AnimationTime.Default, animations: {
+                self.backgroundColor = self.defaultBgColor;
+            }, completion: nil);
+        }
+        
+        UIView.animateWithDuration(AnimationTime.Default, animations: {
+            self.backgroundColor = UIColor.greenColor().alpha(0.2);
+        }, completion: completion);
+    }
+    
+    func showErrorAnimation()
+    {
+        self.backgroundColor = defaultBgColor;
+        
+        func completion(animated:Bool)
+        {
+            UIView.animateWithDuration(AnimationTime.Default, animations: {
+                self.backgroundColor = self.defaultBgColor;
+                }, completion: nil);
+        }
+        
+        UIView.animateWithDuration(AnimationTime.Default, animations: {
+            self.backgroundColor = UIColor.redColor().alpha(0.2);
+            }, completion: completion);
     }
 }

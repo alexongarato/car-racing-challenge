@@ -112,18 +112,26 @@ class GameCenterController
             else
             {
                 Trace.error("GameCenterController -> auth error");
-                Utils.showAlert(title: "Game Center Settings", message: "Offline mode alert.\n\nTo make your scores available\nto your friends, please check\nGame Center permissions\nunder Settings.");
+                Utils.showAlert(title: "Game Center Settings", message: "Offline mode alert.\n\nTo make your scores available\nto your friends, please check\nGame Center permissions\nunder the Settings menu.");
             }
         }
         
         localPlayer.authenticateHandler = handler;
     }
     
-    class func loadLeaderboardInfo()
+    class func loadLeaderboard()
     {
         func completion(leaderboards:[AnyObject]!, error:NSError!)
         {
-            
+            var gameCenterController:GKGameCenterViewController! = GKGameCenterViewController();
+            if (gameCenterController != nil)
+            {
+                gameCenterController.gameCenterDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate).gameController;
+                gameCenterController.viewState = GKGameCenterViewControllerState.Leaderboards;
+                gameCenterController.leaderboardIdentifier = leaderBoardID;
+                (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
+                (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(gameCenterController, animated: true, completion: nil);
+            }
         }
         
         GKLeaderboard.loadLeaderboardsWithCompletionHandler(completion);
@@ -134,6 +142,7 @@ class GameCenterController
         var scoreReporter:GKScore = GKScore(leaderboardIdentifier: leaderBoardID);
         scoreReporter.value = Int64(score);
         scoreReporter.context = 0;
+        scoreReporter.shouldSetDefaultLeaderboard = !UICustomDevice.isIOS8OrHigher();
         
         func completion(error:NSError!)
         {

@@ -11,10 +11,15 @@ import UIKit
 
 class Fonts
 {
-    static func Digital7Italic(size:CGFloat) -> UIFont!
+    static func DefaultFont(size:CGFloat) -> UIFont!
     {
-        return UIFont(name: "Digital-7MonoItalic", size: size)!;
+        return UIFont(name: FontNames.Default, size: size)!;
     }
+}
+
+struct FontNames
+{
+    static var Default:String = "LCDMono2Light";
 }
 
 struct FontSize
@@ -22,7 +27,7 @@ struct FontSize
     /**
     8px
     */
-    static var Tiny        : CGFloat = 8;
+    static var Tiny        : CGFloat = 10;
     /**
     15px
     */

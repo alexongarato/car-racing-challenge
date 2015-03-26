@@ -7,9 +7,14 @@
 //
 
 import Foundation
+import UIKit
+
 class ImageHelper
 {
-    
+    class func imageWithName(name:String) -> UIImage!
+    {
+        return UIImage(named: name);
+    }
 }
 
 struct ImagesNames
@@ -17,4 +22,7 @@ struct ImagesNames
     static var PixelOn:String = "PixelOn";
     static var PixelOff:String = "PixelOff";
     static var Background:String = "Background";
+    static var MenuBackground:String = "MenuBG";
+    static var Podium:String = "Podium";
+    static var Instructions:String = "Instructions";
 }

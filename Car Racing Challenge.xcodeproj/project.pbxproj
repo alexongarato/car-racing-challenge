@@ -37,13 +37,10 @@
 		DB384C2A1AC0D90E00C2BB32 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C201AC0D90E00C2BB32 /* Utils.swift */; };
 		DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */; };
 		DB384C341AC0DA3500C2BB32 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */; };
-		DB525E771ABDEF5F00959D26 /* digital_7_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E731ABDEF5F00959D26 /* digital_7_italic.ttf */; };
-		DB525E781ABDEF5F00959D26 /* digital_7_mono_italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E741ABDEF5F00959D26 /* digital_7_mono_italic.ttf */; };
-		DB525E791ABDEF5F00959D26 /* digital_7_mono.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E751ABDEF5F00959D26 /* digital_7_mono.ttf */; };
-		DB525E7A1ABDEF5F00959D26 /* digital_7.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB525E761ABDEF5F00959D26 /* digital_7.ttf */; };
 		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
 		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
+		DB970F711AC3956200A97BCD /* LCDM2L__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = DB970F701AC3956200A97BCD /* LCDM2L__.TTF */; };
 		DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */; };
 		DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */; };
 		DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */; };
@@ -82,13 +79,10 @@
 		DB384C201AC0D90E00C2BB32 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Extensions/Utils.swift; sourceTree = "<group>"; };
 		DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHelper.swift; sourceTree = "<group>"; };
 		DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		DB525E731ABDEF5F00959D26 /* digital_7_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7_italic.ttf; path = Fonts/digital_7_italic.ttf; sourceTree = "<group>"; };
-		DB525E741ABDEF5F00959D26 /* digital_7_mono_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7_mono_italic.ttf; path = Fonts/digital_7_mono_italic.ttf; sourceTree = "<group>"; };
-		DB525E751ABDEF5F00959D26 /* digital_7_mono.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7_mono.ttf; path = Fonts/digital_7_mono.ttf; sourceTree = "<group>"; };
-		DB525E761ABDEF5F00959D26 /* digital_7.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = digital_7.ttf; path = Fonts/digital_7.ttf; sourceTree = "<group>"; };
 		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
 		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DB970F701AC3956200A97BCD /* LCDM2L__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = LCDM2L__.TTF; path = Fonts/LCDM2L__.TTF; sourceTree = "<group>"; };
 		DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatusView.swift; sourceTree = "<group>"; };
 		DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -195,8 +189,8 @@
 				DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */,
 				DB384C1C1AC0D90E00C2BB32 /* SKExtensions.swift */,
 				DB384C1D1AC0D90E00C2BB32 /* Trace.swift */,
-				DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */,
 				DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */,
+				DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */,
 				DB384C201AC0D90E00C2BB32 /* Utils.swift */,
 				DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */,
 			);
@@ -207,10 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				DB525E7E1ABDF19F00959D26 /* Fonts.swift */,
-				DB525E731ABDEF5F00959D26 /* digital_7_italic.ttf */,
-				DB525E741ABDEF5F00959D26 /* digital_7_mono_italic.ttf */,
-				DB525E751ABDEF5F00959D26 /* digital_7_mono.ttf */,
-				DB525E761ABDEF5F00959D26 /* digital_7.ttf */,
+				DB970F701AC3956200A97BCD /* LCDM2L__.TTF */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -295,12 +286,9 @@
 				DB384C081AC0D86C00C2BB32 /* entrance.wav in Resources */,
 				DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */,
 				DB384C121AC0D86C00C2BB32 /* vel_2.wav in Resources */,
+				DB970F711AC3956200A97BCD /* LCDM2L__.TTF in Resources */,
 				DB384C111AC0D86C00C2BB32 /* vel_1.wav in Resources */,
-				DB525E7A1ABDEF5F00959D26 /* digital_7.ttf in Resources */,
-				DB525E791ABDEF5F00959D26 /* digital_7_mono.ttf in Resources */,
-				DB525E771ABDEF5F00959D26 /* digital_7_italic.ttf in Resources */,
 				DB384C091AC0D86C00C2BB32 /* entrance2.wav in Resources */,
-				DB525E781ABDEF5F00959D26 /* digital_7_mono_italic.ttf in Resources */,
 				DB384C071AC0D86C00C2BB32 /* Blip_Select.wav in Resources */,
 				DB384C141AC0D86C00C2BB32 /* vel_4.wav in Resources */,
 				DB384C0E1AC0D86C00C2BB32 /* Randomize.wav in Resources */,
