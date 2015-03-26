@@ -112,7 +112,7 @@ class GameCenterController
             else
             {
                 Trace.error("GameCenterController -> auth error");
-                Utils.showAlert(title: "Game Center Settings", message: "Offline mode alert.\n\nTo make your scores available\nto your friends, please check\nGame Center permissions\nunder the Settings menu.");
+                Utils.showAlert(title: "Game Center Warning", message: "User is not logged in.");
             }
         }
         

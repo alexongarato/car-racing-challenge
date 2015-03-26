@@ -23,6 +23,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!)
     {
         Trace.log("GameCenter did finish");
+        showResumeOnStartUp = true;
         self.dismissViewControllerAnimated(true, completion: {
             self.applicationDidBecomeActive();
         });

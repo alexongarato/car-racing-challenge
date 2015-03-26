@@ -43,5 +43,5 @@ struct FontSize
     /** 
     40px 
     */
-    static var Big         : CGFloat = 40;
+    static var Big         : CGFloat = 35;
 }

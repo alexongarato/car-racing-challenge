@@ -21,7 +21,15 @@ class MenuView: AbstractView
     {
         super.didMoveToSuperview();
 //        self.enableBlur(UIBlurEffectStyle.Light);
-        self.backgroundColor = UIColor(patternImage: UIImage(named: ImagesNames.MenuBackground)!);
+        
+        if(self.width == 375)
+        {
+            self.backgroundColor = UIColor(patternImage: UIImage(named: ImagesNames.MenuBackgroundiPhone6)!);
+        }
+        else
+        {
+            self.backgroundColor = UIColor(patternImage: UIImage(named: ImagesNames.MenuBackground)!);
+        }
         
         self.title = UITextView();
         self.title.textColor = fontColor;
@@ -48,7 +56,15 @@ class MenuView: AbstractView
         self.title.sizeToFit();
         self.title.width = self.width - 10;
         self.title.center = self.center;
-        self.title.y = self.center.y - (self.height * 0.4);
+        if(self.height > 480)
+        {
+            self.title.y = self.height * 0.1;
+        }
+        else
+        {
+            self.title.y = self.center.y - (self.height * 0.41);
+        }
+        
     }
     
     func setDescription(text:String)
@@ -60,17 +76,29 @@ class MenuView: AbstractView
         self.desc.sizeToFit();
         self.desc.width = self.width - 10;
         self.desc.center = self.center;
-        self.desc.y -= 100;
+        if(self.height > 480)
+        {
+            self.desc.y = self.center.y - (self.height * 0.26);
+        }
+        else
+        {
+            self.desc.y = self.title.y + self.title.height;
+        }
     }
     
     func setInstructions(scoreToLifeUp:Int, scoreToLevelUp:Int)
     {
-        
         var image:UIImage! = UIImage(named: ImagesNames.Instructions);
         var instructions:UIImageView = UIImageView(image: image);
         self.addSubview(instructions);
         instructions.center = self.center;
-        instructions.y += 20;
+        if(self.height <= 480)
+        {
+            if(self.desc != nil)
+            {
+                instructions.y = self.desc.y + self.desc.height + 10;
+            }
+        }
         
         self.instructs.text = "each \(scoreToLifeUp) points earned = 1 life up";
         self.instructs.font = Fonts.DefaultFont(FontSize.Tiny);
@@ -80,6 +108,7 @@ class MenuView: AbstractView
         self.instructs.width = self.width - 10;
         self.instructs.center = self.center;
         self.instructs.y = instructions.y + instructions.height - 41;
+        
     }
     
     func setGameOver()
@@ -102,8 +131,6 @@ class MenuView: AbstractView
     {
         if(self.actions == nil)
         {
-//            Utils.delayedCall(2, target: target, selector: selector, repeats: false);
-//            return;
             self.actions = Array<UILabel>();
         }
         
@@ -120,11 +147,28 @@ class MenuView: AbstractView
         newAction.center = self.center;
         newAction.addTarget(target, selector: selector);
         
-        var totalHeight:CGFloat = (newAction.height.half * self.actions.count.floatValue)
+        var totalHeight:CGFloat = ((newAction.height + 10) * self.actions.count.floatValue);
         for(var i:Int = 0; i < self.actions.count; i++)
         {
             var action:UILabel = self.actions[i];
-            action.y = self.center.y + (self.height * 0.28) - totalHeight + ((action.height + 20) * i.floatValue);
+            /*if(self.instructs != nil)
+            {
+//                action.center.y = self.instructs.y + self.instructs.height + (self.height - self.instructs.y + self.instructs.height).half - (action.height * i.floatValue) - 30;
+                action.center.y = self.instructs.y + self.instructs.height + 40 + (action.height * i.floatValue);
+            }
+            else
+            {*/
+            
+            if(self.height > 480)
+            {
+                action.y = self.height * 0.82 - totalHeight + ((action.height + 20) * i.floatValue);
+            }
+            else
+            {
+                action.y = self.height * 0.94 - totalHeight + ((action.height + 20) * i.floatValue);
+            }
+            
+            //}
         }
     }
     

@@ -23,6 +23,7 @@ struct ImagesNames
     static var PixelOff:String = "PixelOff";
     static var Background:String = "Background";
     static var MenuBackground:String = "MenuBG";
+    static var MenuBackgroundiPhone6:String = "MenuBG_iphone6";
     static var Podium:String = "Podium";
     static var Instructions:String = "Instructions";
 }

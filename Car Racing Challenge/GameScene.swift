@@ -45,7 +45,7 @@ class GameScene: SKScene
     private var bg                      : SKSpriteNode!;
     
     //-- configs --
-    private let scoreToLevelUp          : Int = 100;//500
+    private let scoreToLevelUp          : Int = 1;//500
     private var scoreToEarnLife         : Int = 50;//100
     private let maximunColumns          : Int = 5;
     private let minimumColumns          : Int = 3;
@@ -207,7 +207,9 @@ class GameScene: SKScene
         self.buttonLeft.size = self.buttonSize;
         self.buttonLeft.anchorPoint.y = 1;
         self.buttonLeft.x = self.buttonLeft.width.half;
-        var heightPixels:CGFloat = (totalPixelsY.floatValue - 2);
+        var pxCount:CGFloat = (55 / self.pixelSize).roundValue;
+        pxCount = pxCount == 0 ? 1 : pxCount;
+        var heightPixels:CGFloat = (totalPixelsY.floatValue - pxCount);
         self.buttonLeft.y = self.size.height - (self.pixelSize * heightPixels);
         self.buttonLeft.name = self.IDBtLeft;
         self.addChild(self.buttonLeft);
