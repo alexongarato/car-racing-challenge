@@ -37,13 +37,14 @@ class iAdController:UIViewController, ADInterstitialAdDelegate
             interstitial.presentInView(containerView);
             
             var closeButton:UILabel = UILabel();
-            closeButton.text = "(X)";
+            closeButton.text = "close";
             closeButton.textColor = UIColor.whiteColor();
             closeButton.sizeToFit();
             containerView.addSubview(closeButton);
             closeButton.x = containerView.width - closeButton.width - 10;
             closeButton.y = 10;
-            closeButton.addTarget(self, selector: Selector("closeBanner"));
+            closeButton.userInteractionEnabled = false;
+//            closeButton.addTarget(self, selector: Selector("closeBanner"));
         }
     }
     

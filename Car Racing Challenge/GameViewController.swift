@@ -194,7 +194,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         
         AudioHelper.playSound(AudioHelper.GameOverSound);
         
-        Utils.delayedCall(AnimationTime.VerySlow, target: self, selector: Selector("showBanner"), repeats: false);
+        Utils.delayedCall(3, target: self, selector: Selector("showBanner"), repeats: false);
     }
     
     func showBanner()
