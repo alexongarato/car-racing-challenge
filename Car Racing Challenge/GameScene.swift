@@ -45,8 +45,8 @@ class GameScene: SKScene
     private var bg                      : SKSpriteNode!;
     
     //-- configs --
-    private let scoreToLevelUp          : Int = 2;
-    private var scoreToEarnLife         : Int = 100;
+    private let scoreToLevelUp          : Int = 100;//500
+    private var scoreToEarnLife         : Int = 50;//100
     private let maximunColumns          : Int = 5;
     private let minimumColumns          : Int = 3;
     private let IDBtLeft                : String = "bt_left";
