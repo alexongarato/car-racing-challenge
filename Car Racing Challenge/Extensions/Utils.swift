@@ -146,13 +146,13 @@ class Utils
 //        #endif
     }
     
-    @objc class func showAlert(#title:String, message:String)
+    @objc class func showAlert(#title:String, message:String, completion:(()->Void)! = nil)
     {
         if(UICustomDevice.isIOS8OrHigher())
         {
             var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert);
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil));
-            (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(alert, animated: true, completion: nil);
+            (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(alert, animated: true, completion: completion);
         }
         else
         {

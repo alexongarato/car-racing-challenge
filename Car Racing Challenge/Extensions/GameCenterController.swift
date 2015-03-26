@@ -62,7 +62,7 @@ class GameCenterController
         localPlayer.setDefaultLeaderboardIdentifier(leaderBoardID, completionHandler: leaderboardHandler);
         
         
-        Trace.log("GameCenterController -> authenticating...")
+        Trace.log("GameCenterController -> authenticating...");
         /*
         The authenticateWithCompletionHandler method is like all completion handler methods and runs a block
         of code after completing its task. The difference with this method is that it does not release the
@@ -81,6 +81,7 @@ class GameCenterController
         {
             Trace.log("GameCenterController -> auth complete.");
             
+            
             // If there is an error, do not assume local player is not authenticated.
             if (view != nil)
             {
@@ -88,13 +89,10 @@ class GameCenterController
                 {
                     //showAuthenticationDialogWhenReasonable: is an example method name.
                     //Create your own method that displays an authentication view when appropriate for your app.
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
                     (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(view, animated: true, completion: {
-                        (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
+                        (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationDidBecomeActive();
                     })
-                }
-                else
-                {
-                    
                 }
             }
             else if (localPlayer.authenticated)
@@ -113,7 +111,10 @@ class GameCenterController
             else
             {
                 Trace.error("GameCenterController -> auth error");
-                Utils.showAlert(title: "Game Center Warning", message: "User is not logged in.");
+                (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
+                Utils.showAlert(title: "Game Center Warning", message: "User is not logged in.", completion:{
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationDidBecomeActive();
+                });
             }
         }
         

@@ -201,11 +201,11 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         var desc:String!;
         if(scene.currentLevel() <= scene.maximunLevel())
         {
-            desc = "-\n\ncongratulations!";
+            desc = "\n\ncongratulations!";
         }
         else if(scene.currentLevel() == scene.maximunLevel() + 1)
         {
-            desc = "-\n\nThis is the highest racing track level!";
+            desc = "\n\nThis is the highest\nracing track level!";
         }
         
         if(desc != nil)
