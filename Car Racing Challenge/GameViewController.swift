@@ -23,7 +23,8 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!)
     {
         Trace.log("GameCenter did finish");
-        self.dismissViewControllerAnimated(true, completion: {
+        self.dismissViewControllerAnimated(true, completion:
+        {
             self.applicationDidBecomeActive();
         });
     }
@@ -192,6 +193,13 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         showMenu("\nGAME OVER", desc: "SCORE:\(scene.currentScore())\nBEST:\(self.bestScoreEver)", action: "RESTART", selector: Selector("startGameHandler"), showGameOver:true);
         
         AudioHelper.playSound(AudioHelper.GameOverSound);
+        
+        Utils.delayedCall(AnimationTime.VerySlow, target: self, selector: Selector("showBanner"), repeats: false);
+    }
+    
+    func showBanner()
+    {
+        iAdController.getInstance().presentInterlude(self.view);
     }
     
     func levelUpHandler()

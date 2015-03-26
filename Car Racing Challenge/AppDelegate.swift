@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func startGameCenter()
     {
         GameCenterController.authenticate(nil);
+        iAdController.getInstance().cycleInterstitial();
     }
 
     func applicationWillResignActive(application: UIApplication)
