@@ -11,31 +11,25 @@ class Trace
 {
     class func warning(value:String)
     {
-//        #if DEBUG
         if(Configs.DEBUG_MODE)
         {
-            NSLog("WARNING -> \(value)");
+            NSLog("WARNING: \(value)");
         }
-//        #endif
     }
     
     class func error(value:String)
     {
-//        #if DEBUG
         if(Configs.DEBUG_MODE)
         {
-            NSLog("ERROR -> \(value)");
+            NSLog("ERROR: \(value)");
         }
-//        #endif
     }
     
     class func log(value:String)
     {
-//        #if DEBUG
         if(Configs.DEBUG_MODE)
         {
             NSLog(value);
         }
-//        #endif
     }
 }

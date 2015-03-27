@@ -1,68 +1,65 @@
 //
-//  iAdController.swift
+//  AdController.swift
 //  Car Racing Challenge
 //
 //  Created by Alex Ongarato on 3/26/15.
 //  Copyright (c) 2015 Alex Ongarato. All rights reserved.
 //
 
+/*
 import Foundation
 import iAd
 import UIKit
 
-private var _instance : iAdController!;
+private var _instance : AdController!;
 
-class iAdController:UIViewController, ADInterstitialAdDelegate
+class AdController:UIViewController, ADInterstitialAdDelegate
 {
-    private var interstitial : ADInterstitialAd!;
+    private var interstitial    : ADInterstitialAd!;
+    private var container       : UIView!;
     
-    class func getInstance() -> iAdController
+    class func getInstance() -> AdController
     {
         if(_instance == nil)
         {
-            _instance = iAdController();
+            _instance = AdController();
         }
         
         return _instance;
     }
     
-    func presentInterlude(containerView: UIView!)
+    //----- private
+    func showBanner(view:UIView!)
     {
-        Trace.log("presenting...");
+        Trace.log("AdController -> presenting...");
         
-        // If the interstitial managed to load, then we'll present it now.
+        if(interstitial == nil)
+        {
+            Trace.log("AdController -> banner not loaded");
+            return;
+        }
+        
+        if(self.container != nil)
+        {
+            self.container.removeFromSuperview();
+            self.container = nil;
+        }
+        
         if (interstitial.loaded)
         {
+            self.container = view;
             (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
-            interstitial.presentInView(containerView);
-            
-            var closeButton:UILabel = UILabel();
-            closeButton.text = "close";
-            closeButton.textColor = UIColor.whiteColor();
-            closeButton.sizeToFit();
-            containerView.addSubview(closeButton);
-            closeButton.x = containerView.width - closeButton.width - 10;
-            closeButton.y = 10;
-            closeButton.userInteractionEnabled = false;
-//            closeButton.addTarget(self, selector: Selector("closeBanner"));
+            interstitial.presentInView(self.container);
         }
-    }
-    
-    func closeBanner()
-    {
-        if(interstitial != nil)
+        else
         {
-            interstitial.cancelAction();
-            interstitial.delegate = nil;
-            interstitial = nil;
+            Trace.log("AdController -> banner not loaded");
         }
     }
     
     func cycleInterstitial()
     {
-        Trace.log("recycling...");
-        
-        // Clean up the old interstitial...
+        Trace.log("AdController -> recycling...");
         if(interstitial != nil)
         {
             interstitial.delegate = nil;
@@ -73,24 +70,24 @@ class iAdController:UIViewController, ADInterstitialAdDelegate
         interstitial.delegate = self;
     }
     
-    
     // When this method is invoked, the application should remove the view from the screen and tear it down.
     // The content will be unloaded shortly after this method is called and no new content will be loaded in that view.
     // This may occur either when the user dismisses the interstitial view via the dismiss button or
     // if the content in the view has expired.
     @objc func interstitialAdDidUnload(interstitialAd: ADInterstitialAd!)
     {
-        self.cycleInterstitial();
-        Trace.log("banner closed");
+        Trace.log("AdController -> banner closed");
         (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationDidBecomeActive();
+        self.cycleInterstitial();
     }
-    
-    
+        
     // This method will be invoked when an error has occurred attempting to get advertisement content.
     // The ADError enum lists the possible error codes.
     @objc func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!)
     {
+        Trace.log("AdController -> banner error");
+        (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationDidBecomeActive();
         self.cycleInterstitial();
-        Trace.log("banner error");
     }
 }
+*/

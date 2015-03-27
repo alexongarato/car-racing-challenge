@@ -28,6 +28,8 @@ class GameStatusView:AbstractView
         self.statusField.font = Fonts.DefaultFont(FontSize.Small);
         self.statusField.textColor = UIColor.blackColor();
         self.statusField.textAlignment = NSTextAlignment.Center;
+        self.layer.borderWidth = 0.5;
+        self.layer.borderColor = UIColor.whiteColor().alpha(0.5).CGColor;
     }
     
     func show()
@@ -65,7 +67,7 @@ class GameStatusView:AbstractView
         }
         
         UIView.animateWithDuration(AnimationTime.Default, animations: {
-            self.backgroundColor = UIColor.greenColor().alpha(0.2);
+            self.backgroundColor = UIColor.blackColor().alpha(0.2);
         }, completion: completion);
     }
     
@@ -81,7 +83,7 @@ class GameStatusView:AbstractView
         }
         
         UIView.animateWithDuration(AnimationTime.Default, animations: {
-            self.backgroundColor = UIColor.redColor().alpha(0.2);
+            self.backgroundColor = UIColor.blackColor().alpha(0.2);
             }, completion: completion);
     }
 }

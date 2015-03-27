@@ -123,7 +123,7 @@ class MenuView: AbstractView
     
     func openGameCenter()
     {
-        Trace.log("MenuView -> open game center");
+        Trace.log("MenuView -> MenuView -> open game center");
         GameCenterController.loadLeaderboard();
     }
     

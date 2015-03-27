@@ -45,7 +45,7 @@ class GameScene: SKScene
     private var bg                      : SKSpriteNode!;
     
     //-- configs --
-    private let scoreToLevelUp          : Int = 500;//500
+    private let scoreToLevelUp          : Int = 2;//500
     private var scoreToEarnLife         : Int = 100;//100
     private let maximunColumns          : Int = 5;
     private let minimumColumns          : Int = 3;
@@ -154,7 +154,7 @@ class GameScene: SKScene
         self.buttonLeft = nil;
         self.buttonRight = nil;
         
-        Trace.log("pixelSize:\(self.pixelSize)");
+        Trace.log("GameScene -> pixelSize:\(self.pixelSize)");
         
         /**
         criar malha de pixels de acordo com a quantidade de pistas.

@@ -148,7 +148,7 @@ class GameCenterController
         
         func completion(error:NSError!)
         {
-            Trace.log("score reported:\(score)");
+            Trace.log("GameCenterController -> score reported:\(score)");
         }
         
         GKScore.reportScores([scoreReporter], withCompletionHandler: completion);

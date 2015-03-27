@@ -11,4 +11,5 @@ import Foundation
 struct Configs
 {
     static var DEBUG_MODE          : Bool = true;
+    static var SAMPLE_MODE         : Bool = false;
 }

@@ -44,7 +44,7 @@
 		DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */; };
 		DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */; };
 		DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */; };
-		DBFBA0F31AC4B8F800BD98D7 /* iAdController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBA0F21AC4B8F800BD98D7 /* iAdController.swift */; };
+		DBFBA0F31AC4B8F800BD98D7 /* AdController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */; };
 		DBFBA0F61AC4B93F00BD98D7 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFBA0F41AC4B93700BD98D7 /* iAd.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,7 +89,7 @@
 		DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatusView.swift; sourceTree = "<group>"; };
 		DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		DBB20A4E1ABE5C060050AA36 /* Car Racing Challenge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Car Racing Challenge.entitlements"; sourceTree = "<group>"; };
-		DBFBA0F21AC4B8F800BD98D7 /* iAdController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iAdController.swift; sourceTree = "<group>"; };
+		DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdController.swift; sourceTree = "<group>"; };
 		DBFBA0F41AC4B93700BD98D7 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -188,8 +188,8 @@
 		DB384C161AC0D90500C2BB32 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DB384C171AC0D90E00C2BB32 /* Animation.swift */,
 				DB384C181AC0D90E00C2BB32 /* Configs.swift */,
+				DB384C171AC0D90E00C2BB32 /* Animation.swift */,
 				DB384C191AC0D90E00C2BB32 /* DataProvider.swift */,
 				DB384C1A1AC0D90E00C2BB32 /* Extensions.swift */,
 				DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */,
@@ -199,7 +199,7 @@
 				DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */,
 				DB384C201AC0D90E00C2BB32 /* Utils.swift */,
 				DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */,
-				DBFBA0F21AC4B8F800BD98D7 /* iAdController.swift */,
+				DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -343,7 +343,7 @@
 				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
 				DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */,
 				DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */,
-				DBFBA0F31AC4B8F800BD98D7 /* iAdController.swift in Sources */,
+				DBFBA0F31AC4B8F800BD98D7 /* AdController.swift in Sources */,
 				DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */,
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
 				DB384C231AC0D90E00C2BB32 /* DataProvider.swift in Sources */,
