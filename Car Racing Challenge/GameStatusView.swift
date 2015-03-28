@@ -13,13 +13,15 @@ class GameStatusView:AbstractView
     private var scoreField:UILabel!;
     private var statusField:UILabel!;
     private var defaultBgColor:UIColor = UIColor(patternImage: ImageHelper.imageWithName(ImagesNames.Background)).alpha(0.8);
+    private var defaultY:CGFloat = 0;
     
     override func didMoveToSuperview()
     {
         super.didMoveToSuperview();
         self.alpha = 0;
         self.height = 22;
-        self.y = -self.height;
+        self.defaultY = self.y;
+        self.y = self.defaultY - self.height;
         self.backgroundColor = defaultBgColor;
         
         self.statusField = UILabel();
@@ -35,7 +37,7 @@ class GameStatusView:AbstractView
     func show()
     {
         UIView.animateWithDuration(AnimationTime.VerySlow, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            self.y = 0;
+            self.y = self.defaultY;
             self.alpha = 1;
             }, completion: nil);
     }
@@ -43,7 +45,7 @@ class GameStatusView:AbstractView
     func hide()
     {
         UIView.animateWithDuration(AnimationTime.Default, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            self.y = -self.height;
+            self.y = self.defaultY - self.height;
             self.alpha = 0;
             }, completion: nil);
     }

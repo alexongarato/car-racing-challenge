@@ -11,6 +11,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "Car_Racing.MenuView.setTitle (Car_Racing.MenuView)(Swift.String) -&gt; ():MenuView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.title.width">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Arcade_Car_Race.GameScene.build (Arcade_Car_Race.GameScene)() -&gt; ():GameScene.swift">
       </ContextState>
    </ContextStates>

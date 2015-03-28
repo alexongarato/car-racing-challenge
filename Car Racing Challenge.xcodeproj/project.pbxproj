@@ -40,10 +40,12 @@
 		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
 		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
+		DB8C315F1AC620EB0027E949 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C315E1AC620EB0027E949 /* PurchaseController.swift */; };
 		DB970F711AC3956200A97BCD /* LCDM2L__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = DB970F701AC3956200A97BCD /* LCDM2L__.TTF */; };
 		DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */; };
 		DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */; };
 		DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */; };
+		DBD63E311AC7669100F3A3C3 /* Instructions.png in Resources */ = {isa = PBXBuildFile; fileRef = DBD63E301AC7669100F3A3C3 /* Instructions.png */; };
 		DBFBA0F31AC4B8F800BD98D7 /* AdController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */; };
 		DBFBA0F61AC4B93F00BD98D7 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFBA0F41AC4B93700BD98D7 /* iAd.framework */; };
 /* End PBXBuildFile section */
@@ -84,11 +86,13 @@
 		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
 		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DB8C315E1AC620EB0027E949 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		DB970F701AC3956200A97BCD /* LCDM2L__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = LCDM2L__.TTF; path = Fonts/LCDM2L__.TTF; sourceTree = "<group>"; };
 		DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatusView.swift; sourceTree = "<group>"; };
 		DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		DBB20A4E1ABE5C060050AA36 /* Car Racing Challenge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Car Racing Challenge.entitlements"; sourceTree = "<group>"; };
+		DBD63E301AC7669100F3A3C3 /* Instructions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Instructions.png; path = Images/Instructions.png; sourceTree = "<group>"; };
 		DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdController.swift; sourceTree = "<group>"; };
 		DBFBA0F41AC4B93700BD98D7 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -134,6 +138,7 @@
 				DB525E801ABDF69900959D26 /* MenuView.swift */,
 				DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */,
 				DB2E84471AAD338D0009E321 /* Images.xcassets */,
+				DBD63E2F1AC7668800F3A3C3 /* Images */,
 				DB525E7B1ABDEFDC00959D26 /* Constants */,
 				DB384C161AC0D90500C2BB32 /* Extensions */,
 				DB384BF81AC0D86000C2BB32 /* Sounds */,
@@ -200,6 +205,7 @@
 				DB384C201AC0D90E00C2BB32 /* Utils.swift */,
 				DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */,
 				DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */,
+				DB8C315E1AC620EB0027E949 /* PurchaseController.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -219,6 +225,14 @@
 			);
 			name = Constants;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		DBD63E2F1AC7668800F3A3C3 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				DBD63E301AC7669100F3A3C3 /* Instructions.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,6 +302,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBD63E311AC7669100F3A3C3 /* Instructions.png in Resources */,
 				DB384C0C1AC0D86C00C2BB32 /* pato.wav in Resources */,
 				DB384C0B1AC0D86C00C2BB32 /* level_up.wav in Resources */,
 				DB384C081AC0D86C00C2BB32 /* entrance.wav in Resources */,
@@ -333,6 +348,7 @@
 			files = (
 				DB384C281AC0D90E00C2BB32 /* UICustomDevice.swift in Sources */,
 				DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */,
+				DB8C315F1AC620EB0027E949 /* PurchaseController.swift in Sources */,
 				DB384C271AC0D90E00C2BB32 /* Trace.swift in Sources */,
 				DB384C291AC0D90E00C2BB32 /* UIExtensions.swift in Sources */,
 				DB384C221AC0D90E00C2BB32 /* Configs.swift in Sources */,

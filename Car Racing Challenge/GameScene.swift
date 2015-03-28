@@ -45,7 +45,7 @@ class GameScene: SKScene
     private var bg                      : SKSpriteNode!;
     
     //-- configs --
-    private let scoreToLevelUp          : Int = 2;//500
+    private let scoreToLevelUp          : Int = 500;//500
     private var scoreToEarnLife         : Int = 100;//100
     private let maximunColumns          : Int = 5;
     private let minimumColumns          : Int = 3;
@@ -140,7 +140,7 @@ class GameScene: SKScene
         self.charactersSize.width       = self.pixelSize * 3;
         self.charactersSize.height      = self.pixelSize * 4;
         self.buttonSize.width           = self.size.width.half.roundValue;
-        self.buttonSize.height          = self.pixelSize * 4;
+        self.buttonSize.height          = self.size.height;
         self.currentMainCharColumn      = self.totalColumns / 2;
         self.pixelDistanceCounter       = self.pixelDistanceBtwEnemies;
         self.currentVelSound            = 0;
@@ -203,40 +203,26 @@ class GameScene: SKScene
         /**
         cria os controles do jogo
         */
-        self.buttonLeft = SKSpriteNode(imageNamed: ImagesNames.Background);
+        self.buttonLeft = SKSpriteNode();
         self.buttonLeft.size = self.buttonSize;
         self.buttonLeft.anchorPoint.y = 1;
         self.buttonLeft.x = self.buttonLeft.width.half;
-        var pxCount:CGFloat = (55 / self.pixelSize).roundValue;
-        pxCount = pxCount == 0 ? 1 : pxCount;
-        var heightPixels:CGFloat = (totalPixelsY.floatValue - pxCount);
-        self.buttonLeft.y = self.size.height - (self.pixelSize * heightPixels);
+        self.buttonLeft.y = self.size.height;
         self.buttonLeft.name = self.IDBtLeft;
         self.addChild(self.buttonLeft);
-        var labelLeft:SKLabelNode = SKLabelNode(fontNamed: FontNames.Default);
-        labelLeft.text = "LEFT";
-        labelLeft.fontSize = FontSize.Default;
-        labelLeft.fontColor = UIColor.blackColor();
-        labelLeft.position.y -= 30;
-        labelLeft.name = self.IDBtLeft;
-        self.buttonLeft.addChild(labelLeft);
         
-        self.buttonRight = SKSpriteNode(imageNamed: ImagesNames.Background);
+        self.buttonRight = SKSpriteNode();
         self.buttonRight.size = self.buttonSize;
         self.buttonRight.anchorPoint.y = 1;
         self.buttonRight.x = self.size.width - self.buttonRight.width.half;
         self.buttonRight.y = self.buttonLeft.y;
         self.buttonRight.name = self.IDBtRight;
         self.addChild(self.buttonRight);
-        var labelRight:SKLabelNode = SKLabelNode(fontNamed: FontNames.Default);
-        labelRight.text = "RIGHT";
-        labelRight.fontSize = FontSize.Default;
-        labelRight.fontColor = UIColor.blackColor();
-        labelRight.position.y -= 30;
-        labelRight.name = self.IDBtRight;
-        self.buttonRight.addChild(labelRight);
         
-        self.mainCharacter.y = self.buttonLeft.y + self.mainCharacter.height;
+        var pxCount:CGFloat = (55 / self.pixelSize).roundValue;
+        pxCount = pxCount == 0 ? 1 : pxCount;
+        var heightPixels:CGFloat = (totalPixelsY.floatValue - pxCount);
+        self.mainCharacter.y = self.size.height - (self.pixelSize * totalPixelsY.floatValue) + self.mainCharacter.height;
         
         /**
         configurar posicao z da interface

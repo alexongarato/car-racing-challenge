@@ -16,20 +16,15 @@ class MenuView: AbstractView
     private var instructs   : UITextView!;
     private var actions     : Array<UILabel>!;
     private var fontColor   : UIColor = UIColor.blackColor();
+    private var scaleFactor : CGFloat = 1;
     
     override func didMoveToSuperview()
     {
         super.didMoveToSuperview();
-//        self.enableBlur(UIBlurEffectStyle.Light);
-        
-        if(self.width == 375)
-        {
-            self.backgroundColor = UIColor(patternImage: UIImage(named: ImagesNames.MenuBackgroundiPhone6)!);
-        }
-        else
-        {
-            self.backgroundColor = UIColor(patternImage: UIImage(named: ImagesNames.MenuBackground)!);
-        }
+        var img:UIImage! = UIImage(named: ImagesNames.MenuBackground)!;
+        var imgView:UIImageView = UIImageView(image: img);
+        imgView.frame = self.frame;
+        self.addSubview(imgView)
         
         self.title = UITextView();
         self.title.textColor = fontColor;
@@ -45,63 +40,59 @@ class MenuView: AbstractView
         self.instructs.textColor = fontColor;
         self.addSubview(self.instructs);
         self.instructs.editable = false;
+        
+        if(self.width > 375 && self.width < 414)
+        {
+            self.scaleFactor = 2;
+        }
+        if(self.width > 414)
+        {
+            self.scaleFactor = 3;
+        }
+        
+//        self.title.layer.borderWidth = 1;
+//        self.desc.layer.borderWidth = 1;
+//        self.instructs.layer.borderWidth = 1;
     }
     
     func setTitle(text:String)
     {
         self.title.text = text;
-        self.title.font = Fonts.DefaultFont(FontSize.Big);
+        self.title.font = Fonts.DefaultFont(FontSize.Big * self.scaleFactor);
         self.title.textAlignment = NSTextAlignment.Center;
         self.title.backgroundColor = UIColor.clearColor();
         self.title.sizeToFit();
         self.title.width = self.width - 10;
         self.title.center = self.center;
-        if(self.height > 480)
-        {
-            self.title.y = self.height * 0.1;
-        }
-        else
-        {
-            self.title.y = self.center.y - (self.height * 0.41);
-        }
+        self.title.y = self.center.y - (self.height * 0.41);
         
     }
     
     func setDescription(text:String)
     {
         self.desc.text = text;
-        self.desc.font = Fonts.DefaultFont(FontSize.Default);
+        self.desc.font = Fonts.DefaultFont(FontSize.Default * self.scaleFactor);
         self.desc.textAlignment = NSTextAlignment.Center;
         self.desc.backgroundColor = UIColor.clearColor();
         self.desc.sizeToFit();
         self.desc.width = self.width - 10;
         self.desc.center = self.center;
-        if(self.height > 480)
-        {
-            self.desc.y = self.center.y - (self.height * 0.26);
-        }
-        else
-        {
-            self.desc.y = self.title.y + self.title.height;
-        }
+        self.desc.y = self.title.y + self.title.height - 10;
     }
     
     func setInstructions(scoreToLifeUp:Int, scoreToLevelUp:Int)
     {
-        var image:UIImage! = UIImage(named: ImagesNames.Instructions);
+        var image:UIImage! = ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.Instructions), sizeToFit: self.frame.size);
         var instructions:UIImageView = UIImageView(image: image);
         self.addSubview(instructions);
         instructions.center = self.center;
         if(self.height <= 480)
         {
-            if(self.desc != nil)
-            {
-                instructions.y = self.desc.y + self.desc.height + 10;
-            }
+            instructions.y += 20;
         }
         
         self.instructs.text = "each \(scoreToLifeUp) points earned = 1 life up";
-        self.instructs.font = Fonts.DefaultFont(FontSize.Tiny);
+        self.instructs.font = Fonts.DefaultFont(FontSize.Tiny * self.scaleFactor);
         self.instructs.textAlignment = NSTextAlignment.Center;
         self.instructs.backgroundColor = UIColor.clearColor();
         self.instructs.sizeToFit();
@@ -117,7 +108,14 @@ class MenuView: AbstractView
         var podium:UIImageView = UIImageView(image: image);
         self.addSubview(podium);
         podium.center = self.center;
-        podium.y += 20;
+        if(self.height > 480)
+        {
+            podium.y -= 20;
+        }
+        else
+        {
+            podium.y -= self.y;
+        }
         podium.addTarget(self, selector: Selector("openGameCenter"));
     }
     
@@ -140,7 +138,7 @@ class MenuView: AbstractView
         self.actions.append(newAction);
         
         newAction.text = text;
-        newAction.font = Fonts.DefaultFont(FontSize.Medium);
+        newAction.font = Fonts.DefaultFont(FontSize.Medium * self.scaleFactor);
         newAction.textAlignment = NSTextAlignment.Center;
         newAction.sizeToFit();
         newAction.width = self.width - 10;
@@ -151,24 +149,16 @@ class MenuView: AbstractView
         for(var i:Int = 0; i < self.actions.count; i++)
         {
             var action:UILabel = self.actions[i];
-            /*if(self.instructs != nil)
-            {
-//                action.center.y = self.instructs.y + self.instructs.height + (self.height - self.instructs.y + self.instructs.height).half - (action.height * i.floatValue) - 30;
-                action.center.y = self.instructs.y + self.instructs.height + 40 + (action.height * i.floatValue);
-            }
-            else
-            {*/
             
-            if(self.height > 480)
+            if(self.height <= 480)
             {
-                action.y = self.height * 0.82 - totalHeight + ((action.height + 20) * i.floatValue);
+                action.y = (self.height) * 0.9 - totalHeight + ((action.height + 10) * i.floatValue);
             }
             else
             {
-                action.y = self.height * 0.94 - totalHeight + ((action.height + 20) * i.floatValue);
+                action.y = (self.height) * 0.82 - totalHeight + ((action.height + 20) * i.floatValue);
             }
             
-            //}
         }
     }
     

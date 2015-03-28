@@ -26,10 +26,14 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).gameController = self;
         
+        var purchased:Bool = PurchaseController.getInstance().hasPurchased();
+        
         sceneView = SKView();
         sceneView.frame = self.view.frame;
+        
         sceneView.ignoresSiblingOrder = true;
         self.view.addSubview(sceneView);
+        
 //        sceneView.showsFPS = Configs.DEBUG_MODE;
 //        sceneView.showsNodeCount = Configs.DEBUG_MODE;
         
@@ -182,8 +186,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     
     func levelUpHandler()
     {
-        scene.stop();
-        
         Trace.log("GameViewController -> LEVEL UP");
         
         var ttl:String = "\nRACE TRACK\nUPGRADE \(scene.currentLevel())\n";
@@ -203,21 +205,23 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             }
             if(desc != nil)
             {
+                scene.stop();
                 showMenu(ttl, desc: desc, action: act, selector: selector, showExitButton:false);
                 scene.setTotalColumns(scene.currentColumns() - 1);
+                self.showBanner();
             }
         }
         else
         {
+            scene.stop();
             selector = nil;
             ttl = "FREE VERSION";
             desc = "This free version is limited\nto one level only.";
             showMenu(ttl, desc: desc, action: "", selector: nil, showExitButton:true);
+            self.showBanner();
         }
         
         AudioHelper.playSound(AudioHelper.LevelUpSound);
-        
-        self.showBanner();
     }
     
     func resumeLevelUp()
