@@ -34,8 +34,8 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         sceneView.ignoresSiblingOrder = true;
         self.view.addSubview(sceneView);
         
-//        sceneView.showsFPS = Configs.DEBUG_MODE;
-//        sceneView.showsNodeCount = Configs.DEBUG_MODE;
+        sceneView.showsFPS = Configs.DEBUG_MODE;
+        sceneView.showsNodeCount = Configs.DEBUG_MODE;
         
         self.scene = GameScene();
         scene.size = UIScreen.mainScreen().applicationFrame.size;
@@ -93,7 +93,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         
         if(showInstructions)
         {
-            menuView.setInstructions(self.scene.lifeUpScore(), scoreToLevelUp: self.scene.levelUpScore());
+            menuView.setInstructions(self.scene.SCORE_TO_EARN_LIFE, scoreToLevelUp: self.scene.SCORE_TO_LEVEL_UP);
         }
         else if(showGameOver)
         {
@@ -124,7 +124,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     {
         self.statusView.update(self.scene.currentLevel(),
             score: self.scene.currentScore(),
-            nextScore: self.scene.levelUpScore(),
+            nextScore: self.scene.SCORE_TO_LEVEL_UP,
             lifes:scene.currentLifes(),
             scoreNextLife:self.scene.currentScoreToNextLife());
     }
@@ -132,7 +132,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     func startGame()
     {
         showMenu("car racing\nchallenge",
-            desc: "How far can you go?", action: "PLAY", selector: Selector("startGameHandler"), showInstructions:true, showExitButton:false);
+            desc: "", action: "PLAY", selector: Selector("startGameHandler"), showInstructions:true, showExitButton:false);
         AudioHelper.playSound(AudioHelper.EntranceSound);
         
         self.showBanner();

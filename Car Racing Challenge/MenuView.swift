@@ -8,20 +8,25 @@
 
 import Foundation
 import UIKit
+import iAd
 
-class MenuView: AbstractView
+class MenuView: AbstractView, ADBannerViewDelegate
 {
     private var desc        : UITextView!;
     private var title       : UITextView!;
-    private var instructs   : UITextView!;
+//    private var instructs   : UITextView!;
     private var actions     : Array<UILabel>!;
     private var fontColor   : UIColor = UIColor.blackColor();
     private var scaleFactor : CGFloat = 1;
+    private var _bannerView : ADBannerView!;
+    private var _adLoaded   : Bool = false;
     
     override func didMoveToSuperview()
     {
+        self.buildBanner();
+        
         super.didMoveToSuperview();
-        var img:UIImage! = UIImage(named: ImagesNames.MenuBackground)!;
+        var img:UIImage! = UIImage(named: ImagesNames.Background)!;
         var imgView:UIImageView = UIImageView(image: img);
         imgView.frame = self.frame;
         self.addSubview(imgView)
@@ -36,10 +41,10 @@ class MenuView: AbstractView
         self.addSubview(self.desc);
         self.desc.editable = false;
         
-        self.instructs = UITextView();
-        self.instructs.textColor = fontColor;
-        self.addSubview(self.instructs);
-        self.instructs.editable = false;
+//        self.instructs = UITextView();
+//        self.instructs.textColor = fontColor;
+//        self.addSubview(self.instructs);
+//        self.instructs.editable = false;
         
         if(self.width > 375 && self.width < 414)
         {
@@ -53,7 +58,73 @@ class MenuView: AbstractView
 //        self.title.layer.borderWidth = 1;
 //        self.desc.layer.borderWidth = 1;
 //        self.instructs.layer.borderWidth = 1;
+        
+//        self.showBanner();
     }
+    
+    //-------- banner functions --------------------
+    private func buildBanner()
+    {
+        // On iOS 6 ADBannerView introduces a new initializer, use it when available.
+        if(ADBannerView.instancesRespondToSelector(Selector("initWithAdType:")))
+        {
+            Trace.log("ADAdType banner");
+            _bannerView = ADBannerView(adType: ADAdType.Banner);
+        }
+        else
+        {
+            Trace.log("no ADAdType");
+            _bannerView = ADBannerView();
+        }
+        
+        _bannerView.delegate = self;
+    }
+    
+    func showBanner()
+    {
+        Trace.log("ShowBanner");
+        
+        var bannerFrame:CGRect = _bannerView.frame;
+        if (_bannerView.bannerLoaded)
+        {
+            Trace.log("banner loaded");
+            
+            _bannerView.y = self.height - _bannerView.height;
+            self.addSubview(_bannerView);
+        }
+        else
+        {
+            Trace.log("banner not loaded");
+        }
+    }
+    
+    func bannerViewDidLoadAd(banner:ADBannerView)
+    {
+        Trace.log("bannerViewDidLoadAd");
+        if(!_adLoaded)
+        {
+            _adLoaded = true;
+            self.showBanner();
+        }
+    }
+    
+    private func bannerView(banner:ADBannerView, didFailToReceiveAdWithError:NSError)
+    {
+        Trace.log("didFailToReceiveAdWithError");
+    }
+    
+    private func bannerViewActionShouldBegin(banner:ADBannerView, willLeaveApplication:Bool) -> Bool
+    {
+        Trace.log("bannerViewActionShouldBegin");
+        return true;
+    }
+    
+    private func bannerViewActionDidFinish(banner:ADBannerView)
+    {
+        Trace.log("bannerViewActionDidFinish");
+    }
+    //---------------------------------
+    
     
     func setTitle(text:String)
     {
@@ -91,14 +162,14 @@ class MenuView: AbstractView
             instructions.y += 20;
         }
         
-        self.instructs.text = "each \(scoreToLifeUp) points earned = 1 life up";
-        self.instructs.font = Fonts.DefaultFont(FontSize.Tiny * self.scaleFactor);
-        self.instructs.textAlignment = NSTextAlignment.Center;
-        self.instructs.backgroundColor = UIColor.clearColor();
-        self.instructs.sizeToFit();
-        self.instructs.width = self.width - 10;
-        self.instructs.center = self.center;
-        self.instructs.y = instructions.y + instructions.height - 41;
+//        self.instructs.text = "each \(scoreToLifeUp) points earned = 1 life up";
+//        self.instructs.font = Fonts.DefaultFont(FontSize.Tiny * self.scaleFactor);
+//        self.instructs.textAlignment = NSTextAlignment.Center;
+//        self.instructs.backgroundColor = UIColor.clearColor();
+//        self.instructs.sizeToFit();
+//        self.instructs.width = self.width - 10;
+//        self.instructs.center = self.center;
+//        self.instructs.y = instructions.y + instructions.height - 41;
         
     }
     
@@ -158,7 +229,6 @@ class MenuView: AbstractView
             {
                 action.y = (self.height) * 0.82 - totalHeight + ((action.height + 20) * i.floatValue);
             }
-            
         }
     }
     

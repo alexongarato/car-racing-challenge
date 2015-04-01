@@ -112,7 +112,7 @@ class GameCenterController
             {
                 Trace.error("GameCenterController -> auth error");
                 (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
-                Utils.showAlert(title: "Game Center Warning", message: "User is not logged in.", completion:{
+                Utils.showAlert(title: "Game Center Unavailable", message: "Player is not signed in", completion:{
                     (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationDidBecomeActive();
                 });
             }

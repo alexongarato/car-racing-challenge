@@ -52,7 +52,8 @@ class GameStatusView:AbstractView
     
     func update(level:Int, score:Int, nextScore:Int, lifes:Int, scoreNextLife:Int)
     {
-        self.statusField.text = "LEVEL:\(level)  LIFES:\(lifes)  SCORE:\(score)/\(nextScore * level)";
+//        self.statusField.text = "LEVEL:\(level)  LIFES:\(lifes)  SCORE:\(score)/\(nextScore * level)";
+        self.statusField.text = "LEVEL:\(level)        SCORE:\(score) / \(nextScore * level)";
         self.statusField.sizeToFit();
         self.statusField.center.x = self.center.x;
     }

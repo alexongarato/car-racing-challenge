@@ -100,8 +100,15 @@ class AudioHelper
             if let sndTmp = tmp as? CustomAVAudioPlayer
             {
                 snd = sndTmp;
-                snd.prepareToPlay();
-                snd.play();
+//                if(snd.playing)
+//                {
+//                    snd.stop();
+//                }
+                if(!snd.playing)
+                {
+                    snd.prepareToPlay();
+                    snd.play();
+                }
             }
         }
         else

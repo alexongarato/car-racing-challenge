@@ -133,13 +133,12 @@
 				DBB20A4E1ABE5C060050AA36 /* Car Racing Challenge.entitlements */,
 				DB6FF61C1ABD272700F7B073 /* Main.storyboard */,
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
-				DB2E84401AAD338D0009E321 /* GameScene.swift */,
-				DB2E84421AAD338D0009E321 /* GameViewController.swift */,
 				DB525E801ABDF69900959D26 /* MenuView.swift */,
+				DB2E84401AAD338D0009E321 /* GameScene.swift */,
 				DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */,
+				DB2E84421AAD338D0009E321 /* GameViewController.swift */,
 				DB2E84471AAD338D0009E321 /* Images.xcassets */,
 				DBD63E2F1AC7668800F3A3C3 /* Images */,
-				DB525E7B1ABDEFDC00959D26 /* Constants */,
 				DB384C161AC0D90500C2BB32 /* Extensions */,
 				DB384BF81AC0D86000C2BB32 /* Sounds */,
 				DB525E721ABDEF5500959D26 /* Fonts */,
@@ -160,7 +159,6 @@
 		DB384BF81AC0D86000C2BB32 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */,
 				DB384BF91AC0D86C00C2BB32 /* Blip_Select.wav */,
 				DB384BFA1AC0D86C00C2BB32 /* entrance.wav */,
 				DB384BFB1AC0D86C00C2BB32 /* entrance2.wav */,
@@ -193,19 +191,21 @@
 		DB384C161AC0D90500C2BB32 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DB384C181AC0D90E00C2BB32 /* Configs.swift */,
+				DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */,
 				DB384C171AC0D90E00C2BB32 /* Animation.swift */,
+				DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */,
+				DB384C181AC0D90E00C2BB32 /* Configs.swift */,
 				DB384C191AC0D90E00C2BB32 /* DataProvider.swift */,
 				DB384C1A1AC0D90E00C2BB32 /* Extensions.swift */,
+				DB525E7E1ABDF19F00959D26 /* Fonts.swift */,
 				DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */,
+				DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */,
+				DB8C315E1AC620EB0027E949 /* PurchaseController.swift */,
 				DB384C1C1AC0D90E00C2BB32 /* SKExtensions.swift */,
 				DB384C1D1AC0D90E00C2BB32 /* Trace.swift */,
-				DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */,
 				DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */,
+				DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */,
 				DB384C201AC0D90E00C2BB32 /* Utils.swift */,
-				DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */,
-				DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */,
-				DB8C315E1AC620EB0027E949 /* PurchaseController.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -213,18 +213,9 @@
 		DB525E721ABDEF5500959D26 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				DB525E7E1ABDF19F00959D26 /* Fonts.swift */,
 				DB970F701AC3956200A97BCD /* LCDM2L__.TTF */,
 			);
 			name = Fonts;
-			sourceTree = "<group>";
-		};
-		DB525E7B1ABDEFDC00959D26 /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Constants;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		DBD63E2F1AC7668800F3A3C3 /* Images */ = {
