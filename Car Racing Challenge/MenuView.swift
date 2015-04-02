@@ -58,13 +58,17 @@ class MenuView: AbstractView, ADBannerViewDelegate
 //        self.title.layer.borderWidth = 1;
 //        self.desc.layer.borderWidth = 1;
 //        self.instructs.layer.borderWidth = 1;
-        
-//        self.showBanner();
     }
     
     //-------- banner functions --------------------
     private func buildBanner()
     {
+        if(PurchaseController.getInstance().hasPurchased())
+        {
+            Trace.log("user has purchased remove ads");
+            return;
+        }
+        
         // On iOS 6 ADBannerView introduces a new initializer, use it when available.
         if(ADBannerView.instancesRespondToSelector(Selector("initWithAdType:")))
         {
@@ -82,6 +86,12 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func showBanner()
     {
+        if(_bannerView == nil)
+        {
+            Trace.log("no banner will be displayed.");
+            return;
+        }
+        
         Trace.log("ShowBanner");
         
         var bannerFrame:CGRect = _bannerView.frame;
@@ -89,8 +99,11 @@ class MenuView: AbstractView, ADBannerViewDelegate
         {
             Trace.log("banner loaded");
             
-            _bannerView.y = self.height - _bannerView.height;
-            self.addSubview(_bannerView);
+            self._bannerView.y = self.height;
+            UIView.animateWithDuration(AnimationTime.Default, animations: {
+                self._bannerView.y = self.height - self._bannerView.height;
+                self.addSubview(self._bannerView);
+            });
         }
         else
         {
@@ -108,18 +121,18 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
-    private func bannerView(banner:ADBannerView, didFailToReceiveAdWithError:NSError)
+    func bannerView(banner:ADBannerView!, didFailToReceiveAdWithError:NSError!)
     {
         Trace.log("didFailToReceiveAdWithError");
     }
     
-    private func bannerViewActionShouldBegin(banner:ADBannerView, willLeaveApplication:Bool) -> Bool
+    func bannerViewActionShouldBegin(banner:ADBannerView, willLeaveApplication:Bool) -> Bool
     {
         Trace.log("bannerViewActionShouldBegin");
         return true;
     }
     
-    private func bannerViewActionDidFinish(banner:ADBannerView)
+    func bannerViewActionDidFinish(banner:ADBannerView)
     {
         Trace.log("bannerViewActionDidFinish");
     }
@@ -230,6 +243,30 @@ class MenuView: AbstractView, ADBannerViewDelegate
                 action.y = (self.height) * 0.82 - totalHeight + ((action.height + 20) * i.floatValue);
             }
         }
+    }
+    
+    override func dismiss(completion: ((animated: Bool) -> Void)!)
+    {
+        if(self._bannerView == nil)
+        {
+            super.dismiss(completion);
+            return;
+        }
+        
+        func completion(animated:Bool)
+        {
+            self._bannerView.removeFromSuperview();
+            super.dismiss(completion);
+        }
+        
+        if(self._bannerView.y < self.height - self._bannerView.height)
+        {
+            self._bannerView.y = self.height - self._bannerView.height;
+        }
+        
+        UIView.animateWithDuration(AnimationTime.Default, animations: {
+            self._bannerView.y = self.height;
+        }, completion:completion);
     }
     
     func disableAction()

@@ -105,6 +105,11 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             menuView.setAction(action, target: self, selector: selector);
         }
         
+        if(!PurchaseController.getInstance().hasPurchased() && PurchaseController.getInstance().userCanPurchase())
+        {
+            menuView.setAction("REMOVE ADS", target: PurchaseController.getInstance(), selector: Selector("removeAdsHandler"));
+        }
+        
         if(showExitButton)
         {
             menuView.setAction("exit", target: self, selector: Selector("exitHandler"));
@@ -269,6 +274,8 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             self.showResumeOnStartUp = false;
             showMenu("RESUME\nCAR RACING\nCHALLENGE\n\n", desc: " \n \n \nARE YOU READY?", action: "YES!", selector: Selector("resumeLevelUp"));
         }
+        
+        Utils.hideAlert(nil);
     }
     
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!)

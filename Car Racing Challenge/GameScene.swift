@@ -386,12 +386,12 @@ class GameScene: SKScene
                         self.lifeDownHandler();
                     }
                     
-//                    if(self.totalLifesCounter < 0)
-//                    {
-//                        self.totalLifesCounter = 0;
-//                        self.isGameOver = true;
-//                        self.gameOverHandler();
-//                    }
+                    if(self.totalLifesCounter < 0)
+                    {
+                        self.totalLifesCounter = 0;
+                        self.isGameOver = true;
+                        self.gameOverHandler();
+                    }
                     
                     self.updateStatusHandler();
                 }

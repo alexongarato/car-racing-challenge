@@ -39,7 +39,9 @@
 		DB384C341AC0DA3500C2BB32 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */; };
 		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
 		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
+		DB546E811ACBA35900D1D9F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
+		DB7A0BD51ACCCF2E0008B581 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB7A0BD41ACCCF2E0008B581 /* Products.plist */; };
 		DB8C315F1AC620EB0027E949 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C315E1AC620EB0027E949 /* PurchaseController.swift */; };
 		DB970F711AC3956200A97BCD /* LCDM2L__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = DB970F701AC3956200A97BCD /* LCDM2L__.TTF */; };
 		DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */; };
@@ -85,7 +87,9 @@
 		DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
 		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DB7A0BD41ACCCF2E0008B581 /* Products.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
 		DB8C315E1AC620EB0027E949 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		DB970F701AC3956200A97BCD /* LCDM2L__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = LCDM2L__.TTF; path = Fonts/LCDM2L__.TTF; sourceTree = "<group>"; };
 		DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
@@ -102,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB546E811ACBA35900D1D9F0 /* StoreKit.framework in Frameworks */,
 				DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */,
 				DB384C341AC0DA3500C2BB32 /* AVFoundation.framework in Frameworks */,
 				DBFBA0F61AC4B93F00BD98D7 /* iAd.framework in Frameworks */,
@@ -152,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				DB2E843B1AAD338D0009E321 /* Info.plist */,
+				DB7A0BD41ACCCF2E0008B581 /* Products.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -180,6 +186,7 @@
 		DB384C151AC0D87F00C2BB32 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */,
 				DBFBA0F41AC4B93700BD98D7 /* iAd.framework */,
 				DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */,
 				DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */,
@@ -303,6 +310,7 @@
 				DB384C111AC0D86C00C2BB32 /* vel_1.wav in Resources */,
 				DB384C091AC0D86C00C2BB32 /* entrance2.wav in Resources */,
 				DB384C071AC0D86C00C2BB32 /* Blip_Select.wav in Resources */,
+				DB7A0BD51ACCCF2E0008B581 /* Products.plist in Resources */,
 				DB384C141AC0D86C00C2BB32 /* vel_4.wav in Resources */,
 				DB384C0E1AC0D86C00C2BB32 /* Randomize.wav in Resources */,
 				DB384C0F1AC0D86C00C2BB32 /* menu_open.wav in Resources */,
@@ -480,7 +488,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "Car Racing Challenge/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 import SpriteKit
 
+private var _alert:UIAlertController!;
+private var _alertView:UIAlertView!;
+
 class Utils
 {
     class func random(i:Int) -> Int
@@ -146,18 +149,61 @@ class Utils
 //        #endif
     }
     
-    @objc class func showAlert(#title:String, message:String, completion:(()->Void)! = nil)
+    @objc class func showAlert(#title:String!, message:String!, action:String! = "OK", cancel:String! = nil, completion:(()->Void)! = nil)
+    {
+        Utils.hideAlert({
+            if(UICustomDevice.isIOS8OrHigher())
+            {
+                _alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert);
+                if(cancel != nil)
+                {
+                    _alert.addAction(UIAlertAction(title: cancel, style: UIAlertActionStyle.Cancel, handler: nil));
+                }
+                if(action != nil)
+                {
+                    _alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Default, handler: nil));
+                }
+                (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(_alert, animated: true, completion: completion);
+            }
+            else
+            {
+                _alertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: action, otherButtonTitles: cancel);
+                _alertView.show();
+            }
+        });
+    }
+    
+    @objc class func hideAlert(completion:(()->Void)!)
     {
         if(UICustomDevice.isIOS8OrHigher())
         {
-            var alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert);
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil));
-            (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(alert, animated: true, completion: completion);
+            if(_alert != nil)
+            {
+                if(!_alert.isBeingPresented())
+                {
+                    _alert.dismissViewControllerAnimated(true, completion: completion);
+                    _alert = nil;
+                    return;
+                }
+            }
         }
         else
         {
-            var message:UIAlertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: "OK");
-            message.show();
+            if(_alertView != nil)
+            {
+                _alertView.removeFromSuperview();
+                _alertView = nil;
+                if(completion != nil)
+                {
+                    completion();
+                }
+                return;
+            }
+        }
+        
+        if(completion != nil)
+        {
+            completion();
         }
     }
 }
