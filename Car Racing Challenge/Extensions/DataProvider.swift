@@ -118,6 +118,11 @@ class DataProvider
 
 struct SuiteNames
 {
-    static var GameBestScoreSuite   : String = "game_score_suite";
-    static var GameBestScoreKey     : String = "game_score_key";
+    static var SuiteBestScore   : String = "game_score_suite";
+    static var KeyBestScore     : String = "game_score_key";
+    
+    static var SuiteConfigs     : String = "game_configs_suite";
+    static var KeySound         : String = "game_sound_key";
+    static var KeyAds           : String = "game_ads_key";
+    static var KeyFirstTime     : String = "game_first_time_key";
 }

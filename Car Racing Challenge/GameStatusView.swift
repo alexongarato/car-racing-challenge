@@ -12,7 +12,7 @@ class GameStatusView:AbstractView
 {
     private var scoreField:UILabel!;
     private var statusField:UILabel!;
-    private var defaultBgColor:UIColor = UIColor(patternImage: ImageHelper.imageWithName(ImagesNames.Background)).alpha(0.8);
+    private var defaultBgColor:UIColor = UIColor(patternImage: UIImage(named: ImagesNames.Background)!).alpha(0.8);
     private var defaultY:CGFloat = 0;
     
     override func didMoveToSuperview()

@@ -22,6 +22,16 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     
     override func viewDidLoad()
     {
+        //------ INIT DATA ------
+        if(!DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyFirstTime))
+        {
+            DataProvider.saveData(SuiteNames.SuiteConfigs, key: SuiteNames.KeySound, value: true);
+            DataProvider.saveData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyBestScore, string: "0");
+            DataProvider.saveData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds, value: false);
+            DataProvider.saveData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyFirstTime, value: true);
+        }
+        //------
+        
         super.viewDidLoad();
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).gameController = self;
@@ -52,17 +62,10 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         scene.lifeUpHandler = self.statusView.showSuccessAnimation;
         scene.lifeDownHandler = self.statusView.showErrorAnimation;
         
-        let data:NSString = DataProvider.getString(SuiteNames.GameBestScoreSuite, key: SuiteNames.GameBestScoreKey) as NSString;
-        if(data == "")
-        {
-            Trace.log("GameViewController -> oops. best score not restored.");
-        }
-         else
-        {
-            self.bestScoreEver = NSInteger(data.floatValue);
-            Trace.log("GameViewController -> best score restored: \(self.bestScoreEver)");
-            GameCenterController.reportScore(self.bestScoreEver);
-        }
+        let data:NSString = DataProvider.getString(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore) as NSString;
+        self.bestScoreEver = NSInteger(data.floatValue);
+        Trace.log("GameViewController -> best score restored: \(self.bestScoreEver)");
+        GameCenterController.reportScore(self.bestScoreEver);
         
         self.scene.reset();
         self.scene.build();
@@ -103,11 +106,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         if(selector != nil)
         {
             menuView.setAction(action, target: self, selector: selector);
-        }
-        
-        if(!PurchaseController.getInstance().hasPurchased() && PurchaseController.getInstance().userCanPurchase())
-        {
-            menuView.setAction("REMOVE ADS", target: PurchaseController.getInstance(), selector: Selector("removeAdsHandler"));
         }
         
         if(showExitButton)
@@ -168,11 +166,12 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     func gameOverHandler()
     {
         scene.stop();
+        Utils.vibrate();
         
         if(scene.currentScore() > self.bestScoreEver)
         {
             self.bestScoreEver = scene.currentScore();
-            DataProvider.saveData(SuiteNames.GameBestScoreSuite, key: SuiteNames.GameBestScoreKey, string: "\(self.bestScoreEver)");
+            DataProvider.saveData(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore, string: "\(self.bestScoreEver)");
             if(!GameCenterController.isReady())
             {
                 GameCenterController.authenticate({ GameCenterController.reportScore(self.bestScoreEver); });
@@ -183,7 +182,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             }
         }
         
-        showMenu("\nGAME OVER", desc: "SCORE:\(scene.currentScore())\nBEST:\(self.bestScoreEver)", action: "RESTART", selector: Selector("startGameHandler"), showGameOver:true);
+        showMenu("GAME OVER", desc: "\n\nSCORE:\(scene.currentScore())\nBEST:\(self.bestScoreEver)", action: "RESTART", selector: Selector("startGameHandler"), showGameOver:true);
         AudioHelper.playSound(AudioHelper.GameOverSound);
         
         self.showBanner();

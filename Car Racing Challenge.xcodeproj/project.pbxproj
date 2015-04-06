@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DB1366531AD23992009A33DB /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1366521AD23992009A33DB /* Events.swift */; };
 		DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E843C1AAD338D0009E321 /* AppDelegate.swift */; };
 		DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84401AAD338D0009E321 /* GameScene.swift */; };
 		DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84421AAD338D0009E321 /* GameViewController.swift */; };
@@ -37,13 +38,17 @@
 		DB384C2A1AC0D90E00C2BB32 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C201AC0D90E00C2BB32 /* Utils.swift */; };
 		DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */; };
 		DB384C341AC0DA3500C2BB32 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */; };
+		DB3D62611ACE0B4B001BC9D9 /* ConfigIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3D62601ACE0B4B001BC9D9 /* ConfigIcon.png */; };
+		DB3D62651ACE4A0F001BC9D9 /* LCDMono2Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB3D62621ACE4A0F001BC9D9 /* LCDMono2Bold.ttf */; };
+		DB3D62661ACE4A0F001BC9D9 /* LCDMono2Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB3D62631ACE4A0F001BC9D9 /* LCDMono2Light.ttf */; };
+		DB3D62671ACE4A0F001BC9D9 /* LCDMono2Normal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB3D62641ACE4A0F001BC9D9 /* LCDMono2Normal.ttf */; };
+		DB3D62691ACE51C7001BC9D9 /* ConfigsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3D62681ACE51C7001BC9D9 /* ConfigsView.swift */; };
 		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
 		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
 		DB546E811ACBA35900D1D9F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
 		DB7A0BD51ACCCF2E0008B581 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB7A0BD41ACCCF2E0008B581 /* Products.plist */; };
 		DB8C315F1AC620EB0027E949 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C315E1AC620EB0027E949 /* PurchaseController.swift */; };
-		DB970F711AC3956200A97BCD /* LCDM2L__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = DB970F701AC3956200A97BCD /* LCDM2L__.TTF */; };
 		DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */; };
 		DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */; };
 		DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */; };
@@ -53,6 +58,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DB1366521AD23992009A33DB /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		DB2E84371AAD338D0009E321 /* Car Racing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Car Racing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB2E843B1AAD338D0009E321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB2E843C1AAD338D0009E321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,17 +91,20 @@
 		DB384C201AC0D90E00C2BB32 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Extensions/Utils.swift; sourceTree = "<group>"; };
 		DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHelper.swift; sourceTree = "<group>"; };
 		DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DB3D62601ACE0B4B001BC9D9 /* ConfigIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ConfigIcon.png; path = Images/ConfigIcon.png; sourceTree = "<group>"; };
+		DB3D62621ACE4A0F001BC9D9 /* LCDMono2Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = LCDMono2Bold.ttf; path = Fonts/LCDMono2Bold.ttf; sourceTree = "<group>"; };
+		DB3D62631ACE4A0F001BC9D9 /* LCDMono2Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = LCDMono2Light.ttf; path = Fonts/LCDMono2Light.ttf; sourceTree = "<group>"; };
+		DB3D62641ACE4A0F001BC9D9 /* LCDMono2Normal.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = LCDMono2Normal.ttf; path = Fonts/LCDMono2Normal.ttf; sourceTree = "<group>"; };
+		DB3D62681ACE51C7001BC9D9 /* ConfigsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigsView.swift; sourceTree = "<group>"; };
 		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
 		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB7A0BD41ACCCF2E0008B581 /* Products.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
 		DB8C315E1AC620EB0027E949 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
-		DB970F701AC3956200A97BCD /* LCDM2L__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = LCDM2L__.TTF; path = Fonts/LCDM2L__.TTF; sourceTree = "<group>"; };
 		DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatusView.swift; sourceTree = "<group>"; };
 		DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		DBB20A4E1ABE5C060050AA36 /* Car Racing Challenge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Car Racing Challenge.entitlements"; sourceTree = "<group>"; };
 		DBD63E301AC7669100F3A3C3 /* Instructions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Instructions.png; path = Images/Instructions.png; sourceTree = "<group>"; };
 		DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdController.swift; sourceTree = "<group>"; };
 		DBFBA0F41AC4B93700BD98D7 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
@@ -135,10 +144,10 @@
 		DB2E84391AAD338D0009E321 /* Car Racing Challenge */ = {
 			isa = PBXGroup;
 			children = (
-				DBB20A4E1ABE5C060050AA36 /* Car Racing Challenge.entitlements */,
 				DB6FF61C1ABD272700F7B073 /* Main.storyboard */,
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
 				DB525E801ABDF69900959D26 /* MenuView.swift */,
+				DB3D62681ACE51C7001BC9D9 /* ConfigsView.swift */,
 				DB2E84401AAD338D0009E321 /* GameScene.swift */,
 				DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */,
 				DB2E84421AAD338D0009E321 /* GameViewController.swift */,
@@ -213,6 +222,7 @@
 				DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */,
 				DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */,
 				DB384C201AC0D90E00C2BB32 /* Utils.swift */,
+				DB1366521AD23992009A33DB /* Events.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -220,7 +230,9 @@
 		DB525E721ABDEF5500959D26 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				DB970F701AC3956200A97BCD /* LCDM2L__.TTF */,
+				DB3D62621ACE4A0F001BC9D9 /* LCDMono2Bold.ttf */,
+				DB3D62631ACE4A0F001BC9D9 /* LCDMono2Light.ttf */,
+				DB3D62641ACE4A0F001BC9D9 /* LCDMono2Normal.ttf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -228,6 +240,7 @@
 		DBD63E2F1AC7668800F3A3C3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DB3D62601ACE0B4B001BC9D9 /* ConfigIcon.png */,
 				DBD63E301AC7669100F3A3C3 /* Instructions.png */,
 			);
 			name = Images;
@@ -301,20 +314,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBD63E311AC7669100F3A3C3 /* Instructions.png in Resources */,
+				DB3D62671ACE4A0F001BC9D9 /* LCDMono2Normal.ttf in Resources */,
 				DB384C0C1AC0D86C00C2BB32 /* pato.wav in Resources */,
 				DB384C0B1AC0D86C00C2BB32 /* level_up.wav in Resources */,
 				DB384C081AC0D86C00C2BB32 /* entrance.wav in Resources */,
 				DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */,
 				DB384C121AC0D86C00C2BB32 /* vel_2.wav in Resources */,
-				DB970F711AC3956200A97BCD /* LCDM2L__.TTF in Resources */,
 				DB384C111AC0D86C00C2BB32 /* vel_1.wav in Resources */,
 				DB384C091AC0D86C00C2BB32 /* entrance2.wav in Resources */,
 				DB384C071AC0D86C00C2BB32 /* Blip_Select.wav in Resources */,
 				DB7A0BD51ACCCF2E0008B581 /* Products.plist in Resources */,
 				DB384C141AC0D86C00C2BB32 /* vel_4.wav in Resources */,
+				DB3D62651ACE4A0F001BC9D9 /* LCDMono2Bold.ttf in Resources */,
+				DB3D62611ACE0B4B001BC9D9 /* ConfigIcon.png in Resources */,
 				DB384C0E1AC0D86C00C2BB32 /* Randomize.wav in Resources */,
 				DB384C0F1AC0D86C00C2BB32 /* menu_open.wav in Resources */,
 				DB384C101AC0D86C00C2BB32 /* vel_0.wav in Resources */,
+				DB3D62661ACE4A0F001BC9D9 /* LCDMono2Light.ttf in Resources */,
 				DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */,
 				DB384C131AC0D86C00C2BB32 /* vel_3.wav in Resources */,
 				DB384C0D1AC0D86C00C2BB32 /* Pickup_Coin.wav in Resources */,
@@ -356,11 +372,13 @@
 				DB384C2A1AC0D90E00C2BB32 /* Utils.swift in Sources */,
 				DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */,
 				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
+				DB3D62691ACE51C7001BC9D9 /* ConfigsView.swift in Sources */,
 				DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */,
 				DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */,
 				DBFBA0F31AC4B8F800BD98D7 /* AdController.swift in Sources */,
 				DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */,
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
+				DB1366531AD23992009A33DB /* Events.swift in Sources */,
 				DB384C231AC0D90E00C2BB32 /* DataProvider.swift in Sources */,
 				DB384C211AC0D90E00C2BB32 /* Animation.swift in Sources */,
 				DB525E811ABDF69900959D26 /* MenuView.swift in Sources */,

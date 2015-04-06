@@ -242,6 +242,14 @@ extension UIView
         self.width = self.width * value;
         self.height = self.height * value;
     }
+    
+    func removeAllSubviews()
+    {
+        for view in self.subviews
+        {
+            view.removeFromSuperview();
+        }
+    }
 }
 
 extension UIColor

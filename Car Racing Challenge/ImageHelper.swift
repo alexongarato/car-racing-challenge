@@ -60,5 +60,6 @@ struct ImagesNames
     static var MenuBackgroundiPhone6:String = "MenuBG_iphone6";
     static var Podium:String = "Podium";
     static var Instructions:String = "Instructions.png";
+    static var ConfigIcon:String = "ConfigIcon.png";
 }
 

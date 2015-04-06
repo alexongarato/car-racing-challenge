@@ -15,11 +15,23 @@ class Fonts
     {
         return UIFont(name: FontNames.Default, size: size)!;
     }
+    
+    static func BoldFont(size:CGFloat) -> UIFont!
+    {
+        return UIFont(name: FontNames.Bold, size: size)!;
+    }
+    
+    static func LightFont(size:CGFloat) -> UIFont!
+    {
+        return UIFont(name: FontNames.Light, size: size)!;
+    }
 }
 
 struct FontNames
 {
-    static var Default:String = "LCDMono2Light";
+    static var Light    : String = "LCDMono2Light";
+    static var Default  : String = "LCDMono2Normal";
+    static var Bold     : String = "LCDMono2Bold";
 }
 
 struct FontSize
@@ -43,5 +55,5 @@ struct FontSize
     /** 
     40px 
     */
-    static var Big         : CGFloat = 35;
+    static var Big         : CGFloat = 44;
 }

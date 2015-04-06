@@ -9,12 +9,18 @@
 import Foundation
 import UIKit
 import SpriteKit
+import AudioToolbox
 
 private var _alert:UIAlertController!;
 private var _alertView:UIAlertView!;
 
 class Utils
 {
+    class func vibrate()
+    {
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate));
+    }
+    
     class func random(i:Int) -> Int
     {
         return Int(arc4random_uniform(UInt32(1+i)));

@@ -19,12 +19,14 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>668</string>
+	<string>793</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>LCDM2L__.TTF</string>
+		<string>LCDMono2Bold.ttf</string>
+		<string>LCDMono2Normal.ttf</string>
+		<string>LCDMono2Light.ttf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>

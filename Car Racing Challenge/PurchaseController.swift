@@ -10,6 +10,7 @@ import Foundation
 import StoreKit
 
 private var _instance : PurchaseController!;
+private var _hasPurchased: Bool = false;
 
 class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
@@ -35,11 +36,19 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                 self.productsIDs = dict;
             }
         }
+        
+        _hasPurchased = DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds);
     }
     
     func hasPurchased() -> Bool
     {
-        return false;
+        return _hasPurchased;
+    }
+    
+    func hasPurchased(value:Bool)
+    {
+        DataProvider.saveData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds, value: value);
+        _hasPurchased = value;
     }
     
     func userCanPurchase() -> Bool
@@ -47,7 +56,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         return SKPaymentQueue.canMakePayments();
     }
     
-    func removeAdsHandler()
+    func buyRemoveAds()
     {
         if(self.productsIDs == nil)
         {
@@ -79,10 +88,6 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     }
     
     
-    
-    
-    
-    
     //---------------- observers --------------
     
     func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!)
@@ -91,32 +96,42 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         {
             if let transaction = obj as? SKPaymentTransaction
             {
+                Trace.log("transaction state \(transaction.transactionState.rawValue)");
                 switch (transaction.transactionState)
                 {
                     // Call the appropriate custom method for the transaction state.
                 case SKPaymentTransactionState.Purchasing:
+                    Trace.log("Purchasing");
                     Utils.showAlert(title: nil, message: "Please Wait...", action: nil, cancel: nil, completion: nil);
                     break;
                 case SKPaymentTransactionState.Deferred:
+                    Trace.log("Deferred");
 //                    Utils.showAlert(title: "Purchase canceled", message: nil, action: nil, cancel: nil, completion: nil);
 //                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
                     break;
                 case SKPaymentTransactionState.Failed:
+                    Trace.log("Failed");
 //                    Utils.showAlert(title: "Purchase Failed", message: "Your purchase was not confirmed.", action: nil, cancel: "OK", completion: nil);
 //                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
                     break;
                 case SKPaymentTransactionState.Purchased:
+                    Trace.log("Purchased");
+                    Utils.hideAlert(nil);
 //                    Utils.showAlert(title: "Purchase Confirmed", message: "Thank you!", action: "OK", cancel: nil, completion: nil);
 //                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
+                    NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
                     break;
                 case SKPaymentTransactionState.Restored:
+                    Trace.log("Restored");
+                    Utils.hideAlert(nil);
 //                    Utils.showAlert(title: "Purchase Restored", message: "Thank you!", action: "OK", cancel: nil, completion: nil);
 //                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
+                    NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
                     break;
                 default:
                     // For debugging
                     Utils.hideAlert(nil);
-                    Trace.log("Unexpected transaction state \(transaction.transactionState)");
+                    Trace.log("Unexpected transaction state \(transaction.transactionState.rawValue)");
 //                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
                     break;
                 }
@@ -149,8 +164,6 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                     }
                     
                     confirm();
-                    
-//                    Utils.showAlert(title: "Confirm your purchase", message: "Want to buy \(prod.localizedTitle.capitalizedString) for \(formattedPrice)?", action: "CONFIRM", completion: confirm, cancel:"CANCEL");
                     break;
                 }
             }

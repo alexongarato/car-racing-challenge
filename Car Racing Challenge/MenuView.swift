@@ -15,14 +15,18 @@ class MenuView: AbstractView, ADBannerViewDelegate
     private var desc        : UITextView!;
     private var title       : UITextView!;
 //    private var instructs   : UITextView!;
+    private var instructImg : UIImageView!;
     private var actions     : Array<UILabel>!;
     private var fontColor   : UIColor = UIColor.blackColor();
     private var scaleFactor : CGFloat = 1;
     private var _bannerView : ADBannerView!;
     private var _adLoaded   : Bool = false;
+    private var btConfig    : UIImageView!;
+    private var configView  : ConfigsView!;
     
     override func didMoveToSuperview()
     {
+//        self.frame = UIScreen.mainScreen().applicationFrame;
         self.buildBanner();
         
         super.didMoveToSuperview();
@@ -35,11 +39,13 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.title.textColor = fontColor;
         self.addSubview(self.title);
         self.title.editable = false;
+//        self.title.alpha = 0;
         
         self.desc = UITextView();
         self.desc.textColor = fontColor;
         self.addSubview(self.desc);
         self.desc.editable = false;
+//        self.desc.alpha = 0;
         
 //        self.instructs = UITextView();
 //        self.instructs.textColor = fontColor;
@@ -58,6 +64,80 @@ class MenuView: AbstractView, ADBannerViewDelegate
 //        self.title.layer.borderWidth = 1;
 //        self.desc.layer.borderWidth = 1;
 //        self.instructs.layer.borderWidth = 1;
+        
+//        if(!PurchaseController.getInstance().hasPurchased() && PurchaseController.getInstance().userCanPurchase())
+//        {
+//            menuView.setAction("CONFIGS", target: self, selector: Selector("configsHandler"));
+//        }
+        
+        img = UIImage(named:ImagesNames.ConfigIcon);
+        img = ImageHelper.imageScaledToFit(img, sizeToFit: CGSize(width: 30, height: 30));
+        btConfig = UIImageView(image: img);
+        self.addSubview(btConfig);
+        btConfig.alpha = 0.8;
+        self.updateConfigButtonPosition(self.height);
+        btConfig.addTarget(self, selector: Selector("configsHandler"));
+    }
+    
+    func configsHandler()
+    {
+        if(self.configView == nil)
+        {
+            self.configView = ConfigsView();
+            self.addSubview(self.configView);
+            self.configView.x = self.width;
+            self.configView.height = self.height;
+            if(self._bannerView != nil)
+            {
+                self.configView.height = self._bannerView.y;
+                self.bringSubviewToFront(self._bannerView);
+            }
+            self.bringSubviewToFront(self.btConfig);
+        }
+        
+        if(self.configView.x == self.width)
+        {
+            Trace.log("open configs");
+            
+            let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation");
+            rotateAnimation.fromValue = CGFloat(M_PI * 2.0);
+            rotateAnimation.toValue = 0.0;
+            rotateAnimation.duration = AnimationTime.Slow;
+            self.btConfig.layer.addAnimation(rotateAnimation, forKey: nil);
+            
+            UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.configView.x = 0;
+                }, completion: nil);
+        }
+        else
+        {
+            Trace.log("close configs");
+            
+            let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation");
+            rotateAnimation.fromValue = 0.0;
+            rotateAnimation.toValue = CGFloat(M_PI * 2.0);
+            
+            rotateAnimation.duration = AnimationTime.Slow;
+            self.btConfig.layer.addAnimation(rotateAnimation, forKey: nil);
+            
+            func completion(animated:Bool)
+            {
+                self.configView.removeFromSuperview();
+                self.configView = nil;
+            }
+            
+            UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.configView.x = self.width;
+                }, completion:completion);
+        }
+        
+        AudioHelper.playSound(AudioHelper.MenuOpenSound);
+    }
+    
+    private func updateConfigButtonPosition(posY:CGFloat)
+    {
+        btConfig.x = self.width - (btConfig.width * 1.5);
+        btConfig.y = posY - (btConfig.height * 1.5);
     }
     
     //-------- banner functions --------------------
@@ -103,6 +183,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             UIView.animateWithDuration(AnimationTime.Default, animations: {
                 self._bannerView.y = self.height - self._bannerView.height;
                 self.addSubview(self._bannerView);
+                self.updateConfigButtonPosition(self._bannerView.y);
             });
         }
         else
@@ -142,20 +223,19 @@ class MenuView: AbstractView, ADBannerViewDelegate
     func setTitle(text:String)
     {
         self.title.text = text;
-        self.title.font = Fonts.DefaultFont(FontSize.Big * self.scaleFactor);
+        self.title.font = Fonts.LightFont(FontSize.Big * self.scaleFactor);
         self.title.textAlignment = NSTextAlignment.Center;
         self.title.backgroundColor = UIColor.clearColor();
         self.title.sizeToFit();
         self.title.width = self.width - 10;
         self.title.center = self.center;
         self.title.y = self.center.y - (self.height * 0.41);
-        
     }
     
     func setDescription(text:String)
     {
         self.desc.text = text;
-        self.desc.font = Fonts.DefaultFont(FontSize.Default * self.scaleFactor);
+        self.desc.font = Fonts.LightFont(FontSize.Default * self.scaleFactor);
         self.desc.textAlignment = NSTextAlignment.Center;
         self.desc.backgroundColor = UIColor.clearColor();
         self.desc.sizeToFit();
@@ -166,13 +246,15 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func setInstructions(scoreToLifeUp:Int, scoreToLevelUp:Int)
     {
-        var image:UIImage! = ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.Instructions), sizeToFit: self.frame.size);
-        var instructions:UIImageView = UIImageView(image: image);
-        self.addSubview(instructions);
-        instructions.center = self.center;
+        var fitSize:CGSize = CGSize(width: self.frame.size.width + 40, height: self.frame.size.height);
+        var image:UIImage! = ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.Instructions), sizeToFit: fitSize);
+        self.instructImg = UIImageView(image: image);
+//        self.instructImg.alpha = 0;
+        self.addSubview(self.instructImg);
+        self.instructImg.center = self.center;
         if(self.height <= 480)
         {
-            instructions.y += 20;
+            self.instructImg.y += 20;
         }
         
 //        self.instructs.text = "each \(scoreToLifeUp) points earned = 1 life up";
@@ -245,6 +327,35 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
+    /*
+    override func present(completion: ((animated: Bool) -> Void)!)
+    {
+        func addAnima(target:UIView, delay:NSTimeInterval, completion: ((animated: Bool) -> Void)!)
+        {
+            target.y += 5;
+            UIView.animateWithDuration(AnimationTime.Default, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                target.y -= 5;
+                target.alpha = 1;
+                }, completion: completion);
+        }
+        super.present({ (animated) -> Void in
+            var del:NSTimeInterval = 0;
+            addAnima(self.title, del, nil);
+            del += 0.1;
+            addAnima(self.desc, del, nil);
+            del += 0.1;
+            addAnima(self.instructImg, del, nil);
+            del += 0.1;
+            for(var i:Int = 0; i < self.actions.count; i++)
+            {
+                var action:UILabel = self.actions[i];
+                addAnima(action, del, nil);
+                del += 0.1;
+            }
+            addAnima(self.btConfig, del, nil);
+        });
+    }*/
+    
     override func dismiss(completion: ((animated: Bool) -> Void)!)
     {
         if(self._bannerView == nil)
@@ -266,6 +377,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         UIView.animateWithDuration(AnimationTime.Default, animations: {
             self._bannerView.y = self.height;
+            self.updateConfigButtonPosition(self._bannerView.y);
         }, completion:completion);
     }
     

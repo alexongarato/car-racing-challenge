@@ -482,8 +482,8 @@ class GameScene: SKScene
             self.enemiesArray.append(newEnemy);
         }
         
-        if(self.currentLevelCounter == 1)
-        {
+        /*if(self.currentLevelCounter == 1)
+        {*/
             //zig-zag
             if(self.currentScoreCounter >= Int((self.SCORE_TO_LEVEL_UP.floatValue * self.currentLevelCounter.floatValue) * 0.5))
             {
@@ -509,8 +509,8 @@ class GameScene: SKScene
             {
                 createEnemy();
             }
-        }
-        else if(self.currentLevelCounter == 2)
+        //}
+        /*else if(self.currentLevelCounter == 2)
         {
             //barrier
             self.enemyCurrentPositionX += enemyCurrentPositionIncrement;
@@ -534,11 +534,11 @@ class GameScene: SKScene
                 }
             }
             createEnemy();
-        }
-        else
+        }*/
+        /*else
         {
             createEnemy();
-        }
+        }*/
         
     }
 }

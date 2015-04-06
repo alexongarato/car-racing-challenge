@@ -93,6 +93,11 @@ class AudioHelper
     
     class func playSound(name:String) -> CustomAVAudioPlayer!
     {
+        if(!DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeySound))
+        {
+            return nil;
+        }
+        
         var tmp:AnyObject! = snds.valueForKey(name);
         var snd:CustomAVAudioPlayer!;
         if (tmp != nil)
