@@ -14,12 +14,14 @@ class GameScene: SKScene
     let SCORE_TO_LEVEL_UP               : Int = 50;//500
     let SCORE_TO_EARN_LIFE              : Int = 100;//100
     private let MAX_COLUMNS             : Int = 5;
-    private let MIN_COLUMNS             : Int = 4;
+    private let MIN_COLUMNS             : Int = 5;
     private let ID_BT_LEFT              : String = "bt_left";
     private let ID_BT_RIGHT             : String = "bt_right";
     private let INT_BETWEEN_LEVELS      : CFTimeInterval = 0.01;
-    private let PIXELS_BETWEEN_ENEMIES  : Int = 15;
+    private let PIXELS_BETWEEN_ENEMIES_1: Int = 15;
+    private let MIN_PX_BT_ENEMIES_1     : Int = 10;
     private let IS_LIFE_BONUS_MODE      : Bool = false;
+    private let IS_LEVEL_MODE           : Bool = true;
     private let INITIAL_USER_LIFES      : Int = 0;
     
     
@@ -116,9 +118,8 @@ class GameScene: SKScene
         {
             self.defaultFrame = self.frame;
         }
+        //        self.removeAllChildren();
         
-        self.removeAllChildren();
-        self.roadSides = nil;
         self.size = self.defaultFrame.size;
         AudioHelper.stopSound(AudioHelper.Vel4Sound);
         
@@ -128,7 +129,7 @@ class GameScene: SKScene
         self.isGameOver                 = false;
         self.totalColumns               = self.totalColumns == -1 ? self.MAX_COLUMNS : self.totalColumns;
         var totalPixelsX:Int            = Int((self.totalColumns * 3) + 2);
-        self.enemiesArray               = Array<CustomSpriteNode>();
+        //        self.enemiesArray               = Array<CustomSpriteNode>();
         self.pixelSize                  = CGFloat(self.size.width / totalPixelsX.floatValue);
         var totalPixelsY:Int            = Int((self.size.height / self.pixelSize));
         self.charactersSize.width       = self.pixelSize * 3;
@@ -136,96 +137,115 @@ class GameScene: SKScene
         self.buttonSize.width           = self.size.width.half.roundValue;
         self.buttonSize.height          = self.size.height;
         self.currentMainCharColumn      = self.totalColumns / 2;
-        self.pixelDistanceCounter       = self.PIXELS_BETWEEN_ENEMIES;
+        self.pixelDistanceCounter       = self.PIXELS_BETWEEN_ENEMIES_1;
         self.currentVelSound            = 0;
         self.intervalBetweenLoops       = 0.5;
-//        self.currentLifeCounter         = self.scoreToEarnLife;
-//        self.totalLifesCounter          = self.defaultTotalLifes;
+        //        self.currentLifeCounter         = self.scoreToEarnLife;
+        //        self.totalLifesCounter          = self.defaultTotalLifes;
         
-        self.bg = nil;
-        self.pixelsNode = nil;
-        self.roadSides = nil;
-        self.mainCharacter = nil;
-        self.buttonLeft = nil;
-        self.buttonRight = nil;
+        if(self.enemiesArray == nil)
+        {
+            self.enemiesArray = Array<CustomSpriteNode>();
+            var newEnemy:CustomSpriteNode!;
+            
+            for(var i:Int = 0; i < 10; i++)
+            {
+                newEnemy = CustomSpriteNode(texture: Utils.createCarTexture(self.charactersSize, pixelWidth: self.pixelSize, pixelHeight: self.pixelSize), size: self.charactersSize);
+                newEnemy.size = self.charactersSize;
+                newEnemy.anchorPoint.x = 0;
+                newEnemy.anchorPoint.y = 1;
+                newEnemy.zPosition = 10;
+                self.enemiesArray.append(newEnemy);
+            }
+        }
+        
+        for enemyBlock in enemiesArray
+        {
+            enemyBlock.y = self.size.height + self.charactersSize.height;
+            enemyBlock.x = self.pixelSize;
+        }
+        
+        self.removeChildrenInArray(self.enemiesArray);
         
         Trace.log("GameScene -> pixelSize:\(self.pixelSize)");
         
         /**
         criar malha de pixels de acordo com a quantidade de pistas.
         */
-        bg = SKSpriteNode(imageNamed: ImagesNames.Background);
-        bg.size = self.size;
-        bg.anchorPoint.x = 0;
-        bg.anchorPoint.y = 1;
-        bg.x = 0;
-        bg.y = bg.height;
-        self.addChild(bg);
-        //---------------------
+        if(self.bg == nil)
+        {
+            bg = SKSpriteNode(imageNamed: ImagesNames.Background);
+            bg.size = self.size;
+            bg.anchorPoint.x = 0;
+            bg.anchorPoint.y = 1;
+            bg.x = 0;
+            bg.y = bg.height;
+            self.addChild(bg);
+            //---------------------
+            
+            //desenha a malha no context
+            pixelsNode = SKSpriteNode(texture: Utils.createPixelsGrid(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
+            self.addChild(pixelsNode);
+            pixelsNode.zPosition = 1;
+            pixelsNode.anchorPoint.x = 0;
+            pixelsNode.anchorPoint.y = 1;
+            pixelsNode.x = 0;
+            pixelsNode.y = self.size.height;
+            //---------------------
+            
+            
+            //cria as laterias temporarias que serao desenhadas no context
+            roadSides = SKSpriteNode(texture: Utils.createRoadPixels(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
+            self.addChild(roadSides);
+            roadSides.zPosition = 1;
+            roadSides.anchorPoint.x = 0;
+            roadSides.anchorPoint.y = 1;
+            roadSides.x = 0;
+            roadSides.y = self.size.height;
+            //---------------------
+            
+            
+            /**
+            cria os personagens do jogo
+            */
+            self.mainCharacter = CustomSpriteNode(texture: Utils.createCarTexture(self.charactersSize, pixelWidth: self.pixelSize, pixelHeight: self.pixelSize));
+            self.mainCharacter.size = self.charactersSize;
+            self.mainCharacter.anchorPoint.x = 0;
+            self.mainCharacter.anchorPoint.y = 1;
+            self.addChild(self.mainCharacter);
+            
+            /**
+            cria os controles do jogo
+            */
+            self.buttonLeft = SKSpriteNode();
+            self.buttonLeft.size = self.buttonSize;
+            self.buttonLeft.anchorPoint.y = 1;
+            self.buttonLeft.x = self.buttonLeft.width.half;
+            self.buttonLeft.y = self.size.height;
+            self.buttonLeft.name = self.ID_BT_LEFT;
+            self.addChild(self.buttonLeft);
+            
+            self.buttonRight = SKSpriteNode();
+            self.buttonRight.size = self.buttonSize;
+            self.buttonRight.anchorPoint.y = 1;
+            self.buttonRight.x = self.size.width - self.buttonRight.width.half;
+            self.buttonRight.y = self.buttonLeft.y;
+            self.buttonRight.name = self.ID_BT_RIGHT;
+            self.addChild(self.buttonRight);
+            
+//            var pxCount:CGFloat = (55 / self.pixelSize).roundValue;
+//            pxCount = pxCount == 0 ? 1 : pxCount;
+//            var heightPixels:CGFloat = (totalPixelsY.floatValue - pxCount);
+            
+            self.mainCharacter.y = self.size.height - (self.pixelSize * totalPixelsY.floatValue) + self.mainCharacter.height + (self.pixelSize);
+        }
         
-        //desenha a malha no context
-        pixelsNode = SKSpriteNode(texture: Utils.createPixelsGrid(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
-        self.addChild(pixelsNode);
-        pixelsNode.zPosition = 1;
-        pixelsNode.anchorPoint.x = 0;
-        pixelsNode.anchorPoint.y = 1;
-        pixelsNode.x = 0;
-        pixelsNode.y = self.size.height;
-        //---------------------
-        
-        
-        //cria as laterias temporarias que serao desenhadas no context
-        roadSides = SKSpriteNode(texture: Utils.createRoadPixels(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
-        self.addChild(roadSides);
-        roadSides.zPosition = 1;
-        roadSides.anchorPoint.x = 0;
-        roadSides.anchorPoint.y = 1;
-        roadSides.x = 0;
-        roadSides.y = self.size.height;
-        //---------------------
-        
-        
-        /**
-        cria os personagens do jogo
-        */
-        self.mainCharacter = CustomSpriteNode(texture: Utils.createCarTexture(self.charactersSize, pixelWidth: self.pixelSize, pixelHeight: self.pixelSize));
-        self.mainCharacter.size = self.charactersSize;
-        self.mainCharacter.anchorPoint.x = 0;
-        self.mainCharacter.anchorPoint.y = 1;
+        self.roadSides.y = self.size.height;
         self.mainCharacter.x = self.pixelSize + (self.charactersSize.width * self.currentMainCharColumn.floatValue);
-        self.addChild(self.mainCharacter);
         
-        /**
-        cria os controles do jogo
-        */
-        self.buttonLeft = SKSpriteNode();
-        self.buttonLeft.size = self.buttonSize;
-        self.buttonLeft.anchorPoint.y = 1;
-        self.buttonLeft.x = self.buttonLeft.width.half;
-        self.buttonLeft.y = self.size.height;
-        self.buttonLeft.name = self.ID_BT_LEFT;
-        self.addChild(self.buttonLeft);
-        
-        self.buttonRight = SKSpriteNode();
-        self.buttonRight.size = self.buttonSize;
-        self.buttonRight.anchorPoint.y = 1;
-        self.buttonRight.x = self.size.width - self.buttonRight.width.half;
-        self.buttonRight.y = self.buttonLeft.y;
-        self.buttonRight.name = self.ID_BT_RIGHT;
-        self.addChild(self.buttonRight);
-        
-        var pxCount:CGFloat = (55 / self.pixelSize).roundValue;
-        pxCount = pxCount == 0 ? 1 : pxCount;
-        var heightPixels:CGFloat = (totalPixelsY.floatValue - pxCount);
-        self.mainCharacter.y = self.size.height - (self.pixelSize * totalPixelsY.floatValue) + self.mainCharacter.height;
-        
-        /**
-        configurar posicao z da interface
-        */
         self.mainCharacter.zPosition = 20;
         self.buttonLeft.zPosition = 21;
         self.buttonRight.zPosition = 22;
-        
         
         self.builded = true;
     }
@@ -249,7 +269,7 @@ class GameScene: SKScene
     
     func stop()
     {
-//        self.builded = false;
+        //        self.builded = false;
         self.ready = false;
         self.view?.paused = true;
         AudioHelper.stopSound(AudioHelper.Vel4Sound);
@@ -266,34 +286,20 @@ class GameScene: SKScene
         AudioHelper.playSound("vel_\(Int(self.currentVelSound)).wav");
         
         self.ready = true;
+        self.paused = false;
         self.view?.paused = false;
         self.updateStatusHandler();
         startTrackAnima();
     }
     
+    private var newDistance:Int = 0;
     override func update(currentTime: CFTimeInterval)
     {
         if(!self.ready)
         {
             return;
         }
-/*
-        if(currentTime >= self.sideNodeVelCounter)
-        {
-            self.sideNodeVelCounter = currentTime + intervalBetweenLoops * 0.5;
-            
-            if(!sideNodeFlag)
-            {
-                sideNodeFlag = true;
-                sidesNode.y = self.size.height - pixelSize;
-            }
-            else
-            {
-                sideNodeFlag = false;
-                sidesNode.y = self.size.height;
-            }
-        }
-*/
+        
         if(currentTime >= loopsTimeCounter)
         {
             if(self.currentVelSound < 4)
@@ -306,7 +312,10 @@ class GameScene: SKScene
             //-----------
             
             self.pixelDistanceCounter++;
-            if(self.pixelDistanceCounter >= self.PIXELS_BETWEEN_ENEMIES)
+            newDistance = (self.PIXELS_BETWEEN_ENEMIES_1 - self.currentLevelCounter);
+            newDistance = newDistance < MIN_PX_BT_ENEMIES_1 ? MIN_PX_BT_ENEMIES_1 : newDistance;
+//            newDistance = 10;
+            if(self.pixelDistanceCounter >= newDistance)
             {
                 self.pixelDistanceCounter = 0;
                 addNewEnemy();
@@ -314,86 +323,87 @@ class GameScene: SKScene
             
             for enemyBlock in enemiesArray
             {
-                /**
-                move o inimigo para baixo
-                */
-                enemyBlock.y -= pixelSize;
-                
-                /**
-                quando o inimigo sai da tela. end of life.
-                */
-                if(enemyBlock.y + enemyBlock.height.half < 0)
+                if(enemyBlock.parent != nil)
                 {
-                    if(!enemyBlock.isTouched)
+                    /**
+                    move o inimigo para baixo
+                    */
+                    enemyBlock.y -= pixelSize;
+                    
+                    /**
+                    quando o inimigo sai da tela. end of life.
+                    */
+                    if(enemyBlock.y + enemyBlock.height.half < 0)
                     {
-                        self.totalScoreCounter++;
-                        self.currentScoreCounter++;
-                        
-                        if(IS_LIFE_BONUS_MODE)
+                        if(!enemyBlock.isTouched)
                         {
-                            self.currentLifeCounter--;
-                            if(self.currentLifeCounter < 0)
+                            self.totalScoreCounter++;
+                            self.currentScoreCounter++;
+                            
+                            if(IS_LIFE_BONUS_MODE)
                             {
-                                self.currentLifeCounter = self.SCORE_TO_EARN_LIFE;
-                                self.totalLifesCounter++;
-                                
-                                if(self.lifeUpHandler != nil)
+                                self.currentLifeCounter--;
+                                if(self.currentLifeCounter < 0)
                                 {
-                                    self.lifeUpHandler();
+                                    self.currentLifeCounter = self.SCORE_TO_EARN_LIFE;
+                                    self.totalLifesCounter++;
+                                    
+                                    if(self.lifeUpHandler != nil)
+                                    {
+                                        self.lifeUpHandler();
+                                    }
+                                    
+                                    AudioHelper.playSound(AudioHelper.PickupCoinSound);
                                 }
-                                
-                                AudioHelper.playSound(AudioHelper.PickupCoinSound);
+                            }
+                            
+                            if(IS_LEVEL_MODE)
+                            {
+                                if(self.currentScoreCounter >= self.SCORE_TO_LEVEL_UP)
+                                {
+                                    self.currentScoreCounter = 0;
+                                    self.currentLevelCounter++;
+                                    self.levelUpHandler();
+                                }
                             }
                         }
                         
-                        if(self.currentScoreCounter >= self.SCORE_TO_LEVEL_UP)
-                        {
-                            self.currentScoreCounter = 0;
-                            self.currentLevelCounter++;
-                            self.levelUpHandler();
-                        }
+                        
+                        self.removeChildrenInArray([enemyBlock]);
+                        self.updateStatusHandler();
                     }
-                    
-                    self.removeChildrenInArray([enemyBlock]);
-                    if(enemiesArray.count > 0)
-                    {
-                        enemiesArray.removeAtIndex(0);
-                    }
-                    self.updateStatusHandler();
                 }
             }
         }
         
         for enemyBlock in enemiesArray
         {
-//            if(enemyBlock.intersectsNode(mainCharacter)/* && !Configs.DEBUG_MODE*/)
-            if(enemyBlock.x >= mainCharacter.x - 1 && enemyBlock.x <= mainCharacter.x + 1
-                && enemyBlock.y - charactersSize.height < mainCharacter.y && enemyBlock.y > mainCharacter.y - charactersSize.height + 2)
+            if(enemyBlock.parent != nil)
             {
-                if(!enemyBlock.isTouched)
+                if(enemyBlock.x >= mainCharacter.x - 1 && enemyBlock.x <= mainCharacter.x + 1
+                    && enemyBlock.y - charactersSize.height < mainCharacter.y && enemyBlock.y > mainCharacter.y - charactersSize.height + 2)
                 {
-                    enemyBlock.isTouched = true;
-                    enemyBlock.alpha = 0.5;
-                    
-                    /**
-                    atualizacao das variaveis do jogo
-                    */
-                    AudioHelper.playSound(AudioHelper.lostLifeSound);
-                    
-                    self.totalLifesCounter--;
-                    if(self.lifeDownHandler != nil)
+                    if(!enemyBlock.isTouched)
                     {
-                        self.lifeDownHandler();
+                        enemyBlock.isTouched = true;
+                        
+                        AudioHelper.playSound(AudioHelper.lostLifeSound);
+                        
+                        self.totalLifesCounter--;
+                        if(self.lifeDownHandler != nil)
+                        {
+                            self.lifeDownHandler();
+                        }
+                        
+                        if(self.totalLifesCounter < 0)
+                        {
+                            self.totalLifesCounter = 0;
+                            self.isGameOver = true;
+                            self.gameOverHandler();
+                        }
+                        
+                        self.updateStatusHandler();
                     }
-                    
-                    if(self.totalLifesCounter < 0)
-                    {
-                        self.totalLifesCounter = 0;
-                        self.isGameOver = true;
-                        self.gameOverHandler();
-                    }
-                    
-                    self.updateStatusHandler();
                 }
             }
         }
@@ -406,7 +416,7 @@ class GameScene: SKScene
     
     private func trackAction() -> SKAction
     {
-        var act = SKAction.moveToY(self.size.height - (self.pixelSize * 3) - 1, duration: 0.1 + self.intervalBetweenLoops);
+        var act = SKAction.moveToY(self.size.height - (self.pixelSize * 3) - 1, duration: 0.08 + self.intervalBetweenLoops);
         act.timingMode = SKActionTimingMode.Linear;
         return act;
     }
@@ -421,6 +431,7 @@ class GameScene: SKScene
     
     private func startTrackAnima()
     {
+        roadSides.paused = false;
         roadSides.y = self.size.height;
         roadSides.runAction(trackAction(), completion: trackCompletion);
     }
@@ -464,82 +475,52 @@ class GameScene: SKScene
     }
     
     private var enemyCurrentPositionX:CGFloat = 0;
-    private var enemyCurrentPositionIncrement:CGFloat = 1;
+    //    private var enemyCurrentPositionIncrement:CGFloat = 1;
     private func addNewEnemy()
     {
         var newEnemy:CustomSpriteNode!;
         self.enemyCurrentPositionX = Utils.random(self.totalColumns - 1).floatValue;
         func createEnemy()
         {
-            newEnemy = CustomSpriteNode(texture: Utils.createCarTexture(self.charactersSize, pixelWidth: self.pixelSize, pixelHeight: self.pixelSize), size: self.charactersSize);
-            newEnemy.size = self.charactersSize;
-            newEnemy.anchorPoint.x = 0;
-            newEnemy.anchorPoint.y = 1;
+            newEnemy = self.enemiesArray[0];
+            newEnemy.isTouched = false;
             newEnemy.y = self.size.height + self.charactersSize.height;
             newEnemy.x = self.pixelSize + (self.charactersSize.width * self.enemyCurrentPositionX);
             newEnemy.zPosition = 10;
-            self.addChild(newEnemy);
+            self.enemiesArray.removeAtIndex(0);
             self.enemiesArray.append(newEnemy);
+            if(newEnemy.parent == nil)
+            {
+                self.addChild(newEnemy);
+            }
         }
+        createEnemy();
         
-        /*if(self.currentLevelCounter == 1)
-        {*/
-            //zig-zag
-            if(self.currentScoreCounter >= Int((self.SCORE_TO_LEVEL_UP.floatValue * self.currentLevelCounter.floatValue) * 0.5))
-            {
-                createEnemy();
-                newEnemy.x = self.pixelSize + (self.charactersSize.width * self.enemyCurrentPositionX);
-                self.enemyCurrentPositionX += enemyCurrentPositionIncrement;
-                if(self.enemyCurrentPositionIncrement > 0)
-                {
-                    if(self.enemyCurrentPositionX >= self.totalColumns.floatValue)
-                    {
-                        self.enemyCurrentPositionIncrement = -1;
-                    }
-                }
-                else if(self.enemyCurrentPositionIncrement < 0)
-                {
-                    if(self.enemyCurrentPositionX <= 0)
-                    {
-                        self.enemyCurrentPositionIncrement = 1;
-                    }
-                }
-            }
-            else
-            {
-                createEnemy();
-            }
-        //}
-        /*else if(self.currentLevelCounter == 2)
+        //zig-zag
+        /*if(self.currentScoreCounter >= Int((self.SCORE_TO_LEVEL_UP.floatValue * self.currentLevelCounter.floatValue) * 0.5))
         {
-            //barrier
-            self.enemyCurrentPositionX += enemyCurrentPositionIncrement;
-            createEnemy();
-            
-            self.enemyCurrentPositionX += enemyCurrentPositionIncrement;
-            self.enemyCurrentPositionX += enemyCurrentPositionIncrement;
-            
-            if(self.enemyCurrentPositionIncrement > 0)
-            {
-                if(self.enemyCurrentPositionX >= self.totalColumns.floatValue)
-                {
-                    self.enemyCurrentPositionIncrement = -1;
-                }
-            }
-            else if(self.enemyCurrentPositionIncrement < 0)
-            {
-                if(self.enemyCurrentPositionX <= 0)
-                {
-                    self.enemyCurrentPositionIncrement = 1;
-                }
-            }
-            createEnemy();
-        }*/
-        /*else
+        createEnemy();
+        newEnemy.x = self.pixelSize + (self.charactersSize.width * self.enemyCurrentPositionX);
+        self.enemyCurrentPositionX += enemyCurrentPositionIncrement;
+        if(self.enemyCurrentPositionIncrement > 0)
         {
-            createEnemy();
+        if(self.enemyCurrentPositionX >= self.totalColumns.floatValue)
+        {
+        self.enemyCurrentPositionIncrement = -1;
+        }
+        }
+        else if(self.enemyCurrentPositionIncrement < 0)
+        {
+        if(self.enemyCurrentPositionX <= 0)
+        {
+        self.enemyCurrentPositionIncrement = 1;
+        }
+        }
+        }
+        else
+        {
+        createEnemy();
         }*/
-        
     }
 }
 

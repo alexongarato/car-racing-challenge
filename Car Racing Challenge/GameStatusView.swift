@@ -54,6 +54,7 @@ class GameStatusView:AbstractView
     {
 //        self.statusField.text = "LEVEL:\(level)  LIFES:\(lifes)  SCORE:\(score)/\(nextScore * level)";
         self.statusField.text = "LEVEL:\(level)        SCORE:\(score) / \(nextScore * level)";
+//        self.statusField.text = "LEVEL:SOON... SCORE:\(score)";
         self.statusField.sizeToFit();
         self.statusField.center.x = self.center.x;
     }

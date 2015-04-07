@@ -3,6 +3,9 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "Arcade_Car_Race.GameScene.build (Arcade_Car_Race.GameScene)() -&gt; ():GameScene.swift">
+      </ContextState>
+      <ContextState
          contextName = "Arcade_Car_Race.GameViewController.viewDidLoad (Arcade_Car_Race.GameViewController)() -&gt; ():GameViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -17,9 +20,6 @@
                value = "self.title.width">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "Arcade_Car_Race.GameScene.build (Arcade_Car_Race.GameScene)() -&gt; ():GameScene.swift">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

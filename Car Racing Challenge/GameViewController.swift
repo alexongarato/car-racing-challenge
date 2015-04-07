@@ -70,12 +70,10 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         self.scene.reset();
         self.scene.build();
         
+        Trace.log("start game center");
+        GameCenterController.authenticate(nil);
+        
         startGame();
-    }
-    
-    override func didMoveToParentViewController(parent: UIViewController?)
-    {
-        (UIApplication.sharedApplication().delegate as! AppDelegate).startGameCenter();
     }
     
     func showMenu(msg:String, desc:String, action:String, selector:Selector!, showInstructions:Bool = false, showExitButton:Bool = true, showGameOver:Bool = false)
@@ -110,7 +108,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         
         if(showExitButton)
         {
-            menuView.setAction("exit", target: self, selector: Selector("exitHandler"));
+            menuView.setAction("exit", target: self, selector: Selector("exitHandler:"));
         }
         
         menuView.present(nil);
@@ -118,8 +116,9 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
     }
     
-    func exitHandler()
+    func exitHandler(sender:AnyObject!)
     {
+        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         self.startGame();
     }
     
@@ -135,14 +134,16 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     func startGame()
     {
         showMenu("car racing\nchallenge",
-            desc: "", action: "PLAY", selector: Selector("startGameHandler"), showInstructions:true, showExitButton:false);
+            desc: "", action: "PLAY", selector: Selector("startGameHandler:"), showInstructions:true, showExitButton:false);
         AudioHelper.playSound(AudioHelper.EntranceSound);
         
         self.showBanner();
     }
     
-    func startGameHandler()
+    func startGameHandler(sender:AnyObject!)
     {
+        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
+        
         menuView.disableAction();
         statusView.show();
         
@@ -182,7 +183,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             }
         }
         
-        showMenu("GAME OVER", desc: "\n\nSCORE:\(scene.currentScore())\nBEST:\(self.bestScoreEver)", action: "RESTART", selector: Selector("startGameHandler"), showGameOver:true);
+        showMenu("GAME OVER", desc: "\n\nSCORE:\(scene.currentScore())\nBEST:\(self.bestScoreEver)", action: "RESTART", selector: Selector("startGameHandler:"), showGameOver:true);
         AudioHelper.playSound(AudioHelper.GameOverSound);
         
         self.showBanner();
@@ -192,28 +193,28 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     {
         Trace.log("GameViewController -> LEVEL UP");
         
-        var ttl:String = "\nRACE TRACK\nUPGRADE \(scene.currentLevel())\n";
+        var ttl:String = "\nLEVEL \(scene.currentLevel())\n";
         var desc:String!;
-        var act:String = "GO!";
-        var selector:Selector = Selector("resumeLevelUp");
+        var act:String = "LET'S GO!";
+        var selector:Selector = Selector("resumeLevelUp:");
         
         if(!Configs.SAMPLE_MODE)
         {
-            if(scene.currentLevel() <= scene.maximunLevel())
-            {
+            /*if(scene.currentLevel() <= scene.maximunLevel())
+            {*/
                 desc = "\n\ncongratulations!";
-            }
+            /*}
             else if(scene.currentLevel() == scene.maximunLevel() + 1)
             {
                 desc = "\n\nThis is the highest\nracing track level!";
             }
             if(desc != nil)
-            {
+            {*/
                 scene.stop();
                 showMenu(ttl, desc: desc, action: act, selector: selector, showExitButton:false);
                 scene.setTotalColumns(scene.currentColumns() - 1);
                 self.showBanner();
-            }
+            //}
         }
         else
         {
@@ -228,8 +229,10 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         AudioHelper.playSound(AudioHelper.LevelUpSound);
     }
     
-    func resumeLevelUp()
+    func resumeLevelUp(sender:AnyObject!)
     {
+        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
+        
         menuView.disableAction();
         statusView.show();
         
@@ -271,7 +274,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         if(self.showResumeOnStartUp)
         {
             self.showResumeOnStartUp = false;
-            showMenu("RESUME\nCAR RACING\nCHALLENGE\n\n", desc: " \n \n \nARE YOU READY?", action: "YES!", selector: Selector("resumeLevelUp"));
+            showMenu("RESUME\n\n", desc: " \n \n \nARE YOU READY?", action: "YES!", selector: Selector("resumeLevelUp:"));
         }
         
         Utils.hideAlert(nil);

@@ -155,7 +155,7 @@ class Utils
 //        #endif
     }
     
-    @objc class func showAlert(#title:String!, message:String!, action:String! = "OK", cancel:String! = nil, completion:(()->Void)! = nil)
+    @objc class func showAlert(title:String! = nil, message:String! = nil, action:String! = "OK", cancel:String! = nil, completion:(()->Void)! = nil)
     {
         Utils.hideAlert({
             if(UICustomDevice.isIOS8OrHigher())
@@ -169,7 +169,16 @@ class Utils
                 {
                     _alert.addAction(UIAlertAction(title: action, style: UIAlertActionStyle.Default, handler: nil));
                 }
-                (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(_alert, animated: true, completion: completion);
+                /*else if(completion != nil)
+                {
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(_alert, animated: false, completion: nil);
+                    completion();
+                }
+                else
+                {*/
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(_alert, animated: true, completion: completion);
+                //}
+                
             }
             else
             {

@@ -125,18 +125,32 @@ class GameCenterController
     {
         func completion(leaderboards:[AnyObject]!, error:NSError!)
         {
-            var gameCenterController:GKGameCenterViewController! = GKGameCenterViewController();
-            if (gameCenterController != nil)
-            {
-                gameCenterController.gameCenterDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate).gameController;
-                gameCenterController.viewState = GKGameCenterViewControllerState.Leaderboards;
-                gameCenterController.leaderboardIdentifier = leaderBoardID;
-                (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
-                (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(gameCenterController, animated: true, completion: nil);
-            }
+            Utils.hideAlert({
+                var gameCenterController:GKGameCenterViewController! = GKGameCenterViewController();
+                if (gameCenterController != nil)
+                {
+                    gameCenterController.gameCenterDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate).gameController;
+                    gameCenterController.viewState = GKGameCenterViewControllerState.Leaderboards;
+                    gameCenterController.leaderboardIdentifier = leaderBoardID;
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(gameCenterController, animated: true, completion: {
+                        Utils.hideAlert(nil);
+                    });
+                }
+                else
+                {
+                    Utils.hideAlert(nil);
+                }
+            });
         }
         
-        GKLeaderboard.loadLeaderboardsWithCompletionHandler(completion);
+        AudioHelper.playSound(AudioHelper.MenuOpenSound);
+        
+        Utils.showAlert(message: "Loading...", action: nil, completion:{
+            GKLeaderboard.loadLeaderboardsWithCompletionHandler(completion);
+        });
+        
+        
     }
     
     class func reportScore(score:Int)

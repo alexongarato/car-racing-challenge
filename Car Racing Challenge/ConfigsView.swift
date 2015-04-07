@@ -13,6 +13,7 @@ class ConfigsView:AbstractView
 {
     var actions:Array<ActionModel> = Array<ActionModel>();
     var container:AbstractView!;
+    var podium:UIImageView!;
     
     override func didMoveToSuperview()
     {
@@ -31,8 +32,23 @@ class ConfigsView:AbstractView
         self.container.width = self.width;
         self.container.height = 200;
         self.container.center = self.center;
+//        self.container.layer.borderWidth = 1;
+        
+        var image:UIImage! = UIImage(named: ImagesNames.Podium);
+        podium = UIImageView(image: image);
+        self.addSubview(podium);
+        podium.addTarget(self, selector: Selector("openGameCenter:"));
+        podium.center = self.center;
         
         buildMenu();
+    }
+    
+    func openGameCenter(sender:AnyObject!)
+    {
+        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
+        
+        Trace.log("ConfigsView -> open game center");
+        GameCenterController.loadLeaderboard();
     }
     
     override func removeFromSuperview()
@@ -87,7 +103,12 @@ class ConfigsView:AbstractView
             action.sizeToFit();
             action.width = self.container.width;
             action.y = (action.height + 20) * i.floatValue;
+            
+            self.container.height = action.y + action.height * 2;
+            self.podium.y = self.container.y + self.container.height;
         }
+        
+        
     }
     
     func addAction(label:String, selector:String, key:String! = nil, active:Bool)

@@ -56,6 +56,7 @@ extension UIImage
 class AbstractView:UIView
 {
     var animationStyle:AnimationStyle = AnimationStyle.SlideUp;
+    private var _callback:(()->Void)!;
     
     override func didMoveToSuperview()
     {
@@ -193,9 +194,22 @@ extension UIView
     
     func addTarget(target:AnyObject, selector:Selector)
     {
-        var gestureRec:UITapGestureRecognizer = UITapGestureRecognizer(target: target, action: selector);
         self.userInteractionEnabled = true;
-        self.addGestureRecognizer(gestureRec);
+        self.addGestureRecognizer(UITapGestureRecognizer(target: target, action: selector));
+    }
+    
+    func onTouchAnima()
+    {
+        func completion1(animated:Bool)
+        {
+            UIView.animateWithDuration(AnimationTime.VeryFast, delay:0, options:UIViewAnimationOptions.CurveEaseIn, animations: {
+                self.layer.transform = CATransform3DMakeScale(1, 1, 1);
+                }, completion: nil);
+        }
+        
+        UIView.animateWithDuration(AnimationTime.VeryFast, delay:0, options:UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1);
+            }, completion: completion1);
     }
     
     func removeTargets()

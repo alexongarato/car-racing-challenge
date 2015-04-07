@@ -79,8 +79,16 @@ class MenuView: AbstractView, ADBannerViewDelegate
         btConfig.addTarget(self, selector: Selector("configsHandler"));
     }
     
+    private var _animating:Bool = false;
     func configsHandler()
     {
+        if(_animating)
+        {
+            return;
+        }
+        
+        _animating = true;
+        
         if(self.configView == nil)
         {
             self.configView = ConfigsView();
@@ -105,11 +113,18 @@ class MenuView: AbstractView, ADBannerViewDelegate
             rotateAnimation.duration = AnimationTime.Slow;
             self.btConfig.layer.addAnimation(rotateAnimation, forKey: nil);
             
+            func completion(animated:Bool)
+            {
+                self._animating = false;
+            }
+            
             UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.configView.x = 0;
-                }, completion: nil);
+                }, completion: completion);
+            
+            AudioHelper.playSound(AudioHelper.MenuOpenSound);
         }
-        else
+        else if(self.configView.x == 0)
         {
             Trace.log("close configs");
             
@@ -124,14 +139,15 @@ class MenuView: AbstractView, ADBannerViewDelegate
             {
                 self.configView.removeFromSuperview();
                 self.configView = nil;
+                self._animating = false;
             }
             
             UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.configView.x = self.width;
                 }, completion:completion);
+            
+            AudioHelper.playSound(AudioHelper.MenuOpenSound);
         }
-        
-        AudioHelper.playSound(AudioHelper.MenuOpenSound);
     }
     
     private func updateConfigButtonPosition(posY:CGFloat)
@@ -276,17 +292,19 @@ class MenuView: AbstractView, ADBannerViewDelegate
         podium.center = self.center;
         if(self.height > 480)
         {
-            podium.y -= 20;
+            podium.y -= 10;
         }
         else
         {
             podium.y -= self.y;
         }
-        podium.addTarget(self, selector: Selector("openGameCenter"));
+        podium.addTarget(self, selector: Selector("openGameCenter:"));
     }
     
-    func openGameCenter()
+    func openGameCenter(sender:AnyObject!)
     {
+        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
+        
         Trace.log("MenuView -> MenuView -> open game center");
         GameCenterController.loadLeaderboard();
     }
