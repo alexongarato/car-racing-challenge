@@ -61,5 +61,6 @@ struct ImagesNames
     static var Podium:String = "Podium";
     static var Instructions:String = "Instructions.png";
     static var ConfigIcon:String = "ConfigIcon.png";
+    static var AppIcon:String = "AppIcon";
 }
 

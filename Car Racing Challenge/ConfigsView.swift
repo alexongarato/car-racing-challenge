@@ -61,57 +61,96 @@ class ConfigsView:AbstractView
     {
         self.actions.removeAll(keepCapacity: false);
         
-        addAction("SOUNDS", selector: "soundHandler", key:SuiteNames.KeySound, active:true);
+        addAction(label: "SOUNDS", selector: "soundHandler", key:SuiteNames.KeySound, active:true);
         if(PurchaseController.getInstance().userCanPurchase())
         {
-            addAction("REMOVE ADS", selector: "adsHandler", key:SuiteNames.KeyAds, active:!PurchaseController.getInstance().hasPurchased());
-            addAction("RESTORE PURCHASES", selector: "restoreHandler", active:!PurchaseController.getInstance().hasPurchased());
+            addAction();
+            
+            addAction(label: "REMOVE ADS", selector: "adsHandler", key:SuiteNames.KeyAds, active:!PurchaseController.getInstance().hasPurchased());
+            addAction(label: "RESTORE PURCHASE", selector: "restoreHandler", active:!PurchaseController.getInstance().hasPurchased());
+            
+            addAction();
+            
+            addAction(label: "RATE THIS APP", selector: "rateHandler", key:nil, active:true);
+            addAction(label: "SHARE ON TWITTER", selector: "twitterHandler", key:nil, active:true);
+            addAction(label: "SHARE ON FACEBOOK", selector: "facebookHandler", key:nil, active:true);
         }
         
         self.container.removeAllSubviews();
         
         var action:UILabel!;
         var model:ActionModel!;
-        var label:String = "";
+        var label:String!;
+        let dash:String = " - ";
+        var lastY:CGFloat = 0;
         for(var i:Int = 0; i < self.actions.count; i++)
         {
             label = "";
             model = self.actions[i];
             action = UILabel();
+            
             if(model.key == nil)
             {
-                action.text = model.label;
+                action.text = (model.label == nil) ? dash : model.label;
             }
             else
             {
                 label = DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: model.key) ? "ON" : "OFF";
-                action.text = "\(model.label): \(label)";
+                action.text = "\(model.label):\(label)";
             }
             
-            action.font = Fonts.LightFont(FontSize.Medium);
             action.textColor = UIColor.blackColor();
             action.textAlignment = NSTextAlignment.Center;
             if(model.active)
             {
-                action.addTarget(self, selector: Selector(model.selector));
+                action.font = Fonts.LightFont(FontSize.Medium);
+                
+                if(model.selector != nil)
+                {
+                    action.addTarget(self, selector: Selector(model.selector));
+                }
             }
             else
             {
+                action.font = Fonts.LightFont(FontSize.Default);
                 action.alpha = 0.3;
             }
+            
             self.container.addSubview(action);
             action.sizeToFit();
             action.width = self.container.width;
-            action.y = (action.height + 20) * i.floatValue;
-            
-            self.container.height = action.y + action.height * 2;
-            self.podium.y = self.container.y + self.container.height;
+            if(action.text == dash)
+            {
+                action.height = 18;
+            }
+            action.y = lastY;
+            if(self.height <= 480)
+            {
+                lastY += action.height * 1.3;
+            }
+            else
+            {
+                lastY += action.height * 1.5;
+            }
         }
+        
+        self.container.height = lastY;
+        self.container.center = self.center;
+        if(self.height <= 480)
+        {
+            self.container.y -= self.podium.height.half + 10;
+        }
+        else
+        {
+            self.container.y -= self.podium.height.half;
+        }
+        
+        self.podium.y = self.container.y + self.container.height;
         
         
     }
     
-    func addAction(label:String, selector:String, key:String! = nil, active:Bool)
+    func addAction(label:String! = nil, selector:String! = nil, key:String! = nil, active:Bool = false)
     {
         var action:ActionModel = ActionModel();
         action.label = label;
@@ -136,7 +175,7 @@ class ConfigsView:AbstractView
         if(!DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds))
         {
             NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("purchasedHandler"), name: Events.AdsPurchased, object: nil);
-            PurchaseController.getInstance().buyRemoveAds();
+            PurchaseController.getInstance().buyRemoveAds(tryRestore: false);
             AudioHelper.playSound(AudioHelper.MenuOpenSound);
         }
     }
@@ -144,6 +183,8 @@ class ConfigsView:AbstractView
     func restoreHandler()
     {
         Trace.log("restore handler");
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("restoredHandler"), name: Events.AdsPurchased, object: nil);
+        PurchaseController.getInstance().buyRemoveAds(tryRestore: true);
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
     }
     
@@ -151,8 +192,43 @@ class ConfigsView:AbstractView
     func purchasedHandler()
     {
         NSNotificationCenter.defaultCenter().removeObserver(self);
+        NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
+        Utils.showAlert(title: "Remove Ads", message: "All Ads will be removed.\n\nThank you!", action: "Done", cancel: nil, completion: nil);
+    }
+    
+    func restoredHandler()
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self);
+        NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
+        PurchaseController.getInstance().hasPurchased(true);
+        buildMenu();
+        Utils.showAlert(title: "Remove Ads", message: "Purchase restored.\n\nThank you!", action: "Done", cancel: nil, completion: nil);
+    }
+    
+    func rateHandler()
+    {
+        Trace.log("rate handler");
+        var url:NSURL! = NSURL(string: Routes.RATE_US_URL)!;
+        UIApplication.sharedApplication().openURL(url);
+    }
+    
+    func facebookHandler()
+    {
+        Trace.log("facebook share");
+        shareBuilder(SocialController.facebookType);
+    }
+    
+    func twitterHandler()
+    {
+        Trace.log("twitter share");
+        shareBuilder(SocialController.twitterType);
+    }
+    
+    private func shareBuilder(type:String)
+    {
+        SocialController.share(type, text:"I'm playing Car Racing Challenge and it's awesome!", url:Routes.ITUNES_URL, image:UIImage(named: "export_icon_180.png"));
     }
     
     

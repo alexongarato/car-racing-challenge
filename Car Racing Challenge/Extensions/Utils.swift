@@ -171,19 +171,31 @@ class Utils
                 }
                 /*else if(completion != nil)
                 {
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(_alert, animated: false, completion: nil);
+                    AppDelegate.getInstance().gameController.presentViewController(_alert, animated: false, completion: nil);
                     completion();
                 }
                 else
                 {*/
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(_alert, animated: true, completion: completion);
+                    AppDelegate.getInstance().gameController.presentViewController(_alert, animated: true, completion: completion);
                 //}
                 
             }
             else
             {
-                _alertView = UIAlertView(title: title, message: message, delegate: nil, cancelButtonTitle: action, otherButtonTitles: cancel);
+                if(cancel == nil)
+                {
+                    _alertView = UIAlertView(title: title == nil ? "" : title, message: message, delegate: nil, cancelButtonTitle: action == nil ? "OK" : action);
+                }
+                else
+                {
+                    _alertView = UIAlertView(title: title == nil ? "" : title, message: message, delegate: nil, cancelButtonTitle: action, otherButtonTitles: cancel);
+                }
+                
                 _alertView.show();
+                if(completion != nil)
+                {
+                    completion();
+                }
             }
         });
     }

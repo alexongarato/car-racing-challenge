@@ -27,8 +27,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     override func didMoveToSuperview()
     {
 //        self.frame = UIScreen.mainScreen().applicationFrame;
-        self.buildBanner();
-        
+
         super.didMoveToSuperview();
         var img:UIImage! = UIImage(named: ImagesNames.Background)!;
         var imgView:UIImageView = UIImageView(image: img);
@@ -61,14 +60,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             self.scaleFactor = 3;
         }
         
-//        self.title.layer.borderWidth = 1;
-//        self.desc.layer.borderWidth = 1;
-//        self.instructs.layer.borderWidth = 1;
-        
-//        if(!PurchaseController.getInstance().hasPurchased() && PurchaseController.getInstance().userCanPurchase())
-//        {
-//            menuView.setAction("CONFIGS", target: self, selector: Selector("configsHandler"));
-//        }
+        self.buildBanner();
         
         img = UIImage(named:ImagesNames.ConfigIcon);
         img = ImageHelper.imageScaledToFit(img, sizeToFit: CGSize(width: 30, height: 30));
@@ -177,6 +169,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             _bannerView = ADBannerView();
         }
         
+        _bannerView.y = self.height;
         _bannerView.delegate = self;
     }
     
@@ -201,10 +194,34 @@ class MenuView: AbstractView, ADBannerViewDelegate
                 self.addSubview(self._bannerView);
                 self.updateConfigButtonPosition(self._bannerView.y);
             });
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("hideBannerHandler"), name: Events.removeAds, object: nil);
         }
         else
         {
             Trace.log("banner not loaded");
+        }
+    }
+    
+    func hideBannerHandler()
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self);
+        if(_bannerView != nil)
+        {
+            func completion(animated:Bool)
+            {
+                self._bannerView.removeFromSuperview();
+            }
+            
+            if(self._bannerView.y < self.height - self._bannerView.height)
+            {
+                self._bannerView.y = self.height - self._bannerView.height;
+            }
+            
+            UIView.animateWithDuration(AnimationTime.Default, animations: {
+                self._bannerView.y = self.height;
+                self.updateConfigButtonPosition(self._bannerView.y);
+                }, completion:completion);
         }
     }
     
@@ -336,7 +353,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             
             if(self.height <= 480)
             {
-                action.y = (self.height) * 0.9 - totalHeight + ((action.height + 10) * i.floatValue);
+                action.y = (self.height) * 0.88 - totalHeight + ((action.height + 10) * i.floatValue);
             }
             else
             {
@@ -345,6 +362,11 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
+    override func present(completion: ((animated: Bool) -> Void)!)
+    {
+        super.present(completion);
+        self.bringSubviewToFront(self.btConfig);
+    }
     /*
     override func present(completion: ((animated: Bool) -> Void)!)
     {
@@ -376,6 +398,8 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     override func dismiss(completion: ((animated: Bool) -> Void)!)
     {
+        NSNotificationCenter.defaultCenter().removeObserver(self);
+        
         if(self._bannerView == nil)
         {
             super.dismiss(completion);

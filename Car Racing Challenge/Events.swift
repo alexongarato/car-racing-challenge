@@ -10,5 +10,6 @@ import Foundation
 
 struct Events
 {
-    static var AdsPurchased : String = "AdsPurchased";
+    static var AdsPurchased     : String = "AdsPurchased";
+    static var removeAds        : String = "RemoveAds";
 }

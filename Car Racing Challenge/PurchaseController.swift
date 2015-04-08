@@ -9,8 +9,9 @@
 import Foundation
 import StoreKit
 
-private var _instance : PurchaseController!;
-private var _hasPurchased: Bool = false;
+private var _instance           : PurchaseController!;
+private var _hasPurchased       : Bool = false;
+private var _transactionType    : Int = -1;
 
 class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
@@ -56,13 +57,15 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         return SKPaymentQueue.canMakePayments();
     }
     
-    func buyRemoveAds()
+    func buyRemoveAds(#tryRestore:Bool)
     {
         if(self.productsIDs == nil)
         {
             Trace.log("Remove Ads handler ERROR");
             return;
         }
+        
+        _transactionType = tryRestore ? 1 : 0;
         
         Trace.log("Remove Ads handler");
         
@@ -85,6 +88,8 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         var productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productIdentifiers);
         productsRequest.delegate = self;
         productsRequest.start();
+        
+        //calls productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!)
     }
     
     
@@ -111,7 +116,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                     break;
                 case SKPaymentTransactionState.Failed:
                     Trace.log("Failed");
-//                    Utils.showAlert(title: "Purchase Failed", message: "Your purchase was not confirmed.", action: nil, cancel: "OK", completion: nil);
+//                    Utils.showAlert(title: "Purchase Failed", message: "Your purchase was not confirmed.", action: "OK", cancel: nil, completion: nil);
 //                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
                     break;
                 case SKPaymentTransactionState.Purchased:
@@ -153,17 +158,28 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                     numberFormatter.locale = prod.priceLocale;
                     var formattedPrice:NSString = numberFormatter.stringFromNumber(prod.price)!;
                     
-                    func confirm()
+                    func startPayment()
                     {
-                        Trace.log("user confirmed purchase");
+//                        SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
                         SKPaymentQueue.defaultQueue().addTransactionObserver(self);
+                        if(_transactionType == 0)
+                        {
+                            Trace.log("starting payment process...");
+                            var payment:SKMutablePayment = SKMutablePayment(product: prod);
+                            payment.quantity = 1;
+                            SKPaymentQueue.defaultQueue().addPayment(payment);
+                        }
+                        else if(_transactionType == 1)
+                        {
+                            Trace.log("starting restore payment process...");
+                            SKPaymentQueue.defaultQueue().restoreCompletedTransactions();
+                        }
                         
-                        var payment:SKMutablePayment = SKMutablePayment(product: prod);
-                        payment.quantity = 1;
-                        SKPaymentQueue.defaultQueue().addPayment(payment);
+                        _transactionType = -1;
                     }
                     
-                    confirm();
+                    
+                    startPayment();
                     break;
                 }
             }
@@ -175,7 +191,8 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         {
             for invalidIdentifier in invalid
             {
-                
+                Utils.showAlert(title: "Error", message: "The product requested is currently unavailable. Please try again later.", action: "OK", cancel: nil, completion: nil);
+                break;
             }
             
             Trace.log("invalid products count:\(invalid.count)");

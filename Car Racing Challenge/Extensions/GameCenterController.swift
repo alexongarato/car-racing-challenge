@@ -89,9 +89,9 @@ class GameCenterController
                 {
                     //showAuthenticationDialogWhenReasonable: is an example method name.
                     //Create your own method that displays an authentication view when appropriate for your app.
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(view, animated: true, completion: {
-                        (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationDidBecomeActive();
+                    AppDelegate.getInstance().gameController.applicationWillResignActive();
+                    AppDelegate.getInstance().gameController.presentViewController(view, animated: true, completion: {
+                        AppDelegate.getInstance().gameController.applicationDidBecomeActive();
                     })
                 }
             }
@@ -111,10 +111,10 @@ class GameCenterController
             else
             {
                 Trace.error("GameCenterController -> auth error");
-                (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
-                Utils.showAlert(title: "Game Center Unavailable", message: "Player is not signed in", completion:{
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationDidBecomeActive();
-                });
+                AppDelegate.getInstance().gameController.applicationWillResignActive();
+//                Utils.showAlert(title: "Game Center Unavailable", message: "Player is not signed in", completion:{
+                    AppDelegate.getInstance().gameController.applicationDidBecomeActive();
+//                });
             }
         }
         
@@ -129,11 +129,11 @@ class GameCenterController
                 var gameCenterController:GKGameCenterViewController! = GKGameCenterViewController();
                 if (gameCenterController != nil)
                 {
-                    gameCenterController.gameCenterDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate).gameController;
+                    gameCenterController.gameCenterDelegate = AppDelegate.getInstance().gameController;
                     gameCenterController.viewState = GKGameCenterViewControllerState.Leaderboards;
                     gameCenterController.leaderboardIdentifier = leaderBoardID;
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.presentViewController(gameCenterController, animated: true, completion: {
+                    AppDelegate.getInstance().gameController.applicationWillResignActive();
+                    AppDelegate.getInstance().gameController.presentViewController(gameCenterController, animated: true, completion: {
                         Utils.hideAlert(nil);
                     });
                 }

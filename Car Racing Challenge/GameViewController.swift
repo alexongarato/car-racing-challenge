@@ -34,7 +34,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         
         super.viewDidLoad();
         
-        (UIApplication.sharedApplication().delegate as! AppDelegate).gameController = self;
+        AppDelegate.getInstance().gameController = self;
         
         var purchased:Bool = PurchaseController.getInstance().hasPurchased();
         

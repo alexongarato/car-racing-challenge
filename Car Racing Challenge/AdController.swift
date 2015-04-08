@@ -48,7 +48,7 @@ class AdController:UIViewController, ADInterstitialAdDelegate
         if (interstitial.loaded)
         {
             self.container = view;
-            (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationWillResignActive();
+            AppDelegate.getInstance().gameController.applicationWillResignActive();
             interstitial.presentInView(self.container);
         }
         else
@@ -77,7 +77,7 @@ class AdController:UIViewController, ADInterstitialAdDelegate
     @objc func interstitialAdDidUnload(interstitialAd: ADInterstitialAd!)
     {
         Trace.log("AdController -> banner closed");
-        (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationDidBecomeActive();
+        AppDelegate.getInstance().gameController.applicationDidBecomeActive();
         self.cycleInterstitial();
     }
         
@@ -86,7 +86,7 @@ class AdController:UIViewController, ADInterstitialAdDelegate
     @objc func interstitialAd(interstitialAd: ADInterstitialAd!, didFailWithError error: NSError!)
     {
         Trace.log("AdController -> banner error");
-        (UIApplication.sharedApplication().delegate as! AppDelegate).gameController.applicationDidBecomeActive();
+        AppDelegate.getInstance().gameController.applicationDidBecomeActive();
         self.cycleInterstitial();
     }
 }

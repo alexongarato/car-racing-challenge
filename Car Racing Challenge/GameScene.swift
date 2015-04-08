@@ -11,7 +11,7 @@ import SpriteKit
 class GameScene: SKScene
 {
     //-- configs --
-    let SCORE_TO_LEVEL_UP               : Int = 50;//500
+    let SCORE_TO_LEVEL_UP               : Int = 300;//500
     let SCORE_TO_EARN_LIFE              : Int = 100;//100
     private let MAX_COLUMNS             : Int = 5;
     private let MIN_COLUMNS             : Int = 5;
@@ -237,7 +237,15 @@ class GameScene: SKScene
 //            pxCount = pxCount == 0 ? 1 : pxCount;
 //            var heightPixels:CGFloat = (totalPixelsY.floatValue - pxCount);
             
-            self.mainCharacter.y = self.size.height - (self.pixelSize * totalPixelsY.floatValue) + self.mainCharacter.height + (self.pixelSize);
+            if(self.size.height <= 480)
+            {
+                self.mainCharacter.y = self.size.height - (self.pixelSize * totalPixelsY.floatValue) + self.mainCharacter.height;
+            }
+             else
+            {
+                self.mainCharacter.y = self.size.height - (self.pixelSize * totalPixelsY.floatValue) + self.mainCharacter.height + (self.pixelSize);
+            }
+            
         }
         
         self.roadSides.y = self.size.height;
