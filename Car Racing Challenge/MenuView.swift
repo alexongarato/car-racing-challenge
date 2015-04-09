@@ -51,19 +51,20 @@ class MenuView: AbstractView, ADBannerViewDelegate
 //        self.addSubview(self.instructs);
 //        self.instructs.editable = false;
         
-        if(self.width > 375 && self.width < 414)
+        if(self.width > 375)// && self.width < 414)
         {
             self.scaleFactor = 2;
         }
-        if(self.width > 414)
-        {
-            self.scaleFactor = 3;
-        }
+        
+//        if(self.width > 414)
+//        {
+//            self.scaleFactor = 3;
+//        }
         
         self.buildBanner();
         
         img = UIImage(named:ImagesNames.ConfigIcon);
-        img = ImageHelper.imageScaledToFit(img, sizeToFit: CGSize(width: 30, height: 30));
+        img = ImageHelper.imageScaledToFit(img, sizeToFit: CGSize(width: 30 * self.scaleFactor, height: 30 * self.scaleFactor));
         btConfig = UIImageView(image: img);
         self.addSubview(btConfig);
         btConfig.alpha = 0.8;
@@ -97,7 +98,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         if(self.configView.x == self.width)
         {
-            Trace.log("open configs");
+            Trace("open configs");
             
             let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation");
             rotateAnimation.fromValue = CGFloat(M_PI * 2.0);
@@ -118,7 +119,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
         else if(self.configView.x == 0)
         {
-            Trace.log("close configs");
+            Trace("close configs");
             
             let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation");
             rotateAnimation.fromValue = 0.0;
@@ -153,19 +154,19 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         if(PurchaseController.getInstance().hasPurchased())
         {
-            Trace.log("user has purchased remove ads");
+            Trace("user has purchased remove ads");
             return;
         }
         
         // On iOS 6 ADBannerView introduces a new initializer, use it when available.
         if(ADBannerView.instancesRespondToSelector(Selector("initWithAdType:")))
         {
-            Trace.log("ADAdType banner");
+            Trace("ADAdType banner");
             _bannerView = ADBannerView(adType: ADAdType.Banner);
         }
         else
         {
-            Trace.log("no ADAdType");
+            Trace("no ADAdType");
             _bannerView = ADBannerView();
         }
         
@@ -177,16 +178,16 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         if(_bannerView == nil)
         {
-            Trace.log("no banner will be displayed.");
+            Trace("no banner will be displayed.");
             return;
         }
         
-        Trace.log("ShowBanner");
+        Trace("ShowBanner");
         
         var bannerFrame:CGRect = _bannerView.frame;
         if (_bannerView.bannerLoaded)
         {
-            Trace.log("banner loaded");
+            Trace("banner loaded");
             
             self._bannerView.y = self.height;
             UIView.animateWithDuration(AnimationTime.Default, animations: {
@@ -199,7 +200,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
         else
         {
-            Trace.log("banner not loaded");
+            Trace("banner not loaded");
         }
     }
     
@@ -227,7 +228,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func bannerViewDidLoadAd(banner:ADBannerView)
     {
-        Trace.log("bannerViewDidLoadAd");
+        Trace("bannerViewDidLoadAd");
         if(!_adLoaded)
         {
             _adLoaded = true;
@@ -237,18 +238,18 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func bannerView(banner:ADBannerView!, didFailToReceiveAdWithError:NSError!)
     {
-        Trace.log("didFailToReceiveAdWithError");
+        Trace("didFailToReceiveAdWithError");
     }
     
     func bannerViewActionShouldBegin(banner:ADBannerView, willLeaveApplication:Bool) -> Bool
     {
-        Trace.log("bannerViewActionShouldBegin");
+        Trace("bannerViewActionShouldBegin");
         return true;
     }
     
     func bannerViewActionDidFinish(banner:ADBannerView)
     {
-        Trace.log("bannerViewActionDidFinish");
+        Trace("bannerViewActionDidFinish");
     }
     //---------------------------------
     
@@ -305,6 +306,10 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         var image:UIImage! = UIImage(named: ImagesNames.Podium);
         var podium:UIImageView = UIImageView(image: image);
+//        if(self.scaleFactor > 1)
+//        {
+//            podium.scale(1.5);
+//        }
         self.addSubview(podium);
         podium.center = self.center;
         if(self.height > 480)
@@ -313,7 +318,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
         else
         {
-            podium.y -= self.y;
+            podium.y += 25;
         }
         podium.addTarget(self, selector: Selector("openGameCenter:"));
     }
@@ -322,7 +327,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
-        Trace.log("MenuView -> MenuView -> open game center");
+        Trace("MenuView -> MenuView -> open game center");
         GameCenterController.loadLeaderboard();
     }
     

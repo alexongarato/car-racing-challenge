@@ -173,14 +173,14 @@ extension UIView
             {
                 if(self.superview!.isKindOfClass(UIScrollView))
                 {
-                    Trace.log("inflate -> reached the scrollview");
+                    Trace("inflate -> reached the scrollview");
                     
                     var scroll:UIScrollView = self.superview as! UIScrollView;
                     scroll.contentSize = CGSize(width: scroll.frame.width, height: self.y + newHeight + 30);
                 }
                 else
                 {
-                    Trace.log("inflate -> propagating (superview:\(self.superview!.description))");
+                    Trace("inflate -> propagating (superview:\(self.superview!.description))");
                     
                     self.superview!.inflate(height: self.y + self.frame.height, propagate: true);
                 }

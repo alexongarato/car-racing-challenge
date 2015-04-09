@@ -19,7 +19,7 @@ class GameScene: SKScene
     private let ID_BT_RIGHT             : String = "bt_right";
     private let INT_BETWEEN_LEVELS      : CFTimeInterval = 0.01;
     private let PIXELS_BETWEEN_ENEMIES_1: Int = 15;
-    private let MIN_PX_BT_ENEMIES_1     : Int = 10;
+    private let MIN_PX_BT_ENEMIES_1     : Int = 5;
     private let IS_LIFE_BONUS_MODE      : Bool = false;
     private let IS_LEVEL_MODE           : Bool = true;
     private let INITIAL_USER_LIFES      : Int = 0;
@@ -79,7 +79,7 @@ class GameScene: SKScene
         }
         else
         {
-            Trace.error("INVALID COLUMN NUMBER (\(value))");
+            Trace("INVALID COLUMN NUMBER (\(value))");
         }
     }
     
@@ -109,7 +109,8 @@ class GameScene: SKScene
         {
             return thisView.paused;
         }
-        return false;
+        
+        return true;
     }
     
     func build()
@@ -140,6 +141,7 @@ class GameScene: SKScene
         self.pixelDistanceCounter       = self.PIXELS_BETWEEN_ENEMIES_1;
         self.currentVelSound            = 0;
         self.intervalBetweenLoops       = 0.5;
+        
         //        self.currentLifeCounter         = self.scoreToEarnLife;
         //        self.totalLifesCounter          = self.defaultTotalLifes;
         
@@ -167,7 +169,7 @@ class GameScene: SKScene
         
         self.removeChildrenInArray(self.enemiesArray);
         
-        Trace.log("GameScene -> pixelSize:\(self.pixelSize)");
+        Trace("GameScene -> pixelSize:\(self.pixelSize)");
         
         /**
         criar malha de pixels de acordo com a quantidade de pistas.
@@ -255,6 +257,9 @@ class GameScene: SKScene
         self.buttonLeft.zPosition = 21;
         self.buttonRight.zPosition = 22;
         
+        self.ready = false;
+        self.view?.paused = true;
+        
         self.builded = true;
     }
     
@@ -263,6 +268,7 @@ class GameScene: SKScene
         self.totalColumns = -1;
         
         self.ready = false;
+        self.view?.paused = true;
         self.builded = false;
         self.pixelDistanceCounter = -1;
         self.currentMainCharColumn = -1;
@@ -287,7 +293,7 @@ class GameScene: SKScene
     {
         if(!self.builded)
         {
-            Trace.error("GAME IS NOT READY!");
+            Trace("GAME IS NOT READY!");
             return;
         }
         

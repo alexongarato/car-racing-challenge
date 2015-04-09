@@ -25,7 +25,7 @@ class DataProvider
         {
             _private_nsuser_defaults = NSUserDefaults(suiteName: _private_domain);
             
-            Trace.log("DataProvider -> initialized \(_private_domain)");
+            Trace("DataProvider -> initialized \(_private_domain)");
         }
     }
     
@@ -106,13 +106,13 @@ class DataProvider
             var key:String = keys[i] as! String;
             if(key.hasPrefix(suiteName))
             {
-                Trace.warning("removing[\(i)]: \(key)");
+                Trace("removing[\(i)]: \(key)");
                 _private_nsuser_defaults.removeObjectForKey(key);
             }
         }
         
         _private_nsuser_defaults.synchronize();
-        Trace.warning("DataProvider -> Cache cleaned.");
+        Trace("DataProvider -> Cache cleaned.");
     }
 }
 

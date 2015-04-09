@@ -59,7 +59,6 @@
 		DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */; };
 		DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */; };
 		DBD63E311AC7669100F3A3C3 /* Instructions.png in Resources */ = {isa = PBXBuildFile; fileRef = DBD63E301AC7669100F3A3C3 /* Instructions.png */; };
-		DBFBA0F31AC4B8F800BD98D7 /* AdController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */; };
 		DBFBA0F61AC4B93F00BD98D7 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFBA0F41AC4B93700BD98D7 /* iAd.framework */; };
 /* End PBXBuildFile section */
 
@@ -118,7 +117,6 @@
 		DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatusView.swift; sourceTree = "<group>"; };
 		DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		DBD63E301AC7669100F3A3C3 /* Instructions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Instructions.png; path = Images/Instructions.png; sourceTree = "<group>"; };
-		DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdController.swift; sourceTree = "<group>"; };
 		DBFBA0F41AC4B93700BD98D7 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -255,7 +253,6 @@
 			children = (
 				DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */,
 				DB8C315E1AC620EB0027E949 /* PurchaseController.swift */,
-				DBFBA0F21AC4B8F800BD98D7 /* AdController.swift */,
 				DB9E317A1AD4D70B00C27087 /* SocialController.swift */,
 			);
 			name = Controllers;
@@ -413,7 +410,6 @@
 				DB3D62691ACE51C7001BC9D9 /* ConfigsView.swift in Sources */,
 				DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */,
 				DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */,
-				DBFBA0F31AC4B8F800BD98D7 /* AdController.swift in Sources */,
 				DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */,
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
 				DB1366531AD23992009A33DB /* Events.swift in Sources */,

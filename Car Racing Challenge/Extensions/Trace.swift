@@ -9,23 +9,7 @@
 import Foundation
 class Trace
 {
-    class func warning(value:String)
-    {
-        if(Configs.DEBUG_MODE)
-        {
-            NSLog("WARNING: \(value)");
-        }
-    }
-    
-    class func error(value:String)
-    {
-        if(Configs.DEBUG_MODE)
-        {
-            NSLog("ERROR: \(value)");
-        }
-    }
-    
-    class func log(value:String)
+    init(_ value:String)
     {
         if(Configs.DEBUG_MODE)
         {

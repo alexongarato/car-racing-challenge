@@ -67,7 +67,7 @@ class AudioHelper
             
         } else
         {
-            Trace.log("Sound file '\(name)' doesn't exist at '\(path)'");
+            Trace("Sound file '\(name)' doesn't exist at '\(path)'");
         }
     }
     
@@ -85,7 +85,7 @@ class AudioHelper
         }
         else
         {
-            Trace.log("Sound file '\(name)' error");
+            Trace("Sound file '\(name)' error");
         }
         
         return snd;
@@ -118,7 +118,7 @@ class AudioHelper
         }
         else
         {
-            Trace.log("Sound file '\(name)' error");
+            Trace("Sound file '\(name)' error");
         }
         
         return snd;

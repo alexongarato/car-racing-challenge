@@ -85,7 +85,7 @@ class Utils
         
         for(var x:Int = 0; x < totalPixelsX; x++)
         {
-            for(var y:Int = 0; y < totalPixelsY; y++)
+            for(var y:Int = 0; y <= totalPixelsY; y++)
             {
                 var pnt:CGPoint = CGPoint(x: pixelSize * x.floatValue, y:pixelSize * y.floatValue);
                 var rect:CGRect = CGRect(origin: pnt, size: CGSize(width: pixelSize, height: pixelSize));
@@ -145,11 +145,11 @@ class Utils
 //        #if DEBUG
         for family:AnyObject in UIFont.familyNames()
         {
-            Trace.log("Font family: \(family as? String)");
+            Trace("Font family: \(family as? String)");
             
             for name:AnyObject in UIFont.fontNamesForFamilyName(family as! String)
             {
-                Trace.log("  - Font name: \(name as! String)");
+                Trace("  - Font name: \(name as! String)");
             }
         }
 //        #endif

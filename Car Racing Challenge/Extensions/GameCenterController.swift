@@ -26,6 +26,11 @@ class GameCenterController
         return (gcClass != nil && systemVersion.floatValue >= 4.1);
     }
     
+    class func start()
+    {
+        GameCenterController.authenticate(GameCenterController.fetchUserScores);
+    }
+    
     class func setReadyStatus(value:Bool)
     {
         isGameCenterAuthenticationComplete = value;
@@ -40,29 +45,29 @@ class GameCenterController
     {
         if(error != nil)
         {
-            Trace.error("GameCenterController -> set default leaderboard ID FAILED!")
+            Trace("GameCenterController -> set default leaderboard ID FAILED!")
         }
         else
         {
-            Trace.warning("GameCenterController -> set default leaderboard ID SUCCEED!")
+            Trace("GameCenterController -> set default leaderboard ID SUCCEED!")
         }
     }
     
-    class func authenticate(callback:(()->Void!)!)
+    class func authenticate(callback:(()->Void)!)
     {
         if(!GameCenterController.isGameCenterAPIAvailable())
         {
-            Trace.error("GameCenterController -> GKLocalPlayer NOT READY!")
+            Trace("GameCenterController -> GKLocalPlayer NOT READY!")
             return;
         }
         
-        Trace.log("GameCenterController -> start");
+        Trace("GameCenterController -> start");
         localPlayer = GKLocalPlayer.localPlayer();
         setReadyStatus(false);
         localPlayer.setDefaultLeaderboardIdentifier(leaderBoardID, completionHandler: leaderboardHandler);
         
         
-        Trace.log("GameCenterController -> authenticating...");
+        Trace("GameCenterController -> authenticating...");
         /*
         The authenticateWithCompletionHandler method is like all completion handler methods and runs a block
         of code after completing its task. The difference with this method is that it does not release the
@@ -79,7 +84,7 @@ class GameCenterController
         
         func handler(view:UIViewController!, error:NSError!)
         {
-            Trace.log("GameCenterController -> auth complete.");
+            Trace("GameCenterController -> auth complete.");
             
             
             // If there is an error, do not assume local player is not authenticated.
@@ -100,25 +105,55 @@ class GameCenterController
                 // Enable Game Center Functionality
                 self.setReadyStatus(true);
                 currentPlayerID = localPlayer.playerID;
+                Trace("GameCenterController -> user authenticated (\(currentPlayerID))");
                 
                 if(callback != nil)
                 {
                     callback();
                 }
-                
-                Trace.log("GameCenterController -> user authenticated (\(currentPlayerID))");
             }
             else
             {
-                Trace.error("GameCenterController -> auth error");
-                AppDelegate.getInstance().gameController.applicationWillResignActive();
+                Trace("GameCenterController -> auth error");
+//                AppDelegate.getInstance().gameController.applicationWillResignActive();
 //                Utils.showAlert(title: "Game Center Unavailable", message: "Player is not signed in", completion:{
-                    AppDelegate.getInstance().gameController.applicationDidBecomeActive();
+//                    AppDelegate.getInstance().gameController.applicationDidBecomeActive();
 //                });
             }
         }
         
         localPlayer.authenticateHandler = handler;
+    }
+    
+    class func fetchUserScores()
+    {
+        var leaderboardRequest:GKLeaderboard = GKLeaderboard(players: [localPlayer]);
+        leaderboardRequest.identifier = leaderBoardID;
+        leaderboardRequest.playerScope = GKLeaderboardPlayerScope.Global;
+        leaderboardRequest.timeScope = GKLeaderboardTimeScope.AllTime;
+        leaderboardRequest.range = NSMakeRange(1,1);
+        leaderboardRequest.loadScoresWithCompletionHandler { (scores, error) -> Void in
+            if (scores != nil)
+            {
+                var newScore:NSInteger = NSInteger(leaderboardRequest.localPlayerScore.value);
+                var bestScore:NSInteger = AppDelegate.getInstance().gameController.getBestScore();
+                if(newScore > bestScore)
+                {
+                    Trace("GameCenterController -> gest score from leaderboard: \(newScore)");
+                    AppDelegate.getInstance().gameController.setBestScore(newScore);
+                }
+                else
+                {
+                    Trace("GameCenterController -> gest score from leaderboard: equal or lower than local (\(newScore)/\(bestScore))");
+                }
+                
+            }
+            else
+            {
+                Trace("GameCenterController -> gest score from leaderboard: error");
+                error;
+            }
+        }
     }
     
     class func loadLeaderboard()
@@ -149,8 +184,6 @@ class GameCenterController
         Utils.showAlert(message: "Loading...", action: nil, completion:{
             GKLeaderboard.loadLeaderboardsWithCompletionHandler(completion);
         });
-        
-        
     }
     
     class func reportScore(score:Int)
@@ -162,7 +195,7 @@ class GameCenterController
         
         func completion(error:NSError!)
         {
-            Trace.log("GameCenterController -> score reported:\(score)");
+            Trace("GameCenterController -> score reported:\(score)");
         }
         
         GKScore.reportScores([scoreReporter], withCompletionHandler: completion);

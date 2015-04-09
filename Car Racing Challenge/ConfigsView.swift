@@ -14,6 +14,7 @@ class ConfigsView:AbstractView
     var actions:Array<ActionModel> = Array<ActionModel>();
     var container:AbstractView!;
     var podium:UIImageView!;
+    var scaleFactor:CGFloat = 1;
     
     override func didMoveToSuperview()
     {
@@ -24,6 +25,11 @@ class ConfigsView:AbstractView
         self.addSubview(imgView);
         self.layer.masksToBounds = true;
         //-----
+        
+        if(self.width > 375)// && self.width < 414)
+        {
+            self.scaleFactor = 2;
+        }
         
         self.container = AbstractView();
         self.addSubview(self.container);
@@ -36,6 +42,10 @@ class ConfigsView:AbstractView
         
         var image:UIImage! = UIImage(named: ImagesNames.Podium);
         podium = UIImageView(image: image);
+//        if(self.scaleFactor > 1)
+//        {
+//            podium.scale(1.5);
+//        }
         self.addSubview(podium);
         podium.addTarget(self, selector: Selector("openGameCenter:"));
         podium.center = self.center;
@@ -47,7 +57,7 @@ class ConfigsView:AbstractView
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
-        Trace.log("ConfigsView -> open game center");
+        Trace("ConfigsView -> open game center");
         GameCenterController.loadLeaderboard();
     }
     
@@ -72,8 +82,8 @@ class ConfigsView:AbstractView
             addAction();
             
             addAction(label: "RATE THIS APP", selector: "rateHandler", key:nil, active:true);
-            addAction(label: "SHARE ON TWITTER", selector: "twitterHandler", key:nil, active:true);
-            addAction(label: "SHARE ON FACEBOOK", selector: "facebookHandler", key:nil, active:true);
+            addAction(label: "SHARE ON TWITTER", selector: "twitterHandler", key:nil, active:SocialController.getInstance().isTwitterAvailable());
+            addAction(label: "SHARE ON FACEBOOK", selector: "facebookHandler", key:nil, active:SocialController.getInstance().isFacebookAvailable());
         }
         
         self.container.removeAllSubviews();
@@ -103,7 +113,7 @@ class ConfigsView:AbstractView
             action.textAlignment = NSTextAlignment.Center;
             if(model.active)
             {
-                action.font = Fonts.LightFont(FontSize.Medium);
+                action.font = Fonts.LightFont(FontSize.Medium * self.scaleFactor);
                 
                 if(model.selector != nil)
                 {
@@ -112,7 +122,7 @@ class ConfigsView:AbstractView
             }
             else
             {
-                action.font = Fonts.LightFont(FontSize.Default);
+                action.font = Fonts.LightFont(FontSize.Default * self.scaleFactor);
                 action.alpha = 0.3;
             }
             
@@ -136,15 +146,7 @@ class ConfigsView:AbstractView
         
         self.container.height = lastY;
         self.container.center = self.center;
-        if(self.height <= 480)
-        {
-            self.container.y -= self.podium.height.half + 10;
-        }
-        else
-        {
-            self.container.y -= self.podium.height.half;
-        }
-        
+        self.container.y -= self.podium.height.half + 10;
         self.podium.y = self.container.y + self.container.height;
         
         
@@ -163,7 +165,7 @@ class ConfigsView:AbstractView
     //----- HANDLERS ---------
     func soundHandler()
     {
-        Trace.log("sound handler");
+        Trace("sound handler");
         DataProvider.saveData(SuiteNames.SuiteConfigs, key: SuiteNames.KeySound, value: !DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeySound));
         buildMenu();
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
@@ -171,7 +173,7 @@ class ConfigsView:AbstractView
     
     func adsHandler()
     {
-        Trace.log("ads handler");
+        Trace("ads handler");
         if(!DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds))
         {
             NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("purchasedHandler"), name: Events.AdsPurchased, object: nil);
@@ -182,7 +184,7 @@ class ConfigsView:AbstractView
     
     func restoreHandler()
     {
-        Trace.log("restore handler");
+        Trace("restore handler");
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("restoredHandler"), name: Events.AdsPurchased, object: nil);
         PurchaseController.getInstance().buyRemoveAds(tryRestore: true);
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
@@ -209,26 +211,26 @@ class ConfigsView:AbstractView
     
     func rateHandler()
     {
-        Trace.log("rate handler");
+        Trace("rate handler");
         var url:NSURL! = NSURL(string: Routes.RATE_US_URL)!;
         UIApplication.sharedApplication().openURL(url);
     }
     
     func facebookHandler()
     {
-        Trace.log("facebook share");
+        Trace("facebook share");
         shareBuilder(SocialController.facebookType);
     }
     
     func twitterHandler()
     {
-        Trace.log("twitter share");
+        Trace("twitter share");
         shareBuilder(SocialController.twitterType);
     }
     
     private func shareBuilder(type:String)
     {
-        SocialController.share(type, text:"I'm playing Car Racing Challenge and it's awesome!", url:Routes.ITUNES_URL, image:UIImage(named: "export_icon_180.png"));
+        SocialController.getInstance().share(type, text:"I'm playing Car Racing Challenge. It's awesome!", url:Routes.ITUNES_URL, image:UIImage(named: "export_icon_180.png"));
     }
     
     

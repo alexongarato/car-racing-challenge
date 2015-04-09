@@ -61,24 +61,24 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     {
         if(self.productsIDs == nil)
         {
-            Trace.log("Remove Ads handler ERROR");
+            Trace("Remove Ads handler ERROR");
             return;
         }
         
         _transactionType = tryRestore ? 1 : 0;
         
-        Trace.log("Remove Ads handler");
-        
-        Utils.showAlert(title: nil, message: "please wait...", action: nil, completion: nil);
+        Trace("Remove Ads handler");
         
         if let id = self.productsIDs.valueForKey("remove_ads") as? String
         {
-            Trace.log("validating Remove Ads ID:\(id)...");
-            self.validateProductIdentifiers([id]);
+            Trace("validating Remove Ads ID:\(id)...");
+            Utils.showAlert(title: nil, message: "please wait...", action: nil, completion: {
+                self.validateProductIdentifiers([id]);
+            });
         }
         else
         {
-            Trace.log("Remove Ad ID not found");
+            Trace("Remove Ad ID not found");
             Utils.showAlert(title: "Remove Ad", message: "Sorry. Something went wrong. Please try again.", completion: nil);
         }
     }
@@ -95,52 +95,68 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     
     //---------------- observers --------------
     
-    func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!)
+    @objc func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!)
     {
-        for obj in transactions
+        
+        var failed:Bool = true;
+        
+        Trace("paymentQueue updateTransactions");
+        
+        if let prodID = self.productsIDs.valueForKey("remove_ads") as? String
         {
-            if let transaction = obj as? SKPaymentTransaction
+            for obj in transactions
             {
-                Trace.log("transaction state \(transaction.transactionState.rawValue)");
-                switch (transaction.transactionState)
+                if let transaction = obj as? SKPaymentTransaction
                 {
-                    // Call the appropriate custom method for the transaction state.
-                case SKPaymentTransactionState.Purchasing:
-                    Trace.log("Purchasing");
-                    Utils.showAlert(title: nil, message: "Please Wait...", action: nil, cancel: nil, completion: nil);
-                    break;
-                case SKPaymentTransactionState.Deferred:
-                    Trace.log("Deferred");
-//                    Utils.showAlert(title: "Purchase canceled", message: nil, action: nil, cancel: nil, completion: nil);
-//                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
-                    break;
-                case SKPaymentTransactionState.Failed:
-                    Trace.log("Failed");
-//                    Utils.showAlert(title: "Purchase Failed", message: "Your purchase was not confirmed.", action: "OK", cancel: nil, completion: nil);
-//                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
-                    break;
-                case SKPaymentTransactionState.Purchased:
-                    Trace.log("Purchased");
-                    Utils.hideAlert(nil);
-//                    Utils.showAlert(title: "Purchase Confirmed", message: "Thank you!", action: "OK", cancel: nil, completion: nil);
-//                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
-                    NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
-                    break;
-                case SKPaymentTransactionState.Restored:
-                    Trace.log("Restored");
-                    Utils.hideAlert(nil);
-//                    Utils.showAlert(title: "Purchase Restored", message: "Thank you!", action: "OK", cancel: nil, completion: nil);
-//                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
-                    NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
-                    break;
-                default:
-                    // For debugging
-                    Utils.hideAlert(nil);
-                    Trace.log("Unexpected transaction state \(transaction.transactionState.rawValue)");
-//                    SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
-                    break;
+                    Trace("transaction state \(transaction.transactionState.rawValue)");
+                    Trace("for product: \(transaction.payment.productIdentifier)");
+                    
+                    if(transaction.payment.productIdentifier != nil)
+                    {
+                        if(transaction.payment.productIdentifier == prodID)
+                        {
+                            switch (transaction.transactionState)
+                            {
+                            case SKPaymentTransactionState.Purchasing:
+                                Trace("Purchasing");
+                                break;
+                            case SKPaymentTransactionState.Deferred:
+                                Trace("Deferred");
+                                break;
+                            case SKPaymentTransactionState.Failed:
+                                Trace("Failed");
+                                break;
+                            case SKPaymentTransactionState.Purchased:
+                                Trace("Purchased");
+                                failed = false;
+                                NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
+                                break;
+                            case SKPaymentTransactionState.Restored:
+                                Trace("Restored");
+                                failed = false;
+                                NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
+                                break;
+                            default:
+                                Trace("Unexpected transaction state \(transaction.transactionState.rawValue)");
+                                break;
+                            }
+                        }
+                    }
                 }
             }
+        }
+        else
+        {
+            Utils.showAlert(title: "Error", message: "Oops!\nAn error occurred.\nCode:001", action: "OK");
+        }
+        
+        if(failed)
+        {
+            Utils.showAlert(title: "Failed", message: "\nPurchase of Remove Ads was not completed.\n\nPlease, try again later.\n", action: "OK");
+        }
+        else
+        {
+            Utils.hideAlert(nil);
         }
     }
     
@@ -162,16 +178,17 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                     {
 //                        SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
                         SKPaymentQueue.defaultQueue().addTransactionObserver(self);
+                        
                         if(_transactionType == 0)
                         {
-                            Trace.log("starting payment process...");
+                            Trace("starting payment process...");
                             var payment:SKMutablePayment = SKMutablePayment(product: prod);
                             payment.quantity = 1;
                             SKPaymentQueue.defaultQueue().addPayment(payment);
                         }
                         else if(_transactionType == 1)
                         {
-                            Trace.log("starting restore payment process...");
+                            Trace("starting restore payment process...");
                             SKPaymentQueue.defaultQueue().restoreCompletedTransactions();
                         }
                         
@@ -179,12 +196,16 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                     }
                     
                     
-                    startPayment();
+                    Utils.hideAlert(startPayment);
                     break;
+                }
+                else
+                {
+                    Trace("valid product failed");
                 }
             }
             
-            Trace.log("valid products count:\(valid.count)");
+            Trace("valid products count:\(valid.count)");
         }
         
         if let invalid:NSArray = response.invalidProductIdentifiers
@@ -195,7 +216,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                 break;
             }
             
-            Trace.log("invalid products count:\(invalid.count)");
+            Trace("invalid products count:\(invalid.count)");
         }
     }
 }
