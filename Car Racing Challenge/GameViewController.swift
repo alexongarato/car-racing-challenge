@@ -16,6 +16,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     var sceneView               : SKView!;
     var menuView                : MenuView!;
     var statusView              : GameStatusView!;
+    var pauseArea               : UIView!;
     var snapshotView            : UIImageView!;
     var showResumeOnStartUp     : Bool = false;
     private var _bestScore      : NSInteger = 0;
@@ -58,6 +59,17 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         
         self.statusView = GameStatusView();
         self.view.addSubview(self.statusView);
+        
+        self.pauseArea = UIView();
+        self.pauseArea.frame = self.view.frame;
+        self.pauseArea.width = self.view.width / 3;
+        self.pauseArea.center.x = self.view.center.x;
+        self.pauseArea.height = self.pauseArea.height * 0.8;
+//        self.pauseArea.backgroundColor = UIColor.redColor();
+//        self.pauseArea.alpha = 0.2;
+        self.pauseArea.backgroundColor = UIColor.clearColor();
+        self.pauseArea.addTarget(self, selector: Selector("pauseGameHandler"));
+        self.view.addSubview(self.pauseArea);
         
         scene.lifeUpHandler = self.statusView.showSuccessAnimation;
         scene.lifeDownHandler = self.statusView.showErrorAnimation;
@@ -212,9 +224,9 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     {
         Trace("GameViewController -> LEVEL UP");
         
-        var ttl:String = "\nLEVEL \(scene.currentLevel())\n";
+        var ttl:String = "\nPIT STOP \(scene.currentLevel())\n";
         var desc:String!;
-        var act:String = "LET'S GO!";
+        var act:String = "GO FASTER!";
         var selector:Selector = Selector("resumeLevelUp:");
         
         if(!Configs.SAMPLE_MODE)
@@ -293,10 +305,15 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         if(self.showResumeOnStartUp)
         {
             self.showResumeOnStartUp = false;
-            showMenu("RESUME\n\n", desc: " \n \n \nARE YOU READY?", action: "YES!", selector: Selector("resumeLevelUp:"));
+            self.pauseGameHandler();
         }
         
         Utils.hideAlert(nil);
+    }
+    
+    func pauseGameHandler()
+    {
+        showMenu("GAME PAUSED\n\n", desc: " \n \n \nARE YOU READY?", action: "RESUME", selector: Selector("resumeLevelUp:"));
     }
     
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!)

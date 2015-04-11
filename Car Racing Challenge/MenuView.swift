@@ -286,10 +286,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
 //        self.instructImg.alpha = 0;
         self.addSubview(self.instructImg);
         self.instructImg.center = self.center;
-        if(self.height <= 480)
-        {
-            self.instructImg.y += 20;
-        }
+        self.instructImg.y += 10;
         
 //        self.instructs.text = "each \(scoreToLifeUp) points earned = 1 life up";
 //        self.instructs.font = Fonts.DefaultFont(FontSize.Tiny * self.scaleFactor);
