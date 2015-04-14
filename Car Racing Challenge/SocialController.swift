@@ -55,6 +55,7 @@ class SocialController
     
     func share(type:String, text:String, url:String! = nil, image:UIImage! = nil)
     {
+        var error:Bool = false;
         if(SLComposeViewController.isAvailableForServiceType(type))
         {
             if let sheet:SLComposeViewController! = SLComposeViewController(forServiceType: type)
@@ -73,11 +74,21 @@ class SocialController
                 
                 AppDelegate.getInstance().gameController.presentViewController(sheet, animated: true, completion: nil);
             }
+            else
+            {
+                 error = true;
+            }
         }
         else
         {
+            error = true;
+        }
+        
+        if(error)
+        {
+            Trace("share error");
             var source:String = (type == SLServiceTypeTwitter) ? "Twitter" : "Facebook";
-            Utils.showAlert(title: "Accounts", message: "Please login to a \(source) account to share.", action: nil, cancel: "OK", completion: nil);
+            AlertController.getInstance().showAlert(title: "Accounts", message: "Please login to a \(source) account to share.", action: nil, cancel: "OK", completion: nil);
         }
     }
 }

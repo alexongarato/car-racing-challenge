@@ -11,8 +11,8 @@ import SpriteKit
 class GameScene: SKScene
 {
     //-- configs --
-    let SCORE_TO_LEVEL_UP               : Int = 300;//500
-    let SCORE_TO_EARN_LIFE              : Int = 100;//100
+    let SCORE_TO_LEVEL_UP               : Int = 200;//500
+    let SCORE_TO_EARN_LIFE              : Int = 999999;//100
     private let MAX_COLUMNS             : Int = 5;
     private let MIN_COLUMNS             : Int = 5;
     private let ID_BT_LEFT              : String = "bt_left";

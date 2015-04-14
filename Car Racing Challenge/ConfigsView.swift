@@ -145,11 +145,9 @@ class ConfigsView:AbstractView
         }
         
         self.container.height = lastY;
-        self.container.center = self.center;
-        self.container.y -= self.podium.height.half + 10;
+        self.container.center.x = self.center.x;
+        self.container.y = (UIScreen.mainScreen().applicationFrame.height - self.container.height).half - 45;
         self.podium.y = self.container.y + self.container.height;
-        
-        
     }
     
     func addAction(label:String! = nil, selector:String! = nil, key:String! = nil, active:Bool = false)
@@ -197,7 +195,7 @@ class ConfigsView:AbstractView
         NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
-        Utils.showAlert(title: "Remove Ads", message: "All Ads will be removed.\n\nThank you!", action: "Done", cancel: nil, completion: nil);
+        AlertController.getInstance().showAlert(title: "Remove Ads", message: "All Ads will be removed.\n\nThank you!", action: "Done", cancel: nil, completion: nil);
     }
     
     func restoredHandler()
@@ -206,12 +204,13 @@ class ConfigsView:AbstractView
         NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
-        Utils.showAlert(title: "Remove Ads", message: "Purchase restored.\n\nThank you!", action: "Done", cancel: nil, completion: nil);
+        AlertController.getInstance().showAlert(title: "Remove Ads", message: "Purchase restored.\n\nThank you!", action: "Done", cancel: nil, completion: nil);
     }
     
     func rateHandler()
     {
         Trace("rate handler");
+        AudioHelper.playSound(AudioHelper.MenuOpenSound);
         var url:NSURL! = NSURL(string: Routes.RATE_US_URL)!;
         UIApplication.sharedApplication().openURL(url);
     }
@@ -219,12 +218,14 @@ class ConfigsView:AbstractView
     func facebookHandler()
     {
         Trace("facebook share");
+        AudioHelper.playSound(AudioHelper.MenuOpenSound);
         shareBuilder(SocialController.facebookType);
     }
     
     func twitterHandler()
     {
         Trace("twitter share");
+        AudioHelper.playSound(AudioHelper.MenuOpenSound);
         shareBuilder(SocialController.twitterType);
     }
     

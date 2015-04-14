@@ -36,6 +36,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         super.viewDidLoad();
         
         AppDelegate.getInstance().gameController = self;
+        AlertController.getInstance().build(self);
         
         var purchased:Bool = PurchaseController.getInstance().hasPurchased();
         
@@ -224,7 +225,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     {
         Trace("GameViewController -> LEVEL UP");
         
-        var ttl:String = "\nPIT STOP \(scene.currentLevel())\n";
+        var ttl:String = "\nLEVEL \(scene.currentLevel())\n";
         var desc:String!;
         var act:String = "GO FASTER!";
         var selector:Selector = Selector("resumeLevelUp:");
@@ -308,7 +309,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             self.pauseGameHandler();
         }
         
-        Utils.hideAlert(nil);
+        AlertController.getInstance().hideAlert(nil);
     }
     
     func pauseGameHandler()

@@ -9,6 +9,22 @@
 import Foundation
 import UIKit
 
+
+struct ImagesNames
+{
+    static var PixelOn                  : String = "PixelOn";
+    static var PixelOff                 : String = "PixelOff";
+    static var Background               : String = "Background";
+    static var MenuBackground           : String = "MenuBG";
+    static var MenuBackgroundiPhone6    : String = "MenuBG_iphone6";
+    static var Podium                   : String = "Podium";
+    static var Instructions             : String = "Instructions.png";
+    static var ConfigIcon               : String = "ConfigIcon.png";
+    static var AppIcon                  : String = "AppIcon";
+    static var AlertBG                  : String = "Alert.png";
+}
+
+
 class ImageHelper
 {
     class func imageWithName(name:String) -> UIImage!
@@ -49,18 +65,5 @@ class ImageHelper
         
         return newImage;
     }
-}
-
-struct ImagesNames
-{
-    static var PixelOn:String = "PixelOn";
-    static var PixelOff:String = "PixelOff";
-    static var Background:String = "Background";
-    static var MenuBackground:String = "MenuBG";
-    static var MenuBackgroundiPhone6:String = "MenuBG_iphone6";
-    static var Podium:String = "Podium";
-    static var Instructions:String = "Instructions.png";
-    static var ConfigIcon:String = "ConfigIcon.png";
-    static var AppIcon:String = "AppIcon";
 }
 

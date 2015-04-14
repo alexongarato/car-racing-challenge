@@ -72,14 +72,14 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         if let id = self.productsIDs.valueForKey("remove_ads") as? String
         {
             Trace("validating Remove Ads ID:\(id)...");
-            Utils.showAlert(title: nil, message: "please wait...", action: nil, completion: {
+            AlertController.getInstance().showAlert(title: nil, message: "please wait...", action: nil, completion: {
                 self.validateProductIdentifiers([id]);
             });
         }
         else
         {
             Trace("Remove Ad ID not found");
-            Utils.showAlert(title: "Remove Ad", message: "Sorry. Something went wrong. Please try again.", completion: nil);
+            AlertController.getInstance().showAlert(title: "Remove Ad", message: "Sorry. Something went wrong. Please try again.", completion: nil);
         }
     }
     
@@ -147,16 +147,16 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         }
         else
         {
-            Utils.showAlert(title: "Error", message: "Oops!\nAn error occurred.\nCode:001", action: "OK");
+            AlertController.getInstance().showAlert(title: "Error", message: "Oops!\nAn error occurred.\nCode:001", action: "OK");
         }
         
         if(failed)
         {
-            Utils.showAlert(title: "Failed", message: "\nPurchase of Remove Ads was not completed.\n\nPlease, try again later.\n", action: "OK");
+            AlertController.getInstance().showAlert(title: "Failed", message: "\nPurchase of Remove Ads was not completed.\n\nPlease, try again later.\n", action: "OK");
         }
         else
         {
-            Utils.hideAlert(nil);
+            AlertController.getInstance().hideAlert(nil);
         }
     }
     
@@ -196,7 +196,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                     }
                     
                     
-                    Utils.hideAlert(startPayment);
+                    AlertController.getInstance().hideAlert(startPayment);
                     break;
                 }
                 else
@@ -212,7 +212,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         {
             for invalidIdentifier in invalid
             {
-                Utils.showAlert(title: "Error", message: "The product requested is currently unavailable. Please try again later.", action: "OK", cancel: nil, completion: nil);
+                AlertController.getInstance().showAlert(title: "Error", message: "The product requested is currently unavailable. Please try again later.", action: "OK", cancel: nil, completion: nil);
                 break;
             }
             

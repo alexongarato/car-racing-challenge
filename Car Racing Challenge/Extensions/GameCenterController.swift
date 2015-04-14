@@ -116,7 +116,7 @@ class GameCenterController
             {
                 Trace("GameCenterController -> auth error");
 //                AppDelegate.getInstance().gameController.applicationWillResignActive();
-//                Utils.showAlert(title: "Game Center Unavailable", message: "Player is not signed in", completion:{
+//                AlertController.getInstance().showAlert(title: "Game Center Unavailable", message: "Player is not signed in", completion:{
 //                    AppDelegate.getInstance().gameController.applicationDidBecomeActive();
 //                });
             }
@@ -160,7 +160,7 @@ class GameCenterController
     {
         func completion(leaderboards:[AnyObject]!, error:NSError!)
         {
-            Utils.hideAlert({
+            AlertController.getInstance().hideAlert({
                 var gameCenterController:GKGameCenterViewController! = GKGameCenterViewController();
                 if (gameCenterController != nil)
                 {
@@ -169,19 +169,19 @@ class GameCenterController
                     gameCenterController.leaderboardIdentifier = leaderBoardID;
                     AppDelegate.getInstance().gameController.applicationWillResignActive();
                     AppDelegate.getInstance().gameController.presentViewController(gameCenterController, animated: true, completion: {
-                        Utils.hideAlert(nil);
+                        AlertController.getInstance().hideAlert(nil);
                     });
                 }
                 else
                 {
-                    Utils.hideAlert(nil);
+                    AlertController.getInstance().hideAlert(nil);
                 }
             });
         }
         
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         
-        Utils.showAlert(message: "Loading...", action: nil, completion:{
+        AlertController.getInstance().showAlert(message: "Loading...", action: nil, completion:{
             GKLeaderboard.loadLeaderboardsWithCompletionHandler(completion);
         });
     }
