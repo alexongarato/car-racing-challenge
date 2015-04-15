@@ -11,10 +11,10 @@ import SpriteKit
 class GameScene: SKScene
 {
     //-- configs --
-    let SCORE_TO_LEVEL_UP               : Int = 200;//500
+    let SCORE_TO_LEVEL_UP               : Int = 150;//500
     let SCORE_TO_EARN_LIFE              : Int = 999999;//100
-    private let MAX_COLUMNS             : Int = 5;
-    private let MIN_COLUMNS             : Int = 5;
+    private let MAX_COLUMNS             : Int = 4;
+    private let MIN_COLUMNS             : Int = 4;
     private let ID_BT_LEFT              : String = "bt_left";
     private let ID_BT_RIGHT             : String = "bt_right";
     private let INT_BETWEEN_LEVELS      : CFTimeInterval = 0.01;
@@ -23,6 +23,7 @@ class GameScene: SKScene
     private let IS_LIFE_BONUS_MODE      : Bool = false;
     private let IS_LEVEL_MODE           : Bool = true;
     private let INITIAL_USER_LIFES      : Int = 0;
+    private let ROAD_PIXELS_INTERVAL    : Int = 4;
     
     
     //-- pointers --
@@ -197,7 +198,7 @@ class GameScene: SKScene
             
             
             //cria as laterias temporarias que serao desenhadas no context
-            roadSides = SKSpriteNode(texture: Utils.createRoadPixels(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
+            roadSides = SKSpriteNode(texture: Utils.createRoadPixels(CGSize(width: self.size.width, height: self.size.height + (self.pixelSize * (ROAD_PIXELS_INTERVAL.floatValue * 2))), totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY + ROAD_PIXELS_INTERVAL * 2, pixelSize: self.pixelSize));
             self.addChild(roadSides);
             roadSides.zPosition = 1;
             roadSides.anchorPoint.x = 0;
@@ -263,6 +264,11 @@ class GameScene: SKScene
         self.builded = true;
     }
     
+    func resetIntervalBetweenLoops()
+    {
+        self.intervalBetweenLoops = 0.5;
+    }
+    
     func reset()
     {
         self.totalColumns = -1;
@@ -272,8 +278,8 @@ class GameScene: SKScene
         self.builded = false;
         self.pixelDistanceCounter = -1;
         self.currentMainCharColumn = -1;
-        self.intervalBetweenLoops = 0.5;
-        self.currentLevelCounter = 1;
+        self.resetIntervalBetweenLoops();
+        self.currentLevelCounter = 30;
         self.currentScoreCounter = 0;
         self.totalScoreCounter = 0;
         self.totalLifesCounter = self.INITIAL_USER_LIFES;
@@ -286,6 +292,9 @@ class GameScene: SKScene
         //        self.builded = false;
         self.ready = false;
         self.view?.paused = true;
+        self.roadSides.removeAllActions();
+        self.resetIntervalBetweenLoops();
+        self.currentVelSound = 0;
         AudioHelper.stopSound(AudioHelper.Vel4Sound);
     }
     
@@ -378,6 +387,7 @@ class GameScene: SKScene
                                     self.currentScoreCounter = 0;
                                     self.currentLevelCounter++;
                                     self.levelUpHandler();
+                                    self.resetIntervalBetweenLoops();
                                 }
                             }
                         }
@@ -397,7 +407,8 @@ class GameScene: SKScene
                 if(enemyBlock.x >= mainCharacter.x - 1 && enemyBlock.x <= mainCharacter.x + 1
                     && enemyBlock.y - charactersSize.height < mainCharacter.y && enemyBlock.y > mainCharacter.y - charactersSize.height + 2)
                 {
-                    if(!enemyBlock.isTouched)
+                    
+                    if(!enemyBlock.isTouched && false)
                     {
                         enemyBlock.isTouched = true;
                         
@@ -422,22 +433,22 @@ class GameScene: SKScene
             }
         }
         
-        if(self.intervalBetweenLoops > 0.03)
+        if(self.intervalBetweenLoops > 0.04)
         {
-            self.intervalBetweenLoops -= 0.003;
+            self.intervalBetweenLoops -= 0.004;
         }
     }
     
     private func trackAction() -> SKAction
     {
-        var act = SKAction.moveToY(self.size.height - (self.pixelSize * 3) - 1, duration: 0.08 + self.intervalBetweenLoops);
+        var act = SKAction.moveToY(self.size.height, duration: 0.04 + self.intervalBetweenLoops);
         act.timingMode = SKActionTimingMode.Linear;
         return act;
     }
     
     private func trackCompletion()
     {
-        if(!self.isGameOver && !self.isGamePaused())
+        if(!self.isGameOver/* && !self.isGamePaused()*/)
         {
             startTrackAnima();
         }
@@ -446,7 +457,7 @@ class GameScene: SKScene
     private func startTrackAnima()
     {
         roadSides.paused = false;
-        roadSides.y = self.size.height;
+        roadSides.y = self.size.height + (self.pixelSize * ROAD_PIXELS_INTERVAL.floatValue);
         roadSides.runAction(trackAction(), completion: trackCompletion);
     }
     
@@ -509,32 +520,6 @@ class GameScene: SKScene
             }
         }
         createEnemy();
-        
-        //zig-zag
-        /*if(self.currentScoreCounter >= Int((self.SCORE_TO_LEVEL_UP.floatValue * self.currentLevelCounter.floatValue) * 0.5))
-        {
-        createEnemy();
-        newEnemy.x = self.pixelSize + (self.charactersSize.width * self.enemyCurrentPositionX);
-        self.enemyCurrentPositionX += enemyCurrentPositionIncrement;
-        if(self.enemyCurrentPositionIncrement > 0)
-        {
-        if(self.enemyCurrentPositionX >= self.totalColumns.floatValue)
-        {
-        self.enemyCurrentPositionIncrement = -1;
-        }
-        }
-        else if(self.enemyCurrentPositionIncrement < 0)
-        {
-        if(self.enemyCurrentPositionX <= 0)
-        {
-        self.enemyCurrentPositionIncrement = 1;
-        }
-        }
-        }
-        else
-        {
-        createEnemy();
-        }*/
     }
 }
 

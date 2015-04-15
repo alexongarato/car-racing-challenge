@@ -14,7 +14,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
 {
     private var desc        : UITextView!;
     private var title       : UITextView!;
-//    private var instructs   : UITextView!;
+    private var instructs   : UITextView!;
     private var instructImg : UIImageView!;
     private var actions     : Array<UILabel>!;
     private var fontColor   : UIColor = UIColor.blackColor();
@@ -52,10 +52,10 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.desc.editable = false;
 //        self.desc.alpha = 0;
         
-//        self.instructs = UITextView();
-//        self.instructs.textColor = fontColor;
-//        self.addSubview(self.instructs);
-//        self.instructs.editable = false;
+        self.instructs = UITextView();
+        self.instructs.textColor = fontColor;
+        self.addSubview(self.instructs);
+        self.instructs.editable = false;
         
         if(self.width > 375)// && self.width < 414)
         {
@@ -294,15 +294,15 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.instructImg.center = self.center;
         self.instructImg.y += 10;
         
-//        self.instructs.text = "each \(scoreToLifeUp) points earned = 1 life up";
-//        self.instructs.font = Fonts.DefaultFont(FontSize.Tiny * self.scaleFactor);
-//        self.instructs.textAlignment = NSTextAlignment.Center;
-//        self.instructs.backgroundColor = UIColor.clearColor();
-//        self.instructs.sizeToFit();
-//        self.instructs.width = self.width - 10;
-//        self.instructs.center = self.center;
-//        self.instructs.y = instructions.y + instructions.height - 41;
-        
+        self.instructs.text = "";
+        self.instructs.font = Fonts.DefaultFont(FontSize.Tiny * self.scaleFactor);
+        self.instructs.textAlignment = NSTextAlignment.Center;
+        self.instructs.backgroundColor = UIColor.clearColor();
+        self.instructs.sizeToFit();
+        self.instructs.width = self.width - 10;
+        self.instructs.center = self.center;
+        self.instructs.y = self.instructImg.y + self.instructImg.height - 45;
+        self.instructs.alpha = 0.5;
     }
     
     func setGameOver()

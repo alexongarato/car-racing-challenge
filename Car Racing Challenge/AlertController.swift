@@ -48,16 +48,21 @@ class AlertController
         {
             func end(animated:Bool)
             {
-                self._alert.removeFromSuperview();
-                self._alert = nil;
+                if(_alert != nil)
+                {
+                    if(self._alert.superview != nil)
+                    {
+                        self._alert.removeFromSuperview();
+                    }
+                    self._alert = nil;
+                }
                 if(completion != nil)
                 {
                     completion();
                 }
             }
-            UIView.animateWithDuration(AnimationTime.Fast, animations: {
-                self._alert.alpha = 0;
-                }, completion: end);
+            
+            _alert.hide(end);
         }
         else
         {
@@ -174,6 +179,15 @@ class AlertController
             
             UIView.animateWithDuration(AnimationTime.Fast, animations: {
                 self.alpha = 1;
+            });
+            
+            self.bg.alpha = 0;
+            self.bg.layer.transform = CATransform3DMakeRotation(180, 0, self.height, 1);
+            UIView.animateWithDuration(AnimationTime.Fast,
+                delay:AnimationTime.Fast,
+                options:UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.bg.alpha = 1;
+                self.bg.layer.transform = CATransform3DMakeRotation(0, 0, 0, 1);
                 }, completion: { (animate) -> Void in
                     if(self.action == nil && self.completion != nil)
                     {
@@ -181,6 +195,23 @@ class AlertController
                     }
             });
             
+        }
+        
+        func hide(callback:((animated:Bool)->Void)!)
+        {
+            UIView.animateWithDuration(AnimationTime.Fast,
+                delay:0,
+                options:UIViewAnimationOptions.CurveEaseInOut, animations: {
+                    self.bg.alpha = 0;
+                    self.bg.layer.transform = CATransform3DMakeRotation(180, 0, self.height, 1);
+                }, completion: {(animated) -> Void in
+                    
+                    UIView.animateWithDuration(AnimationTime.Fast,
+                        delay:0,
+                        options:UIViewAnimationOptions.CurveEaseInOut, animations: {
+                            self.bg.alpha = 0;
+                        }, completion: callback);
+            });
         }
     }
 }

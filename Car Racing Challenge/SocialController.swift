@@ -55,6 +55,8 @@ class SocialController
     
     func share(type:String, text:String, url:String! = nil, image:UIImage! = nil)
     {
+        AlertController.getInstance().showAlert(message: "loading...");
+        
         var error:Bool = false;
         if(SLComposeViewController.isAvailableForServiceType(type))
         {
@@ -72,7 +74,10 @@ class SocialController
                     sheet.addImage(image);
                 }
                 
-                AppDelegate.getInstance().gameController.presentViewController(sheet, animated: true, completion: nil);
+                
+                AppDelegate.getInstance().gameController.presentViewController(sheet, animated: true, completion: {
+                    AlertController.getInstance().hideAlert(nil);
+                });
             }
             else
             {

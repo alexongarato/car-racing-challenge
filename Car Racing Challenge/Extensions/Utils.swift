@@ -128,6 +128,12 @@ class Utils
                 
                 y++;
                 
+                pnt = CGPoint(x: pixelSize * x.floatValue, y:pixelSize * y.floatValue);
+                rect = CGRect(origin: pnt, size: CGSize(width: pixelSize, height: pixelSize));
+                CGContextDrawImage(context, rect, pixelOn);
+                
+                y++;
+                
             }
         }
         
