@@ -212,7 +212,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         {
             for invalidIdentifier in invalid
             {
-                AlertController.getInstance().showAlert(title: "Error", message: "The product requested is currently unavailable. Please try again later.", action: "OK", cancel: nil, completion: nil);
+                AlertController.getInstance().showAlert(title: "Error", message: "The product requested is currently unavailable. Please try again later.", action: "OK", completion: nil);
                 break;
             }
             

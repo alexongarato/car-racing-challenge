@@ -36,12 +36,18 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         self.title = UITextView();
         self.title.textColor = fontColor;
+        self.title.scrollEnabled = false;
+        self.title.editable = false;
+        self.title.selectable = false;
         self.addSubview(self.title);
         self.title.editable = false;
 //        self.title.alpha = 0;
         
         self.desc = UITextView();
         self.desc.textColor = fontColor;
+        self.desc.scrollEnabled = false;
+        self.desc.editable = false;
+        self.desc.selectable = false;
         self.addSubview(self.desc);
         self.desc.editable = false;
 //        self.desc.alpha = 0;

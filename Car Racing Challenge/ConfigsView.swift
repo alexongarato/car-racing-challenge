@@ -195,7 +195,7 @@ class ConfigsView:AbstractView
         NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
-        AlertController.getInstance().showAlert(title: "Remove Ads", message: "All Ads will be removed.\n\nThank you!", action: "Done", cancel: nil, completion: nil);
+        AlertController.getInstance().showAlert(title: "Remove Ads", message: "All Ads will be removed.\n\nThank you!", action: "Done", completion: nil);
     }
     
     func restoredHandler()
@@ -204,7 +204,7 @@ class ConfigsView:AbstractView
         NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
-        AlertController.getInstance().showAlert(title: "Remove Ads", message: "Purchase restored.\n\nThank you!", action: "Done", cancel: nil, completion: nil);
+        AlertController.getInstance().showAlert(title: "Remove Ads", message: "Purchase restored.\n\nThank you!", action: "Done", completion: nil);
     }
     
     func rateHandler()

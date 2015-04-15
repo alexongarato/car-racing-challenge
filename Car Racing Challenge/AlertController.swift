@@ -30,11 +30,11 @@ class AlertController
         _controller = controller;
     }
     
-    func showAlert(title:String! = nil, message:String! = nil, action:String! = "OK", cancel:String! = nil, completion:(()->Void)! = nil)
+    func showAlert(title:String! = nil, message:String! = nil, action:String! = nil, completion:(()->Void)! = nil)
     {
         func block()
         {
-            _alert = AlertView(title: title, message: message, action: action, cancel: cancel, completion: completion);
+            _alert = AlertView(title: title, message: message, action: action, completion: completion);
             _controller.view.addSubview(_alert);
         }
         
@@ -50,7 +50,10 @@ class AlertController
             {
                 self._alert.removeFromSuperview();
                 self._alert = nil;
-                completion();
+                if(completion != nil)
+                {
+                    completion();
+                }
             }
             UIView.animateWithDuration(AnimationTime.Fast, animations: {
                 self._alert.alpha = 0;
@@ -67,35 +70,117 @@ class AlertController
     
     class AlertView:AbstractView
     {
-        private var title       : String!;
+        private var curTitle    : String!;
         private var message     : String!;
         private var action      : String!;
-        private var cancel      : String!;
         private var completion  : (()->Void)!;
+        private var bg          : UIView!;
         
-        private var bg          : UIImageView!;
-        
-        convenience init(title:String!, message:String!, action:String!, cancel:String!, completion:(()->Void)!)
+        convenience init(title:String!, message:String!, action:String!, completion:(()->Void)!)
         {
             self.init();
-            self.title = title;
+            self.curTitle = title;
             self.message = message;
             self.action = action;
-            self.cancel = cancel;
             self.completion = completion;
             
-            self.backgroundColor = UIColor.blackColor().alpha(0.5);
-            
-            
+            self.backgroundColor = UIColor.blackColor().alpha(0.7);
+        }
+        
+        func closeHandler()
+        {
+            AlertController.getInstance().hideAlert(nil);
+        }
+        
+        func completionHandler()
+        {
+            self.completion();
         }
         
         override func didMoveToSuperview()
         {
             super.didMoveToSuperview();
             
-            var img:UIImage = ImageHelper.imageWithName(ImagesNames.AlertBG);
-            bg = UIImageView(image: ImageHelper.imageScaledToFit(img, sizeToFit: self.frame.size));
+            self.alpha = 0;
+            
+            var currHeight:CGFloat = 10;
+            bg = UIView();
+            bg.layer.masksToBounds = true;
+            bg.frame.size = CGSize(width: 200, height: currHeight);
+            
+            func newField(text:String, isAction:Bool = false)
+            {
+                var field = UITextView();
+                field.scrollEnabled = false;
+                field.editable = false;
+                field.selectable = false;
+                field.text = text;
+                field.textAlignment = NSTextAlignment.Center;
+                field.sizeToFit();
+                field.font = isAction ? Fonts.BoldFont(FontSize.Default) : Fonts.LightFont(FontSize.Default);
+                field.textColor = UIColor.blackColor();
+                field.backgroundColor = UIColor.clearColor();
+                bg.addSubview(field);
+                field.y = currHeight;
+                field.width = bg.width - 20;
+                currHeight = field.y + field.height;
+                
+                if(isAction)
+                {
+                    field.addTarget(self, selector: Selector(completion != nil ? "completionHandler" : "closeHandler"));
+                    field.width = bg.width;
+                    field.height = 35;
+                    var border:CALayer = CALayer();
+                    border.frame = CGRectMake(5, 0, field.width-10, 1);
+                    border.backgroundColor = UIColor.blackColor().alpha(0.2).CGColor;
+                    field.layer.addSublayer(border);
+                    field.backgroundColor = UIColor.whiteColor().alpha(0.1);
+                }
+                else
+                {
+                    field.sizeToFit();
+                    field.width = bg.width - 20;
+                    field.x = 10;
+                    currHeight = field.y + field.height;
+                }
+            }
+            
+            if(self.curTitle != nil)
+            {
+                newField(self.curTitle);
+                
+            }
+            
+            if(self.message != nil)
+            {
+                newField(self.message);
+            }
+            
+            if(self.action != nil)
+            {
+                currHeight += 12;
+                newField(self.action, isAction:true);
+                currHeight -= 5;
+            }
+            
+            
+            //----------
+            currHeight += 10;
+            bg.height = currHeight;
+            bg.layer.cornerRadius = 5;
+            bg.backgroundColor = UIColor(patternImage: ImageHelper.imageWithName(ImagesNames.Background));
+            bg.center = self.center;
             self.addSubview(bg);
+            
+            UIView.animateWithDuration(AnimationTime.Fast, animations: {
+                self.alpha = 1;
+                }, completion: { (animate) -> Void in
+                    if(self.action == nil && self.completion != nil)
+                    {
+                        self.completion();
+                    }
+            });
+            
         }
     }
 }
