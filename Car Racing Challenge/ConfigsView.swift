@@ -19,11 +19,15 @@ class ConfigsView:AbstractView
     override func didMoveToSuperview()
     {
         super.didMoveToSuperview();
-        var img:UIImage! = UIImage(named: ImagesNames.Background)!;
-        var imgView:UIImageView = UIImageView(image: img);
-        imgView.frame = self.frame;
-        self.addSubview(imgView);
+//        var img:UIImage! = UIImage(named: ImagesNames.Background)!;
+//        var imgView:UIImageView = UIImageView(image: img);
+//        imgView.frame = self.frame;
+//        imgView.alpha = 0.9;
+//        imgView.enableBlur(UIBlurEffectStyle.Dark);
+//        self.addSubview(imgView);
         self.layer.masksToBounds = true;
+//        self.enableBlur(UIBlurEffectStyle.ExtraLight);
+        self.backgroundColor = UIColor(white: 0.8, alpha: 1);
         //-----
         
         if(self.width > 375)// && self.width < 414)

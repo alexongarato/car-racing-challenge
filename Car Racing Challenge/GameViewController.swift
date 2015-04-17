@@ -19,6 +19,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     var pauseArea               : UIView!;
     var snapshotView            : UIImageView!;
     var showResumeOnStartUp     : Bool = false;
+    var touchAreasImgView       : UIImageView!;
     private var _bestScore      : NSInteger = 0;
     
     override func viewDidLoad()
@@ -72,6 +73,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         self.pauseArea.addTarget(self, selector: Selector("pauseGameHandler"));
         self.view.addSubview(self.pauseArea);
         
+        
         scene.lifeUpHandler = self.statusView.showSuccessAnimation;
         scene.lifeDownHandler = self.statusView.showErrorAnimation;
         
@@ -115,14 +117,14 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             menuView.setGameOver();
         }
         
-        if(selector != nil)
-        {
-            menuView.setAction(action, target: self, selector: selector);
-        }
-        
         if(showExitButton)
         {
             menuView.setAction("exit", target: self, selector: Selector("exitHandler:"));
+        }
+        
+        if(selector != nil)
+        {
+            menuView.setAction(action, target: self, selector: selector);
         }
         
         menuView.present(nil);
@@ -187,9 +189,32 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
                 self.menuView.removeFromSuperview();
                 self.menuView = nil;
             }
+            
+            if(self.touchAreasImgView != nil)
+            {
+                self.touchAreasImgView.removeFromSuperview();
+                self.touchAreasImgView = nil;
+            }
+            
+            self.touchAreasImgView = UIImageView(image: ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.TouchAreas), sizeToFit: self.view.frame.size));
+            self.touchAreasImgView.y = self.view.height - self.touchAreasImgView.height;
+            self.touchAreasImgView.alpha = 0;
+            self.view.addSubview(self.touchAreasImgView);
+            
             self.scene.reset();
             self.scene.build();
             self.scene.start();
+            
+            UIView.animateWithDuration(AnimationTime.Default, animations: {
+                self.touchAreasImgView.alpha = 1;
+                },completion: { (animated) -> Void in
+                    UIView.animateWithDuration(AnimationTime.VerySlow, delay:AnimationTime.VerySlow, options:nil, animations: {
+                        self.touchAreasImgView.alpha = 0;
+                        }, completion:{ (animated) -> Void in
+                            self.touchAreasImgView.removeFromSuperview();
+                            self.touchAreasImgView = nil;
+                    });
+            });
         }
         
         self.menuView.dismiss(complete);
@@ -215,7 +240,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             }
         }
         
-        showMenu("GAME OVER", desc: "\n\nSCORE:\(scene.currentScore())\n\nBEST:\(self.getBestScore())", action: "RESTART", selector: Selector("startGameHandler:"), showGameOver:true);
+        showMenu("GAME OVER", desc: "\n\nSCORE:\(scene.currentScore())\n\nBEST:\(self.getBestScore())", action: "TRY AGAIN", selector: Selector("startGameHandler:"), showGameOver:true);
         AudioHelper.playSound(AudioHelper.GameOverSound);
         
         self.showBanner();
@@ -227,7 +252,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         
         var ttl:String = "\nLEVEL \(scene.currentLevel())\n";
         var desc:String!;
-        var act:String = "GO FASTER!";
+        var act:String = "GO!";
         var selector:Selector = Selector("resumeLevelUp:");
         
         if(!Configs.SAMPLE_MODE)
@@ -314,7 +339,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     
     func pauseGameHandler()
     {
-        showMenu("GAME PAUSED\n\n", desc: " \n \n \nARE YOU READY?", action: "RESUME", selector: Selector("resumeLevelUp:"));
+        showMenu("GAME PAUSED\n\n", desc: " \n \n \nARE YOU READY?", action: "RESUME", selector: Selector("resumeLevelUp:"), showExitButton:false);
     }
     
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!)

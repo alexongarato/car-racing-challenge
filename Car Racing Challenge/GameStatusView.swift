@@ -12,7 +12,7 @@ class GameStatusView:AbstractView
 {
     private var scoreField:UILabel!;
     private var statusField:UILabel!;
-    private var defaultBgColor:UIColor = UIColor(patternImage: UIImage(named: ImagesNames.Background)!).alpha(0.8);
+    private var defaultBgColor:UIColor = UIColor(patternImage: UIImage(named: ImagesNames.Background)!)//.alpha(0.8);
     private var defaultY:CGFloat = 0;
     
     override func didMoveToSuperview()
@@ -36,7 +36,7 @@ class GameStatusView:AbstractView
     
     func show()
     {
-        UIView.animateWithDuration(AnimationTime.VerySlow, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animateWithDuration(AnimationTime.VerySlow, delay: AnimationTime.Slow, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.y = self.defaultY;
             self.alpha = 1;
             }, completion: nil);

@@ -73,7 +73,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         img = ImageHelper.imageScaledToFit(img, sizeToFit: CGSize(width: 30 * self.scaleFactor, height: 30 * self.scaleFactor));
         btConfig = UIImageView(image: img);
         self.addSubview(btConfig);
-        btConfig.alpha = 0.8;
+        btConfig.alpha = 0.4;
         self.updateConfigButtonPosition(self.height);
         btConfig.addTarget(self, selector: Selector("configsHandler"));
     }
@@ -119,6 +119,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             
             UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.configView.x = 0;
+                self.btConfig.alpha = 1;
                 }, completion: completion);
             
             AudioHelper.playSound(AudioHelper.MenuOpenSound);
@@ -143,6 +144,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             
             UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.configView.x = self.width;
+                self.btConfig.alpha = 0.4;
                 }, completion:completion);
             
             AudioHelper.playSound(AudioHelper.MenuOpenSound);
@@ -270,6 +272,10 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.title.width = self.width - 10;
         self.title.center = self.center;
         self.title.y = self.center.y - (self.height * 0.41);
+        if(self.height <= 480)
+        {
+            self.title.y -= 25;
+        }
     }
     
     func setDescription(text:String)
@@ -309,19 +315,11 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         var image:UIImage! = UIImage(named: ImagesNames.Podium);
         var podium:UIImageView = UIImageView(image: image);
-//        if(self.scaleFactor > 1)
-//        {
-//            podium.scale(1.5);
-//        }
         self.addSubview(podium);
         podium.center = self.center;
-        if(self.height > 480)
+        if(self.height <= 480)
         {
-            podium.y -= 10;
-        }
-        else
-        {
-            podium.y += 25;
+            podium.y += 15;
         }
         podium.addTarget(self, selector: Selector("openGameCenter:"));
     }

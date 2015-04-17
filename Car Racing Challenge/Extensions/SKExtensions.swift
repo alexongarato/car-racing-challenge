@@ -46,4 +46,5 @@ class Pixel
 class CustomSpriteNode:SKSpriteNode
 {
     var isTouched:Bool = false;
+    var isDead:Bool = false;
 }

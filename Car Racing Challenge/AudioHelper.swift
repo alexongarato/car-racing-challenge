@@ -91,37 +91,31 @@ class AudioHelper
         return snd;
     }
     
-    class func playSound(name:String) -> CustomAVAudioPlayer!
+    class func playSound(name:String)
     {
-        if(!DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeySound))
-        {
-            return nil;
-        }
-        
-        var tmp:AnyObject! = snds.valueForKey(name);
-        var snd:CustomAVAudioPlayer!;
-        if (tmp != nil)
-        {
-            if let sndTmp = tmp as? CustomAVAudioPlayer
+        AsyncHelper.addWorkBlock({
+            if(!DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeySound))
             {
-                snd = sndTmp;
-//                if(snd.playing)
-//                {
-//                    snd.stop();
-//                }
-                if(!snd.playing)
+                return;
+            }
+            
+            var tmp:AnyObject! = snds.valueForKey(name);
+            if (tmp != nil)
+            {
+                if let snd = tmp as? CustomAVAudioPlayer
                 {
-                    snd.prepareToPlay();
-                    snd.play();
+                    if(!snd.playing)
+                    {
+                        snd.prepareToPlay();
+                        snd.play();
+                    }
                 }
             }
-        }
-        else
-        {
-            Trace("Sound file '\(name)' error");
-        }
-        
-        return snd;
+            else
+            {
+                Trace("Sound file '\(name)' error");
+            }
+        });
     }
 }
 

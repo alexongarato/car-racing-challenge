@@ -22,6 +22,7 @@ struct ImagesNames
     static var ConfigIcon               : String = "ConfigIcon.png";
     static var AppIcon                  : String = "AppIcon";
     static var AlertBG                  : String = "Alert.png";
+    static var TouchAreas               : String = "TouchAreas.png";
 }
 
 

@@ -48,6 +48,9 @@
 		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
 		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
 		DB546E811ACBA35900D1D9F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */; };
+		DB5E47F71ADF2B720029B8DD /* GameHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5E47F61ADF2B720029B8DD /* GameHelper.swift */; };
+		DB5E47FB1ADF43260029B8DD /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB5E47FA1ADF43260029B8DD /* Levels.plist */; };
+		DB5E47FF1ADF58E30029B8DD /* AsyncHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
 		DB7A0BD51ACCCF2E0008B581 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB7A0BD41ACCCF2E0008B581 /* Products.plist */; };
 		DB8C315F1AC620EB0027E949 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C315E1AC620EB0027E949 /* PurchaseController.swift */; };
@@ -60,6 +63,7 @@
 		DB9E31891AD4E2EE00C27087 /* export_icon_180.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9E31881AD4E2EE00C27087 /* export_icon_180.png */; };
 		DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */; };
 		DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */; };
+		DBCA18BF1AE0C3BA008E93A9 /* TouchAreas.png in Resources */ = {isa = PBXBuildFile; fileRef = DBCA18BE1AE0C3BA008E93A9 /* TouchAreas.png */; };
 		DBD63E311AC7669100F3A3C3 /* Instructions.png in Resources */ = {isa = PBXBuildFile; fileRef = DBD63E301AC7669100F3A3C3 /* Instructions.png */; };
 		DBFBA0F61AC4B93F00BD98D7 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFBA0F41AC4B93700BD98D7 /* iAd.framework */; };
 /* End PBXBuildFile section */
@@ -108,6 +112,9 @@
 		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
 		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		DB5E47F61ADF2B720029B8DD /* GameHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHelper.swift; sourceTree = "<group>"; };
+		DB5E47FA1ADF43260029B8DD /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
+		DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncHelper.swift; sourceTree = "<group>"; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB7A0BD41ACCCF2E0008B581 /* Products.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
 		DB8C315E1AC620EB0027E949 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
@@ -120,6 +127,7 @@
 		DB9E31881AD4E2EE00C27087 /* export_icon_180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = export_icon_180.png; path = Images.xcassets/AppIcon.appiconset/export_icon_180.png; sourceTree = "<group>"; };
 		DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatusView.swift; sourceTree = "<group>"; };
 		DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		DBCA18BE1AE0C3BA008E93A9 /* TouchAreas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TouchAreas.png; path = Images/TouchAreas.png; sourceTree = "<group>"; };
 		DBD63E301AC7669100F3A3C3 /* Instructions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Instructions.png; path = Images/Instructions.png; sourceTree = "<group>"; };
 		DBFBA0F41AC4B93700BD98D7 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -166,6 +174,7 @@
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
 				DB525E801ABDF69900959D26 /* MenuView.swift */,
 				DB3D62681ACE51C7001BC9D9 /* ConfigsView.swift */,
+				DB5E47F61ADF2B720029B8DD /* GameHelper.swift */,
 				DB2E84401AAD338D0009E321 /* GameScene.swift */,
 				DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */,
 				DB2E84421AAD338D0009E321 /* GameViewController.swift */,
@@ -184,6 +193,7 @@
 		DB2E843A1AAD338D0009E321 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				DB5E47FA1ADF43260029B8DD /* Levels.plist */,
 				DB2E843B1AAD338D0009E321 /* Info.plist */,
 				DB7A0BD41ACCCF2E0008B581 /* Products.plist */,
 			);
@@ -259,6 +269,7 @@
 				DB8C315E1AC620EB0027E949 /* PurchaseController.swift */,
 				DB9E317A1AD4D70B00C27087 /* SocialController.swift */,
 				DB0600C01ADCABF700745AB8 /* AlertController.swift */,
+				DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -278,6 +289,7 @@
 		DBD63E2F1AC7668800F3A3C3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DBCA18BE1AE0C3BA008E93A9 /* TouchAreas.png */,
 				DB0600C21ADCBA0400745AB8 /* Alert.png */,
 				DB9E31881AD4E2EE00C27087 /* export_icon_180.png */,
 				DB3D62601ACE0B4B001BC9D9 /* ConfigIcon.png */,
@@ -374,8 +386,10 @@
 				DB384C101AC0D86C00C2BB32 /* vel_0.wav in Resources */,
 				DB3D62661ACE4A0F001BC9D9 /* LCDMono2Light.ttf in Resources */,
 				DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */,
+				DB5E47FB1ADF43260029B8DD /* Levels.plist in Resources */,
 				DB384C131AC0D86C00C2BB32 /* vel_3.wav in Resources */,
 				DB384C0D1AC0D86C00C2BB32 /* Pickup_Coin.wav in Resources */,
+				DBCA18BF1AE0C3BA008E93A9 /* TouchAreas.png in Resources */,
 				DB384C0A1AC0D86C00C2BB32 /* Explosion2.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,7 +431,9 @@
 				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
 				DB3D62691ACE51C7001BC9D9 /* ConfigsView.swift in Sources */,
 				DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */,
+				DB5E47FF1ADF58E30029B8DD /* AsyncHelper.swift in Sources */,
 				DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */,
+				DB5E47F71ADF2B720029B8DD /* GameHelper.swift in Sources */,
 				DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */,
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
 				DB1366531AD23992009A33DB /* Events.swift in Sources */,
@@ -535,7 +551,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Car Racing Challenge/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "Car Racing";
@@ -559,7 +575,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "Car Racing Challenge/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "Car Racing";
 				PROVISIONING_PROFILE = "";
