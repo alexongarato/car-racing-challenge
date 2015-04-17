@@ -27,7 +27,7 @@ class ConfigsView:AbstractView
 //        self.addSubview(imgView);
         self.layer.masksToBounds = true;
 //        self.enableBlur(UIBlurEffectStyle.ExtraLight);
-        self.backgroundColor = UIColor(white: 0.8, alpha: 1);
+        self.backgroundColor = UIColor(white: 0.9, alpha: 1);
         //-----
         
         if(self.width > 375)// && self.width < 414)
