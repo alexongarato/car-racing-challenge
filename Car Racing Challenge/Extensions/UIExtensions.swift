@@ -253,8 +253,8 @@ extension UIView
     func scale(value:CGFloat)
     {
         self.layer.transform = CATransform3DMakeScale(value, value, 1);
-        self.width = self.width * value;
-        self.height = self.height * value;
+//        self.width = self.width * value;
+//        self.height = self.height * value;
     }
     
     func removeAllSubviews()
@@ -263,6 +263,18 @@ extension UIView
         {
             view.removeFromSuperview();
         }
+    }
+    
+    func takeSnapshot() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.mainScreen().scale)
+        
+        drawViewHierarchyInRect(self.bounds, afterScreenUpdates: true)
+        
+        // old style: layer.renderInContext(UIGraphicsGetCurrentContext())
+        
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
     }
 }
 
@@ -308,5 +320,22 @@ extension CGFloat
 extension Int
 {
     var floatValue: CGFloat { get { return CGFloat(self); } };
+}
+
+extension UILabel
+{
+    func bold(word:String)
+    {
+        self.bold(word, color: self.textColor);
+    }
+    
+    func bold(word:String, color:UIColor!)
+    {
+        var temp:NSMutableAttributedString = self.attributedText as! NSMutableAttributedString;
+        var main_string:NSString = temp.string;
+        var format:NSDictionary = [NSFontAttributeName : Fonts.BoldFont(self.font.pointSize), NSForegroundColorAttributeName: color];
+        temp.addAttributes(format as [NSObject : AnyObject], range: (main_string as NSString).rangeOfString(word));
+        self.attributedText = temp;
+    }
 }
 

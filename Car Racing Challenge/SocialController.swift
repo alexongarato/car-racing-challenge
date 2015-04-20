@@ -10,6 +10,7 @@ import Foundation
 import Social
 import Twitter
 import Accounts
+import UIKit
 
 private var _instance:SocialController!;
 
@@ -19,6 +20,7 @@ class SocialController
     static var facebookType:String = SLServiceTypeFacebook;
     private var _isTwitterAvailable:Bool = false;
     private var _isFacebookAvailable:Bool = false;
+    var _currentScreenShot:UIImage!;
     
     class func getInstance() -> SocialController
     {
@@ -73,6 +75,10 @@ class SocialController
                 {
                     sheet.addImage(image);
                 }
+                else if(self._currentScreenShot != nil)
+                {
+                    sheet.addImage(self._currentScreenShot);
+                }
                 
                 
                 AppDelegate.getInstance().gameController.presentViewController(sheet, animated: true, completion: {
@@ -95,5 +101,10 @@ class SocialController
             var source:String = (type == SLServiceTypeTwitter) ? "Twitter" : "Facebook";
             AlertController.getInstance().showAlert(title: "Accounts", message: "Please login to a \(source) account to share.", action: "OK", completion: nil);
         }
+    }
+    
+    func screenShot(view:UIView)
+    {
+        self._currentScreenShot = view.takeSnapshot();
     }
 }

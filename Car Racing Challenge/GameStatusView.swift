@@ -19,7 +19,7 @@ class GameStatusView:AbstractView
     {
         super.didMoveToSuperview();
         self.alpha = 0;
-        self.height = 22;
+        self.height = 20;
         self.defaultY = self.y;
         self.y = self.defaultY - self.height;
         self.backgroundColor = defaultBgColor;
@@ -54,7 +54,9 @@ class GameStatusView:AbstractView
     {
 //        self.statusField.text = "LEVEL:\(level)  LIFES:\(lifes)  SCORE:\(score)/\(nextScore * level)";
         self.statusField.text = "LEVEL:\(level)        SCORE:\(score) / \(nextScore * level)";
-//        self.statusField.text = "LEVEL:SOON... SCORE:\(score)";
+//        self.statusField.bold("LEVEL:");
+//        self.statusField.bold("SCORE:");
+//        self.statusField.bold("\(nextScore * level)");
         self.statusField.sizeToFit();
         self.statusField.center.x = self.center.x;
     }

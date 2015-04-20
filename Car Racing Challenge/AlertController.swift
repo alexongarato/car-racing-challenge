@@ -163,7 +163,7 @@ class AlertController
             
             if(self.action != nil)
             {
-                currHeight += 12;
+                currHeight += 8;
                 newField(self.action, isAction:true);
                 currHeight -= 5;
             }

@@ -196,20 +196,26 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
                 self.touchAreasImgView = nil;
             }
             
-            self.touchAreasImgView = UIImageView(image: ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.TouchAreas), sizeToFit: self.view.frame.size));
-            self.touchAreasImgView.y = self.view.height - self.touchAreasImgView.height;
+            var newSize:CGSize = CGSize(width: self.view.width - 30, height: self.view.height);
+            self.touchAreasImgView = UIImageView(image: ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.TouchAreas), sizeToFit: newSize));
+            self.touchAreasImgView.width -= self.touchAreasImgView.width * 0.02;
+            self.touchAreasImgView.y = self.view.height - self.touchAreasImgView.height * 0.66;
             self.touchAreasImgView.alpha = 0;
+            self.touchAreasImgView.center.x = self.view.center.x;
             self.view.addSubview(self.touchAreasImgView);
             
             self.scene.reset();
             self.scene.build();
             self.scene.start();
             
+            self.touchAreasImgView.scale(0.5);
             UIView.animateWithDuration(AnimationTime.Default, animations: {
                 self.touchAreasImgView.alpha = 1;
+                self.touchAreasImgView.scale(1);
                 },completion: { (animated) -> Void in
-                    UIView.animateWithDuration(AnimationTime.VerySlow, delay:AnimationTime.VerySlow, options:nil, animations: {
+                    UIView.animateWithDuration(AnimationTime.Default, delay:AnimationTime.VerySlow + AnimationTime.Default, options:nil, animations: {
                         self.touchAreasImgView.alpha = 0;
+                        self.touchAreasImgView.scale(0.5);
                         }, completion:{ (animated) -> Void in
                             self.touchAreasImgView.removeFromSuperview();
                             self.touchAreasImgView = nil;
@@ -226,6 +232,12 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     {
         scene.stop();
         Utils.vibrate();
+        SocialController.getInstance().screenShot(self.view);
+        
+//        var tmp:UIImageView = UIImageView(image: SocialController.getInstance()._currentScreenShot);
+//        tmp.scale(0.5);
+//        self.view.addSubview(tmp);
+//        return;
         
         if(scene.currentScore() > self.getBestScore())
         {

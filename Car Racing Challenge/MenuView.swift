@@ -23,12 +23,13 @@ class MenuView: AbstractView, ADBannerViewDelegate
     private var _adLoaded   : Bool = false;
     private var btConfig    : UIImageView!;
     private var configView  : ConfigsView!;
+    private var DEFAULT_W   : CGFloat = 0;
     
     override func didMoveToSuperview()
     {
-//        self.frame = UIScreen.mainScreen().applicationFrame;
-
         super.didMoveToSuperview();
+        self.DEFAULT_W = UIScreen.mainScreen().applicationFrame.width;
+        
         var img:UIImage! = UIImage(named: ImagesNames.Background)!;
         var imgView:UIImageView = UIImageView(image: img);
         imgView.frame = self.frame;
@@ -41,7 +42,6 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.title.selectable = false;
         self.addSubview(self.title);
         self.title.editable = false;
-//        self.title.alpha = 0;
         
         self.desc = UITextView();
         self.desc.textColor = fontColor;
@@ -50,7 +50,6 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.desc.selectable = false;
         self.addSubview(self.desc);
         self.desc.editable = false;
-//        self.desc.alpha = 0;
         
         self.instructs = UITextView();
         self.instructs.textColor = fontColor;
@@ -61,11 +60,6 @@ class MenuView: AbstractView, ADBannerViewDelegate
         {
             self.scaleFactor = 2;
         }
-        
-//        if(self.width > 414)
-//        {
-//            self.scaleFactor = 3;
-//        }
         
         self.buildBanner();
         
@@ -92,7 +86,8 @@ class MenuView: AbstractView, ADBannerViewDelegate
         {
             self.configView = ConfigsView();
             self.addSubview(self.configView);
-            self.configView.x = self.width;
+            self.configView.x = self.DEFAULT_W;
+//            self.width = self.configView.x + self.configView.width;
             self.configView.height = self.height;
             if(self._bannerView != nil)
             {
@@ -117,10 +112,15 @@ class MenuView: AbstractView, ADBannerViewDelegate
                 self._animating = false;
             }
             
+            UIView.animateWithDuration(AnimationTime.Slow, delay: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.btConfig.alpha = 1;
+                self.btConfig.x = self.btConfig.width.half;
+                //self.btConfig.transform = CGAffineTransformRotate(self.btConfig.transform, 0);
+                }, completion: completion);
+            
             UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.configView.x = 0;
-                self.btConfig.alpha = 1;
-                }, completion: completion);
+                }, completion: nil);
             
             AudioHelper.playSound(AudioHelper.MenuOpenSound);
         }
@@ -131,7 +131,6 @@ class MenuView: AbstractView, ADBannerViewDelegate
             let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation");
             rotateAnimation.fromValue = 0.0;
             rotateAnimation.toValue = CGFloat(M_PI * 2.0);
-            
             rotateAnimation.duration = AnimationTime.Slow;
             self.btConfig.layer.addAnimation(rotateAnimation, forKey: nil);
             
@@ -140,20 +139,31 @@ class MenuView: AbstractView, ADBannerViewDelegate
                 self.configView.removeFromSuperview();
                 self.configView = nil;
                 self._animating = false;
+                self.width = self.DEFAULT_W;
             }
             
-            UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-                self.configView.x = self.width;
+            UIView.animateWithDuration(AnimationTime.Slow, delay: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.btConfig.alpha = 0.4;
+//                self.btConfig.transform = CGAffineTransformRotate(self.btConfig.transform, CGFloat(M_PI));
+                self.updateConfigButtonPosition();
                 }, completion:completion);
+            
+            UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.configView.x = self.DEFAULT_W;
+                }, completion:nil);
             
             AudioHelper.playSound(AudioHelper.MenuOpenSound);
         }
     }
     
+    private func updateConfigButtonPosition()
+    {
+        btConfig.x = self.DEFAULT_W - (btConfig.width * 1.5);
+    }
+    
     private func updateConfigButtonPosition(posY:CGFloat)
     {
-        btConfig.x = self.width - (btConfig.width * 1.5);
+        self.updateConfigButtonPosition();
         btConfig.y = posY - (btConfig.height * 1.5);
     }
     
@@ -274,7 +284,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.title.y = self.center.y - (self.height * 0.41);
         if(self.height <= 480)
         {
-            self.title.y -= 25;
+            self.title.y -= 15;
         }
     }
     
@@ -313,15 +323,38 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func setGameOver()
     {
-        var image:UIImage! = UIImage(named: ImagesNames.Podium);
-        var podium:UIImageView = UIImageView(image: image);
-        self.addSubview(podium);
-        podium.center = self.center;
+        var image:UIImageView = UIImageView(image: UIImage(named: ImagesNames.Podium)!);
+        self.addSubview(image);
+        image.center = self.center;
         if(self.height <= 480)
         {
-            podium.y += 15;
+            image.y += 15;
         }
-        podium.addTarget(self, selector: Selector("openGameCenter:"));
+        image.addTarget(self, selector: Selector("openGameCenter:"));
+        
+        //---fb
+        image = UIImageView(image: UIImage(named: ImagesNames.FBIcon)!);
+        self.addSubview(image);
+        image.center = self.center;
+        image.x -= image.width * 1.5;
+        if(self.height <= 480)
+        {
+            image.y += 15;
+        }
+        image.addTarget(self, selector: Selector("openFBHandler:"));
+        
+        
+        //---tt
+        image = UIImageView(image: UIImage(named: ImagesNames.TTIcon)!);
+        self.addSubview(image);
+        image.center = self.center;
+        image.x += image.width * 1.5;
+        if(self.height <= 480)
+        {
+            image.y += 15;
+        }
+        image.addTarget(self, selector: Selector("openTTHandler:"));
+        
     }
     
     func openGameCenter(sender:AnyObject!)
@@ -330,6 +363,25 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         Trace("MenuView -> MenuView -> open game center");
         GameCenterController.loadLeaderboard();
+    }
+    
+    func openFBHandler(sender:AnyObject!)
+    {
+        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
+        AudioHelper.playSound(AudioHelper.MenuOpenSound);
+        shareBuilder(SocialController.facebookType);
+    }
+    
+    func openTTHandler(sender:AnyObject!)
+    {
+        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
+        AudioHelper.playSound(AudioHelper.MenuOpenSound);
+        shareBuilder(SocialController.twitterType);
+    }
+    
+    private func shareBuilder(type:String)
+    {
+        SocialController.getInstance().share(type, text:"I've reached level \(AppDelegate.getInstance().gameController.scene.currentLevel()) of Car Racing Challenge.", url:Routes.ITUNES_URL);
     }
     
     func setAction(text:String!, target:AnyObject, selector:Selector)

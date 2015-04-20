@@ -14,19 +14,14 @@ class ConfigsView:AbstractView
     var actions:Array<ActionModel> = Array<ActionModel>();
     var container:AbstractView!;
     var podium:UIImageView!;
+    var fb:UIImageView!;
+    var tt:UIImageView!;
     var scaleFactor:CGFloat = 1;
     
     override func didMoveToSuperview()
     {
         super.didMoveToSuperview();
-//        var img:UIImage! = UIImage(named: ImagesNames.Background)!;
-//        var imgView:UIImageView = UIImageView(image: img);
-//        imgView.frame = self.frame;
-//        imgView.alpha = 0.9;
-//        imgView.enableBlur(UIBlurEffectStyle.Dark);
-//        self.addSubview(imgView);
         self.layer.masksToBounds = true;
-//        self.enableBlur(UIBlurEffectStyle.ExtraLight);
         self.backgroundColor = UIColor(white: 0.9, alpha: 1);
         //-----
         
@@ -42,17 +37,27 @@ class ConfigsView:AbstractView
         self.container.width = self.width;
         self.container.height = 200;
         self.container.center = self.center;
-//        self.container.layer.borderWidth = 1;
         
         var image:UIImage! = UIImage(named: ImagesNames.Podium);
-        podium = UIImageView(image: image);
-//        if(self.scaleFactor > 1)
-//        {
-//            podium.scale(1.5);
-//        }
-        self.addSubview(podium);
-        podium.addTarget(self, selector: Selector("openGameCenter:"));
-        podium.center = self.center;
+        self.podium = UIImageView(image: image);
+        self.addSubview(self.podium);
+        self.podium.addTarget(self, selector: Selector("openGameCenter:"));
+        self.podium.center = self.center;
+        
+        //---fb
+        self.fb = UIImageView(image: UIImage(named: ImagesNames.FBIcon)!);
+        self.addSubview(self.fb);
+        self.fb.center = self.center;
+        self.fb.x -= self.podium.width * 1.5;
+        self.fb.addTarget(self, selector: Selector("facebookHandler"));
+        
+        
+        //---tt
+        self.tt = UIImageView(image: UIImage(named: ImagesNames.TTIcon)!);
+        self.addSubview(self.tt);
+        self.tt.center = self.center;
+        self.tt.x += self.podium.width * 1.5;
+        self.tt.addTarget(self, selector: Selector("twitterHandler"));
         
         buildMenu();
     }
@@ -86,8 +91,8 @@ class ConfigsView:AbstractView
             addAction();
             
             addAction(label: "RATE THIS APP", selector: "rateHandler", key:nil, active:true);
-            addAction(label: "SHARE ON TWITTER", selector: "twitterHandler", key:nil, active:SocialController.getInstance().isTwitterAvailable());
-            addAction(label: "SHARE ON FACEBOOK", selector: "facebookHandler", key:nil, active:SocialController.getInstance().isFacebookAvailable());
+//            addAction(label: "SHARE ON TWITTER", selector: "twitterHandler", key:nil, active:SocialController.getInstance().isTwitterAvailable());
+//            addAction(label: "SHARE ON FACEBOOK", selector: "facebookHandler", key:nil, active:SocialController.getInstance().isFacebookAvailable());
         }
         
         self.container.removeAllSubviews();
@@ -102,17 +107,6 @@ class ConfigsView:AbstractView
             label = "";
             model = self.actions[i];
             action = UILabel();
-            
-            if(model.key == nil)
-            {
-                action.text = (model.label == nil) ? dash : model.label;
-            }
-            else
-            {
-                label = DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: model.key) ? "ON" : "OFF";
-                action.text = "\(model.label):\(label)";
-            }
-            
             action.textColor = UIColor.blackColor();
             action.textAlignment = NSTextAlignment.Center;
             if(model.active)
@@ -128,6 +122,17 @@ class ConfigsView:AbstractView
             {
                 action.font = Fonts.LightFont(FontSize.Default * self.scaleFactor);
                 action.alpha = 0.3;
+            }
+            
+            if(model.key == nil)
+            {
+                action.text = (model.label == nil) ? dash : model.label;
+            }
+            else
+            {
+                label = DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: model.key) ? "ON" : "OFF";
+                action.text = "\(model.label):\(label)";
+                action.bold(label);
             }
             
             self.container.addSubview(action);
@@ -152,6 +157,8 @@ class ConfigsView:AbstractView
         self.container.center.x = self.center.x;
         self.container.y = (UIScreen.mainScreen().applicationFrame.height - self.container.height).half - 45;
         self.podium.y = self.container.y + self.container.height;
+        self.fb.y = self.podium.y;
+        self.tt.y = self.podium.y;
     }
     
     func addAction(label:String! = nil, selector:String! = nil, key:String! = nil, active:Bool = false)
