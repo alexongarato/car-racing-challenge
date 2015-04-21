@@ -64,7 +64,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.buildBanner();
         
         img = UIImage(named:ImagesNames.ConfigIcon);
-        img = ImageHelper.imageScaledToFit(img, sizeToFit: CGSize(width: 30 * self.scaleFactor, height: 30 * self.scaleFactor));
+        img = ImageHelper.imageScaledToFit(img, sizeToFit: CGSize(width: 60 * self.scaleFactor, height: 60 * self.scaleFactor));
         btConfig = UIImageView(image: img);
         self.addSubview(btConfig);
         btConfig.alpha = 0.4;
@@ -114,7 +114,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             
             UIView.animateWithDuration(AnimationTime.Slow, delay: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.btConfig.alpha = 1;
-                self.btConfig.x = self.btConfig.width.half;
+                self.btConfig.x = 0;
                 //self.btConfig.transform = CGAffineTransformRotate(self.btConfig.transform, 0);
                 }, completion: completion);
             
@@ -158,13 +158,13 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     private func updateConfigButtonPosition()
     {
-        btConfig.x = self.DEFAULT_W - (btConfig.width * 1.5);
+        btConfig.x = self.DEFAULT_W - btConfig.width;
     }
     
     private func updateConfigButtonPosition(posY:CGFloat)
     {
         self.updateConfigButtonPosition();
-        btConfig.y = posY - (btConfig.height * 1.5);
+        btConfig.y = posY - btConfig.height;
     }
     
     //-------- banner functions --------------------
@@ -381,7 +381,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     private func shareBuilder(type:String)
     {
-        SocialController.getInstance().share(type, text:"I've reached level \(AppDelegate.getInstance().gameController.scene.currentLevel()) of Car Racing Challenge.", url:Routes.ITUNES_URL);
+        SocialController.getInstance().share(type, text:"I reached level \(AppDelegate.getInstance().gameController.scene.currentLevel()) in Car Racing Challenge (score:\(AppDelegate.getInstance().gameController.scene.currentScore()))", url:Routes.ITUNES_URL);
     }
     
     func setAction(text:String!, target:AnyObject, selector:Selector)

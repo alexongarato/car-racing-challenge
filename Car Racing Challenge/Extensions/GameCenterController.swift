@@ -127,7 +127,7 @@ class GameCenterController
     
     class func fetchUserScores()
     {
-        var leaderboardRequest:GKLeaderboard = GKLeaderboard(players: [localPlayer]);
+        var leaderboardRequest:GKLeaderboard = UICustomDevice.isIOS8OrHigher() ? GKLeaderboard(players: [localPlayer]) : GKLeaderboard();
         leaderboardRequest.identifier = leaderBoardID;
         leaderboardRequest.playerScope = GKLeaderboardPlayerScope.Global;
         leaderboardRequest.timeScope = GKLeaderboardTimeScope.AllTime;
