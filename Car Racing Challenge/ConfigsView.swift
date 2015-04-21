@@ -49,7 +49,7 @@ class ConfigsView:AbstractView
         self.addSubview(self.fb);
         self.fb.center = self.center;
         self.fb.x -= self.podium.width * 1.5;
-        self.fb.addTarget(self, selector: Selector("facebookHandler"));
+        self.fb.addTarget(self, selector: Selector("facebookHandler:"));
         
         
         //---tt
@@ -57,17 +57,9 @@ class ConfigsView:AbstractView
         self.addSubview(self.tt);
         self.tt.center = self.center;
         self.tt.x += self.podium.width * 1.5;
-        self.tt.addTarget(self, selector: Selector("twitterHandler"));
+        self.tt.addTarget(self, selector: Selector("twitterHandler:"));
         
         buildMenu();
-    }
-    
-    func openGameCenter(sender:AnyObject!)
-    {
-        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
-        
-        Trace("ConfigsView -> open game center");
-        GameCenterController.loadLeaderboard();
     }
     
     override func removeFromSuperview()
@@ -172,6 +164,14 @@ class ConfigsView:AbstractView
     }
     
     //----- HANDLERS ---------
+    func openGameCenter(sender:AnyObject!)
+    {
+        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
+        
+        Trace("ConfigsView -> open game center");
+        GameCenterController.loadLeaderboard();
+    }
+    
     func soundHandler()
     {
         Trace("sound handler");
@@ -226,15 +226,19 @@ class ConfigsView:AbstractView
         UIApplication.sharedApplication().openURL(url);
     }
     
-    func facebookHandler()
+    func facebookHandler(sender:AnyObject!)
     {
+        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
+        
         Trace("facebook share");
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         shareBuilder(SocialController.facebookType);
     }
     
-    func twitterHandler()
+    func twitterHandler(sender:AnyObject!)
     {
+        (sender as! UITapGestureRecognizer).view?.onTouchAnima();
+        
         Trace("twitter share");
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         shareBuilder(SocialController.twitterType);
