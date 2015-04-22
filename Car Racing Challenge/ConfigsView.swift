@@ -69,11 +69,12 @@ class ConfigsView:AbstractView
         self.bestScore.text = "BEST SCORE:\(data)";
         self.bestScore.sizeToFit();
         self.bestScore.width = self.width + 2;
-        self.bestScore.height += 10;
+        self.bestScore.height += 30;
         self.bestScore.center.x = self.center.x;
         self.addSubview(self.bestScore);
         self.bestScore.alpha = 0.4;
         self.bestScore.layer.borderWidth = 0.5;
+        self.bestScore.layer.borderColor = UIColor.blackColor().alpha(0.2).CGColor;
         
         buildMenu();
     }
@@ -164,7 +165,7 @@ class ConfigsView:AbstractView
         self.podium.y = self.container.y + self.container.height;
         self.fb.y = self.podium.y;
         self.tt.y = self.podium.y;
-        self.bestScore.y = self.container.y - self.bestScore.height * 2;
+        self.bestScore.y = self.container.y - self.bestScore.height * 1.5;
     }
     
     func addAction(label:String! = nil, selector:String! = nil, key:String! = nil, active:Bool = false)
