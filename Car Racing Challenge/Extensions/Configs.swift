@@ -10,6 +10,10 @@ import Foundation
 
 struct Configs
 {
+    //flags
     static var DEBUG_MODE          : Bool = false;
     static var SAMPLE_MODE         : Bool = false;
+    
+    //infos
+    static var APP_ID              : String = "979116721";
 }

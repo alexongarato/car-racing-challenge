@@ -69,6 +69,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.addSubview(btConfig);
         btConfig.alpha = 0.4;
         self.updateConfigButtonPosition(self.height);
+        self.btConfigToClosedPosition();
         btConfig.addTarget(self, selector: Selector("configsHandler"));
     }
     
@@ -144,8 +145,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             
             UIView.animateWithDuration(AnimationTime.Slow, delay: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.btConfig.alpha = 0.4;
-//                self.btConfig.transform = CGAffineTransformRotate(self.btConfig.transform, CGFloat(M_PI));
-                self.updateConfigButtonPosition();
+                self.btConfigToClosedPosition();
                 }, completion:completion);
             
             UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
@@ -156,14 +156,13 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
-    private func updateConfigButtonPosition()
+    private func btConfigToClosedPosition()
     {
         btConfig.x = self.DEFAULT_W - btConfig.width;
     }
     
     private func updateConfigButtonPosition(posY:CGFloat)
     {
-        self.updateConfigButtonPosition();
         btConfig.y = posY - btConfig.height;
     }
     
@@ -239,6 +238,10 @@ class MenuView: AbstractView, ADBannerViewDelegate
             
             UIView.animateWithDuration(AnimationTime.Default, animations: {
                 self._bannerView.y = self.height;
+                if(self.configView != nil)
+                {
+                    self.configView.height = self.height;
+                }
                 self.updateConfigButtonPosition(self._bannerView.y);
                 }, completion:completion);
         }

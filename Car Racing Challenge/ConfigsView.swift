@@ -17,6 +17,7 @@ class ConfigsView:AbstractView
     var fb:UIImageView!;
     var tt:UIImageView!;
     var scaleFactor:CGFloat = 1;
+    var bestScore: UILabel!;
     
     override func didMoveToSuperview()
     {
@@ -59,6 +60,21 @@ class ConfigsView:AbstractView
         self.tt.x += self.podium.width * 1.5;
         self.tt.addTarget(self, selector: Selector("twitterHandler:"));
         
+        //best score
+        let data:NSString = DataProvider.getString(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore) as NSString;
+        self.bestScore = UILabel();
+        self.bestScore.textColor = UIColor.blackColor();
+        self.bestScore.textAlignment = NSTextAlignment.Center;
+        self.bestScore.font = Fonts.DefaultFont(FontSize.Default * self.scaleFactor);
+        self.bestScore.text = "BEST SCORE:\(data)";
+        self.bestScore.sizeToFit();
+        self.bestScore.width = self.width + 2;
+        self.bestScore.height += 10;
+        self.bestScore.center.x = self.center.x;
+        self.addSubview(self.bestScore);
+        self.bestScore.alpha = 0.4;
+        self.bestScore.layer.borderWidth = 0.5;
+        
         buildMenu();
     }
     
@@ -73,19 +89,14 @@ class ConfigsView:AbstractView
         self.actions.removeAll(keepCapacity: false);
         
         addAction(label: "SOUNDS", selector: "soundHandler", key:SuiteNames.KeySound, active:true);
-        if(PurchaseController.getInstance().userCanPurchase())
+        if(PurchaseController.getInstance().userCanPurchase() && !PurchaseController.getInstance().hasPurchased())
         {
             addAction();
-            
-            addAction(label: "REMOVE ADS", selector: "adsHandler", key:SuiteNames.KeyAds, active:!PurchaseController.getInstance().hasPurchased());
-            addAction(label: "RESTORE PURCHASE", selector: "restoreHandler", active:!PurchaseController.getInstance().hasPurchased());
-            
+            addAction(label: "REMOVE ADS", selector: "adsHandler", key:SuiteNames.KeyAds, active:true);
+            addAction(label: "RESTORE PURCHASE", selector: "restoreHandler", active:true);
             addAction();
-            
-            addAction(label: "RATE THIS APP", selector: "rateHandler", key:nil, active:true);
-//            addAction(label: "SHARE ON TWITTER", selector: "twitterHandler", key:nil, active:SocialController.getInstance().isTwitterAvailable());
-//            addAction(label: "SHARE ON FACEBOOK", selector: "facebookHandler", key:nil, active:SocialController.getInstance().isFacebookAvailable());
         }
+        addAction(label: "RATE THIS S2", selector: "rateHandler", key:nil, active:true);
         
         self.container.removeAllSubviews();
         
@@ -127,6 +138,8 @@ class ConfigsView:AbstractView
                 action.bold(label);
             }
             
+            action.bold("S2");
+            
             self.container.addSubview(action);
             action.sizeToFit();
             action.width = self.container.width;
@@ -147,10 +160,11 @@ class ConfigsView:AbstractView
         
         self.container.height = lastY;
         self.container.center.x = self.center.x;
-        self.container.y = (UIScreen.mainScreen().applicationFrame.height - self.container.height).half - 45;
+        self.container.y = (UIScreen.mainScreen().applicationFrame.height - self.container.height).half - 25;
         self.podium.y = self.container.y + self.container.height;
         self.fb.y = self.podium.y;
         self.tt.y = self.podium.y;
+        self.bestScore.y = self.container.y - self.bestScore.height * 2;
     }
     
     func addAction(label:String! = nil, selector:String! = nil, key:String! = nil, active:Bool = false)
@@ -206,7 +220,7 @@ class ConfigsView:AbstractView
         NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
-        AlertController.getInstance().showAlert(title: "Remove Ads", message: "All Ads will be removed.\n\nThank you!", action: "Done", completion: nil);
+        AlertController.getInstance().showAlert(title: "Thank you!", message: "All Ads has been removed.", action: "Done", completion: nil);
     }
     
     func restoredHandler()
@@ -215,7 +229,7 @@ class ConfigsView:AbstractView
         NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
-        AlertController.getInstance().showAlert(title: "Remove Ads", message: "Purchase restored.\n\nThank you!", action: "Done", completion: nil);
+        AlertController.getInstance().showAlert(title: "Thank you!", message: "Purchase has been restored.", action: "Done", completion: nil);
     }
     
     func rateHandler()

@@ -12,6 +12,7 @@ import StoreKit
 private var _instance           : PurchaseController!;
 private var _hasPurchased       : Bool = false;
 private var _transactionType    : Int = -1;
+private var _productsRequest    : SKProductsRequest!;
 
 class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
@@ -85,80 +86,22 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     
     private func validateProductIdentifiers(productIdentifiers:Set<NSObject>!)
     {
-        var productsRequest:SKProductsRequest = SKProductsRequest(productIdentifiers: productIdentifiers);
-        productsRequest.delegate = self;
-        productsRequest.start();
+        if(_productsRequest != nil)
+        {
+            _productsRequest.cancel();
+            _productsRequest.delegate = nil;
+            _productsRequest = nil;
+        }
+        
+        _productsRequest = SKProductsRequest(productIdentifiers: productIdentifiers);
+        _productsRequest.delegate = self;
+        _productsRequest.start();
         
         //calls productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!)
     }
     
     
     //---------------- observers --------------
-    
-    @objc func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!)
-    {
-        
-        var failed:Bool = true;
-        
-        Trace("paymentQueue updateTransactions");
-        
-        if let prodID = self.productsIDs.valueForKey("remove_ads") as? String
-        {
-            for obj in transactions
-            {
-                if let transaction = obj as? SKPaymentTransaction
-                {
-                    Trace("transaction state \(transaction.transactionState.rawValue)");
-                    Trace("for product: \(transaction.payment.productIdentifier)");
-                    
-                    if(transaction.payment.productIdentifier != nil)
-                    {
-                        if(transaction.payment.productIdentifier == prodID)
-                        {
-                            switch (transaction.transactionState)
-                            {
-                            case SKPaymentTransactionState.Purchasing:
-                                Trace("Purchasing");
-                                break;
-                            case SKPaymentTransactionState.Deferred:
-                                Trace("Deferred");
-                                break;
-                            case SKPaymentTransactionState.Failed:
-                                Trace("Failed");
-                                break;
-                            case SKPaymentTransactionState.Purchased:
-                                Trace("Purchased");
-                                failed = false;
-                                NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
-                                break;
-                            case SKPaymentTransactionState.Restored:
-                                Trace("Restored");
-                                failed = false;
-                                NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
-                                break;
-                            default:
-                                Trace("Unexpected transaction state \(transaction.transactionState.rawValue)");
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else
-        {
-            AlertController.getInstance().showAlert(title: "Error", message: "Oops!\nAn error occurred.\nCode:001", action: "OK");
-        }
-        
-        if(failed)
-        {
-            AlertController.getInstance().showAlert(title: "Failed", message: "\nPurchase of Remove Ads was not completed.\n\nTry again later.\n", action: "OK");
-        }
-        else
-        {
-            AlertController.getInstance().hideAlert(nil);
-        }
-    }
     
     @objc func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!)
     {
@@ -176,7 +119,6 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                     
                     func startPayment()
                     {
-//                        SKPaymentQueue.defaultQueue().removeTransactionObserver(self);
                         SKPaymentQueue.defaultQueue().addTransactionObserver(self);
                         
                         if(_transactionType == 0)
@@ -195,9 +137,9 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                         _transactionType = -1;
                     }
                     
-                    
-                    AlertController.getInstance().hideAlert(startPayment);
-                    break;
+                    _productsRequest.delegate = nil;
+                    startPayment();
+                    return;
                 }
                 else
                 {
@@ -217,6 +159,74 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
             }
             
             Trace("invalid products count:\(invalid.count)");
+        }
+    }
+    
+    @objc func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!)
+    {
+        
+        var failed:Bool = false;
+        var purchased:Bool = false;
+        
+        Trace("paymentQueue updateTransactions");
+        
+        if let prodID = self.productsIDs.valueForKey("remove_ads") as? String
+        {
+            for obj in transactions
+            {
+                if let transaction = obj as? SKPaymentTransaction
+                {
+                    Trace("product: \(transaction.payment.productIdentifier), state \(transaction.transactionState.rawValue)");
+                    
+                    if(transaction.payment.productIdentifier != nil)
+                    {
+                        if(transaction.payment.productIdentifier == prodID)
+                        {
+                            switch (transaction.transactionState)
+                            {
+                            case SKPaymentTransactionState.Purchasing:
+                                Trace("Purchasing");
+                                break;
+                            case SKPaymentTransactionState.Deferred:
+                                Trace("Deferred");
+                                failed = true;
+                                break;
+                            case SKPaymentTransactionState.Failed:
+                                Trace("Failed");
+//                                failed = true;
+                                break;
+                            case SKPaymentTransactionState.Purchased:
+                                Trace("Purchased");
+                                purchased = true;
+                                break;
+                            case SKPaymentTransactionState.Restored:
+                                Trace("Restored");
+                                purchased = true;
+                                break;
+                            default:
+                                Trace("Unexpected transaction state \(transaction.transactionState.rawValue)");
+                                failed = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            AlertController.getInstance().showAlert(title: "Error", message: "Oops!\nAn error occurred.\nCode:001", action: "OK");
+        }
+        
+        if(failed)
+        {
+            AlertController.getInstance().showAlert(title: "Failed", message: "\nPurchase of Remove Ads was not completed.\n\nTry again later.\n", action: "OK");
+        }
+        
+        if(purchased)
+        {
+            NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
+            return;
         }
     }
 }

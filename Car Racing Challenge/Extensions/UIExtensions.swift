@@ -333,9 +333,13 @@ extension UILabel
     {
         var temp:NSMutableAttributedString = self.attributedText as! NSMutableAttributedString;
         var main_string:NSString = temp.string;
-        var format:NSDictionary = [NSFontAttributeName : Fonts.BoldFont(self.font.pointSize), NSForegroundColorAttributeName: color];
-        temp.addAttributes(format as [NSObject : AnyObject], range: (main_string as NSString).rangeOfString(word));
-        self.attributedText = temp;
+        var range:NSRange = (main_string as NSString).rangeOfString(word);
+        if(range.length > 0)
+        {
+            var format:NSDictionary = [NSFontAttributeName : Fonts.BoldFont(self.font.pointSize), NSForegroundColorAttributeName: color];
+            temp.addAttributes(format as [NSObject : AnyObject], range: (main_string as NSString).rangeOfString(word));
+            self.attributedText = temp;
+        }
     }
 }
 

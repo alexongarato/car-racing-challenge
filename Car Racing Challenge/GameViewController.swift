@@ -346,7 +346,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             self.pauseGameHandler();
         }
         
-        AlertController.getInstance().hideAlert(nil);
+//        AlertController.getInstance().hideAlert(nil);
     }
     
     func pauseGameHandler()
