@@ -174,13 +174,11 @@
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
 				DB525E801ABDF69900959D26 /* MenuView.swift */,
 				DB3D62681ACE51C7001BC9D9 /* ConfigsView.swift */,
-				DB5E47F61ADF2B720029B8DD /* GameHelper.swift */,
 				DB2E84401AAD338D0009E321 /* GameScene.swift */,
 				DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */,
-				DB2E84421AAD338D0009E321 /* GameViewController.swift */,
 				DB2E84471AAD338D0009E321 /* Images.xcassets */,
 				DB9E31771AD4BAEF00C27087 /* Constants */,
-				DB384C161AC0D90500C2BB32 /* Extensions */,
+				DB384C161AC0D90500C2BB32 /* Helpers */,
 				DBD63E2F1AC7668800F3A3C3 /* Images */,
 				DB384BF81AC0D86000C2BB32 /* Sounds */,
 				DB525E721ABDEF5500959D26 /* Fonts */,
@@ -236,9 +234,11 @@
 			path = ..;
 			sourceTree = "<group>";
 		};
-		DB384C161AC0D90500C2BB32 /* Extensions */ = {
+		DB384C161AC0D90500C2BB32 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				DB5E47F61ADF2B720029B8DD /* GameHelper.swift */,
+				DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */,
 				DB384C1D1AC0D90E00C2BB32 /* Trace.swift */,
 				DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */,
 				DB384C191AC0D90E00C2BB32 /* DataProvider.swift */,
@@ -249,7 +249,7 @@
 				DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */,
 				DB384C201AC0D90E00C2BB32 /* Utils.swift */,
 			);
-			name = Extensions;
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		DB525E721ABDEF5500959D26 /* Fonts */ = {
@@ -269,7 +269,7 @@
 				DB8C315E1AC620EB0027E949 /* PurchaseController.swift */,
 				DB9E317A1AD4D70B00C27087 /* SocialController.swift */,
 				DB0600C01ADCABF700745AB8 /* AlertController.swift */,
-				DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */,
+				DB2E84421AAD338D0009E321 /* GameViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

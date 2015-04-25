@@ -64,7 +64,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.buildBanner();
         
         img = UIImage(named:ImagesNames.ConfigIcon);
-        img = ImageHelper.imageScaledToFit(img, sizeToFit: CGSize(width: 60 * self.scaleFactor, height: 60 * self.scaleFactor));
+        img = ImageHelper.imageScaledToFit(img, sizeToFit: CGSize(width: 60, height: 60));
         btConfig = UIImageView(image: img);
         self.addSubview(btConfig);
         btConfig.alpha = 0.4;

@@ -18,6 +18,10 @@ class ConfigsView:AbstractView
     var tt:UIImageView!;
     var scaleFactor:CGFloat = 1;
     var bestScore: UILabel!;
+    var _timer:NSTimer!;
+    var _currentScore:Float = 0;
+    var _totalScore:Float = 0;
+    var _animaTime:NSTimeInterval = 0;
     
     override func didMoveToSuperview()
     {
@@ -62,11 +66,17 @@ class ConfigsView:AbstractView
         
         //best score
         let data:NSString = DataProvider.getString(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore) as NSString;
+        _totalScore = data.floatValue;
+        //_totalScore = 9000;
+        _animaTime = NSTimeInterval(0.005);
+        
+        Trace("animatime:\(_animaTime)");
+        
         self.bestScore = UILabel();
         self.bestScore.textColor = UIColor.blackColor();
         self.bestScore.textAlignment = NSTextAlignment.Center;
         self.bestScore.font = Fonts.DefaultFont(FontSize.Default * self.scaleFactor);
-        self.bestScore.text = "BEST SCORE:\(data)";
+        self.bestScore.text = "BEST SCORE:0";
         self.bestScore.sizeToFit();
         self.bestScore.width = self.width + 2;
         self.bestScore.height += 30;
@@ -77,10 +87,40 @@ class ConfigsView:AbstractView
         self.bestScore.layer.borderColor = UIColor.blackColor().alpha(0.2).CGColor;
         
         buildMenu();
+        
+        _timer = Utils.delayedCall(AnimationTime.Slow, target: self, selector: Selector("updateScore"), repeats: false);
+    }
+    
+    func updateScore()
+    {
+        if(_timer != nil)
+        {
+            _timer.invalidate();
+            _timer = nil;
+        }
+        
+        if(_currentScore < _totalScore)
+        {
+            _timer = Utils.delayedCall(_animaTime, target: self, selector: Selector("updateScore"), repeats: false);
+            
+            _currentScore += _totalScore/100;
+            
+            self.bestScore.text = "BEST SCORE:\(Int(_currentScore))";
+            self.bestScore.sizeToFit();
+            self.bestScore.width = self.width + 2;
+            self.bestScore.height += 30;
+            self.bestScore.center.x = self.center.x;
+        }
     }
     
     override func removeFromSuperview()
     {
+        if(_timer != nil)
+        {
+            _timer.invalidate();
+            _timer = nil;
+        }
+        
         NSNotificationCenter.defaultCenter().removeObserver(self);
         super.removeFromSuperview();
     }
@@ -97,7 +137,7 @@ class ConfigsView:AbstractView
             addAction(label: "RESTORE PURCHASE", selector: "restoreHandler", active:true);
             addAction();
         }
-        addAction(label: "RATE THIS S2", selector: "rateHandler", key:nil, active:true);
+        addAction(label: "RATE S2", selector: "rateHandler", key:nil, active:true);
         
         self.container.removeAllSubviews();
         
