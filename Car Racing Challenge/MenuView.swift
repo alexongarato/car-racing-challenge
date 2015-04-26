@@ -207,7 +207,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
         else
         {
-            _adLoader.text = "(FREE VERSION) PLEASE WAIT, LOADING BANNER...";
+            _adLoader.text = "(FREE VERSION) LOADING ADVERTISEMENT...";
         }
         _adLoader.font = Fonts.LightFont(FontSize.Small);
         _adLoader.sizeToFit();

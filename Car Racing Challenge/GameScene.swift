@@ -293,8 +293,8 @@ class GameScene: SKScene
         self.ready = false;
         self.view?.paused = true;
         self.roadSides.removeAllActions();
-        self.resetIntervalBetweenLoops();
-        self.currentVelSound = 0;
+        //self.resetIntervalBetweenLoops();
+        //self.currentVelSound = 0;
         AudioHelper.stopSound(AudioHelper.Vel4Sound);
     }
     

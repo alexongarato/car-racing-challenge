@@ -262,7 +262,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             }
         }
         
-        showMenu("GAME OVER", desc: "\n\nSCORE:\(scene.currentScore())\n\nBEST:\(self.getBestScore())", action: "TRY AGAIN", selector: Selector("testConnectivity:"), showGameOver:true);
+        showMenu("\nGAME OVER", desc: "\nSCORE:\(scene.currentScore())\nBEST:\(self.getBestScore())\n\n", action: "TRY AGAIN", selector: Selector("testConnectivity:"), showGameOver:true);
         AudioHelper.playSound(AudioHelper.GameOverSound);
         
         self.showBanner();
