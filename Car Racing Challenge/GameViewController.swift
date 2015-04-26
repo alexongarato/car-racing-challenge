@@ -96,8 +96,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         if(menuView != nil)
         {
             return;
-//            menuView.removeFromSuperview();
-//            menuView = nil;
         }
         
         scene.stop();
@@ -168,11 +166,28 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             menuView = nil;
         }
         
-        showMenu("car racing\nchallenge",
-            desc: "", action: "PLAY", selector: Selector("startGameHandler:"), showInstructions:true, showExitButton:false);
+        showMenu("car racing\nchallenge", desc: "", action: "PLAY", selector: Selector("testConnectivity:"), showInstructions:true, showExitButton:false);
         AudioHelper.playSound(AudioHelper.EntranceSound);
         
         self.showBanner();
+    }
+    
+    func testConnectivity(sender:AnyObject!)
+    {
+        /* as acoes do menu agora só aparecem quando o banner é carregado (MenuView).
+        if(ConnectivityHelper.isReachable() || PurchaseController.getInstance().hasPurchased())
+        {
+            startGameHandler(sender);
+        }
+        else
+        {
+            PurchaseController.getInstance().showDefaultPurchaseMessage({
+                AlertController.getInstance().hideAlert({ self.menuView.configsHandler(); });
+            });
+        }
+        */
+        
+        self.startGameHandler(sender);
     }
     
     func startGameHandler(sender:AnyObject!)
@@ -234,11 +249,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         Utils.vibrate();
         SocialController.getInstance().screenShot(self.view);
         
-//        var tmp:UIImageView = UIImageView(image: SocialController.getInstance()._currentScreenShot);
-//        tmp.scale(0.5);
-//        self.view.addSubview(tmp);
-//        return;
-        
         if(scene.currentScore() > self.getBestScore())
         {
             self.setBestScore(scene.currentScore())
@@ -252,7 +262,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             }
         }
         
-        showMenu("GAME OVER", desc: "\n\nSCORE:\(scene.currentScore())\n\nBEST:\(self.getBestScore())", action: "TRY AGAIN", selector: Selector("startGameHandler:"), showGameOver:true);
+        showMenu("GAME OVER", desc: "\n\nSCORE:\(scene.currentScore())\n\nBEST:\(self.getBestScore())", action: "TRY AGAIN", selector: Selector("testConnectivity:"), showGameOver:true);
         AudioHelper.playSound(AudioHelper.GameOverSound);
         
         self.showBanner();
@@ -267,33 +277,10 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         var act:String = "GO!";
         var selector:Selector = Selector("resumeLevelUp:");
         
-        if(!Configs.SAMPLE_MODE)
-        {
-            /*if(scene.currentLevel() <= scene.maximunLevel())
-            {*/
-                desc = "\n\ncongratulations!";
-            /*}
-            else if(scene.currentLevel() == scene.maximunLevel() + 1)
-            {
-                desc = "\n\nThis is the highest\nracing track level!";
-            }
-            if(desc != nil)
-            {*/
-                scene.stop();
-                showMenu(ttl, desc: desc, action: act, selector: selector, showExitButton:false);
-                scene.setTotalColumns(scene.currentColumns() - 1);
-                self.showBanner();
-            //}
-        }
-        else
-        {
-            scene.stop();
-            selector = nil;
-            ttl = "FREE VERSION";
-            desc = "This free version is limited\nto one level only.";
-            showMenu(ttl, desc: desc, action: "", selector: nil, showExitButton:true);
-            self.showBanner();
-        }
+        scene.stop();
+        showMenu(ttl, desc: "\n\ncongratulations!", action: act, selector: selector, showExitButton:false);
+        scene.setTotalColumns(scene.currentColumns() - 1);
+        self.showBanner();
         
         AudioHelper.playSound(AudioHelper.LevelUpSound);
     }

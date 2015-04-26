@@ -18,7 +18,7 @@ class GameScene: SKScene
     private let ID_BT_LEFT              : String = "bt_left";
     private let ID_BT_RIGHT             : String = "bt_right";
     private let INT_BETWEEN_LEVELS      : CFTimeInterval = 0.01;
-    private let PIXELS_BETWEEN_ENEMIES_1: Int = 15;
+    private let PIXELS_BETWEEN_ENEMIES_1: Int = 19;
     private let MIN_PX_BT_ENEMIES_1     : Int = 10;
     private let IS_LIFE_BONUS_MODE      : Bool = false;
     private let IS_LEVEL_MODE           : Bool = true;
@@ -49,6 +49,7 @@ class GameScene: SKScene
     private var builded                 : Bool = false;
     private var loopsTimeCounter        : CFTimeInterval = -1;
     private var intervalBetweenLoops    : CFTimeInterval = 0.5;
+    private var minIntervalForThisDevice: CFTimeInterval = 0.5;
     private var pixelDistanceCounter    : Int = -1;
     private var currentMainCharColumn   : Int = -1;
     private var currentLevelCounter     : Int = 1;
@@ -144,7 +145,7 @@ class GameScene: SKScene
         self.currentMainCharColumn      = self.totalColumns / 2;
         self.pixelDistanceCounter       = self.PIXELS_BETWEEN_ENEMIES_1;
         self.currentVelSound            = 0;
-        self.intervalBetweenLoops       = 0.5;
+        self.resetIntervalBetweenLoops();
         self.currentEnemiesVector       = GameHelper.getInstance().enemiesForLevel(self.currentLevelCounter);
         self.currEnemiesVectorCounter   = 0;
         
@@ -258,6 +259,14 @@ class GameScene: SKScene
     func resetIntervalBetweenLoops()
     {
         self.intervalBetweenLoops = 0.5;
+        if(UIDevice.currentDevice().model == "iPad")
+        {
+            self.minIntervalForThisDevice = 0.035;
+        }
+        else
+        {
+            self.minIntervalForThisDevice = 0.03;
+        }
     }
     
     func reset()
@@ -327,12 +336,12 @@ class GameScene: SKScene
     {
         //self.mainTimer = Utils.delayedCall(self.intervalBetweenLoops, target: self, selector: Selector("update"), repeats: false);
         
-        if(self.intervalBetweenLoops > 0.03)
+        if(self.intervalBetweenLoops > self.minIntervalForThisDevice)
         {
             self.intervalBetweenLoops -= 0.1;
-            if(self.intervalBetweenLoops < 0.03)
+            if(self.intervalBetweenLoops < self.minIntervalForThisDevice)
             {
-                self.intervalBetweenLoops = 0.03;
+                self.intervalBetweenLoops = self.minIntervalForThisDevice;
             }
         }
         
@@ -452,7 +461,7 @@ class GameScene: SKScene
     
     private func addNewEnemy()
     {
-        AsyncHelper.addWorkBlock({
+//        AsyncHelper.addWorkBlock({
             var newEnemy:CustomSpriteNode!;
             func createEnemy(col:CGFloat)
             {
@@ -486,7 +495,7 @@ class GameScene: SKScene
                 createEnemy(Utils.random(self.totalColumns - 1).floatValue);
             }
             self.currEnemiesVectorCounter++;
-        });
+//        });
     }
     
     
@@ -508,12 +517,12 @@ class GameScene: SKScene
     
     private func startTrackAnima()
     {
-        AsyncHelper.addWorkBlock({
-            Trace("anima");
+//        AsyncHelper.addWorkBlock({
+            //Trace("anima");
             self.roadSides.paused = false;
             self.roadSides.y = self.size.height + (self.pixelSize * self.ROAD_PIXELS_INTERVAL.floatValue) + 1;
             self.roadSides.runAction(self.trackAction(), completion: self.trackCompletion);
-        });
+//        });
     }
     //----------
     

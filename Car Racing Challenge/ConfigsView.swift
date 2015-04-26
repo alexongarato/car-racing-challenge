@@ -22,6 +22,7 @@ class ConfigsView:AbstractView
     var _currentScore:Float = 0;
     var _totalScore:Float = 0;
     var _animaTime:NSTimeInterval = 0;
+    var _hasPurchasedCallback:(()->Void)!;
     
     override func didMoveToSuperview()
     {
@@ -133,7 +134,7 @@ class ConfigsView:AbstractView
         if(PurchaseController.getInstance().userCanPurchase() && !PurchaseController.getInstance().hasPurchased())
         {
             addAction();
-            addAction(label: "REMOVE ADS", selector: "adsHandler", key:SuiteNames.KeyAds, active:true);
+            addAction(label: "BUY FULL VERSION", selector: "adsHandler", key:nil, active:true);
             addAction(label: "RESTORE PURCHASE", selector: "restoreHandler", active:true);
             addAction();
         }
@@ -258,7 +259,8 @@ class ConfigsView:AbstractView
     func purchasedHandler()
     {
         NSNotificationCenter.defaultCenter().removeObserver(self);
-        NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
+//        NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
+        _hasPurchasedCallback();
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
         AlertController.getInstance().showAlert(title: "Thank you!", message: "All Ads has been removed.", action: "Done", completion: nil);
@@ -267,7 +269,8 @@ class ConfigsView:AbstractView
     func restoredHandler()
     {
         NSNotificationCenter.defaultCenter().removeObserver(self);
-        NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
+//        NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
+        _hasPurchasedCallback();
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
         AlertController.getInstance().showAlert(title: "Thank you!", message: "Purchase has been restored.", action: "Done", completion: nil);

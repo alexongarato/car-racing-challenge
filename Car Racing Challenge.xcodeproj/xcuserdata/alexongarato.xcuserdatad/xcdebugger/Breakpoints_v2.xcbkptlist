@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Car Racing Challenge/PurchaseController.swift"
-            timestampString = "451357039.795616"
+            filePath = "Car Racing Challenge/Extensions/DeviceModel.m"
+            timestampString = "451680011.433552"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "productsRequest(_:didReceiveResponse:)"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "-platformString"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -80,7 +80,6 @@ class SocialController
                     sheet.addImage(self._currentScreenShot);
                 }
                 
-                
                 AppDelegate.getInstance().gameController.presentViewController(sheet, animated: true, completion: {
                     AlertController.getInstance().hideAlert(nil);
                 });
@@ -99,7 +98,7 @@ class SocialController
         {
             Trace("share error");
             var source:String = (type == SLServiceTypeTwitter) ? "Twitter" : "Facebook";
-            AlertController.getInstance().showAlert(title: "Accounts", message: "Please login to a \(source) account to share.", action: "OK", completion: nil);
+            AlertController.getInstance().showAlert(title: source, message: "Please login to a \(source) account to share.", action: "OK", completion: nil);
         }
     }
     

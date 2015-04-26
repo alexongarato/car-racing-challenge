@@ -48,10 +48,13 @@
 		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
 		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
 		DB546E811ACBA35900D1D9F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */; };
+		DB5816D71AEC11AE003C72FC /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5816D61AEC11AE003C72FC /* DeviceModel.m */; };
 		DB5E47F71ADF2B720029B8DD /* GameHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5E47F61ADF2B720029B8DD /* GameHelper.swift */; };
 		DB5E47FB1ADF43260029B8DD /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB5E47FA1ADF43260029B8DD /* Levels.plist */; };
 		DB5E47FF1ADF58E30029B8DD /* AsyncHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
+		DB717E111AEC3D7A00A0C90A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB717E0F1AEC3D6E00A0C90A /* SystemConfiguration.framework */; };
+		DB717E131AEC3E9A00A0C90A /* ConnectivityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717E121AEC3E9A00A0C90A /* ConnectivityHelper.swift */; };
 		DB7A0BD51ACCCF2E0008B581 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB7A0BD41ACCCF2E0008B581 /* Products.plist */; };
 		DB8C315F1AC620EB0027E949 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C315E1AC620EB0027E949 /* PurchaseController.swift */; };
 		DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */; };
@@ -112,10 +115,15 @@
 		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
 		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		DB5816D51AEC11AD003C72FC /* Car Racing Challenge-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Car Racing Challenge-Bridging-Header.h"; sourceTree = "<group>"; };
+		DB5816D61AEC11AE003C72FC /* DeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceModel.m; path = Extensions/DeviceModel.m; sourceTree = "<group>"; };
+		DB5816D81AEC12FB003C72FC /* DeviceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeviceModel.h; path = Extensions/DeviceModel.h; sourceTree = "<group>"; };
 		DB5E47F61ADF2B720029B8DD /* GameHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHelper.swift; sourceTree = "<group>"; };
 		DB5E47FA1ADF43260029B8DD /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
 		DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncHelper.swift; sourceTree = "<group>"; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DB717E0F1AEC3D6E00A0C90A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DB717E121AEC3E9A00A0C90A /* ConnectivityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectivityHelper.swift; sourceTree = "<group>"; };
 		DB7A0BD41ACCCF2E0008B581 /* Products.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
 		DB8C315E1AC620EB0027E949 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
@@ -137,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB717E111AEC3D7A00A0C90A /* SystemConfiguration.framework in Frameworks */,
 				DB9E31871AD4E1B400C27087 /* Accounts.framework in Frameworks */,
 				DB9E31841AD4DFB800C27087 /* Twitter.framework in Frameworks */,
 				DB9E31801AD4D78C00C27087 /* Social.framework in Frameworks */,
@@ -222,6 +231,7 @@
 		DB384C151AC0D87F00C2BB32 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				DB717E0F1AEC3D6E00A0C90A /* SystemConfiguration.framework */,
 				DB9E31851AD4E1AE00C27087 /* Accounts.framework */,
 				DB9E31821AD4DFB200C27087 /* Twitter.framework */,
 				DB9E317E1AD4D77500C27087 /* Social.framework */,
@@ -248,6 +258,10 @@
 				DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */,
 				DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */,
 				DB384C201AC0D90E00C2BB32 /* Utils.swift */,
+				DB5816D61AEC11AE003C72FC /* DeviceModel.m */,
+				DB5816D81AEC12FB003C72FC /* DeviceModel.h */,
+				DB5816D51AEC11AD003C72FC /* Car Racing Challenge-Bridging-Header.h */,
+				DB717E121AEC3E9A00A0C90A /* ConnectivityHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -431,6 +445,7 @@
 				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
 				DB3D62691ACE51C7001BC9D9 /* ConfigsView.swift in Sources */,
 				DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */,
+				DB5816D71AEC11AE003C72FC /* DeviceModel.m in Sources */,
 				DB5E47FF1ADF58E30029B8DD /* AsyncHelper.swift in Sources */,
 				DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */,
 				DB5E47F71ADF2B720029B8DD /* GameHelper.swift in Sources */,
@@ -438,6 +453,7 @@
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
 				DB1366531AD23992009A33DB /* Events.swift in Sources */,
 				DB384C231AC0D90E00C2BB32 /* DataProvider.swift in Sources */,
+				DB717E131AEC3E9A00A0C90A /* ConnectivityHelper.swift in Sources */,
 				DB384C211AC0D90E00C2BB32 /* Animation.swift in Sources */,
 				DB525E811ABDF69900959D26 /* MenuView.swift in Sources */,
 				DB9E31751AD4B5E900C27087 /* Routes.swift in Sources */,
@@ -558,6 +574,7 @@
 				PROVISIONING_PROFILE = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Car Racing Challenge/Car Racing Challenge-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -581,6 +598,7 @@
 				PROVISIONING_PROFILE = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Car Racing Challenge/Car Racing Challenge-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

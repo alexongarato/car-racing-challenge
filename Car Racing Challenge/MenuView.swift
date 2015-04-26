@@ -24,6 +24,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     private var btConfig    : UIImageView!;
     private var configView  : ConfigsView!;
     private var DEFAULT_W   : CGFloat = 0;
+    private var _adLoader   : UILabel!;
     
     override func didMoveToSuperview()
     {
@@ -86,6 +87,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         if(self.configView == nil)
         {
             self.configView = ConfigsView();
+            self.configView._hasPurchasedCallback = self.hideBannerHandler;
             self.addSubview(self.configView);
             self.configView.x = self.DEFAULT_W;
 //            self.width = self.configView.x + self.configView.width;
@@ -189,6 +191,28 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         _bannerView.y = self.height;
         _bannerView.delegate = self;
+        
+        _adLoader = UILabel();
+        self.addSubview(_adLoader);
+        self.updateLoaderText();
+        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("hideBannerHandler"), name: Events.removeAds, object: nil);
+    }
+    
+    func updateLoaderText()
+    {
+        if(!PurchaseController.getInstance().hasPurchased() && !ConnectivityHelper.isReachable())
+        {
+            _adLoader.text = "(FREE VERSION) AVAILABLE ONLY WHILE ONLINE.";
+        }
+        else
+        {
+            _adLoader.text = "(FREE VERSION) PLEASE WAIT, LOADING BANNER...";
+        }
+        _adLoader.font = Fonts.LightFont(FontSize.Small);
+        _adLoader.sizeToFit();
+        _adLoader.center.x = self.center.x;
+        _adLoader.y = self.height - 90;
     }
     
     func showBanner()
@@ -211,9 +235,10 @@ class MenuView: AbstractView, ADBannerViewDelegate
                 self._bannerView.y = self.height - self._bannerView.height;
                 self.addSubview(self._bannerView);
                 self.updateConfigButtonPosition(self._bannerView.y);
+                self.showActions();
             });
             
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("hideBannerHandler"), name: Events.removeAds, object: nil);
+//            NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("hideBannerHandler"), name: Events.removeAds, object: nil);
         }
         else
         {
@@ -224,8 +249,13 @@ class MenuView: AbstractView, ADBannerViewDelegate
     func hideBannerHandler()
     {
         NSNotificationCenter.defaultCenter().removeObserver(self);
+        self.showActions();
+        
         if(_bannerView != nil)
         {
+            _bannerView.cancelBannerViewAction();
+            _bannerView.delegate = nil;
+            
             func completion(animated:Bool)
             {
                 self._bannerView.removeFromSuperview();
@@ -260,6 +290,10 @@ class MenuView: AbstractView, ADBannerViewDelegate
     func bannerView(banner:ADBannerView!, didFailToReceiveAdWithError:NSError!)
     {
         Trace("didFailToReceiveAdWithError");
+        if(_adLoader != nil)
+        {
+            self.updateLoaderText();
+        }
     }
     
     func bannerViewActionShouldBegin(banner:ADBannerView, willLeaveApplication:Bool) -> Bool
@@ -274,6 +308,21 @@ class MenuView: AbstractView, ADBannerViewDelegate
     }
     //---------------------------------
     
+    func showActions()
+    {
+        if(self.actions != nil)
+        {
+            for action in self.actions
+            {
+                action.alpha = 1;
+            }
+        }
+        
+        if(_adLoader != nil)
+        {
+            _adLoader.alpha = 0;
+        }
+    }
     
     func setTitle(text:String)
     {
@@ -384,7 +433,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     private func shareBuilder(type:String)
     {
-        SocialController.getInstance().share(type, text:"I reached level \(AppDelegate.getInstance().gameController.scene.currentLevel()) in Car Racing Challenge (score:\(AppDelegate.getInstance().gameController.scene.currentScore()))", url:Routes.ITUNES_URL);
+        SocialController.getInstance().share(type, text:"I've reached level \(AppDelegate.getInstance().gameController.scene.currentLevel())(score:\(AppDelegate.getInstance().gameController.scene.currentScore())) in Car Racing Challenge.", url:Routes.ITUNES_URL);
     }
     
     func setAction(text:String!, target:AnyObject, selector:Selector)
@@ -396,6 +445,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         var newAction:UILabel = UILabel();
         newAction.textColor = fontColor;
+        newAction.alpha = 0;
         self.addSubview(newAction);
         self.actions.append(newAction);
         
@@ -427,6 +477,11 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         super.present(completion);
         self.bringSubviewToFront(self.btConfig);
+        
+        if(PurchaseController.getInstance().hasPurchased())
+        {
+            self.showActions();
+        }
     }
     /*
     override func present(completion: ((animated: Bool) -> Void)!)
@@ -459,6 +514,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     override func dismiss(completion: ((animated: Bool) -> Void)!)
     {
+        Trace("dismiss menu");
         NSNotificationCenter.defaultCenter().removeObserver(self);
         
         if(self._bannerView == nil)

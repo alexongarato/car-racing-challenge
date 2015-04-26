@@ -39,7 +39,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
             }
         }
         
-        _hasPurchased = DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds);// || Configs.DEBUG_MODE;
+        _hasPurchased = DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds)// || Configs.DEBUG_MODE;
     }
     
     func hasPurchased() -> Bool
@@ -58,6 +58,11 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         return SKPaymentQueue.canMakePayments();
     }
     
+    func showDefaultPurchaseMessage(completion:(()->Void)!)
+    {
+        AlertController.getInstance().showAlert(title: "FREE VERSION", message: "It's Only available while online.\nTry the full version now!", action: "OK", completion: completion);
+    }
+    
     func buyRemoveAds(#tryRestore:Bool)
     {
         if(self.productsIDs == nil)
@@ -73,9 +78,9 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         if let id = self.productsIDs.valueForKey("remove_ads") as? String
         {
             Trace("validating Remove Ads ID:\(id)...");
-            AlertController.getInstance().showAlert(title: nil, message: "please wait...", action: nil, completion: {
+            AlertController.getInstance().showAlert(title: nil, message: "please wait...", action: nil, completion:nil);// {
                 self.validateProductIdentifiers([id]);
-            });
+//            });
         }
         else
         {
@@ -86,6 +91,12 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     
     private func validateProductIdentifiers(productIdentifiers:Set<NSObject>!)
     {
+        if(!ConnectivityHelper.isReachable())
+        {
+            ConnectivityHelper.showDefaultOfflineMessage();
+            return;
+        }
+        
         if(_productsRequest != nil)
         {
             _productsRequest.cancel();
@@ -102,7 +113,6 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     
     
     //---------------- observers --------------
-    
     @objc func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!)
     {
         if let valid:NSArray = response.products

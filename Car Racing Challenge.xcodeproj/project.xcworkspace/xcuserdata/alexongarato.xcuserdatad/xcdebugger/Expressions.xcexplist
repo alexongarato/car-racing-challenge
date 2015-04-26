@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "Car_Racing.GameScene.resetIntervalBetweenLoops (Car_Racing.GameScene)() -&gt; ():GameScene.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "device.model">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Arcade_Car_Race.GameScene.build (Arcade_Car_Race.GameScene)() -&gt; ():GameScene.swift">
       </ContextState>
       <ContextState
