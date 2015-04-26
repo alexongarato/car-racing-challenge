@@ -68,7 +68,6 @@ class ConfigsView:AbstractView
         //best score
         let data:NSString = DataProvider.getString(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore) as NSString;
         _totalScore = data.floatValue;
-        //_totalScore = 9000;
         _animaTime = NSTimeInterval(0.005);
         
         Trace("animatime:\(_animaTime)");
@@ -105,6 +104,7 @@ class ConfigsView:AbstractView
             _timer = Utils.delayedCall(_animaTime, target: self, selector: Selector("updateScore"), repeats: false);
             
             _currentScore += _totalScore/100;
+            _currentScore = _currentScore > _totalScore ? _totalScore : _currentScore;
             
             self.bestScore.text = "BEST SCORE:\(Int(_currentScore))";
             self.bestScore.sizeToFit();
