@@ -57,12 +57,12 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     {
         return SKPaymentQueue.canMakePayments();
     }
-    
+    /*
     func showDefaultPurchaseMessage(completion:(()->Void)!)
     {
         AlertController.getInstance().showAlert(title: "FREE VERSION", message: "It's Only available while online.\nTry the full version now!", action: "OK", completion: completion);
     }
-    
+    */
     func buyRemoveAds(#tryRestore:Bool)
     {
         if(self.productsIDs == nil)
