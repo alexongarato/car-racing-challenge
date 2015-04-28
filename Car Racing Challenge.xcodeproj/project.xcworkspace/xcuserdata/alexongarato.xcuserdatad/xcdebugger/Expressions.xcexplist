@@ -3,10 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "Car_Racing.GameScene.resetIntervalBetweenLoops (Car_Racing.GameScene)() -&gt; ():GameScene.swift">
+         contextName = "Car_Racing.MenuView.setTitle (Car_Racing.MenuView)(Swift.String) -&gt; ():MenuView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "device.model">
+               value = "self.title.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -22,10 +22,18 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "Car_Racing.MenuView.setTitle (Car_Racing.MenuView)(Swift.String) -&gt; ():MenuView.swift">
+         contextName = "static Car_Racing.UICustomDevice.isiPhone4 (Car_Racing.UICustomDevice.Type)() -&gt; Swift.Bool:UICustomDevice.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self.title.width">
+               value = "UIDevice.currentDevice().platformString">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "Car_Racing.GameScene.resetIntervalBetweenLoops (Car_Racing.GameScene)() -&gt; ():GameScene.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "device.model">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

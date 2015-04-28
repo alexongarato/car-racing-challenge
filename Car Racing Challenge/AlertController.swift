@@ -173,7 +173,15 @@ class AlertController
             currHeight += 10;
             bg.height = currHeight;
             bg.layer.cornerRadius = 5;
-            bg.backgroundColor = UIColor(patternImage: ImageHelper.imageWithName(ImagesNames.Background));
+            if(UICustomDevice.avoidTexture())
+            {
+                bg.backgroundColor = Colors.green;
+            }
+            else
+            {
+                bg.backgroundColor = UIColor(patternImage: ImageHelper.imageWithName(ImagesNames.Background));
+            }
+            
             bg.center = self.center;
             self.addSubview(bg);
             

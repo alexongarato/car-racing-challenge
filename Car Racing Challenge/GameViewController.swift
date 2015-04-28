@@ -34,7 +34,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         }
         //------
         
-        super.viewDidLoad();
+        
         
         AppDelegate.getInstance().gameController = self;
         AlertController.getInstance().build(self);
@@ -44,11 +44,13 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         sceneView = SKView();
         sceneView.frame = self.view.frame;
         
-        sceneView.ignoresSiblingOrder = true;
+        sceneView.ignoresSiblingOrder = false;
         self.view.addSubview(sceneView);
         
-        //sceneView.showsFPS = Configs.DEBUG_MODE;
-        //sceneView.showsNodeCount = Configs.DEBUG_MODE;
+        sceneView.showsFPS = Configs.DEBUG_MODE;
+        sceneView.showsNodeCount = Configs.DEBUG_MODE;
+        
+        super.viewDidLoad();
         
         self.scene = GameScene();
         scene.size = UIScreen.mainScreen().applicationFrame.size;
