@@ -11,7 +11,7 @@ import Foundation
 struct Configs
 {
     //flags
-    static var DEBUG_MODE          : Bool = false;
+    static var DEBUG_MODE          : Bool = true;
     static var SAMPLE_MODE         : Bool = false;
     
     //infos

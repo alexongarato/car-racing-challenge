@@ -160,8 +160,10 @@ class GameScene: SKScene
         /**
         criar malha de pixels de acordo com a quantidade de pistas.
         */
-        if(self.bg == nil)
+        if(self.mainCharacter == nil)
         {
+            self.scene?.backgroundColor = UIColor(patternImage: UIImage(named: ImagesNames.PixelOff)!);
+            /*
             bg = SKSpriteNode(imageNamed: ImagesNames.Background);
             bg.size = self.size;
             bg.anchorPoint.x = 0;
@@ -181,7 +183,7 @@ class GameScene: SKScene
             pixelsNode.y = self.size.height;
             //---------------------
             
-            
+            */
             //cria as laterias temporarias que serao desenhadas no context
             roadSides = SKSpriteNode(texture: Utils.createRoadPixels(CGSize(width: self.size.width, height: self.size.height + (self.pixelSize * (ROAD_PIXELS_INTERVAL.floatValue * 2))), totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY + ROAD_PIXELS_INTERVAL * 2, pixelSize: self.pixelSize));
             self.addChild(roadSides);
@@ -191,7 +193,7 @@ class GameScene: SKScene
             roadSides.x = 0;
             roadSides.y = self.size.height;
             //---------------------
-            
+
             
             /**
             cria os personagens do jogo
@@ -237,6 +239,9 @@ class GameScene: SKScene
         self.roadSides.y = self.size.height;
         self.mainCharacter.x = self.pixelSize + (self.charactersSize.width * self.currentMainCharColumn.floatValue);
         
+        //self.pixelsNode.zPosition = 17;
+        //self.bg.zPosition = 18;
+        self.roadSides.zPosition = 19;
         self.mainCharacter.zPosition = 20;
         self.buttonLeft.zPosition = 21;
         self.buttonRight.zPosition = 22;
@@ -561,7 +566,10 @@ class GameScene: SKScene
                 }
             }
             
+            var tmp = self.mainCharacter.physicsBody;
+            self.mainCharacter.physicsBody = nil;
             self.mainCharacter.x = self.pixelSize + (self.charactersSize.width * self.currentMainCharColumn.floatValue);
+            self.mainCharacter.physicsBody = tmp;
         }
     }
 }

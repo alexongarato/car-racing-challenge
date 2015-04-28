@@ -25,6 +25,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     private var configView  : ConfigsView!;
     private var DEFAULT_W   : CGFloat = 0;
     private var _adLoader   : UILabel!;
+    private var _bannerTimer: NSTimer!;
     
     override func didMoveToSuperview()
     {
@@ -177,6 +178,13 @@ class MenuView: AbstractView, ADBannerViewDelegate
             return;
         }
         
+        if(_bannerView != nil)
+        {
+            _bannerView.cancelBannerViewAction();
+            _bannerView.delegate = nil;
+            _bannerView = nil;
+        }
+        
         // On iOS 6 ADBannerView introduces a new initializer, use it when available.
         if(ADBannerView.instancesRespondToSelector(Selector("initWithAdType:")))
         {
@@ -195,8 +203,19 @@ class MenuView: AbstractView, ADBannerViewDelegate
         _adLoader = UILabel();
         self.addSubview(_adLoader);
         self.updateLoaderText();
-        
+        self.killBannerTimer();
+        _bannerTimer = NSTimer(timeInterval: 4.0, target: self, selector: Selector("buildBanner"), userInfo: nil, repeats: false);
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("hideBannerHandler"), name: Events.removeAds, object: nil);
+    }
+    
+    func killBannerTimer()
+    {
+        Trace("kill banner timer");
+        if(_bannerTimer != nil)
+        {
+            _bannerTimer.invalidate();
+            _bannerTimer = nil;
+        }
     }
     
     func updateLoaderText()
@@ -215,6 +234,14 @@ class MenuView: AbstractView, ADBannerViewDelegate
         _adLoader.y = self.height - 90;
     }
     
+    func hideAdLoader()
+    {
+        if(_adLoader != nil)
+        {
+            _adLoader.alpha = 0;
+        }
+    }
+    
     func showBanner()
     {
         if(_bannerView == nil)
@@ -229,6 +256,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         if (_bannerView.bannerLoaded)
         {
             Trace("banner loaded");
+            self.hideAdLoader();
             
             self._bannerView.y = self.height;
             UIView.animateWithDuration(AnimationTime.Default, animations: {
@@ -285,6 +313,8 @@ class MenuView: AbstractView, ADBannerViewDelegate
             _adLoaded = true;
             self.showBanner();
         }
+        
+        self.killBannerTimer();
     }
     
     func bannerView(banner:ADBannerView!, didFailToReceiveAdWithError:NSError!)
@@ -294,10 +324,13 @@ class MenuView: AbstractView, ADBannerViewDelegate
         {
             self.updateLoaderText();
         }
+        
+        self.buildBanner();
     }
     
     func bannerViewActionShouldBegin(banner:ADBannerView, willLeaveApplication:Bool) -> Bool
     {
+        self.killBannerTimer();
         Trace("bannerViewActionShouldBegin");
         return true;
     }
@@ -305,6 +338,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     func bannerViewActionDidFinish(banner:ADBannerView)
     {
         Trace("bannerViewActionDidFinish");
+        self.killBannerTimer();
     }
     //---------------------------------
     
@@ -317,11 +351,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
                 action.alpha = 1;
             }
         }
-        
-        if(_adLoader != nil)
-        {
-            _adLoader.alpha = 0;
-        }
+        self.hideAdLoader();
     }
     
     func setTitle(text:String)
@@ -516,6 +546,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         Trace("dismiss menu");
         NSNotificationCenter.defaultCenter().removeObserver(self);
+        self.killBannerTimer();
         
         if(self._bannerView == nil)
         {
