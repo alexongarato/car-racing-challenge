@@ -204,6 +204,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.addSubview(_adLoader);
         self.updateLoaderText();
         self.killBannerTimer();
+        Trace("new banner timer");
         _bannerTimer = NSTimer(timeInterval: 4.0, target: self, selector: Selector("buildBanner"), userInfo: nil, repeats: false);
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("hideBannerHandler"), name: Events.removeAds, object: nil);
     }
@@ -255,16 +256,18 @@ class MenuView: AbstractView, ADBannerViewDelegate
         var bannerFrame:CGRect = _bannerView.frame;
         if (_bannerView.bannerLoaded)
         {
+            func completion(animated:Bool)
+            {
+                self.hideAdLoader();
+            }
             Trace("banner loaded");
-            self.hideAdLoader();
-            
             self._bannerView.y = self.height;
-            UIView.animateWithDuration(AnimationTime.Default, animations: {
+            UIView.animateWithDuration(AnimationTime.Default, delay:0, options:nil, animations: {
                 self._bannerView.y = self.height - self._bannerView.height;
                 self.addSubview(self._bannerView);
                 self.updateConfigButtonPosition(self._bannerView.y);
                 self.showActions();
-            });
+            }, completion:completion);
             
 //            NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("hideBannerHandler"), name: Events.removeAds, object: nil);
         }

@@ -162,17 +162,22 @@ class GameScene: SKScene
         */
         if(self.mainCharacter == nil)
         {
-            self.scene?.backgroundColor = UIColor(patternImage: UIImage(named: ImagesNames.PixelOff)!);
-            /*
-            bg = SKSpriteNode(imageNamed: ImagesNames.Background);
-            bg.size = self.size;
-            bg.anchorPoint.x = 0;
-            bg.anchorPoint.y = 1;
-            bg.x = 0;
-            bg.y = bg.height;
-            self.addChild(bg);
-            //---------------------
-            
+            //#C3DD85
+            if(UICustomDevice.avoidTexture())
+            {
+                self.scene?.backgroundColor = Colors.green;
+            }
+            else
+            {
+                bg = SKSpriteNode(imageNamed: ImagesNames.Background);
+                bg.size = self.size;
+                bg.anchorPoint.x = 0;
+                bg.anchorPoint.y = 1;
+                bg.x = 0;
+                bg.y = bg.height;
+                self.addChild(bg);
+                //---------------------
+            }
             //desenha a malha no context
             pixelsNode = SKSpriteNode(texture: Utils.createPixelsGrid(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
             self.addChild(pixelsNode);
@@ -183,7 +188,7 @@ class GameScene: SKScene
             pixelsNode.y = self.size.height;
             //---------------------
             
-            */
+
             //cria as laterias temporarias que serao desenhadas no context
             roadSides = SKSpriteNode(texture: Utils.createRoadPixels(CGSize(width: self.size.width, height: self.size.height + (self.pixelSize * (ROAD_PIXELS_INTERVAL.floatValue * 2))), totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY + ROAD_PIXELS_INTERVAL * 2, pixelSize: self.pixelSize));
             self.addChild(roadSides);
@@ -222,25 +227,18 @@ class GameScene: SKScene
             self.buttonRight.y = self.buttonLeft.y;
             self.buttonRight.name = self.ID_BT_RIGHT;
             self.addChild(self.buttonRight);
-            
-//            if(self.size.height <= 480)
-//            {
-                self.mainCharacter.y = self.size.height - (self.pixelSize * totalPixelsY.floatValue) + self.mainCharacter.height;
-//            }
-//            else
-//            {
-//                self.mainCharacter.y = self.size.height - (self.pixelSize * totalPixelsY.floatValue) + self.mainCharacter.height + (self.pixelSize);
-//            }
+
+            self.mainCharacter.y = self.size.height - (self.pixelSize * totalPixelsY.floatValue) + self.mainCharacter.height;
         }
-        
-        //self.bg.color = UIColor.yellowColor();
-        //self.bg.colorBlendFactor = 0.5;
         
         self.roadSides.y = self.size.height;
         self.mainCharacter.x = self.pixelSize + (self.charactersSize.width * self.currentMainCharColumn.floatValue);
         
-        //self.pixelsNode.zPosition = 17;
-        //self.bg.zPosition = 18;
+        self.pixelsNode.zPosition = 17;
+        if(self.bg != nil)
+        {
+            self.bg.zPosition = 18;
+        }
         self.roadSides.zPosition = 19;
         self.mainCharacter.zPosition = 20;
         self.buttonLeft.zPosition = 21;

@@ -12,7 +12,7 @@ class GameStatusView:AbstractView
 {
     private var scoreField:UILabel!;
     private var statusField:UILabel!;
-    private var defaultBgColor:UIColor = UIColor(patternImage: UIImage(named: ImagesNames.Background)!)//.alpha(0.8);
+    private var defaultBgColor:UIColor!;
     private var defaultY:CGFloat = 0;
     
     override func didMoveToSuperview()
@@ -22,8 +22,18 @@ class GameStatusView:AbstractView
         self.height = 20;
         self.defaultY = self.y;
         self.y = self.defaultY - self.height;
-        self.backgroundColor = defaultBgColor;
         
+        if(UICustomDevice.avoidTexture())
+        {
+            defaultBgColor = Colors.green;
+        }
+        else
+        {
+            defaultBgColor = UIColor(patternImage: UIImage(named: ImagesNames.Background)!)//.alpha(0.8);
+            
+        }
+        
+        self.backgroundColor = defaultBgColor;
         self.statusField = UILabel();
         self.addSubview(self.statusField);
         self.statusField.y = 5;

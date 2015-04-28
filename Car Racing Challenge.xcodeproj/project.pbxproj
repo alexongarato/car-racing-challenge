@@ -57,6 +57,7 @@
 		DB717E131AEC3E9A00A0C90A /* ConnectivityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717E121AEC3E9A00A0C90A /* ConnectivityHelper.swift */; };
 		DB7A0BD51ACCCF2E0008B581 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB7A0BD41ACCCF2E0008B581 /* Products.plist */; };
 		DB8C315F1AC620EB0027E949 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C315E1AC620EB0027E949 /* PurchaseController.swift */; };
+		DB8FE2471AEFDE3400471758 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8FE2461AEFDE3400471758 /* Colors.swift */; };
 		DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */; };
 		DB9E31751AD4B5E900C27087 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E31741AD4B5E900C27087 /* Routes.swift */; };
 		DB9E317B1AD4D70B00C27087 /* SocialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E317A1AD4D70B00C27087 /* SocialController.swift */; };
@@ -126,6 +127,7 @@
 		DB717E121AEC3E9A00A0C90A /* ConnectivityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectivityHelper.swift; sourceTree = "<group>"; };
 		DB7A0BD41ACCCF2E0008B581 /* Products.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
 		DB8C315E1AC620EB0027E949 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
+		DB8FE2461AEFDE3400471758 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
 		DB9E31741AD4B5E900C27087 /* Routes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
 		DB9E317A1AD4D70B00C27087 /* SocialController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialController.swift; sourceTree = "<group>"; };
@@ -296,6 +298,7 @@
 				DB1366521AD23992009A33DB /* Events.swift */,
 				DB525E7E1ABDF19F00959D26 /* Fonts.swift */,
 				DB384C171AC0D90E00C2BB32 /* Animation.swift */,
+				DB8FE2461AEFDE3400471758 /* Colors.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				DB5E47F71ADF2B720029B8DD /* GameHelper.swift in Sources */,
 				DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */,
 				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
+				DB8FE2471AEFDE3400471758 /* Colors.swift in Sources */,
 				DB1366531AD23992009A33DB /* Events.swift in Sources */,
 				DB384C231AC0D90E00C2BB32 /* DataProvider.swift in Sources */,
 				DB717E131AEC3E9A00A0C90A /* ConnectivityHelper.swift in Sources */,
