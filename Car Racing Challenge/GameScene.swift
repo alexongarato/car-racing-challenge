@@ -234,11 +234,11 @@ class GameScene: SKScene
         self.roadSides.y = self.size.height;
         self.mainCharacter.x = self.pixelSize + (self.charactersSize.width * self.currentMainCharColumn.floatValue);
         
-        self.pixelsNode.zPosition = 17;
         if(self.bg != nil)
         {
-            self.bg.zPosition = 18;
+            self.bg.zPosition = 17;
         }
+        self.pixelsNode.zPosition = 18;
         self.roadSides.zPosition = 19;
         self.mainCharacter.zPosition = 20;
         self.buttonLeft.zPosition = 21;
@@ -476,7 +476,7 @@ class GameScene: SKScene
                 newEnemy.anchorPoint.y = 1;
                 newEnemy.y = self.size.height + self.charactersSize.height;
                 newEnemy.x = self.pixelSize + (self.charactersSize.width * col);
-                newEnemy.zPosition = 10;
+                newEnemy.zPosition = self.pixelsNode.zPosition + 1;
                 self.poolOfEnemiesSprites.append(newEnemy);
                 self.addChild(newEnemy);
             }

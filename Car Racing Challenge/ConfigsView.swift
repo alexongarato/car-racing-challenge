@@ -140,6 +140,12 @@ class ConfigsView:AbstractView
         }
         addAction(label: "RATE S2", selector: "rateHandler", key:nil, active:true);
         
+        if(PurchaseController.getInstance().hasPurchased())
+        {
+            addAction();
+            addAction(label: "FULL VERSION", selector: nil, key:nil, active:false);
+        }
+        
         self.container.removeAllSubviews();
         
         var action:UILabel!;
