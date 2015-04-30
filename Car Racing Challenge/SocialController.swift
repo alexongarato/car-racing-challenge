@@ -66,18 +66,25 @@ class SocialController
             {
                 sheet.setInitialText(text);
                 
-                if(url != nil)
-                {
-                    sheet.addURL(NSURL(string: url));
-                }
-                
-                if(image != nil)
-                {
-                    sheet.addImage(image);
-                }
-                else if(self._currentScreenShot != nil)
+                if(image == nil && self._currentScreenShot != nil)
                 {
                     sheet.addImage(self._currentScreenShot);
+                    if(url != nil)
+                    {
+                        sheet.setInitialText("\(text) \(url)");
+                    }
+                }
+                else
+                {
+                    if(image != nil)
+                    {
+                        sheet.addImage(image);
+                    }
+                    
+                    if(url != nil)
+                    {
+                        sheet.addURL(NSURL(string: url));
+                    }
                 }
                 
                 AppDelegate.getInstance().gameController.presentViewController(sheet, animated: true, completion: {

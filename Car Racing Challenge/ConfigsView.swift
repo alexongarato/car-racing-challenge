@@ -310,7 +310,7 @@ class ConfigsView:AbstractView
     
     private func shareBuilder(type:String)
     {
-        SocialController.getInstance().share(type, text:"I'm playing Car Racing Challenge. It's awesome!", url:Routes.ITUNES_URL, image:UIImage(named: "export_icon_180.png"));
+        SocialController.getInstance().share(type, text:"#CarRacingChallenge inspired by the old brick games. Try your best on this infinite car race!", url:Routes.ITUNES_URL, image:UIImage(named: "export_icon_180.png"));
     }
     
     

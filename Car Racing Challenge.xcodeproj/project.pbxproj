@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DB0600C11ADCABF700745AB8 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0600C01ADCABF700745AB8 /* AlertController.swift */; };
-		DB0600C31ADCBA0400745AB8 /* Alert.png in Resources */ = {isa = PBXBuildFile; fileRef = DB0600C21ADCBA0400745AB8 /* Alert.png */; };
 		DB1366531AD23992009A33DB /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1366521AD23992009A33DB /* Events.swift */; };
 		DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E843C1AAD338D0009E321 /* AppDelegate.swift */; };
 		DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84401AAD338D0009E321 /* GameScene.swift */; };
@@ -74,7 +73,6 @@
 
 /* Begin PBXFileReference section */
 		DB0600C01ADCABF700745AB8 /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
-		DB0600C21ADCBA0400745AB8 /* Alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Alert.png; path = Images/Alert.png; sourceTree = "<group>"; };
 		DB1366521AD23992009A33DB /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
 		DB2E84371AAD338D0009E321 /* Car Racing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Car Racing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB2E843B1AAD338D0009E321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -307,7 +305,6 @@
 			isa = PBXGroup;
 			children = (
 				DBCA18BE1AE0C3BA008E93A9 /* TouchAreas.png */,
-				DB0600C21ADCBA0400745AB8 /* Alert.png */,
 				DB9E31881AD4E2EE00C27087 /* export_icon_180.png */,
 				DB3D62601ACE0B4B001BC9D9 /* ConfigIcon.png */,
 				DBD63E301AC7669100F3A3C3 /* Instructions.png */,
@@ -394,7 +391,6 @@
 				DB384C071AC0D86C00C2BB32 /* Blip_Select.wav in Resources */,
 				DB7A0BD51ACCCF2E0008B581 /* Products.plist in Resources */,
 				DB384C141AC0D86C00C2BB32 /* vel_4.wav in Resources */,
-				DB0600C31ADCBA0400745AB8 /* Alert.png in Resources */,
 				DB3D62651ACE4A0F001BC9D9 /* LCDMono2Bold.ttf in Resources */,
 				DB3D62611ACE0B4B001BC9D9 /* ConfigIcon.png in Resources */,
 				DB9E31891AD4E2EE00C27087 /* export_icon_180.png in Resources */,
