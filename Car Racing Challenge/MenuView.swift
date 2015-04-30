@@ -484,7 +484,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     private func shareBuilder(type:String)
     {
-        SocialController.getInstance().share(type, text:"Level achieved: \(AppDelegate.getInstance().gameController.scene.currentLevel()) (\(AppDelegate.getInstance().gameController.scene.currentScore()) points)", url:Routes.ITUNES_URL);
+        SocialController.getInstance().share(type, text:"Level achieved: \(AppDelegate.getInstance().gameController.scene.currentLevel()) (\(AppDelegate.getInstance().gameController.scene.currentScore()) points) #CarRacingChallenge", url:Routes.ITUNES_URL);
     }
     
     func setAction(text:String!, target:AnyObject, selector:Selector)
