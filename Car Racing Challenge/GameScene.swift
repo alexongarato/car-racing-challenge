@@ -32,8 +32,8 @@ class GameScene: SKScene
     var levelUpHandler                  : (()->Void)!;
     var lifeUpHandler                   : (()->Void)!;
     var lifeDownHandler                 : (()->Void)!;
-    private var buttonLeft              : SKSpriteNode!;
-    private var buttonRight             : SKSpriteNode!;
+    private var leftButton              : SKSpriteNode!;
+    private var rightButton             : SKSpriteNode!;
     private var mainCharacter           : CustomSpriteNode!;
     private var poolOfEnemiesSprites    : Array<CustomSpriteNode> = Array<CustomSpriteNode>();
     private var buttonSize              : CGSize = CGSize();
@@ -53,12 +53,12 @@ class GameScene: SKScene
     private var pixelDistanceCounter    : Int = -1;
     private var currentMainCharColumn   : Int = -1;
     private var currentLevelCounter     : Int = 1;
-    private var roadSides               : SKSpriteNode!;
+    private var trackTexture               : SKSpriteNode!;
     private var sideNodeFlag            : Bool = false;
     private var sideNodeVelCounter      : CFTimeInterval = 0;
     private var currentVelSound         : Float = 0;
-    private var pixelsNode              : SKSpriteNode!;
-    private var bg                      : SKSpriteNode!;
+    private var pixelsGridTexture              : SKSpriteNode!;
+    private var lcdTexture                      : SKSpriteNode!;
     private var isGameOver              : Bool = false;
     private var currentEnemiesVector    : Array<EnemySheet>!;
     private var currEnemiesVectorCounter: Int = 0;
@@ -169,34 +169,34 @@ class GameScene: SKScene
             }
             else
             {
-                bg = SKSpriteNode(imageNamed: ImagesNames.Background);
-                bg.size = self.size;
-                bg.anchorPoint.x = 0;
-                bg.anchorPoint.y = 1;
-                bg.x = 0;
-                bg.y = bg.height;
-                self.addChild(bg);
+                lcdTexture = SKSpriteNode(imageNamed: ImagesNames.Background);
+                lcdTexture.size = self.size;
+                lcdTexture.anchorPoint.x = 0;
+                lcdTexture.anchorPoint.y = 1;
+                lcdTexture.x = 0;
+                lcdTexture.y = lcdTexture.height;
+                self.addChild(lcdTexture);
                 //---------------------
             }
             //desenha a malha no context
-            pixelsNode = SKSpriteNode(texture: Utils.createPixelsGrid(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
-            self.addChild(pixelsNode);
-            pixelsNode.zPosition = 1;
-            pixelsNode.anchorPoint.x = 0;
-            pixelsNode.anchorPoint.y = 1;
-            pixelsNode.x = 0;
-            pixelsNode.y = self.size.height;
+            pixelsGridTexture = SKSpriteNode(texture: Utils.createPixelsGrid(self.size, totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY, pixelSize: self.pixelSize));
+            self.addChild(pixelsGridTexture);
+            pixelsGridTexture.zPosition = 1;
+            pixelsGridTexture.anchorPoint.x = 0;
+            pixelsGridTexture.anchorPoint.y = 1;
+            pixelsGridTexture.x = 0;
+            pixelsGridTexture.y = self.size.height;
             //---------------------
             
 
             //cria as laterias temporarias que serao desenhadas no context
-            roadSides = SKSpriteNode(texture: Utils.createRoadPixels(CGSize(width: self.size.width, height: self.size.height + (self.pixelSize * (ROAD_PIXELS_INTERVAL.floatValue * 2))), totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY + ROAD_PIXELS_INTERVAL * 2, pixelSize: self.pixelSize));
-            self.addChild(roadSides);
-            roadSides.zPosition = 1;
-            roadSides.anchorPoint.x = 0;
-            roadSides.anchorPoint.y = 1;
-            roadSides.x = 0;
-            roadSides.y = self.size.height;
+            trackTexture = SKSpriteNode(texture: Utils.createRoadPixels(CGSize(width: self.size.width, height: self.size.height + (self.pixelSize * (ROAD_PIXELS_INTERVAL.floatValue * 2))), totalPixelsX: totalPixelsX, totalPixelsY: totalPixelsY + ROAD_PIXELS_INTERVAL * 2, pixelSize: self.pixelSize));
+            self.addChild(trackTexture);
+            trackTexture.zPosition = 1;
+            trackTexture.anchorPoint.x = 0;
+            trackTexture.anchorPoint.y = 1;
+            trackTexture.x = 0;
+            trackTexture.y = self.size.height;
             //---------------------
 
             
@@ -212,37 +212,37 @@ class GameScene: SKScene
             /**
             cria os controles do jogo
             */
-            self.buttonLeft = SKSpriteNode();
-            self.buttonLeft.size = self.buttonSize;
-            self.buttonLeft.anchorPoint.y = 1;
-            self.buttonLeft.x = self.buttonLeft.width.half;
-            self.buttonLeft.y = self.size.height;
-            self.buttonLeft.name = self.ID_BT_LEFT;
-            self.addChild(self.buttonLeft);
+            self.leftButton = SKSpriteNode();
+            self.leftButton.size = self.buttonSize;
+            self.leftButton.anchorPoint.y = 1;
+            self.leftButton.x = self.leftButton.width.half;
+            self.leftButton.y = self.size.height;
+            self.leftButton.name = self.ID_BT_LEFT;
+            self.addChild(self.leftButton);
             
-            self.buttonRight = SKSpriteNode();
-            self.buttonRight.size = self.buttonSize;
-            self.buttonRight.anchorPoint.y = 1;
-            self.buttonRight.x = self.size.width - self.buttonRight.width.half;
-            self.buttonRight.y = self.buttonLeft.y;
-            self.buttonRight.name = self.ID_BT_RIGHT;
-            self.addChild(self.buttonRight);
+            self.rightButton = SKSpriteNode();
+            self.rightButton.size = self.buttonSize;
+            self.rightButton.anchorPoint.y = 1;
+            self.rightButton.x = self.size.width - self.rightButton.width.half;
+            self.rightButton.y = self.leftButton.y;
+            self.rightButton.name = self.ID_BT_RIGHT;
+            self.addChild(self.rightButton);
 
             self.mainCharacter.y = self.size.height - (self.pixelSize * totalPixelsY.floatValue) + self.mainCharacter.height;
         }
         
-        self.roadSides.y = self.size.height;
+        self.trackTexture.y = self.size.height;
         self.mainCharacter.x = self.pixelSize + (self.charactersSize.width * self.currentMainCharColumn.floatValue);
         
-        if(self.bg != nil)
+        if(self.lcdTexture != nil)
         {
-            self.bg.zPosition = 17;
+            self.lcdTexture.zPosition = 17;
         }
-        self.pixelsNode.zPosition = 18;
-        self.roadSides.zPosition = 19;
+        self.pixelsGridTexture.zPosition = 18;
+        self.trackTexture.zPosition = 19;
         self.mainCharacter.zPosition = 20;
-        self.buttonLeft.zPosition = 21;
-        self.buttonRight.zPosition = 22;
+        self.leftButton.zPosition = 21;
+        self.rightButton.zPosition = 22;
         
         self.ready = false;
         self.view?.paused = true;
@@ -295,7 +295,8 @@ class GameScene: SKScene
         self.resetTimer();
         self.ready = false;
         self.view?.paused = true;
-        self.roadSides.removeAllActions();
+        self.trackTexture.removeAllActions();
+        self.trackTexture.paused = true;
         //self.resetIntervalBetweenLoops();
         //self.currentVelSound = 0;
         AudioHelper.stopSound(AudioHelper.Vel4Sound);
@@ -314,9 +315,9 @@ class GameScene: SKScene
         self.ready = true;
         self.paused = false;
         self.view?.paused = false;
+        self.trackTexture.paused = false;
         self.updateStatusHandler();
-        startTrackAnima();
-//        update();
+        /*startTrackAnima();*/
     }
     
     override func update(currentTime: CFTimeInterval)
@@ -338,6 +339,12 @@ class GameScene: SKScene
     func update()
     {
         //self.mainTimer = Utils.delayedCall(self.intervalBetweenLoops, target: self, selector: Selector("update"), repeats: false);
+        
+        self.trackTexture.y -= self.pixelSize;
+        if(self.trackTexture.y <= self.size.height)
+        {
+            self.trackTexture.y = self.size.height + (self.pixelSize * self.ROAD_PIXELS_INTERVAL.floatValue);
+        }
         
         if(self.intervalBetweenLoops > self.minIntervalForThisDevice)
         {
@@ -446,64 +453,59 @@ class GameScene: SKScene
             }
         }
         
-        //AsyncHelper.addWorkBlock({
-            for (var i:Int = self.poolOfEnemiesSprites.count - 1; i > 0; i--)
+        for (var i:Int = self.poolOfEnemiesSprites.count - 1; i > 0; i--)
+        {
+            let enemyBlock = self.poolOfEnemiesSprites[i];
+            if(enemyBlock.isDead)
             {
-                let enemyBlock = self.poolOfEnemiesSprites[i];
-                if(enemyBlock.isDead)
-                {
-                    self.poolOfEnemiesSprites.removeLast();
-                }
-                else
-                {
-                    break;
-                }
+                self.poolOfEnemiesSprites.removeLast();
             }
-        //});
+            else
+            {
+                break;
+            }
+        }
     }
     
     private func addNewEnemy()
     {
-//        AsyncHelper.addWorkBlock({
-            var newEnemy:CustomSpriteNode!;
-            func createEnemy(col:CGFloat)
+        var newEnemy:CustomSpriteNode!;
+        func createEnemy(col:CGFloat)
+        {
+            //            newEnemy = self.poolOfEnemiesSprites[0];
+            newEnemy = CustomSpriteNode(texture: Utils.createCarTexture(self.charactersSize, pixelWidth: self.pixelSize, pixelHeight: self.pixelSize), size: self.charactersSize);
+            newEnemy.size = self.charactersSize;
+            newEnemy.anchorPoint.x = 0;
+            newEnemy.anchorPoint.y = 1;
+            newEnemy.y = self.size.height + self.charactersSize.height;
+            newEnemy.x = self.pixelSize + (self.charactersSize.width * col);
+            newEnemy.zPosition = self.pixelsGridTexture.zPosition + 1;
+            self.poolOfEnemiesSprites.append(newEnemy);
+            self.addChild(newEnemy);
+        }
+        
+        if (self.currentEnemiesVector != nil && self.currEnemiesVectorCounter < self.currentEnemiesVector.count)
+        {
+            let sheet = self.currentEnemiesVector[self.currEnemiesVectorCounter]
+            for (var i:Int = 0; i < sheet.lineArr.count; i++)
             {
-//                Trace("enemy col:\(col)");
-                //            newEnemy = self.poolOfEnemiesSprites[0];
-                newEnemy = CustomSpriteNode(texture: Utils.createCarTexture(self.charactersSize, pixelWidth: self.pixelSize, pixelHeight: self.pixelSize), size: self.charactersSize);
-                newEnemy.size = self.charactersSize;
-                newEnemy.anchorPoint.x = 0;
-                newEnemy.anchorPoint.y = 1;
-                newEnemy.y = self.size.height + self.charactersSize.height;
-                newEnemy.x = self.pixelSize + (self.charactersSize.width * col);
-                newEnemy.zPosition = self.pixelsNode.zPosition + 1;
-                self.poolOfEnemiesSprites.append(newEnemy);
-                self.addChild(newEnemy);
-            }
-            
-            if (self.currentEnemiesVector != nil && self.currEnemiesVectorCounter < self.currentEnemiesVector.count)
-            {
-                let sheet = self.currentEnemiesVector[self.currEnemiesVectorCounter]
-                for (var i:Int = 0; i < sheet.lineArr.count; i++)
+                if(sheet.lineArr[i].hasPrefix("1"))
                 {
-                    if(sheet.lineArr[i].hasPrefix("1"))
-                    {
-                        createEnemy(i.floatValue);
-                    }
+                    createEnemy(i.floatValue);
                 }
             }
-            else
-            {
-                //TODO - se nao existir array do level, usar modo aleatorio.
-                createEnemy(Utils.random(self.totalColumns - 1).floatValue);
-            }
-            self.currEnemiesVectorCounter++;
-//        });
+        }
+        else
+        {
+            //TODO - se nao existir array do level, usar modo aleatorio.
+            createEnemy(Utils.random(self.totalColumns - 1).floatValue);
+        }
+        self.currEnemiesVectorCounter++;
     }
     
     
     //---------- road anima -------------
-    private func trackAction() -> SKAction
+    /*private func trackAction() -> SKAction
     {
         var act = SKAction.moveToY(self.size.height - 1, duration: 0.05 + self.intervalBetweenLoops);
         act.timingMode = SKActionTimingMode.Linear;
@@ -516,17 +518,17 @@ class GameScene: SKScene
         {
             startTrackAnima();
         }
+        else
+        {
+            Trace("ERROR");
+        }
     }
     
     private func startTrackAnima()
     {
-//        AsyncHelper.addWorkBlock({
-            //Trace("anima");
-            self.roadSides.paused = false;
-            self.roadSides.y = self.size.height + (self.pixelSize * self.ROAD_PIXELS_INTERVAL.floatValue) + 1;
-            self.roadSides.runAction(self.trackAction(), completion: self.trackCompletion);
-//        });
-    }
+        self.trackTexture.y = self.size.height + (self.pixelSize * self.ROAD_PIXELS_INTERVAL.floatValue) + 1;
+        self.trackTexture.runAction(self.trackAction(), completion: self.trackCompletion);
+    }*/
     //----------
     
     

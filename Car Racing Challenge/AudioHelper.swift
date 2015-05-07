@@ -29,9 +29,9 @@ class AudioHelper
     
     class func didFinishLaunchingWithOptions()
     {
-        buildAudio(EntranceSound,   volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
+        buildAudio(EntranceSound,   volume: 0.2, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(SelectSound,     volume: 0.15, timeStart: 0, rate: 1.0, loops: 0);
-        buildAudio(GameOverSound,   volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
+        buildAudio(GameOverSound,   volume: 0.2, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(PickupCoinSound, volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(LevelUpSound,    volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(Vel0Sound,       volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
@@ -40,7 +40,7 @@ class AudioHelper
         buildAudio(Vel3Sound,       volume: 0.1, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(Vel4Sound,       volume: 0.05, timeStart: 0, rate: 1.0, loops: -1);
         buildAudio(MenuOpenSound,   volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
-        buildAudio(StartGameSound,  volume: 0.4, timeStart: 0, rate: 1.0, loops: 0);
+        buildAudio(StartGameSound,  volume: 0.1, timeStart: 0, rate: 1.0, loops: 0);
         buildAudio(lostLifeSound,   volume: 0.2, timeStart: 0, rate: 1.0, loops: 0);
     }
     
