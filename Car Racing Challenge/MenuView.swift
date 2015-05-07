@@ -429,33 +429,38 @@ class MenuView: AbstractView, ADBannerViewDelegate
         var image:UIImageView = UIImageView(image: UIImage(named: ImagesNames.Podium)!);
         self.addSubview(image);
         image.center = self.center;
+        var lastY:CGFloat = 0;
         if(self.height <= 480)
         {
             image.y += 15;
         }
+        lastY = image.y;
         image.addTarget(self, selector: Selector("openGameCenter:"));
         
         //---fb
         image = UIImageView(image: UIImage(named: ImagesNames.FBIcon)!);
+        image.alpha = 0;
         self.addSubview(image);
         image.center = self.center;
-        image.x -= image.width * 1.5;
-        if(self.height <= 480)
-        {
-            image.y += 15;
-        }
+        UIView.animateWithDuration(AnimationTime.Default, delay: 2, options: nil, animations: {
+            image.x -= image.width * 1.6;
+            image.alpha = 1;
+            }, completion: nil);
+        
+        image.y = lastY;
         image.addTarget(self, selector: Selector("openFBHandler:"));
         
         
         //---tt
         image = UIImageView(image: UIImage(named: ImagesNames.TTIcon)!);
+        image.alpha = 0;
         self.addSubview(image);
         image.center = self.center;
-        image.x += image.width * 1.5;
-        if(self.height <= 480)
-        {
-            image.y += 15;
-        }
+        UIView.animateWithDuration(AnimationTime.Default, delay: 2, options: nil, animations: {
+            image.x += image.width * 1.6;
+            image.alpha = 1;
+            }, completion: nil);
+        image.y = lastY;
         image.addTarget(self, selector: Selector("openTTHandler:"));
         
     }

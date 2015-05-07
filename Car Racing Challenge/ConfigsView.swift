@@ -54,16 +54,15 @@ class ConfigsView:AbstractView
         self.fb = UIImageView(image: UIImage(named: ImagesNames.FBIcon)!);
         self.addSubview(self.fb);
         self.fb.center = self.center;
-        self.fb.x -= self.podium.width * 1.5;
         self.fb.addTarget(self, selector: Selector("facebookHandler:"));
-        
+        self.fb.alpha = 0;
         
         //---tt
         self.tt = UIImageView(image: UIImage(named: ImagesNames.TTIcon)!);
         self.addSubview(self.tt);
         self.tt.center = self.center;
-        self.tt.x += self.podium.width * 1.5;
         self.tt.addTarget(self, selector: Selector("twitterHandler:"));
+        self.tt.alpha = 0;
         
         //best score
         let data:NSString = DataProvider.getString(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore) as NSString;
@@ -213,6 +212,13 @@ class ConfigsView:AbstractView
         self.fb.y = self.podium.y;
         self.tt.y = self.podium.y;
         self.bestScore.y = self.container.y - self.bestScore.height * 1.5;
+        
+        UIView.animateWithDuration(AnimationTime.Default, delay: 0.3, options: nil, animations: {
+            self.fb.x -= self.podium.width * 1.15;
+            self.tt.x += self.podium.width * 1.15;
+            self.fb.alpha = 1;
+            self.tt.alpha = 1;
+            }, completion: nil);
     }
     
     func addAction(label:String! = nil, selector:String! = nil, key:String! = nil, active:Bool = false)
