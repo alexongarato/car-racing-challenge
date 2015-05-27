@@ -139,7 +139,7 @@ class ConfigsView:AbstractView
         }
         addAction(label: "RATE S2", selector: "rateHandler", key:nil, active:true);
         
-        if(PurchaseController.getInstance().hasPurchased())
+        if(PurchaseController.getInstance().hasPurchased() && !Configs.FULL_VERSION_MODE)
         {
             addAction();
             addAction(label: "FULL VERSION", selector: nil, key:nil, active:false);
@@ -211,13 +211,17 @@ class ConfigsView:AbstractView
         self.podium.y = self.container.y + self.container.height;
         self.fb.y = self.podium.y;
         self.tt.y = self.podium.y;
-        self.fb.center.x = self.podium.center.x;
-        self.tt.center.x = self.podium.center.x;
-        self.bestScore.y = self.container.y - self.bestScore.height * 1.5;
+        
+        if(self.fb.alpha == 0)
+        {
+            self.fb.center.x = self.podium.center.x;
+            self.tt.center.x = self.podium.center.x;
+            self.bestScore.y = self.container.y - self.bestScore.height * 1.5;
+        }
         
         UIView.animateWithDuration(AnimationTime.Default, delay: 0.3, options: nil, animations: {
-            self.fb.x -= self.podium.width * 1.15;
-            self.tt.x += self.podium.width * 1.15;
+            self.fb.center.x = self.podium.center.x - (self.podium.width * 1.15);
+            self.tt.center.x = self.podium.center.x + (self.podium.width * 1.15);
             self.fb.alpha = 1;
             self.tt.alpha = 1;
             }, completion: nil);

@@ -39,7 +39,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
             }
         }
         
-        _hasPurchased = DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds)// || Configs.DEBUG_MODE;
+        _hasPurchased = (Configs.FULL_VERSION_MODE) ? true : DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds);
     }
     
     func hasPurchased() -> Bool

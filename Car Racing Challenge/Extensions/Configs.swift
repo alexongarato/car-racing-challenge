@@ -11,8 +11,9 @@ import Foundation
 struct Configs
 {
     //flags
-    static var DEBUG_MODE          : Bool = true;
+    static var DEBUG_MODE          : Bool = false;
     static var SAMPLE_MODE         : Bool = false;
+    static var FULL_VERSION_MODE   : Bool = true;
     
     //infos
     static var APP_ID              : String = "979116721";
