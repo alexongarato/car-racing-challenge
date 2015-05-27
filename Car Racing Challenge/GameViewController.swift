@@ -47,8 +47,8 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         sceneView.ignoresSiblingOrder = false;
         self.view.addSubview(sceneView);
         
-        sceneView.showsFPS = Configs.DEBUG_MODE;
-        sceneView.showsNodeCount = Configs.DEBUG_MODE;
+        //sceneView.showsFPS = Configs.DEBUG_MODE;
+        //sceneView.showsNodeCount = Configs.DEBUG_MODE;
         
         super.viewDidLoad();
         

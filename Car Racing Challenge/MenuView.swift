@@ -26,7 +26,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     private var configView  : ConfigsView!;
     private var DEFAULT_W   : CGFloat = 0;
     private var _adLoader   : UILabel!;
-    private var _bannerTimer: NSTimer!;
+    private var _showActionsTimer: NSTimer!;
     
     override func didMoveToSuperview()
     {
@@ -90,7 +90,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             self.configView._hasPurchasedCallback = self.hideBannerHandler;
             self.addSubview(self.configView);
             self.configView.x = self.DEFAULT_W;
-//            self.width = self.configView.x + self.configView.width;
+            //            self.width = self.configView.x + self.configView.width;
             self.configView.height = self.height;
             if(self._bannerView != nil)
             {
@@ -210,31 +210,6 @@ class MenuView: AbstractView, ADBannerViewDelegate
             self.addSubview(_adLoader);
         }
         self.updateLoaderText();
-        
-        self.connectivityChanged();
-    }
-    
-    func connectivityChanged()
-    {
-        Trace("connectivity changed");
-        
-        if(ConnectivityHelper.isReachable())
-        {
-//            NSNotificationCenter.defaultCenter().removeObserver(self);
-            Trace("loading banner...");
-            self.killBannerTimer();
-            _bannerTimer = NSTimer(timeInterval: NSTimeInterval(10), target: self, selector: Selector("hideBannerHandler"), userInfo: nil, repeats: false);
-        }
-    }
-    
-    func killBannerTimer()
-    {
-        if(_bannerTimer != nil)
-        {
-            Trace("kill banner timer");
-            _bannerTimer.invalidate();
-            _bannerTimer = nil;
-        }
     }
     
     func updateLoaderText()
@@ -243,14 +218,12 @@ class MenuView: AbstractView, ADBannerViewDelegate
         if(!PurchaseController.getInstance().hasPurchased() && !ConnectivityHelper.isReachable())
         {
             _adLoader.text = "(FREE VERSION) AVAILABLE ONLY WHILE ONLINE.";
-//            Trace("waiting for internet connection...");
-//            NSNotificationCenter.defaultCenter().removeObserver(self);
-//            NSNotificationCenter.defaultCenter().addObserver(self, selector:Selector("connectivityChanged"), name:"kNetworkReachabilityChangedNotification", object: nil);
         }
         else
         {
             _adLoader.text = "(FREE VERSION) LOADING ADVERTISEMENT...";
         }
+        
         _adLoader.font = Fonts.LightFont(FontSize.Small);
         _adLoader.sizeToFit();
         _adLoader.center.x = self.center.x;
@@ -290,8 +263,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
                 self._bannerView.y = self.height - self._bannerView.height;
                 self.addSubview(self._bannerView);
                 self.updateConfigButtonPosition(self._bannerView.y);
-                self.showActions();
-            }, completion:completion);
+                }, completion:completion);
         }
         else
         {
@@ -303,9 +275,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         Trace("hiding banner...");
         NSNotificationCenter.defaultCenter().removeObserver(self);
-        self.showActions();
         self.hideAdLoader();
-        self.killBannerTimer();
         
         if(_bannerView != nil)
         {
@@ -336,9 +306,8 @@ class MenuView: AbstractView, ADBannerViewDelegate
     func bannerViewDidLoadAd(banner:ADBannerView)
     {
         Trace("banner Loaded");
-        
-        self.killBannerTimer();
         self.hideAdLoader();
+        self.showActions();
         
         if(!_adLoaded)
         {
@@ -366,6 +335,8 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func showActions()
     {
+        self.killTimer();
+        
         if(self.actions != nil)
         {
             for action in self.actions
@@ -408,7 +379,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         var fitSize:CGSize = CGSize(width: self.frame.size.width + 40, height: self.frame.size.height);
         var image:UIImage! = ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.Instructions), sizeToFit: fitSize);
         self.instructImg = UIImageView(image: image);
-//        self.instructImg.alpha = 0;
+        //        self.instructImg.alpha = 0;
         self.addSubview(self.instructImg);
         self.instructImg.center = self.center;
         self.instructImg.y += 10;
@@ -540,44 +511,28 @@ class MenuView: AbstractView, ADBannerViewDelegate
         else
         {
             self.buildBanner();
+            _showActionsTimer = Utils.delayedCall(7, target: self, selector: Selector("showActions"), repeats: false);
         }
         
         super.present(completion);
     }
-    /*
-    override func present(completion: ((animated: Bool) -> Void)!)
+    
+    func killTimer()
     {
-        func addAnima(target:UIView, delay:NSTimeInterval, completion: ((animated: Bool) -> Void)!)
+        if(_showActionsTimer != nil)
         {
-            target.y += 5;
-            UIView.animateWithDuration(AnimationTime.Default, delay: delay, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-                target.y -= 5;
-                target.alpha = 1;
-                }, completion: completion);
+            Trace("kill actions timer");
+            _showActionsTimer.invalidate();
+            _showActionsTimer = nil;
         }
-        super.present({ (animated) -> Void in
-            var del:NSTimeInterval = 0;
-            addAnima(self.title, del, nil);
-            del += 0.1;
-            addAnima(self.desc, del, nil);
-            del += 0.1;
-            addAnima(self.instructImg, del, nil);
-            del += 0.1;
-            for(var i:Int = 0; i < self.actions.count; i++)
-            {
-                var action:UILabel = self.actions[i];
-                addAnima(action, del, nil);
-                del += 0.1;
-            }
-            addAnima(self.btConfig, del, nil);
-        });
-    }*/
+    }
     
     override func dismiss(completion: ((animated: Bool) -> Void)!)
     {
         Trace("dismiss menu");
         NSNotificationCenter.defaultCenter().removeObserver(self);
-        self.killBannerTimer();
+        
+        self.killTimer();
         
         if(self._bannerView == nil)
         {
@@ -599,7 +554,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         UIView.animateWithDuration(AnimationTime.Default, animations: {
             self._bannerView.y = self.height;
             self.updateConfigButtonPosition(self._bannerView.y);
-        }, completion:completion);
+            }, completion:completion);
     }
     
     func disableAction()

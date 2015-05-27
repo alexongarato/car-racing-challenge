@@ -211,6 +211,8 @@ class ConfigsView:AbstractView
         self.podium.y = self.container.y + self.container.height;
         self.fb.y = self.podium.y;
         self.tt.y = self.podium.y;
+        self.fb.center.x = self.podium.center.x;
+        self.tt.center.x = self.podium.center.x;
         self.bestScore.y = self.container.y - self.bestScore.height * 1.5;
         
         UIView.animateWithDuration(AnimationTime.Default, delay: 0.3, options: nil, animations: {
