@@ -131,20 +131,20 @@ class ConfigsView:AbstractView
         
         addAction(label: "SOUNDS", selector: "soundHandler", key:SuiteNames.KeySound, active:true);
         
-//        if(PurchaseController.getInstance().userCanPurchase() && !PurchaseController.getInstance().hasPurchased())
-//        {
-//            addAction();
-//            addAction(label: "REMOVE ADS", selector: "adsHandler", key:nil, active:true);
-//            addAction(label: "RESTORE PURCHASE", selector: "restoreHandler", active:true);
-//            addAction();
-//        }
+        if(PurchaseController.getInstance().userCanPurchase() && !PurchaseController.getInstance().hasPurchased())
+        {
+            addAction();
+            addAction(label: "REMOVE ADS", selector: "adsHandler", key:nil, active:true);
+            addAction(label: "RESTORE PURCHASE", selector: "restoreHandler", active:true);
+            addAction();
+        }
         addAction(label: "RATE S2", selector: "rateHandler", key:nil, active:true);
         
-//        if(PurchaseController.getInstance().hasPurchased() && !Configs.FULL_VERSION_MODE)
-//        {
-//            addAction();
-//            addAction(label: "FULL VERSION", selector: nil, key:nil, active:false);
-//        }
+        if(PurchaseController.getInstance().hasPurchased() && !Configs.FULL_VERSION_MODE)
+        {
+            addAction();
+            addAction(label: "FULL VERSION", selector: nil, key:nil, active:false);
+        }
         
         addAction(label: "MORE APPS", selector: "appsHandler", key:nil, active:true);
         
