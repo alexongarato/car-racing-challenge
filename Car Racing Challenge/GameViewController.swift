@@ -39,7 +39,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         AppDelegate.getInstance().gameController = self;
         AlertController.getInstance().build(self);
         
-        var purchased:Bool = PurchaseController.getInstance().hasPurchased();
+        //var purchased:Bool = PurchaseController.getInstance().hasPurchased();
         
         sceneView = SKView();
         sceneView.frame = self.view.frame;
@@ -72,7 +72,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
 //        self.pauseArea.backgroundColor = UIColor.redColor();
 //        self.pauseArea.alpha = 0.2;
         self.pauseArea.backgroundColor = UIColor.clearColor();
-        self.pauseArea.addTarget(self, selector: Selector("pauseGameHandler"));
+        self.pauseArea.addTarget(self, selector: #selector(GameViewController.pauseGameHandler));
         self.view.addSubview(self.pauseArea);
         
         
@@ -119,7 +119,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         
         if(showExitButton)
         {
-            menuView.setAction("exit", target: self, selector: Selector("exitHandler:"));
+            menuView.setAction("exit", target: self, selector: #selector(GameViewController.exitHandler(_:)));
         }
         
         if(selector != nil)
@@ -168,7 +168,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             menuView = nil;
         }
         
-        showMenu("car racing\nchallenge", desc: "", action: "PLAY", selector: Selector("testConnectivity:"), showInstructions:true, showExitButton:false);
+        showMenu("car racing\nchallenge", desc: "", action: "PLAY", selector: #selector(GameViewController.testConnectivity(_:)), showInstructions:true, showExitButton:false);
         AudioHelper.playSound(AudioHelper.EntranceSound);
         
         self.showBanner();
@@ -213,7 +213,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
                 self.touchAreasImgView = nil;
             }
             
-            var newSize:CGSize = CGSize(width: self.view.width - 30, height: self.view.height);
+            let newSize:CGSize = CGSize(width: self.view.width - 30, height: self.view.height);
             self.touchAreasImgView = UIImageView(image: ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.TouchAreas), sizeToFit: newSize));
             self.touchAreasImgView.width -= self.touchAreasImgView.width * 0.02;
             self.touchAreasImgView.y = self.view.height - self.touchAreasImgView.height * 0.66;
@@ -230,7 +230,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
                 self.touchAreasImgView.alpha = 1;
                 self.touchAreasImgView.scale(1);
                 },completion: { (animated) -> Void in
-                    UIView.animateWithDuration(AnimationTime.Default, delay:AnimationTime.VerySlow + AnimationTime.Default, options:nil, animations: {
+                    UIView.animateWithDuration(AnimationTime.Default, delay:AnimationTime.VerySlow + AnimationTime.Default, options:[], animations: {
                         self.touchAreasImgView.alpha = 0;
                         self.touchAreasImgView.scale(0.5);
                         }, completion:{ (animated) -> Void in
@@ -264,7 +264,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             }
         }
         
-        showMenu("\nGAME OVER", desc: "\nSCORE:\(scene.currentScore())\nBEST:\(self.getBestScore())\n\n", action: "TRY AGAIN", selector: Selector("testConnectivity:"), showGameOver:true);
+        showMenu("\nGAME OVER", desc: "\nSCORE:\(scene.currentScore())\nBEST:\(self.getBestScore())\n\n", action: "TRY AGAIN", selector: #selector(GameViewController.testConnectivity(_:)), showGameOver:true);
         AudioHelper.playSound(AudioHelper.GameOverSound);
         
         self.showBanner();
@@ -274,10 +274,10 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     {
         Trace("GameViewController -> LEVEL UP");
         
-        var ttl:String = "\nLEVEL \(scene.currentLevel())\n";
-        var desc:String!;
-        var act:String = "GO!";
-        var selector:Selector = Selector("resumeLevelUp:");
+        let ttl:String = "\nLEVEL \(scene.currentLevel())\n";
+        //var desc:String!;
+        let act:String = "GO!";
+        let selector:Selector = #selector(GameViewController.resumeLevelUp(_:));
         
         scene.stop();
         showMenu(ttl, desc: "\n\ncongratulations!", action: act, selector: selector, showExitButton:false);
@@ -340,15 +340,14 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     
     func pauseGameHandler()
     {
-        showMenu("GAME PAUSED\n\n", desc: " \n \n \nARE YOU READY?", action: "RESUME", selector: Selector("resumeLevelUp:"), showExitButton:false);
+        showMenu("GAME PAUSED\n\n", desc: " \n \n \nARE YOU READY?", action: "RESUME", selector: #selector(GameViewController.resumeLevelUp(_:)), showExitButton:false);
     }
     
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController!)
+    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController)
     {
         Trace("GameViewController -> GameCenter did finish");
         
-        self.dismissViewControllerAnimated(true, completion:
-            {
+        gameCenterViewController.dismissViewControllerAnimated(true, completion:{
                 self.applicationDidBecomeActive();
         });
     }
@@ -366,9 +365,9 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         return true;
     }
     
-    override func supportedInterfaceOrientations() -> Int
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
     {
-        return Int(UIInterfaceOrientationMask.Portrait.rawValue);
+        return UIInterfaceOrientationMask.Portrait;
     }
     
     override func didReceiveMemoryWarning()

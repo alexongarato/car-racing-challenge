@@ -34,12 +34,12 @@ class SocialController
     
     func didFinishLaunchingWithOptions()
     {
-        if let sheet:SLComposeViewController! = SLComposeViewController(forServiceType: SocialController.twitterType)
+        if let _:SLComposeViewController! = SLComposeViewController(forServiceType: SocialController.twitterType)
         {
             _isTwitterAvailable = true;
         }
         
-        if let sheet:SLComposeViewController! = SLComposeViewController(forServiceType: SocialController.facebookType)
+        if let _:SLComposeViewController! = SLComposeViewController(forServiceType: SocialController.facebookType)
         {
             _isFacebookAvailable = true;
         }
@@ -104,8 +104,8 @@ class SocialController
         if(error)
         {
             Trace("share error");
-            var source:String = (type == SLServiceTypeTwitter) ? "Twitter" : "Facebook";
-            AlertController.getInstance().showAlert(title: source, message: "Please login to a \(source) account to share.", action: "OK", completion: nil);
+            let source:String = (type == SLServiceTypeTwitter) ? "Twitter" : "Facebook";
+            AlertController.getInstance().showAlert(source, message: "Please login to a \(source) account to share.", action: "OK", completion: nil);
         }
     }
     

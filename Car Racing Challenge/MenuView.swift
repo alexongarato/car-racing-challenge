@@ -34,7 +34,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         self.DEFAULT_W = UIScreen.mainScreen().applicationFrame.width;
         
         var img:UIImage! = UIImage(named: ImagesNames.Background)!;
-        var imgView:UIImageView = UIImageView(image: img);
+        let imgView:UIImageView = UIImageView(image: img);
         imgView.frame = self.frame;
         self.addSubview(imgView)
         
@@ -71,7 +71,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         btConfig.alpha = 0.4;
         self.updateConfigButtonPosition(self.height);
         self.btConfigToClosedPosition();
-        btConfig.addTarget(self, selector: Selector("configsHandler"));
+        btConfig.addTarget(self, selector: #selector(MenuView.configsHandler));
     }
     
     private var _animating:Bool = false;
@@ -189,7 +189,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         if(_bannerView == nil)
         {
             // On iOS 6 ADBannerView introduces a new initializer, use it when available.
-            if(ADBannerView.instancesRespondToSelector(Selector("initWithAdType:")))
+            if(ADBannerView.instancesRespondToSelector(#selector(ADBannerView.init(adType:))))
             {
                 Trace("ADAdType banner");
                 _bannerView = ADBannerView(adType: ADAdType.Banner);
@@ -259,7 +259,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
                 self.hideAdLoader();
             }
             self._bannerView.y = self.height;
-            UIView.animateWithDuration(AnimationTime.Default, delay:0, options:nil, animations: {
+            UIView.animateWithDuration(AnimationTime.Default, delay:0, options:[], animations: {
                 self._bannerView.y = self.height - self._bannerView.height;
                 self.addSubview(self._bannerView);
                 self.updateConfigButtonPosition(self._bannerView.y);
@@ -376,8 +376,8 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func setInstructions(scoreToLifeUp:Int, scoreToLevelUp:Int)
     {
-        var fitSize:CGSize = CGSize(width: self.frame.size.width + 40, height: self.frame.size.height);
-        var image:UIImage! = ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.Instructions), sizeToFit: fitSize);
+        let fitSize:CGSize = CGSize(width: self.frame.size.width + 40, height: self.frame.size.height);
+        let image:UIImage! = ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.Instructions), sizeToFit: fitSize);
         self.instructImg = UIImageView(image: image);
         //        self.instructImg.alpha = 0;
         self.addSubview(self.instructImg);
@@ -406,20 +406,20 @@ class MenuView: AbstractView, ADBannerViewDelegate
             image.y += 15;
         }
         lastY = image.y;
-        image.addTarget(self, selector: Selector("openGameCenter:"));
+        image.addTarget(self, selector: #selector(MenuView.openGameCenter(_:)));
         
         //---fb
         image = UIImageView(image: UIImage(named: ImagesNames.FBIcon)!);
         image.alpha = 0;
         self.addSubview(image);
         image.center = self.center;
-        UIView.animateWithDuration(AnimationTime.Default, delay: 2, options: nil, animations: {
+        UIView.animateWithDuration(AnimationTime.Default, delay: 2, options: [], animations: {
             image.x -= image.width * 1.6;
             image.alpha = 1;
             }, completion: nil);
         
         image.y = lastY;
-        image.addTarget(self, selector: Selector("openFBHandler:"));
+        image.addTarget(self, selector: #selector(MenuView.openFBHandler(_:)));
         
         
         //---tt
@@ -427,12 +427,12 @@ class MenuView: AbstractView, ADBannerViewDelegate
         image.alpha = 0;
         self.addSubview(image);
         image.center = self.center;
-        UIView.animateWithDuration(AnimationTime.Default, delay: 2, options: nil, animations: {
+        UIView.animateWithDuration(AnimationTime.Default, delay: 2, options: [], animations: {
             image.x += image.width * 1.6;
             image.alpha = 1;
             }, completion: nil);
         image.y = lastY;
-        image.addTarget(self, selector: Selector("openTTHandler:"));
+        image.addTarget(self, selector: #selector(MenuView.openTTHandler(_:)));
         
     }
     
@@ -470,7 +470,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             self.actions = Array<UILabel>();
         }
         
-        var newAction:UILabel = UILabel();
+        let newAction:UILabel = UILabel();
         newAction.textColor = fontColor;
         newAction.alpha = 0;
         self.addSubview(newAction);
@@ -484,10 +484,10 @@ class MenuView: AbstractView, ADBannerViewDelegate
         newAction.center = self.center;
         newAction.addTarget(target, selector: selector);
         
-        var totalHeight:CGFloat = ((newAction.height + 10) * self.actions.count.floatValue);
-        for(var i:Int = 0; i < self.actions.count; i++)
+        let totalHeight:CGFloat = ((newAction.height + 10) * self.actions.count.floatValue);
+        for i in 0 ..< self.actions.count
         {
-            var action:UILabel = self.actions[i];
+            let action:UILabel = self.actions[i];
             
             if(self.height <= 480)
             {
@@ -511,7 +511,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         else
         {
             self.buildBanner();
-            _showActionsTimer = Utils.delayedCall(7, target: self, selector: Selector("showActions"), repeats: false);
+            _showActionsTimer = Utils.delayedCall(7, target: self, selector: #selector(MenuView.showActions), repeats: false);
         }
         
         super.present(completion);
@@ -559,9 +559,9 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func disableAction()
     {
-        for(var i:Int = 0; i < self.actions.count; i++)
+        for i in 0 ..< self.actions.count
         {
-            var action:UILabel = self.actions[i];
+            let action:UILabel = self.actions[i];
             action.gestureRecognizers?.removeAll(keepCapacity: false);
         }
     }

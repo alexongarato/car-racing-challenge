@@ -46,14 +46,14 @@ class AudioHelper
     
     private class func buildAudio(name:String, volume:Float, timeStart:NSTimeInterval, rate:Float, loops:Int)
     {
-        var path    : String! = NSBundle.mainBundle().resourcePath?.stringByAppendingPathComponent(name);
-        var err     : NSError!;
-        var snd      :CustomAVAudioPlayer!;
+        let path    : String! = ((NSBundle.mainBundle().resourcePath)! as NSString).stringByAppendingPathComponent(name);
+        //var err     : NSError!;
+        //var snd      :CustomAVAudioPlayer!;
         
         if (NSFileManager.defaultManager().fileExistsAtPath(path))
         {
-            var url = NSURL(fileURLWithPath: path)!;
-            var snd:CustomAVAudioPlayer! = CustomAVAudioPlayer(contentsOfURL: url, error: nil);
+            let url = NSURL(fileURLWithPath: path);
+            let snd:CustomAVAudioPlayer! = try? CustomAVAudioPlayer(contentsOfURL: url);
             if(snd != nil)
             {
                 snd.volume = volume;
@@ -73,7 +73,7 @@ class AudioHelper
     
     class func stopSound(name:String) -> CustomAVAudioPlayer!
     {
-        var tmp:AnyObject! = snds.valueForKey(name);
+        let tmp:AnyObject! = snds.valueForKey(name);
         var snd:CustomAVAudioPlayer!;
         if (tmp != nil)
         {
@@ -99,7 +99,7 @@ class AudioHelper
                 return;
             }
             
-            var tmp:AnyObject! = snds.valueForKey(name);
+            let tmp:AnyObject! = snds.valueForKey(name);
             if (tmp != nil)
             {
                 if let snd = tmp as? CustomAVAudioPlayer
@@ -121,7 +121,7 @@ class AudioHelper
 
 class CustomAVAudioPlayer:AVAudioPlayer, AVAudioPlayerDelegate
 {
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool)
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool)
     {
 //        self.finalize();
     }

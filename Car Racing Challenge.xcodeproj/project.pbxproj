@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DB0600C11ADCABF700745AB8 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0600C01ADCABF700745AB8 /* AlertController.swift */; };
 		DB1366531AD23992009A33DB /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1366521AD23992009A33DB /* Events.swift */; };
+		DB1A2B7C1CADCF5400062D45 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1A2B7B1CADCF5400062D45 /* Reachability.swift */; };
 		DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E843C1AAD338D0009E321 /* AppDelegate.swift */; };
 		DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84401AAD338D0009E321 /* GameScene.swift */; };
 		DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84421AAD338D0009E321 /* GameViewController.swift */; };
@@ -74,6 +75,7 @@
 /* Begin PBXFileReference section */
 		DB0600C01ADCABF700745AB8 /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		DB1366521AD23992009A33DB /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		DB1A2B7B1CADCF5400062D45 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Extensions/Reachability.swift; sourceTree = "<group>"; };
 		DB2E84371AAD338D0009E321 /* Car Racing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Car Racing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB2E843B1AAD338D0009E321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB2E843C1AAD338D0009E321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 		DB384C161AC0D90500C2BB32 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				DB1A2B7B1CADCF5400062D45 /* Reachability.swift */,
 				DB5E47F61ADF2B720029B8DD /* GameHelper.swift */,
 				DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */,
 				DB384C1D1AC0D90E00C2BB32 /* Trace.swift */,
@@ -339,7 +342,9 @@
 		DB2E842F1AAD338D0009E321 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftMigration = 0730;
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Alex Ongarato";
 				TargetAttributes = {
 					DB2E84361AAD338D0009E321 = {
@@ -438,6 +443,7 @@
 				DB384C291AC0D90E00C2BB32 /* UIExtensions.swift in Sources */,
 				DB384C221AC0D90E00C2BB32 /* Configs.swift in Sources */,
 				DB384C251AC0D90E00C2BB32 /* GameCenterController.swift in Sources */,
+				DB1A2B7C1CADCF5400062D45 /* Reachability.swift in Sources */,
 				DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */,
 				DB384C2A1AC0D90E00C2BB32 /* Utils.swift in Sources */,
 				DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */,
@@ -496,6 +502,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -510,7 +517,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -547,7 +554,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -567,9 +574,10 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "Car Racing Challenge/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alexongarato.games.Car-Racing-Challenge";
 				PRODUCT_NAME = "Car Racing";
 				PROVISIONING_PROFILE = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
@@ -592,8 +600,9 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = "Car Racing Challenge/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alexongarato.games.Car-Racing-Challenge";
 				PRODUCT_NAME = "Car Racing";
 				PROVISIONING_PROFILE = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;

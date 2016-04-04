@@ -21,8 +21,8 @@ class GameCenterController
     class func isGameCenterAPIAvailable() -> Bool
     {
         // Check for presence of GKLocalPlayer API.
-        var gcClass:AnyClass! = NSClassFromString("GKLocalPlayer");
-        var systemVersion:NSString = UIDevice.currentDevice().systemVersion;
+        let gcClass:AnyClass! = NSClassFromString("GKLocalPlayer");
+        let systemVersion:NSString = UIDevice.currentDevice().systemVersion;
         return (gcClass != nil && systemVersion.floatValue >= 4.1);
     }
     
@@ -41,7 +41,7 @@ class GameCenterController
         return isGameCenterAuthenticationComplete;
     }
     
-    private class func leaderboardHandler(error:NSError!)
+    private class func leaderboardHandler(error:NSError?)
     {
         if(error != nil)
         {
@@ -82,7 +82,7 @@ class GameCenterController
         Grand Central Dispatch to call the block asynchronously once authentication completes.
         */
         
-        func handler(view:UIViewController!, error:NSError!)
+        func handler(view:UIViewController?, error:NSError?) -> Void
         {
             Trace("GameCenterController -> auth complete.");
             
@@ -95,7 +95,7 @@ class GameCenterController
                     //showAuthenticationDialogWhenReasonable: is an example method name.
                     //Create your own method that displays an authentication view when appropriate for your app.
                     AppDelegate.getInstance().gameController.applicationWillResignActive();
-                    AppDelegate.getInstance().gameController.presentViewController(view, animated: true, completion: {
+                    AppDelegate.getInstance().gameController.presentViewController(view!, animated: true, completion: {
                         AppDelegate.getInstance().gameController.applicationDidBecomeActive();
                     })
                 }
@@ -127,7 +127,8 @@ class GameCenterController
     
     class func fetchUserScores()
     {
-        var leaderboardRequest:GKLeaderboard = UICustomDevice.isIOS8OrHigher() ? GKLeaderboard(players: [localPlayer]) : GKLeaderboard();
+        var leaderboardRequest:GKLeaderboard;
+        leaderboardRequest =  GKLeaderboard(players: [localPlayer]);
         leaderboardRequest.identifier = leaderBoardID;
         leaderboardRequest.playerScope = GKLeaderboardPlayerScope.Global;
         leaderboardRequest.timeScope = GKLeaderboardTimeScope.AllTime;
@@ -135,8 +136,8 @@ class GameCenterController
         leaderboardRequest.loadScoresWithCompletionHandler { (scores, error) -> Void in
             if (scores != nil)
             {
-                var newScore:NSInteger = NSInteger(leaderboardRequest.localPlayerScore.value);
-                var bestScore:NSInteger = AppDelegate.getInstance().gameController.getBestScore();
+                let newScore:NSInteger = NSInteger(leaderboardRequest.localPlayerScore!.value);
+                let bestScore:NSInteger = AppDelegate.getInstance().gameController.getBestScore();
                 if(newScore > bestScore)
                 {
                     Trace("GameCenterController -> gest score from leaderboard: \(newScore)");
@@ -158,15 +159,16 @@ class GameCenterController
     
     class func loadLeaderboard()
     {
-        func completion(leaderboards:[AnyObject]!, error:NSError!)
+        func completion(leaderboards:[GKLeaderboard]?, error:NSError?) -> Void
         {
-            AlertController.getInstance().hideAlert({
-                var gameCenterController:GKGameCenterViewController! = GKGameCenterViewController();
+            //AlertController.getInstance().hideAlert({
+                let gameCenterController:GKGameCenterViewController! = GKGameCenterViewController();
+                
                 if (gameCenterController != nil)
                 {
                     gameCenterController.gameCenterDelegate = AppDelegate.getInstance().gameController;
-                    gameCenterController.viewState = GKGameCenterViewControllerState.Leaderboards;
-                    gameCenterController.leaderboardIdentifier = leaderBoardID;
+                    gameCenterController.viewState = GKGameCenterViewControllerState.Achievements;
+//                    gameCenterController.leaderboardIdentifier = leaderBoardID;
                     AppDelegate.getInstance().gameController.applicationWillResignActive();
                     AppDelegate.getInstance().gameController.presentViewController(gameCenterController, animated: true, completion: {
                         AlertController.getInstance().hideAlert(nil);
@@ -176,14 +178,14 @@ class GameCenterController
                 {
                     AlertController.getInstance().hideAlert(nil);
                 }
-            });
+            //});
         }
         
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         
-        AlertController.getInstance().showAlert(message: "Loading...", action: nil, completion:{
+        //AlertController.getInstance().showAlert(message: "Loading...", action: nil, completion:{
             GKLeaderboard.loadLeaderboardsWithCompletionHandler(completion);
-        });
+        //});
     }
     
     class func reportScore(score:Int)
@@ -193,7 +195,7 @@ class GameCenterController
         scoreReporter.context = 0;
         scoreReporter.shouldSetDefaultLeaderboard = !UICustomDevice.isIOS8OrHigher();
         
-        func completion(error:NSError!)
+        func completion(error:NSError?) -> Void
         {
             Trace("GameCenterController -> score reported:\(score)");
         }

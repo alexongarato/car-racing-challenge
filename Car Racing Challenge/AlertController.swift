@@ -115,7 +115,7 @@ class AlertController
             
             func newField(text:String, isAction:Bool = false)
             {
-                var field = UITextView();
+                let field = UITextView();
                 field.scrollEnabled = false;
                 field.editable = false;
                 field.selectable = false;
@@ -135,7 +135,7 @@ class AlertController
                     field.addTarget(self, selector: Selector(completion != nil ? "completionHandler" : "closeHandler"));
                     field.width = bg.width;
                     field.height = 35;
-                    var border:CALayer = CALayer();
+                    let border:CALayer = CALayer();
                     border.frame = CGRectMake(5, 0, field.width-10, 1);
                     border.backgroundColor = UIColor.blackColor().alpha(0.2).CGColor;
                     field.layer.addSublayer(border);

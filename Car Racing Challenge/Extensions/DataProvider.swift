@@ -99,11 +99,12 @@ class DataProvider
     
     private class func emptySpaceForName(suiteName:String)
     {
-        var keys:NSArray = NSDictionary(dictionary: _private_nsuser_defaults.dictionaryRepresentation()).allKeys;
-        
-        for (var i:Int = 0; i < keys.count; i++)
+        let keys:NSArray = NSDictionary(dictionary: _private_nsuser_defaults.dictionaryRepresentation()).allKeys;
+
+        for i in 0 ..< keys.count
         {
-            var key:String = keys[i] as! String;
+
+            let key:String = keys[i] as! String;
             if(key.hasPrefix(suiteName))
             {
                 Trace("removing[\(i)]: \(key)");

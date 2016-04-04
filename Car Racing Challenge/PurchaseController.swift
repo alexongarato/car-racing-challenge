@@ -63,7 +63,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         AlertController.getInstance().showAlert(title: "FREE VERSION", message: "It's Only available while online.\nTry the full version now!", action: "OK", completion: completion);
     }
     */
-    func buyRemoveAds(#tryRestore:Bool)
+    func buyRemoveAds(tryRestore:Bool)
     {
         if(self.productsIDs == nil)
         {
@@ -78,18 +78,18 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         if let id = self.productsIDs.valueForKey("remove_ads") as? String
         {
             Trace("validating Remove Ads ID:\(id)...");
-            AlertController.getInstance().showAlert(title: nil, message: "please wait...", action: nil, completion:nil);// {
+            AlertController.getInstance().showAlert(nil, message: "please wait...", action: nil, completion:nil);// {
                 self.validateProductIdentifiers([id]);
 //            });
         }
         else
         {
             Trace("Remove Ad ID not found");
-            AlertController.getInstance().showAlert(title: "Remove Ad", message: "Sorry. Something went wrong. Please try again.", completion: nil);
+            AlertController.getInstance().showAlert("Remove Ad", message: "Sorry. Something went wrong. Please try again.", completion: nil);
         }
     }
     
-    private func validateProductIdentifiers(productIdentifiers:Set<NSObject>!)
+    private func validateProductIdentifiers(productIdentifiers:Set<String>!)
     {
         if(!ConnectivityHelper.isReachable())
         {
@@ -113,7 +113,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     
     
     //---------------- observers --------------
-    @objc func productsRequest(request: SKProductsRequest!, didReceiveResponse response: SKProductsResponse!)
+    @objc func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse)
     {
         if let valid:NSArray = response.products
         {
@@ -134,7 +134,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                         if(_transactionType == 0)
                         {
                             Trace("starting payment process...");
-                            var payment:SKMutablePayment = SKMutablePayment(product: prod);
+                            let payment:SKMutablePayment = SKMutablePayment(product: prod);
                             payment.quantity = 1;
                             SKPaymentQueue.defaultQueue().addPayment(payment);
                         }
@@ -162,9 +162,9 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         
         if let invalid:NSArray = response.invalidProductIdentifiers
         {
-            for invalidIdentifier in invalid
+            for _ in invalid
             {
-                AlertController.getInstance().showAlert(title: "Error", message: "The product requested is currently unavailable. Try again later.", action: "OK", completion: nil);
+                AlertController.getInstance().showAlert("Error", message: "The product requested is currently unavailable. Try again later.", action: "OK", completion: nil);
                 break;
             }
             
@@ -172,7 +172,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         }
     }
     
-    @objc func paymentQueue(queue: SKPaymentQueue!, updatedTransactions transactions: [AnyObject]!)
+    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction])
     {
         
         var failed:Bool = false;
@@ -182,55 +182,45 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         
         if let prodID = self.productsIDs.valueForKey("remove_ads") as? String
         {
-            for obj in transactions
+            for transaction in transactions
             {
-                if let transaction = obj as? SKPaymentTransaction
+                Trace("product: \(transaction.payment.productIdentifier), state \(transaction.transactionState.rawValue)");
+                
+                if(transaction.payment.productIdentifier == prodID)
                 {
-                    Trace("product: \(transaction.payment.productIdentifier), state \(transaction.transactionState.rawValue)");
-                    
-                    if(transaction.payment.productIdentifier != nil)
+                    switch (transaction.transactionState)
                     {
-                        if(transaction.payment.productIdentifier == prodID)
-                        {
-                            switch (transaction.transactionState)
-                            {
-                            case SKPaymentTransactionState.Purchasing:
-                                Trace("Purchasing");
-                                break;
-                            case SKPaymentTransactionState.Deferred:
-                                Trace("Deferred");
-                                failed = true;
-                                break;
-                            case SKPaymentTransactionState.Failed:
-                                Trace("Failed");
+                    case SKPaymentTransactionState.Purchasing:
+                        Trace("Purchasing");
+                        break;
+                    case SKPaymentTransactionState.Deferred:
+                        Trace("Deferred");
+                        failed = true;
+                        break;
+                    case SKPaymentTransactionState.Failed:
+                        Trace("Failed");
 //                                failed = true;
-                                break;
-                            case SKPaymentTransactionState.Purchased:
-                                Trace("Purchased");
-                                purchased = true;
-                                break;
-                            case SKPaymentTransactionState.Restored:
-                                Trace("Restored");
-                                purchased = true;
-                                break;
-                            default:
-                                Trace("Unexpected transaction state \(transaction.transactionState.rawValue)");
-                                failed = true;
-                                break;
-                            }
-                        }
+                        break;
+                    case SKPaymentTransactionState.Purchased:
+                        Trace("Purchased");
+                        purchased = true;
+                        break;
+                    case SKPaymentTransactionState.Restored:
+                        Trace("Restored");
+                        purchased = true;
+                        break;
                     }
                 }
             }
         }
         else
         {
-            AlertController.getInstance().showAlert(title: "Error", message: "Oops!\nAn error occurred.\nCode:001", action: "OK");
+            AlertController.getInstance().showAlert("Error", message: "Oops!\nAn error occurred.\nCode:001", action: "OK");
         }
         
         if(failed)
         {
-            AlertController.getInstance().showAlert(title: "Failed", message: "\nPurchase of Remove Ads was not completed.\n\nTry again later.\n", action: "OK");
+            AlertController.getInstance().showAlert("Failed", message: "\nPurchase of Remove Ads was not completed.\n\nTry again later.\n", action: "OK");
         }
         
         if(purchased)
@@ -239,4 +229,21 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
             return;
         }
     }
+  /*
+    func paymentQueue(queue: SKPaymentQueue, updatedDownloads downloads: [SKDownload]) {
+        
+    }
+    
+    func paymentQueueRestoreCompletedTransactionsFinished(queue: SKPaymentQueue) {
+        
+    }
+    
+    func paymentQueue(queue: SKPaymentQueue, removedTransactions transactions: [SKPaymentTransaction]) {
+        
+    }
+    
+    func paymentQueue(queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: NSError) {
+        
+    }
+ */
 }

@@ -16,37 +16,37 @@ extension UIImage
     
     func imageWithHalfSize() -> UIImage
     {
-        return self.resizeImage(scale: 0.5);
+        return self.resizeImage(0.5);
     }
     
-    func imageScaled(#fitToWidth:CGFloat) -> UIImage
+    func imageScaled(fitToWidth:CGFloat) -> UIImage
     {
-        var scale:CGFloat = fitToWidth / self.width;
-        return self.resizeImage(scale: scale);
+        let scale:CGFloat = fitToWidth / self.width;
+        return self.resizeImage(scale);
     }
     
-    func imageScaledToFit(#sizeToFit:CGSize) -> UIImage
+    func imageScaledToFit(sizeToFit:CGSize) -> UIImage
     {
-        var scale:CGFloat = (self.width > self.height || (sizeToFit.width < sizeToFit.height && self.width >= self.height))
+        let scale:CGFloat = (self.width > self.height || (sizeToFit.width < sizeToFit.height && self.width >= self.height))
             ? sizeToFit.width / self.width
             : sizeToFit.height / self.height;
-        return self.resizeImage(scale: scale);
+        return self.resizeImage(scale);
     }
     
-    func imageScaledToFill(#sizeToFill:CGSize) -> UIImage
+    func imageScaledToFill(sizeToFill:CGSize) -> UIImage
     {
-        var scale:CGFloat = (self.width < self.height || (sizeToFill.width > sizeToFill.height && self.width <= self.height))
+        let scale:CGFloat = (self.width < self.height || (sizeToFill.width > sizeToFill.height && self.width <= self.height))
             ? sizeToFill.width / self.width
             : sizeToFill.height / self.height;
-        return self.resizeImage(scale: scale);
+        return self.resizeImage(scale);
     }
     
-    func resizeImage(#scale:CGFloat) -> UIImage
+    func resizeImage(scale:CGFloat) -> UIImage
     {
-        var newSize:CGSize = CGSize(width: Int(self.width * scale), height: Int(self.height * scale));
+        let newSize:CGSize = CGSize(width: Int(self.width * scale), height: Int(self.height * scale));
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
         self.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
-        var newImage:UIImage! = UIGraphicsGetImageFromCurrentImageContext();
+        let newImage:UIImage! = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
         return newImage;
@@ -167,20 +167,20 @@ extension UIView
                 return;
             }
             
-            var superFrame:CGRect = self.superview!.frame;
+            let superFrame:CGRect = self.superview!.frame;
             
             if(self.y + newHeight + 90 >= superFrame.height)
             {
                 if(self.superview!.isKindOfClass(UIScrollView))
                 {
-                    Trace("inflate -> reached the scrollview");
+                    //Trace("inflate -> reached the scrollview");
                     
-                    var scroll:UIScrollView = self.superview as! UIScrollView;
+                    let scroll:UIScrollView = self.superview as! UIScrollView;
                     scroll.contentSize = CGSize(width: scroll.frame.width, height: self.y + newHeight + 30);
                 }
                 else
                 {
-                    Trace("inflate -> propagating (superview:\(self.superview!.description))");
+                    //Trace("inflate -> propagating (superview:\(self.superview!.description))");
                     
                     self.superview!.inflate(height: self.y + self.frame.height, propagate: true);
                 }
@@ -217,6 +217,7 @@ extension UIView
         self.gestureRecognizers?.removeAll(keepCapacity: false);
     }
     
+    @available(iOS 8.0, *)
     func enableBlur(style:UIBlurEffectStyle)
     {
         //only apply the blur if the user hasn't disabled transparency effects
@@ -226,7 +227,7 @@ extension UIView
             return;
         }
         
-        var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: style)) as UIVisualEffectView;
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: style)) as UIVisualEffectView;
         visualEffectView.frame = self.bounds;
         self.addSubview(visualEffectView)
         visualEffectView.alpha = 0.9;
@@ -248,6 +249,7 @@ extension UIView
         {
             self.backgroundColor = UIColor.blackColor().alpha(0.9);
         }
+        
     }
     
     func scale(value:CGFloat)
@@ -289,11 +291,11 @@ extension UIColor
         get {
             var str:NSString = "";
             
-            var numComponents:Int = CGColorGetNumberOfComponents(self.CGColor!);
+            let numComponents:Int = CGColorGetNumberOfComponents(self.CGColor);
             
             if (numComponents == 4)
             {
-                var components:UnsafePointer<CGFloat> = CGColorGetComponents(self.CGColor!);
+                let components:UnsafePointer<CGFloat> = CGColorGetComponents(self.CGColor);
                 str = NSString(format:"#%2X%2X%2X", Int(components[0] * 255), Int(components[1] * 255), Int(components[2] * 255));
                 str = str.stringByReplacingOccurrencesOfString(" ", withString: "0");
             }
@@ -331,13 +333,13 @@ extension UILabel
     
     func bold(word:String, color:UIColor!)
     {
-        var temp:NSMutableAttributedString = self.attributedText as! NSMutableAttributedString;
-        var main_string:NSString = temp.string;
-        var range:NSRange = (main_string as NSString).rangeOfString(word);
+        let temp:NSMutableAttributedString = self.attributedText as! NSMutableAttributedString;
+        let main_string:NSString = temp.string;
+        let range:NSRange = (main_string as NSString).rangeOfString(word);
         if(range.length > 0)
         {
-            var format:NSDictionary = [NSFontAttributeName : Fonts.BoldFont(self.font.pointSize), NSForegroundColorAttributeName: color];
-            temp.addAttributes(format as [NSObject : AnyObject], range: (main_string as NSString).rangeOfString(word));
+            let format:NSDictionary = [NSFontAttributeName : Fonts.BoldFont(self.font.pointSize), NSForegroundColorAttributeName: color];
+            temp.addAttributes(format as! [String : AnyObject], range: (main_string as NSString).rangeOfString(word));
             self.attributedText = temp;
         }
     }

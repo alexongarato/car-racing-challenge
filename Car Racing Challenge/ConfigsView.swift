@@ -44,24 +44,24 @@ class ConfigsView:AbstractView
         self.container.height = 200;
         self.container.center = self.center;
         
-        var image:UIImage! = UIImage(named: ImagesNames.Podium);
+        let image:UIImage! = UIImage(named: ImagesNames.Podium);
         self.podium = UIImageView(image: image);
         self.addSubview(self.podium);
-        self.podium.addTarget(self, selector: Selector("openGameCenter:"));
+        self.podium.addTarget(self, selector: #selector(ConfigsView.openGameCenter(_:)));
         self.podium.center = self.center;
         
         //---fb
         self.fb = UIImageView(image: UIImage(named: ImagesNames.FBIcon)!);
         self.addSubview(self.fb);
         self.fb.center = self.center;
-        self.fb.addTarget(self, selector: Selector("facebookHandler:"));
+        self.fb.addTarget(self, selector: #selector(ConfigsView.facebookHandler(_:)));
         self.fb.alpha = 0;
         
         //---tt
         self.tt = UIImageView(image: UIImage(named: ImagesNames.TTIcon)!);
         self.addSubview(self.tt);
         self.tt.center = self.center;
-        self.tt.addTarget(self, selector: Selector("twitterHandler:"));
+        self.tt.addTarget(self, selector: #selector(ConfigsView.twitterHandler(_:)));
         self.tt.alpha = 0;
         
         //best score
@@ -87,7 +87,7 @@ class ConfigsView:AbstractView
         
         buildMenu();
         
-        _timer = Utils.delayedCall(AnimationTime.Slow, target: self, selector: Selector("updateScore"), repeats: false);
+        _timer = Utils.delayedCall(AnimationTime.Slow, target: self, selector: #selector(ConfigsView.updateScore), repeats: false);
     }
     
     func updateScore()
@@ -100,7 +100,7 @@ class ConfigsView:AbstractView
         
         if(_currentScore < _totalScore)
         {
-            _timer = Utils.delayedCall(_animaTime, target: self, selector: Selector("updateScore"), repeats: false);
+            _timer = Utils.delayedCall(_animaTime, target: self, selector: #selector(ConfigsView.updateScore), repeats: false);
             
             _currentScore += _totalScore/100;
             _currentScore = _currentScore > _totalScore ? _totalScore : _currentScore;
@@ -129,24 +129,24 @@ class ConfigsView:AbstractView
     {
         self.actions.removeAll(keepCapacity: false);
         
-        addAction(label: "SOUNDS", selector: "soundHandler", key:SuiteNames.KeySound, active:true);
+        addAction("SOUNDS", selector: "soundHandler", key:SuiteNames.KeySound, active:true);
         
         if(PurchaseController.getInstance().userCanPurchase() && !PurchaseController.getInstance().hasPurchased())
         {
             addAction();
-            addAction(label: "REMOVE ADS", selector: "adsHandler", key:nil, active:true);
-            addAction(label: "RESTORE PURCHASE", selector: "restoreHandler", active:true);
+            addAction("REMOVE ADS", selector: "adsHandler", key:nil, active:true);
+            addAction("RESTORE PURCHASE", selector: "restoreHandler", active:true);
             addAction();
         }
-        addAction(label: "RATE S2", selector: "rateHandler", key:nil, active:true);
+        addAction("SUPPORT ME S2", selector: "rateHandler", key:nil, active:true);
         
         if(PurchaseController.getInstance().hasPurchased() && !Configs.FULL_VERSION_MODE)
         {
             addAction();
-            addAction(label: "FULL VERSION", selector: nil, key:nil, active:false);
+            addAction("FULL VERSION", selector: nil, key:nil, active:false);
         }
         
-        addAction(label: "MORE APPS", selector: "appsHandler", key:nil, active:true);
+        addAction("MORE APPS", selector: "appsHandler", key:nil, active:true);
         
         self.container.removeAllSubviews();
         
@@ -155,7 +155,7 @@ class ConfigsView:AbstractView
         var label:String!;
         let dash:String = " - ";
         var lastY:CGFloat = 0;
-        for(var i:Int = 0; i < self.actions.count; i++)
+        for i in 0 ..< self.actions.count
         {
             label = "";
             model = self.actions[i];
@@ -222,7 +222,7 @@ class ConfigsView:AbstractView
             self.bestScore.y = self.container.y - self.bestScore.height * 1.5;
         }
         
-        UIView.animateWithDuration(AnimationTime.Default, delay: 0.3, options: nil, animations: {
+        UIView.animateWithDuration(AnimationTime.Default, delay: 0.3, options: [], animations: {
             self.fb.center.x = self.podium.center.x - (self.podium.width * 1.15);
             self.tt.center.x = self.podium.center.x + (self.podium.width * 1.15);
             self.fb.alpha = 1;
@@ -232,7 +232,7 @@ class ConfigsView:AbstractView
     
     func addAction(label:String! = nil, selector:String! = nil, key:String! = nil, active:Bool = false)
     {
-        var action:ActionModel = ActionModel();
+        let action:ActionModel = ActionModel();
         action.label = label;
         action.selector = selector;
         action.key = key;
@@ -262,8 +262,8 @@ class ConfigsView:AbstractView
         Trace("ads handler");
         if(!DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds))
         {
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("purchasedHandler"), name: Events.AdsPurchased, object: nil);
-            PurchaseController.getInstance().buyRemoveAds(tryRestore: false);
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConfigsView.purchasedHandler), name: Events.AdsPurchased, object: nil);
+            PurchaseController.getInstance().buyRemoveAds(false);
             AudioHelper.playSound(AudioHelper.MenuOpenSound);
         }
     }
@@ -271,8 +271,8 @@ class ConfigsView:AbstractView
     func restoreHandler()
     {
         Trace("restore handler");
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("restoredHandler"), name: Events.AdsPurchased, object: nil);
-        PurchaseController.getInstance().buyRemoveAds(tryRestore: true);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConfigsView.restoredHandler), name: Events.AdsPurchased, object: nil);
+        PurchaseController.getInstance().buyRemoveAds(true);
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
     }
     
@@ -284,7 +284,7 @@ class ConfigsView:AbstractView
         _hasPurchasedCallback();
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
-        AlertController.getInstance().showAlert(title: "Thank you!", message: "All advertisement has been removed.", action: "Done", completion: nil);
+        AlertController.getInstance().showAlert("Thank you!", message: "All advertisement has been removed.", action: "Done", completion: nil);
     }
     
     func restoredHandler()
@@ -294,14 +294,14 @@ class ConfigsView:AbstractView
         _hasPurchasedCallback();
         PurchaseController.getInstance().hasPurchased(true);
         buildMenu();
-        AlertController.getInstance().showAlert(title: "Thank you!", message: "Your purchase has been restored.", action: "Done", completion: nil);
+        AlertController.getInstance().showAlert("Thank you!", message: "Your purchase has been restored.", action: "Done", completion: nil);
     }
     
     func rateHandler()
     {
         Trace("rate handler");
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
-        var url:NSURL! = NSURL(string: Routes.RATE_US_URL)!;
+        let url:NSURL! = NSURL(string: Routes.RATE_US_URL)!;
         UIApplication.sharedApplication().openURL(url);
     }
     
@@ -309,7 +309,7 @@ class ConfigsView:AbstractView
     {
         Trace("apps handler");
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
-        var url:NSURL! = NSURL(string: Routes.MY_APPS)!;
+        let url:NSURL! = NSURL(string: Routes.MY_APPS)!;
         UIApplication.sharedApplication().openURL(url);
     }
     

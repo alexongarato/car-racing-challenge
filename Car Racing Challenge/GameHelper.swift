@@ -32,7 +32,7 @@ class GameHelper
                 {
                     let sheets = str.componentsSeparatedByString("-") as Array<String>;
                     var array = Array<EnemySheet>();
-                    for(var i:Int = 0; i < sheets.count; i++)
+                    for i in 0 ..< sheets.count
                     {
                         let sheet = EnemySheet();
                         sheet.build(sheets[i]);

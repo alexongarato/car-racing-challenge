@@ -134,10 +134,10 @@ class GameScene: SKScene
         */
         self.isGameOver                 = false;
         self.totalColumns               = self.totalColumns == -1 ? self.MAX_COLUMNS : self.totalColumns;
-        var totalPixelsX:Int            = Int((self.totalColumns * 3) + 2);
+        let totalPixelsX:Int            = Int((self.totalColumns * 3) + 2);
         //        self.enemiesArray               = Array<CustomSpriteNode>();
         self.pixelSize                  = CGFloat(self.size.width / totalPixelsX.floatValue);
-        var totalPixelsY:Int            = Int((self.size.height / self.pixelSize));
+        let totalPixelsY:Int            = Int((self.size.height / self.pixelSize));
         self.charactersSize.width       = self.pixelSize * 3;
         self.charactersSize.height      = self.pixelSize * 4;
         self.buttonSize.width           = self.size.width.half.roundValue;
@@ -361,7 +361,7 @@ class GameScene: SKScene
             AudioHelper.playSound("vel_\(Int(self.currentVelSound)).wav");
         }
         
-        self.pixelDistanceCounter++;
+        self.pixelDistanceCounter += 1;
         self.newDistance = (self.PIXELS_BETWEEN_ENEMIES_1 - self.currentLevelCounter);
         self.newDistance = self.newDistance < self.MIN_PX_BT_ENEMIES_1 ? self.MIN_PX_BT_ENEMIES_1 : self.newDistance;
         if(self.pixelDistanceCounter >= self.newDistance)
@@ -383,16 +383,16 @@ class GameScene: SKScene
                     
                     if(!enemyBlock.isTouched)//se nao foi tocado
                     {
-                        self.totalScoreCounter++;
-                        self.currentScoreCounter++;
+                        self.totalScoreCounter += 1;
+                        self.currentScoreCounter += 1;
                         
                         if(self.IS_LIFE_BONUS_MODE)
                         {
-                            self.currentLifeCounter--;
+                            self.currentLifeCounter -= 1;
                             if(self.currentLifeCounter < 0)
                             {
                                 self.currentLifeCounter = self.SCORE_TO_EARN_LIFE;
-                                self.totalLifesCounter++;
+                                self.totalLifesCounter += 1;
                                 
                                 if(self.lifeUpHandler != nil)
                                 {
@@ -408,7 +408,7 @@ class GameScene: SKScene
                             if(self.currentScoreCounter >= self.SCORE_TO_LEVEL_UP)
                             {
                                 self.currentScoreCounter = 0;
-                                self.currentLevelCounter++;
+                                self.currentLevelCounter += 1;
                                 self.levelUpHandler();
                                 self.resetIntervalBetweenLoops();
                                 self.build();
@@ -429,7 +429,7 @@ class GameScene: SKScene
                         
                         AudioHelper.playSound(AudioHelper.lostLifeSound);
                         
-                        self.totalLifesCounter--;
+                        self.totalLifesCounter -= 1;
                         
                         if(self.IS_LIFE_BONUS_MODE)
                         {
@@ -453,7 +453,7 @@ class GameScene: SKScene
             }
         }
         
-        for (var i:Int = self.poolOfEnemiesSprites.count - 1; i > 0; i--)
+        for i in (self.poolOfEnemiesSprites.count-1).stride(to:0, by:-1)
         {
             let enemyBlock = self.poolOfEnemiesSprites[i];
             if(enemyBlock.isDead)
@@ -487,7 +487,7 @@ class GameScene: SKScene
         if (self.currentEnemiesVector != nil && self.currEnemiesVectorCounter < self.currentEnemiesVector.count)
         {
             let sheet = self.currentEnemiesVector[self.currEnemiesVectorCounter]
-            for (var i:Int = 0; i < sheet.lineArr.count; i++)
+            for i in 0 ..< sheet.lineArr.count
             {
                 if(sheet.lineArr[i].hasPrefix("1"))
                 {
@@ -500,7 +500,7 @@ class GameScene: SKScene
             //TODO - se nao existir array do level, usar modo aleatorio.
             createEnemy(Utils.random(self.totalColumns - 1).floatValue);
         }
-        self.currEnemiesVectorCounter++;
+        self.currEnemiesVectorCounter += 1;
     }
     
     
@@ -532,7 +532,7 @@ class GameScene: SKScene
     //----------
     
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
         if(!self.ready)
         {
@@ -543,12 +543,12 @@ class GameScene: SKScene
         for touch: AnyObject in touches
         {
             let location = touch.locationInNode(self)
-            var node:SKNode = self.nodeAtPoint(location);
+            let node:SKNode = self.nodeAtPoint(location);
             if(node.name == self.ID_BT_LEFT)
             {
                 AudioHelper.playSound(AudioHelper.SelectSound);
                 
-                self.currentMainCharColumn--;
+                self.currentMainCharColumn-=1;
                 if(self.currentMainCharColumn < 0)
                 {
                     self.currentMainCharColumn = 0;
@@ -559,14 +559,14 @@ class GameScene: SKScene
             {
                 AudioHelper.playSound(AudioHelper.SelectSound);
                 
-                self.currentMainCharColumn++;
+                self.currentMainCharColumn+=1;
                 if(self.currentMainCharColumn > self.totalColumns - 1)
                 {
                     self.currentMainCharColumn = self.totalColumns - 1;
                 }
             }
             
-            var tmp = self.mainCharacter.physicsBody;
+            let tmp = self.mainCharacter.physicsBody;
             self.mainCharacter.physicsBody = nil;
             self.mainCharacter.x = self.pixelSize + (self.charactersSize.width * self.currentMainCharColumn.floatValue);
             self.mainCharacter.physicsBody = tmp;
