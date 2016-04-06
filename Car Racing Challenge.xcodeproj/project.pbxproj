@@ -52,6 +52,8 @@
 		DB5E47F71ADF2B720029B8DD /* GameHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5E47F61ADF2B720029B8DD /* GameHelper.swift */; };
 		DB5E47FB1ADF43260029B8DD /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB5E47FA1ADF43260029B8DD /* Levels.plist */; };
 		DB5E47FF1ADF58E30029B8DD /* AsyncHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */; };
+		DB602CBE1CB36C5B00791F1C /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB602CBC1CB36C5B00791F1C /* Launch Screen.storyboard */; };
+		DB602CC01CB36D7E00791F1C /* ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DB602CBF1CB36D7E00791F1C /* ipad.png */; };
 		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
 		DB717E111AEC3D7A00A0C90A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB717E0F1AEC3D6E00A0C90A /* SystemConfiguration.framework */; };
 		DB717E131AEC3E9A00A0C90A /* ConnectivityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717E121AEC3E9A00A0C90A /* ConnectivityHelper.swift */; };
@@ -122,6 +124,8 @@
 		DB5E47F61ADF2B720029B8DD /* GameHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHelper.swift; sourceTree = "<group>"; };
 		DB5E47FA1ADF43260029B8DD /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
 		DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncHelper.swift; sourceTree = "<group>"; };
+		DB602CBD1CB36C5B00791F1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Car Racing Challenge/Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
+		DB602CBF1CB36D7E00791F1C /* ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ipad.png; path = Images/ipad.png; sourceTree = "<group>"; };
 		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DB717E0F1AEC3D6E00A0C90A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		DB717E121AEC3E9A00A0C90A /* ConnectivityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectivityHelper.swift; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 			children = (
 				DB9E31761AD4BACB00C27087 /* Controllers */,
 				DB6FF61C1ABD272700F7B073 /* Main.storyboard */,
+				DB602CBC1CB36C5B00791F1C /* Launch Screen.storyboard */,
 				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
 				DB525E801ABDF69900959D26 /* MenuView.swift */,
 				DB3D62681ACE51C7001BC9D9 /* ConfigsView.swift */,
@@ -307,6 +312,7 @@
 		DBD63E2F1AC7668800F3A3C3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				DB602CBF1CB36D7E00791F1C /* ipad.png */,
 				DBCA18BE1AE0C3BA008E93A9 /* TouchAreas.png */,
 				DB9E31881AD4E2EE00C27087 /* export_icon_180.png */,
 				DB3D62601ACE0B4B001BC9D9 /* ConfigIcon.png */,
@@ -386,8 +392,10 @@
 			files = (
 				DBD63E311AC7669100F3A3C3 /* Instructions.png in Resources */,
 				DB3D62671ACE4A0F001BC9D9 /* LCDMono2Normal.ttf in Resources */,
+				DB602CC01CB36D7E00791F1C /* ipad.png in Resources */,
 				DB384C0C1AC0D86C00C2BB32 /* pato.wav in Resources */,
 				DB384C0B1AC0D86C00C2BB32 /* level_up.wav in Resources */,
+				DB602CBE1CB36C5B00791F1C /* Launch Screen.storyboard in Resources */,
 				DB384C081AC0D86C00C2BB32 /* entrance.wav in Resources */,
 				DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */,
 				DB384C121AC0D86C00C2BB32 /* vel_2.wav in Resources */,
@@ -417,7 +425,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		DB23FD441AC0913F00A2C202 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -471,6 +479,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		DB602CBC1CB36C5B00791F1C /* Launch Screen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB602CBD1CB36C5B00791F1C /* Base */,
+			);
+			name = "Launch Screen.storyboard";
+			path = ..;
+			sourceTree = "<group>";
+		};
 		DB6FF61C1ABD272700F7B073 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

@@ -134,19 +134,19 @@ class ConfigsView:AbstractView
         if(PurchaseController.getInstance().userCanPurchase() && !PurchaseController.getInstance().hasPurchased())
         {
             addAction();
-            addAction("REMOVE ADS", selector: "adsHandler", key:nil, active:true);
-            addAction("RESTORE PURCHASE", selector: "restoreHandler", active:true);
+            addAction("SUPPORT ME", selector: "adsHandler", key:nil, active:true);
+            //addAction("RESTORE PURCHASE", selector: "restoreHandler", active:true);
             addAction();
         }
-        addAction("SUPPORT ME S2", selector: "rateHandler", key:nil, active:true);
+        addAction("RATE THIS APP", selector: "rateHandler", key:nil, active:true);
         
-        if(PurchaseController.getInstance().hasPurchased() && !Configs.FULL_VERSION_MODE)
+        if(PurchaseController.getInstance().hasPurchased() || Configs.FULL_VERSION_MODE)
         {
             addAction();
-            addAction("FULL VERSION", selector: nil, key:nil, active:false);
+            addAction("FULL VERSION S2", selector: nil, key:nil, active:false);
         }
         
-        addAction("MORE APPS", selector: "appsHandler", key:nil, active:true);
+        //addAction("MORE APPS", selector: "appsHandler", key:nil, active:true);
         
         self.container.removeAllSubviews();
         
@@ -188,7 +188,7 @@ class ConfigsView:AbstractView
                 action.bold(label);
             }
             
-            action.bold("S2");
+            action.bold("S2", color: UIColor.magentaColor());
             
             self.container.addSubview(action);
             action.sizeToFit();

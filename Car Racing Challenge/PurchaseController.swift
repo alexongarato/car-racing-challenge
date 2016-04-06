@@ -200,6 +200,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                     case SKPaymentTransactionState.Failed:
                         Trace("Failed");
 //                                failed = true;
+                        AlertController.getInstance().hideAlert(nil);
                         break;
                     case SKPaymentTransactionState.Purchased:
                         Trace("Purchased");
@@ -220,7 +221,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         
         if(failed)
         {
-            AlertController.getInstance().showAlert("Failed", message: "\nPurchase of Remove Ads was not completed.\n\nTry again later.\n", action: "OK");
+            AlertController.getInstance().showAlert("Failed", message: "\nPurchase not completed.\n\nTry again later.\n", action: "OK");
         }
         
         if(purchased)

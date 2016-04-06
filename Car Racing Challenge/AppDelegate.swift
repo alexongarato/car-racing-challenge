@@ -19,6 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return (UIApplication.sharedApplication().delegate as! AppDelegate);
     }
     
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask
+    {
+        return UIInterfaceOrientationMask.Portrait;
+    }
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
 //        Utils.printFontNames();

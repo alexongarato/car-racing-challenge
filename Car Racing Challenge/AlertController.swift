@@ -190,7 +190,7 @@ class AlertController
             });
             
             self.bg.alpha = 0;
-            self.bg.layer.transform = CATransform3DMakeRotation(180, 0, self.height, 1);
+            self.bg.layer.transform = CATransform3DMakeRotation(10, 0, self.height, 1);
             UIView.animateWithDuration(AnimationTime.Fast,
                 delay:AnimationTime.Fast,
                 options:UIViewAnimationOptions.CurveEaseInOut, animations: {
@@ -211,7 +211,7 @@ class AlertController
                 delay:0,
                 options:UIViewAnimationOptions.CurveEaseInOut, animations: {
                     self.bg.alpha = 0;
-                    self.bg.layer.transform = CATransform3DMakeRotation(180, 0, self.height, 1);
+                    self.bg.layer.transform = CATransform3DMakeRotation(10, 0, self.height, 1);
                 }, completion: {(animated) -> Void in
                     
                     UIView.animateWithDuration(AnimationTime.Fast,

@@ -61,7 +61,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         if(self.width > 375)// && self.width < 414)
         {
-            self.scaleFactor = 2;
+            self.scaleFactor = 1.3;
         }
         
         img = UIImage(named:ImagesNames.ConfigIcon);
