@@ -1,0 +1,652 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DB0600C11ADCABF700745AB8 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0600C01ADCABF700745AB8 /* AlertController.swift */; };
+		DB1366531AD23992009A33DB /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1366521AD23992009A33DB /* Events.swift */; };
+		DB1A2B7C1CADCF5400062D45 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1A2B7B1CADCF5400062D45 /* Reachability.swift */; };
+		DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E843C1AAD338D0009E321 /* AppDelegate.swift */; };
+		DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84401AAD338D0009E321 /* GameScene.swift */; };
+		DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2E84421AAD338D0009E321 /* GameViewController.swift */; };
+		DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB2E84471AAD338D0009E321 /* Images.xcassets */; };
+		DB384C071AC0D86C00C2BB32 /* Blip_Select.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BF91AC0D86C00C2BB32 /* Blip_Select.wav */; };
+		DB384C081AC0D86C00C2BB32 /* entrance.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFA1AC0D86C00C2BB32 /* entrance.wav */; };
+		DB384C091AC0D86C00C2BB32 /* entrance2.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFB1AC0D86C00C2BB32 /* entrance2.wav */; };
+		DB384C0A1AC0D86C00C2BB32 /* Explosion2.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFC1AC0D86C00C2BB32 /* Explosion2.wav */; };
+		DB384C0B1AC0D86C00C2BB32 /* level_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFD1AC0D86C00C2BB32 /* level_up.wav */; };
+		DB384C0C1AC0D86C00C2BB32 /* pato.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFE1AC0D86C00C2BB32 /* pato.wav */; };
+		DB384C0D1AC0D86C00C2BB32 /* Pickup_Coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384BFF1AC0D86C00C2BB32 /* Pickup_Coin.wav */; };
+		DB384C0E1AC0D86C00C2BB32 /* Randomize.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C001AC0D86C00C2BB32 /* Randomize.wav */; };
+		DB384C0F1AC0D86C00C2BB32 /* menu_open.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C011AC0D86C00C2BB32 /* menu_open.wav */; };
+		DB384C101AC0D86C00C2BB32 /* vel_0.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C021AC0D86C00C2BB32 /* vel_0.wav */; };
+		DB384C111AC0D86C00C2BB32 /* vel_1.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C031AC0D86C00C2BB32 /* vel_1.wav */; };
+		DB384C121AC0D86C00C2BB32 /* vel_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C041AC0D86C00C2BB32 /* vel_2.wav */; };
+		DB384C131AC0D86C00C2BB32 /* vel_3.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C051AC0D86C00C2BB32 /* vel_3.wav */; };
+		DB384C141AC0D86C00C2BB32 /* vel_4.wav in Resources */ = {isa = PBXBuildFile; fileRef = DB384C061AC0D86C00C2BB32 /* vel_4.wav */; };
+		DB384C211AC0D90E00C2BB32 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C171AC0D90E00C2BB32 /* Animation.swift */; };
+		DB384C221AC0D90E00C2BB32 /* Configs.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C181AC0D90E00C2BB32 /* Configs.swift */; };
+		DB384C231AC0D90E00C2BB32 /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C191AC0D90E00C2BB32 /* DataProvider.swift */; };
+		DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1A1AC0D90E00C2BB32 /* Extensions.swift */; };
+		DB384C251AC0D90E00C2BB32 /* GameCenterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */; };
+		DB384C261AC0D90E00C2BB32 /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1C1AC0D90E00C2BB32 /* SKExtensions.swift */; };
+		DB384C281AC0D90E00C2BB32 /* UICustomDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */; };
+		DB384C291AC0D90E00C2BB32 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */; };
+		DB384C2A1AC0D90E00C2BB32 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C201AC0D90E00C2BB32 /* Utils.swift */; };
+		DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */; };
+		DB384C341AC0DA3500C2BB32 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */; };
+		DB3D62611ACE0B4B001BC9D9 /* ConfigIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3D62601ACE0B4B001BC9D9 /* ConfigIcon.png */; };
+		DB3D62651ACE4A0F001BC9D9 /* LCDMono2Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB3D62621ACE4A0F001BC9D9 /* LCDMono2Bold.ttf */; };
+		DB3D62661ACE4A0F001BC9D9 /* LCDMono2Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB3D62631ACE4A0F001BC9D9 /* LCDMono2Light.ttf */; };
+		DB3D62671ACE4A0F001BC9D9 /* LCDMono2Normal.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DB3D62641ACE4A0F001BC9D9 /* LCDMono2Normal.ttf */; };
+		DB3D62691ACE51C7001BC9D9 /* ConfigsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3D62681ACE51C7001BC9D9 /* ConfigsView.swift */; };
+		DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E7E1ABDF19F00959D26 /* Fonts.swift */; };
+		DB525E811ABDF69900959D26 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB525E801ABDF69900959D26 /* MenuView.swift */; };
+		DB546E811ACBA35900D1D9F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */; };
+		DB5816D71AEC11AE003C72FC /* DeviceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5816D61AEC11AE003C72FC /* DeviceModel.m */; };
+		DB5E47F71ADF2B720029B8DD /* GameHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5E47F61ADF2B720029B8DD /* GameHelper.swift */; };
+		DB5E47FB1ADF43260029B8DD /* Levels.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB5E47FA1ADF43260029B8DD /* Levels.plist */; };
+		DB5E47FF1ADF58E30029B8DD /* AsyncHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */; };
+		DB602CBE1CB36C5B00791F1C /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB602CBC1CB36C5B00791F1C /* Launch Screen.storyboard */; };
+		DB602CC01CB36D7E00791F1C /* ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DB602CBF1CB36D7E00791F1C /* ipad.png */; };
+		DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB6FF61C1ABD272700F7B073 /* Main.storyboard */; };
+		DB717E111AEC3D7A00A0C90A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB717E0F1AEC3D6E00A0C90A /* SystemConfiguration.framework */; };
+		DB717E131AEC3E9A00A0C90A /* ConnectivityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB717E121AEC3E9A00A0C90A /* ConnectivityHelper.swift */; };
+		DB7A0BD51ACCCF2E0008B581 /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB7A0BD41ACCCF2E0008B581 /* Products.plist */; };
+		DB8C315F1AC620EB0027E949 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8C315E1AC620EB0027E949 /* PurchaseController.swift */; };
+		DB8FE2471AEFDE3400471758 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB8FE2461AEFDE3400471758 /* Colors.swift */; };
+		DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */; };
+		DB9E31751AD4B5E900C27087 /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E31741AD4B5E900C27087 /* Routes.swift */; };
+		DB9E317B1AD4D70B00C27087 /* SocialController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9E317A1AD4D70B00C27087 /* SocialController.swift */; };
+		DB9E31801AD4D78C00C27087 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9E317E1AD4D77500C27087 /* Social.framework */; };
+		DB9E31841AD4DFB800C27087 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9E31821AD4DFB200C27087 /* Twitter.framework */; };
+		DB9E31871AD4E1B400C27087 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9E31851AD4E1AE00C27087 /* Accounts.framework */; };
+		DB9E31891AD4E2EE00C27087 /* export_icon_180.png in Resources */ = {isa = PBXBuildFile; fileRef = DB9E31881AD4E2EE00C27087 /* export_icon_180.png */; };
+		DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */; };
+		DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */; };
+		DBCA18BF1AE0C3BA008E93A9 /* TouchAreas.png in Resources */ = {isa = PBXBuildFile; fileRef = DBCA18BE1AE0C3BA008E93A9 /* TouchAreas.png */; };
+		DBD63E311AC7669100F3A3C3 /* Instructions.png in Resources */ = {isa = PBXBuildFile; fileRef = DBD63E301AC7669100F3A3C3 /* Instructions.png */; };
+		DBFBA0F61AC4B93F00BD98D7 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBFBA0F41AC4B93700BD98D7 /* iAd.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DB0600C01ADCABF700745AB8 /* AlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
+		DB1366521AD23992009A33DB /* Events.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		DB1A2B7B1CADCF5400062D45 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Extensions/Reachability.swift; sourceTree = "<group>"; };
+		DB2E84371AAD338D0009E321 /* Car Racing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Car Racing.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB2E843B1AAD338D0009E321 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB2E843C1AAD338D0009E321 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DB2E84401AAD338D0009E321 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		DB2E84421AAD338D0009E321 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		DB2E84471AAD338D0009E321 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DB384BF91AC0D86C00C2BB32 /* Blip_Select.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Blip_Select.wav; path = Sounds/Blip_Select.wav; sourceTree = "<group>"; };
+		DB384BFA1AC0D86C00C2BB32 /* entrance.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = entrance.wav; path = Sounds/entrance.wav; sourceTree = "<group>"; };
+		DB384BFB1AC0D86C00C2BB32 /* entrance2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = entrance2.wav; path = Sounds/entrance2.wav; sourceTree = "<group>"; };
+		DB384BFC1AC0D86C00C2BB32 /* Explosion2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Explosion2.wav; path = Sounds/Explosion2.wav; sourceTree = "<group>"; };
+		DB384BFD1AC0D86C00C2BB32 /* level_up.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = level_up.wav; path = Sounds/level_up.wav; sourceTree = "<group>"; };
+		DB384BFE1AC0D86C00C2BB32 /* pato.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pato.wav; path = Sounds/pato.wav; sourceTree = "<group>"; };
+		DB384BFF1AC0D86C00C2BB32 /* Pickup_Coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Pickup_Coin.wav; path = Sounds/Pickup_Coin.wav; sourceTree = "<group>"; };
+		DB384C001AC0D86C00C2BB32 /* Randomize.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Randomize.wav; path = Sounds/Randomize.wav; sourceTree = "<group>"; };
+		DB384C011AC0D86C00C2BB32 /* menu_open.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = menu_open.wav; path = Sounds/menu_open.wav; sourceTree = "<group>"; };
+		DB384C021AC0D86C00C2BB32 /* vel_0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = vel_0.wav; path = Sounds/vel_0.wav; sourceTree = "<group>"; };
+		DB384C031AC0D86C00C2BB32 /* vel_1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = vel_1.wav; path = Sounds/vel_1.wav; sourceTree = "<group>"; };
+		DB384C041AC0D86C00C2BB32 /* vel_2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = vel_2.wav; path = Sounds/vel_2.wav; sourceTree = "<group>"; };
+		DB384C051AC0D86C00C2BB32 /* vel_3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = vel_3.wav; path = Sounds/vel_3.wav; sourceTree = "<group>"; };
+		DB384C061AC0D86C00C2BB32 /* vel_4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = vel_4.wav; path = Sounds/vel_4.wav; sourceTree = "<group>"; };
+		DB384C171AC0D90E00C2BB32 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Animation.swift; path = Extensions/Animation.swift; sourceTree = "<group>"; };
+		DB384C181AC0D90E00C2BB32 /* Configs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configs.swift; path = Extensions/Configs.swift; sourceTree = "<group>"; };
+		DB384C191AC0D90E00C2BB32 /* DataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataProvider.swift; path = Extensions/DataProvider.swift; sourceTree = "<group>"; };
+		DB384C1A1AC0D90E00C2BB32 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Extensions/Extensions.swift; sourceTree = "<group>"; };
+		DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameCenterController.swift; path = Extensions/GameCenterController.swift; sourceTree = "<group>"; };
+		DB384C1C1AC0D90E00C2BB32 /* SKExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SKExtensions.swift; path = Extensions/SKExtensions.swift; sourceTree = "<group>"; };
+		DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UICustomDevice.swift; path = Extensions/UICustomDevice.swift; sourceTree = "<group>"; };
+		DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIExtensions.swift; path = Extensions/UIExtensions.swift; sourceTree = "<group>"; };
+		DB384C201AC0D90E00C2BB32 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Extensions/Utils.swift; sourceTree = "<group>"; };
+		DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHelper.swift; sourceTree = "<group>"; };
+		DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		DB3D62601ACE0B4B001BC9D9 /* ConfigIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ConfigIcon.png; path = Images/ConfigIcon.png; sourceTree = "<group>"; };
+		DB3D62621ACE4A0F001BC9D9 /* LCDMono2Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = LCDMono2Bold.ttf; path = Fonts/LCDMono2Bold.ttf; sourceTree = "<group>"; };
+		DB3D62631ACE4A0F001BC9D9 /* LCDMono2Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = LCDMono2Light.ttf; path = Fonts/LCDMono2Light.ttf; sourceTree = "<group>"; };
+		DB3D62641ACE4A0F001BC9D9 /* LCDMono2Normal.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = LCDMono2Normal.ttf; path = Fonts/LCDMono2Normal.ttf; sourceTree = "<group>"; };
+		DB3D62681ACE51C7001BC9D9 /* ConfigsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigsView.swift; sourceTree = "<group>"; };
+		DB525E7E1ABDF19F00959D26 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Fonts.swift; path = Fonts/Fonts.swift; sourceTree = "<group>"; };
+		DB525E801ABDF69900959D26 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		DB5816D51AEC11AD003C72FC /* Car Racing Challenge-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Car Racing Challenge-Bridging-Header.h"; sourceTree = "<group>"; };
+		DB5816D61AEC11AE003C72FC /* DeviceModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceModel.m; path = Extensions/DeviceModel.m; sourceTree = "<group>"; };
+		DB5816D81AEC12FB003C72FC /* DeviceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DeviceModel.h; path = Extensions/DeviceModel.h; sourceTree = "<group>"; };
+		DB5E47F61ADF2B720029B8DD /* GameHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHelper.swift; sourceTree = "<group>"; };
+		DB5E47FA1ADF43260029B8DD /* Levels.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Levels.plist; sourceTree = "<group>"; };
+		DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncHelper.swift; sourceTree = "<group>"; };
+		DB602CBD1CB36C5B00791F1C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Car Racing Challenge/Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
+		DB602CBF1CB36D7E00791F1C /* ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ipad.png; path = Images/ipad.png; sourceTree = "<group>"; };
+		DB6FF61D1ABD272700F7B073 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DB717E0F1AEC3D6E00A0C90A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		DB717E121AEC3E9A00A0C90A /* ConnectivityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectivityHelper.swift; sourceTree = "<group>"; };
+		DB7A0BD41ACCCF2E0008B581 /* Products.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
+		DB8C315E1AC620EB0027E949 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
+		DB8FE2461AEFDE3400471758 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHelper.swift; sourceTree = "<group>"; };
+		DB9E31741AD4B5E900C27087 /* Routes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
+		DB9E317A1AD4D70B00C27087 /* SocialController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialController.swift; sourceTree = "<group>"; };
+		DB9E317E1AD4D77500C27087 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		DB9E31821AD4DFB200C27087 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		DB9E31851AD4E1AE00C27087 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		DB9E31881AD4E2EE00C27087 /* export_icon_180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = export_icon_180.png; path = Images.xcassets/AppIcon.appiconset/export_icon_180.png; sourceTree = "<group>"; };
+		DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStatusView.swift; sourceTree = "<group>"; };
+		DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		DBCA18BE1AE0C3BA008E93A9 /* TouchAreas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TouchAreas.png; path = Images/TouchAreas.png; sourceTree = "<group>"; };
+		DBD63E301AC7669100F3A3C3 /* Instructions.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Instructions.png; path = Images/Instructions.png; sourceTree = "<group>"; };
+		DBFBA0F41AC4B93700BD98D7 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DB2E84341AAD338D0009E321 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB717E111AEC3D7A00A0C90A /* SystemConfiguration.framework in Frameworks */,
+				DB9E31871AD4E1B400C27087 /* Accounts.framework in Frameworks */,
+				DB9E31841AD4DFB800C27087 /* Twitter.framework in Frameworks */,
+				DB9E31801AD4D78C00C27087 /* Social.framework in Frameworks */,
+				DB546E811ACBA35900D1D9F0 /* StoreKit.framework in Frameworks */,
+				DBB20A4D1ABE5BA20050AA36 /* GameKit.framework in Frameworks */,
+				DB384C341AC0DA3500C2BB32 /* AVFoundation.framework in Frameworks */,
+				DBFBA0F61AC4B93F00BD98D7 /* iAd.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DB2E842E1AAD338D0009E321 = {
+			isa = PBXGroup;
+			children = (
+				DB2E84391AAD338D0009E321 /* Car Racing Challenge */,
+				DB2E84381AAD338D0009E321 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DB2E84381AAD338D0009E321 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DB2E84371AAD338D0009E321 /* Car Racing.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DB2E84391AAD338D0009E321 /* Car Racing Challenge */ = {
+			isa = PBXGroup;
+			children = (
+				DB9E31761AD4BACB00C27087 /* Controllers */,
+				DB6FF61C1ABD272700F7B073 /* Main.storyboard */,
+				DB602CBC1CB36C5B00791F1C /* Launch Screen.storyboard */,
+				DB2E843C1AAD338D0009E321 /* AppDelegate.swift */,
+				DB525E801ABDF69900959D26 /* MenuView.swift */,
+				DB3D62681ACE51C7001BC9D9 /* ConfigsView.swift */,
+				DB2E84401AAD338D0009E321 /* GameScene.swift */,
+				DBB20A4A1ABE3D1C0050AA36 /* GameStatusView.swift */,
+				DB2E84471AAD338D0009E321 /* Images.xcassets */,
+				DB9E31771AD4BAEF00C27087 /* Constants */,
+				DB384C161AC0D90500C2BB32 /* Helpers */,
+				DBD63E2F1AC7668800F3A3C3 /* Images */,
+				DB384BF81AC0D86000C2BB32 /* Sounds */,
+				DB525E721ABDEF5500959D26 /* Fonts */,
+				DB384C151AC0D87F00C2BB32 /* Libs */,
+				DB2E843A1AAD338D0009E321 /* Supporting Files */,
+			);
+			path = "Car Racing Challenge";
+			sourceTree = "<group>";
+		};
+		DB2E843A1AAD338D0009E321 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DB5E47FA1ADF43260029B8DD /* Levels.plist */,
+				DB2E843B1AAD338D0009E321 /* Info.plist */,
+				DB7A0BD41ACCCF2E0008B581 /* Products.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DB384BF81AC0D86000C2BB32 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				DB384BF91AC0D86C00C2BB32 /* Blip_Select.wav */,
+				DB384BFA1AC0D86C00C2BB32 /* entrance.wav */,
+				DB384BFB1AC0D86C00C2BB32 /* entrance2.wav */,
+				DB384BFC1AC0D86C00C2BB32 /* Explosion2.wav */,
+				DB384BFD1AC0D86C00C2BB32 /* level_up.wav */,
+				DB384BFE1AC0D86C00C2BB32 /* pato.wav */,
+				DB384BFF1AC0D86C00C2BB32 /* Pickup_Coin.wav */,
+				DB384C001AC0D86C00C2BB32 /* Randomize.wav */,
+				DB384C011AC0D86C00C2BB32 /* menu_open.wav */,
+				DB384C021AC0D86C00C2BB32 /* vel_0.wav */,
+				DB384C031AC0D86C00C2BB32 /* vel_1.wav */,
+				DB384C041AC0D86C00C2BB32 /* vel_2.wav */,
+				DB384C051AC0D86C00C2BB32 /* vel_3.wav */,
+				DB384C061AC0D86C00C2BB32 /* vel_4.wav */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		DB384C151AC0D87F00C2BB32 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				DB717E0F1AEC3D6E00A0C90A /* SystemConfiguration.framework */,
+				DB9E31851AD4E1AE00C27087 /* Accounts.framework */,
+				DB9E31821AD4DFB200C27087 /* Twitter.framework */,
+				DB9E317E1AD4D77500C27087 /* Social.framework */,
+				DB546E7F1ACBA34F00D1D9F0 /* StoreKit.framework */,
+				DBFBA0F41AC4B93700BD98D7 /* iAd.framework */,
+				DB384C321AC0DA3000C2BB32 /* AVFoundation.framework */,
+				DBB20A4C1ABE5BA20050AA36 /* GameKit.framework */,
+			);
+			name = Libs;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		DB384C161AC0D90500C2BB32 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DB1A2B7B1CADCF5400062D45 /* Reachability.swift */,
+				DB5E47F61ADF2B720029B8DD /* GameHelper.swift */,
+				DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */,
+				DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */,
+				DB384C191AC0D90E00C2BB32 /* DataProvider.swift */,
+				DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */,
+				DB384C1A1AC0D90E00C2BB32 /* Extensions.swift */,
+				DB384C1C1AC0D90E00C2BB32 /* SKExtensions.swift */,
+				DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */,
+				DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */,
+				DB384C201AC0D90E00C2BB32 /* Utils.swift */,
+				DB5816D61AEC11AE003C72FC /* DeviceModel.m */,
+				DB5816D81AEC12FB003C72FC /* DeviceModel.h */,
+				DB5816D51AEC11AD003C72FC /* Car Racing Challenge-Bridging-Header.h */,
+				DB717E121AEC3E9A00A0C90A /* ConnectivityHelper.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		DB525E721ABDEF5500959D26 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DB3D62621ACE4A0F001BC9D9 /* LCDMono2Bold.ttf */,
+				DB3D62631ACE4A0F001BC9D9 /* LCDMono2Light.ttf */,
+				DB3D62641ACE4A0F001BC9D9 /* LCDMono2Normal.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		DB9E31761AD4BACB00C27087 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */,
+				DB8C315E1AC620EB0027E949 /* PurchaseController.swift */,
+				DB9E317A1AD4D70B00C27087 /* SocialController.swift */,
+				DB0600C01ADCABF700745AB8 /* AlertController.swift */,
+				DB2E84421AAD338D0009E321 /* GameViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		DB9E31771AD4BAEF00C27087 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				DB384C181AC0D90E00C2BB32 /* Configs.swift */,
+				DB9E31741AD4B5E900C27087 /* Routes.swift */,
+				DB1366521AD23992009A33DB /* Events.swift */,
+				DB525E7E1ABDF19F00959D26 /* Fonts.swift */,
+				DB384C171AC0D90E00C2BB32 /* Animation.swift */,
+				DB8FE2461AEFDE3400471758 /* Colors.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		DBD63E2F1AC7668800F3A3C3 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				DB602CBF1CB36D7E00791F1C /* ipad.png */,
+				DBCA18BE1AE0C3BA008E93A9 /* TouchAreas.png */,
+				DB9E31881AD4E2EE00C27087 /* export_icon_180.png */,
+				DB3D62601ACE0B4B001BC9D9 /* ConfigIcon.png */,
+				DBD63E301AC7669100F3A3C3 /* Instructions.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DB2E84361AAD338D0009E321 /* Car Racing Challenge */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB2E845A1AAD338E0009E321 /* Build configuration list for PBXNativeTarget "Car Racing Challenge" */;
+			buildPhases = (
+				DB2E84331AAD338D0009E321 /* Sources */,
+				DB2E84341AAD338D0009E321 /* Frameworks */,
+				DB2E84351AAD338D0009E321 /* Resources */,
+				DB23FD441AC0913F00A2C202 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Car Racing Challenge";
+			productName = "Car Racing Chellenge";
+			productReference = DB2E84371AAD338D0009E321 /* Car Racing.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DB2E842F1AAD338D0009E321 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 0730;
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Alex Ongarato";
+				TargetAttributes = {
+					DB2E84361AAD338D0009E321 = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 85HJEQ8RZV;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 0;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = DB2E84321AAD338D0009E321 /* Build configuration list for PBXProject "Car Racing Challenge" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DB2E842E1AAD338D0009E321;
+			productRefGroup = DB2E84381AAD338D0009E321 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DB2E84361AAD338D0009E321 /* Car Racing Challenge */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DB2E84351AAD338D0009E321 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBD63E311AC7669100F3A3C3 /* Instructions.png in Resources */,
+				DB3D62671ACE4A0F001BC9D9 /* LCDMono2Normal.ttf in Resources */,
+				DB602CC01CB36D7E00791F1C /* ipad.png in Resources */,
+				DB384C0C1AC0D86C00C2BB32 /* pato.wav in Resources */,
+				DB384C0B1AC0D86C00C2BB32 /* level_up.wav in Resources */,
+				DB602CBE1CB36C5B00791F1C /* Launch Screen.storyboard in Resources */,
+				DB384C081AC0D86C00C2BB32 /* entrance.wav in Resources */,
+				DB2E84481AAD338D0009E321 /* Images.xcassets in Resources */,
+				DB384C121AC0D86C00C2BB32 /* vel_2.wav in Resources */,
+				DB384C111AC0D86C00C2BB32 /* vel_1.wav in Resources */,
+				DB384C091AC0D86C00C2BB32 /* entrance2.wav in Resources */,
+				DB384C071AC0D86C00C2BB32 /* Blip_Select.wav in Resources */,
+				DB7A0BD51ACCCF2E0008B581 /* Products.plist in Resources */,
+				DB384C141AC0D86C00C2BB32 /* vel_4.wav in Resources */,
+				DB3D62651ACE4A0F001BC9D9 /* LCDMono2Bold.ttf in Resources */,
+				DB3D62611ACE0B4B001BC9D9 /* ConfigIcon.png in Resources */,
+				DB9E31891AD4E2EE00C27087 /* export_icon_180.png in Resources */,
+				DB384C0E1AC0D86C00C2BB32 /* Randomize.wav in Resources */,
+				DB384C0F1AC0D86C00C2BB32 /* menu_open.wav in Resources */,
+				DB384C101AC0D86C00C2BB32 /* vel_0.wav in Resources */,
+				DB3D62661ACE4A0F001BC9D9 /* LCDMono2Light.ttf in Resources */,
+				DB6FF61E1ABD272700F7B073 /* Main.storyboard in Resources */,
+				DB5E47FB1ADF43260029B8DD /* Levels.plist in Resources */,
+				DB384C131AC0D86C00C2BB32 /* vel_3.wav in Resources */,
+				DB384C0D1AC0D86C00C2BB32 /* Pickup_Coin.wav in Resources */,
+				DBCA18BF1AE0C3BA008E93A9 /* TouchAreas.png in Resources */,
+				DB384C0A1AC0D86C00C2BB32 /* Explosion2.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DB23FD441AC0913F00A2C202 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DB2E84331AAD338D0009E321 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB384C281AC0D90E00C2BB32 /* UICustomDevice.swift in Sources */,
+				DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */,
+				DB8C315F1AC620EB0027E949 /* PurchaseController.swift in Sources */,
+				DB0600C11ADCABF700745AB8 /* AlertController.swift in Sources */,
+				DB384C291AC0D90E00C2BB32 /* UIExtensions.swift in Sources */,
+				DB384C221AC0D90E00C2BB32 /* Configs.swift in Sources */,
+				DB384C251AC0D90E00C2BB32 /* GameCenterController.swift in Sources */,
+				DB1A2B7C1CADCF5400062D45 /* Reachability.swift in Sources */,
+				DB525E7F1ABDF19F00959D26 /* Fonts.swift in Sources */,
+				DB384C2A1AC0D90E00C2BB32 /* Utils.swift in Sources */,
+				DB2E84411AAD338D0009E321 /* GameScene.swift in Sources */,
+				DB2E84431AAD338D0009E321 /* GameViewController.swift in Sources */,
+				DB3D62691ACE51C7001BC9D9 /* ConfigsView.swift in Sources */,
+				DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */,
+				DB5816D71AEC11AE003C72FC /* DeviceModel.m in Sources */,
+				DB5E47FF1ADF58E30029B8DD /* AsyncHelper.swift in Sources */,
+				DB9CBFD11AC2F40400A23BFE /* ImageHelper.swift in Sources */,
+				DB5E47F71ADF2B720029B8DD /* GameHelper.swift in Sources */,
+				DB384C2C1AC0D92A00C2BB32 /* AudioHelper.swift in Sources */,
+				DB2E843D1AAD338D0009E321 /* AppDelegate.swift in Sources */,
+				DB8FE2471AEFDE3400471758 /* Colors.swift in Sources */,
+				DB1366531AD23992009A33DB /* Events.swift in Sources */,
+				DB384C231AC0D90E00C2BB32 /* DataProvider.swift in Sources */,
+				DB717E131AEC3E9A00A0C90A /* ConnectivityHelper.swift in Sources */,
+				DB384C211AC0D90E00C2BB32 /* Animation.swift in Sources */,
+				DB525E811ABDF69900959D26 /* MenuView.swift in Sources */,
+				DB9E31751AD4B5E900C27087 /* Routes.swift in Sources */,
+				DB384C261AC0D90E00C2BB32 /* SKExtensions.swift in Sources */,
+				DB9E317B1AD4D70B00C27087 /* SocialController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DB602CBC1CB36C5B00791F1C /* Launch Screen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB602CBD1CB36C5B00791F1C /* Base */,
+			);
+			name = "Launch Screen.storyboard";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		DB6FF61C1ABD272700F7B073 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB6FF61D1ABD272700F7B073 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DB2E84581AAD338E0009E321 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DB2E84591AAD338E0009E321 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DB2E845B1AAD338E0009E321 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				INFOPLIST_FILE = "Car Racing Challenge/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alexongarato.games.Car-Racing-Challenge";
+				PRODUCT_NAME = "Car Racing";
+				PROVISIONING_PROFILE = "";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Car Racing Challenge/Car Racing Challenge-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DB2E845C1AAD338E0009E321 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = "";
+				INFOPLIST_FILE = "Car Racing Challenge/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alexongarato.games.Car-Racing-Challenge";
+				PRODUCT_NAME = "Car Racing";
+				PROVISIONING_PROFILE = "";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Car Racing Challenge/Car Racing Challenge-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DB2E84321AAD338D0009E321 /* Build configuration list for PBXProject "Car Racing Challenge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB2E84581AAD338E0009E321 /* Debug */,
+				DB2E84591AAD338E0009E321 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB2E845A1AAD338E0009E321 /* Build configuration list for PBXNativeTarget "Car Racing Challenge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB2E845B1AAD338E0009E321 /* Debug */,
+				DB2E845C1AAD338E0009E321 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DB2E842F1AAD338D0009E321 /* Project object */;
+}
