@@ -83,7 +83,7 @@ class GameScene: SKScene
         }
         else
         {
-            Trace("INVALID COLUMN NUMBER (\(value))");
+            print("INVALID COLUMN NUMBER (\(value))");
         }
     }
     
@@ -155,7 +155,7 @@ class GameScene: SKScene
             self.poolOfEnemiesSprites.removeAll(keepCapacity: false);
         }
         
-        Trace("GameScene -> pixelSize:\(self.pixelSize)");
+        print("GameScene -> pixelSize:\(self.pixelSize)");
         
         /**
         criar malha de pixels de acordo com a quantidade de pistas.
@@ -306,7 +306,7 @@ class GameScene: SKScene
     {
         if(!self.builded)
         {
-            Trace("GAME IS NOT READY!");
+            print("GAME IS NOT READY!");
             return;
         }
         
@@ -443,7 +443,7 @@ class GameScene: SKScene
                         {
                             self.totalLifesCounter = 0;
                             self.isGameOver = true;
-                            Trace("x:\(enemyBlock.x)|y:\(enemyBlock.y)");
+                            print("x:\(enemyBlock.x)|y:\(enemyBlock.y)");
                             self.gameOverHandler();
                         }
                         
@@ -520,7 +520,7 @@ class GameScene: SKScene
         }
         else
         {
-            Trace("ERROR");
+            print("ERROR");
         }
     }
     

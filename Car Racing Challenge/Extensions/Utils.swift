@@ -151,11 +151,11 @@ class Utils
 //        #if DEBUG
         for family:AnyObject in UIFont.familyNames()
         {
-            Trace("Font family: \(family as? String)");
+            print("Font family: \(family as? String)");
             
             for name:AnyObject in UIFont.fontNamesForFamilyName(family as! String)
             {
-                Trace("  - Font name: \(name as! String)");
+                print("  - Font name: \(name as! String)");
             }
         }
 //        #endif

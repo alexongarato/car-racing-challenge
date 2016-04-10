@@ -59,7 +59,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         scene.levelUpHandler = self.levelUpHandler;
         sceneView.presentScene(scene);
         
-        Trace("GameViewController -> \(scene.size.description as String)");
+        print("GameViewController -> \(scene.size.description as String)");
         
         self.statusView = GameStatusView();
         self.view.addSubview(self.statusView);
@@ -81,13 +81,13 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         
         let data:NSString = DataProvider.getString(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore) as NSString;
         _bestScore = NSInteger(data.floatValue);
-        Trace("GameViewController -> best score restored: \(_bestScore)");
+        print("GameViewController -> best score restored: \(_bestScore)");
         GameCenterController.reportScore(self.getBestScore());
         
         self.scene.reset();
         self.scene.build();
         
-        Trace("GameViewController -> start game center");
+        print("GameViewController -> start game center");
         GameCenterController.start();
         
         startGame();
@@ -139,7 +139,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     
     func setBestScore(score:NSInteger)
     {
-        Trace("GameViewController -> best score saved: \(score)");
+        print("GameViewController -> best score saved: \(score)");
         DataProvider.saveData(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore, string: "\(score)");
         _bestScore = score;
     }
@@ -272,7 +272,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     
     func levelUpHandler()
     {
-        Trace("GameViewController -> LEVEL UP");
+        print("GameViewController -> LEVEL UP");
         
         let ttl:String = "\nLEVEL \(scene.currentLevel())\n";
         //var desc:String!;
@@ -311,7 +311,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     //################### PRAGMA
     func applicationWillResignActive()
     {
-        Trace("GameViewController -> app will resign active");
+        print("GameViewController -> app will resign active");
         
         if(!self.scene.isGamePaused())
         {
@@ -327,7 +327,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     
     func applicationDidBecomeActive()
     {
-        Trace("GameViewController -> app did become active");
+        print("GameViewController -> app did become active");
         
         if(self.showResumeOnStartUp)
         {
@@ -345,7 +345,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     
     func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController)
     {
-        Trace("GameViewController -> GameCenter did finish");
+        print("GameViewController -> GameCenter did finish");
         
         gameCenterViewController.dismissViewControllerAnimated(true, completion:{
                 self.applicationDidBecomeActive();
@@ -356,7 +356,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     {
         if(Configs.SAMPLE_MODE)
         {
-            Trace("GameViewController -> show banner");
+            print("GameViewController -> show banner");
         }
     }
 

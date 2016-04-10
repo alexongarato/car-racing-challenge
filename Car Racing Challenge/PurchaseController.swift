@@ -39,17 +39,17 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
             }
         }
         
-        _hasPurchased = (Configs.FULL_VERSION_MODE) ? true : DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds);
+        _hasPurchased = hasPurchased();
     }
     
     func hasPurchased() -> Bool
     {
-        return _hasPurchased;
+        return (Configs.FULL_VERSION_MODE) ? true : DataProvider.getInteger(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds) >= 2;
     }
     
     func hasPurchased(value:Bool)
     {
-        DataProvider.saveData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds, value: value);
+        DataProvider.saveData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds, value: (value == true) ? 2 : 0);
         _hasPurchased = value;
     }
     
@@ -67,24 +67,24 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     {
         if(self.productsIDs == nil)
         {
-            Trace("Remove Ads handler ERROR");
+            print("Remove Ads handler ERROR");
             return;
         }
         
         _transactionType = tryRestore ? 1 : 0;
         
-        Trace("Remove Ads handler");
+        print("Remove Ads handler");
         
         if let id = self.productsIDs.valueForKey("remove_ads") as? String
         {
-            Trace("validating Remove Ads ID:\(id)...");
+            print("validating Remove Ads ID:\(id)...");
             AlertController.getInstance().showAlert(nil, message: "please wait...", action: nil, completion:nil);// {
                 self.validateProductIdentifiers([id]);
 //            });
         }
         else
         {
-            Trace("Remove Ad ID not found");
+            print("Remove Ad ID not found");
             AlertController.getInstance().showAlert("Remove Ad", message: "Sorry. Something went wrong. Please try again.", completion: nil);
         }
     }
@@ -131,16 +131,18 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                     {
                         SKPaymentQueue.defaultQueue().addTransactionObserver(self);
                         
+                        AlertController.getInstance().hideAlert(nil);
+                        
                         if(_transactionType == 0)
                         {
-                            Trace("starting payment process...");
+                            print("starting payment process...");
                             let payment:SKMutablePayment = SKMutablePayment(product: prod);
                             payment.quantity = 1;
                             SKPaymentQueue.defaultQueue().addPayment(payment);
                         }
                         else if(_transactionType == 1)
                         {
-                            Trace("starting restore payment process...");
+                            print("starting restore payment process...");
                             SKPaymentQueue.defaultQueue().restoreCompletedTransactions();
                         }
                         
@@ -153,11 +155,11 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                 }
                 else
                 {
-                    Trace("valid product failed");
+                    print("valid product failed");
                 }
             }
             
-            Trace("valid products count:\(valid.count)");
+            print("valid products count:\(valid.count)");
         }
         
         if let invalid:NSArray = response.invalidProductIdentifiers
@@ -168,7 +170,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                 break;
             }
             
-            Trace("invalid products count:\(invalid.count)");
+            print("invalid products count:\(invalid.count)");
         }
     }
     
@@ -178,36 +180,36 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         var failed:Bool = false;
         var purchased:Bool = false;
         
-        Trace("paymentQueue updateTransactions");
+        print("paymentQueue updateTransactions");
         
         if let prodID = self.productsIDs.valueForKey("remove_ads") as? String
         {
             for transaction in transactions
             {
-                Trace("product: \(transaction.payment.productIdentifier), state \(transaction.transactionState.rawValue)");
+                print("product: \(transaction.payment.productIdentifier), state \(transaction.transactionState.rawValue)");
                 
                 if(transaction.payment.productIdentifier == prodID)
                 {
                     switch (transaction.transactionState)
                     {
                     case SKPaymentTransactionState.Purchasing:
-                        Trace("Purchasing");
-                        break;
+                        print("Purchasing");
+                        
                     case SKPaymentTransactionState.Deferred:
-                        Trace("Deferred");
+                        print("Deferred");
                         failed = true;
-                        break;
+                        AlertController.getInstance().hideAlert(nil);
                     case SKPaymentTransactionState.Failed:
-                        Trace("Failed");
+                        print("Failed");
 //                                failed = true;
                         AlertController.getInstance().hideAlert(nil);
-                        break;
+                        
                     case SKPaymentTransactionState.Purchased:
-                        Trace("Purchased");
+                        print("Purchased");
                         purchased = true;
                         break;
                     case SKPaymentTransactionState.Restored:
-                        Trace("Restored");
+                        print("Restored");
                         purchased = true;
                         break;
                     }
@@ -226,6 +228,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         
         if(purchased)
         {
+            AlertController.getInstance().hideAlert(nil);
             NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
             return;
         }

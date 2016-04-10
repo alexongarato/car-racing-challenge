@@ -15,7 +15,7 @@ private var isGameCenterAuthenticationComplete  : Bool = false;
 private var localPlayer                         : GKLocalPlayer!;
 private var leaderBoardID                       : String = "car_racing_challenge";
 
-class GameCenterController
+class GameCenterController:NSObject
 {
     // Check for the availability of Game Center API.
     class func isGameCenterAPIAvailable() -> Bool
@@ -45,11 +45,11 @@ class GameCenterController
     {
         if(error != nil)
         {
-            Trace("GameCenterController -> set default leaderboard ID FAILED!")
+            print("GameCenterController -> set default leaderboard ID FAILED!")
         }
         else
         {
-            Trace("GameCenterController -> set default leaderboard ID SUCCEED!")
+            print("GameCenterController -> set default leaderboard ID SUCCEED!")
         }
     }
     
@@ -57,17 +57,17 @@ class GameCenterController
     {
         if(!GameCenterController.isGameCenterAPIAvailable())
         {
-            Trace("GameCenterController -> GKLocalPlayer NOT READY!")
+            print("GameCenterController -> GKLocalPlayer NOT READY!")
             return;
         }
         
-        Trace("GameCenterController -> start");
+        print("GameCenterController -> start");
         localPlayer = GKLocalPlayer.localPlayer();
         setReadyStatus(false);
         localPlayer.setDefaultLeaderboardIdentifier(leaderBoardID, completionHandler: leaderboardHandler);
         
         
-        Trace("GameCenterController -> authenticating...");
+        print("GameCenterController -> authenticating...");
         /*
         The authenticateWithCompletionHandler method is like all completion handler methods and runs a block
         of code after completing its task. The difference with this method is that it does not release the
@@ -84,7 +84,7 @@ class GameCenterController
         
         func handler(view:UIViewController?, error:NSError?) -> Void
         {
-            Trace("GameCenterController -> auth complete.");
+            print("GameCenterController -> auth complete.");
             
             
             // If there is an error, do not assume local player is not authenticated.
@@ -105,7 +105,7 @@ class GameCenterController
                 // Enable Game Center Functionality
                 self.setReadyStatus(true);
                 currentPlayerID = localPlayer.playerID;
-                Trace("GameCenterController -> user authenticated (\(currentPlayerID))");
+                print("GameCenterController -> user authenticated (\(currentPlayerID))");
                 
                 if(callback != nil)
                 {
@@ -114,7 +114,7 @@ class GameCenterController
             }
             else
             {
-                Trace("GameCenterController -> auth error");
+                print("GameCenterController -> auth error");
 //                AppDelegate.getInstance().gameController.applicationWillResignActive();
 //                AlertController.getInstance().showAlert(title: "Game Center Unavailable", message: "Player is not signed in", completion:{
 //                    AppDelegate.getInstance().gameController.applicationDidBecomeActive();
@@ -140,18 +140,18 @@ class GameCenterController
                 let bestScore:NSInteger = AppDelegate.getInstance().gameController.getBestScore();
                 if(newScore > bestScore)
                 {
-                    Trace("GameCenterController -> gest score from leaderboard: \(newScore)");
+                    print("GameCenterController -> gest score from leaderboard: \(newScore)");
                     AppDelegate.getInstance().gameController.setBestScore(newScore);
                 }
                 else
                 {
-                    Trace("GameCenterController -> gest score from leaderboard: equal or lower than local (\(newScore)/\(bestScore))");
+                    print("GameCenterController -> gest score from leaderboard: equal or lower than local (\(newScore)/\(bestScore))");
                 }
                 
             }
             else
             {
-                Trace("GameCenterController -> gest score from leaderboard: error");
+                print("GameCenterController -> gest score from leaderboard: error");
                 error;
             }
         }
@@ -197,7 +197,7 @@ class GameCenterController
         
         func completion(error:NSError?) -> Void
         {
-            Trace("GameCenterController -> score reported:\(score)");
+            print("GameCenterController -> score reported:\(score)");
         }
         
         GKScore.reportScores([scoreReporter], withCompletionHandler: completion);

@@ -102,7 +102,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         if(self.configView.x == self.width)
         {
-            Trace("open configs");
+            print("open configs");
             
             let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation");
             rotateAnimation.fromValue = CGFloat(M_PI * 2.0);
@@ -129,7 +129,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
         else if(self.configView.x == 0)
         {
-            Trace("close configs");
+            print("close configs");
             
             let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation");
             rotateAnimation.fromValue = 0.0;
@@ -173,7 +173,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         if(PurchaseController.getInstance().hasPurchased())
         {
-            Trace("user has purchased remove ads");
+            print("user has purchased remove ads");
             return;
         }
         
@@ -191,12 +191,12 @@ class MenuView: AbstractView, ADBannerViewDelegate
             // On iOS 6 ADBannerView introduces a new initializer, use it when available.
             if(ADBannerView.instancesRespondToSelector(#selector(ADBannerView.init(adType:))))
             {
-                Trace("ADAdType banner");
+                print("ADAdType banner");
                 _bannerView = ADBannerView(adType: ADAdType.Banner);
             }
             else
             {
-                Trace("no ADAdType");
+                print("no ADAdType");
                 _bannerView = ADBannerView();
             }
             _adLoaded = false;
@@ -214,7 +214,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func updateLoaderText()
     {
-        Trace("update loader text");
+        print("update loader text");
         if(!PurchaseController.getInstance().hasPurchased() && !ConnectivityHelper.isReachable())
         {
             _adLoader.text = "(FREE VERSION) AVAILABLE ONLY WHILE ONLINE.";
@@ -234,7 +234,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         if(_adLoader != nil && _adLoader.alpha == 1)
         {
-            Trace("hide loader");
+            print("hide loader");
             _adLoader.alpha = 0;
         }
     }
@@ -243,16 +243,16 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         if(_bannerView == nil)
         {
-            Trace("no banner will be displayed.");
+            print("no banner will be displayed.");
             return;
         }
         
-        Trace("ShowBanner");
+        print("ShowBanner");
         
         var bannerFrame:CGRect = _bannerView.frame;
         if (_bannerView.bannerLoaded)
         {
-            Trace("presenting banner...");
+            print("presenting banner...");
             
             func completion(animated:Bool)
             {
@@ -267,13 +267,13 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
         else
         {
-            Trace("banner not loaded");
+            print("banner not loaded");
         }
     }
     
     func hideBannerHandler()
     {
-        Trace("hiding banner...");
+        print("hiding banner...");
         NSNotificationCenter.defaultCenter().removeObserver(self);
         self.hideAdLoader();
         
@@ -305,7 +305,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func bannerViewDidLoadAd(banner:ADBannerView)
     {
-        Trace("banner Loaded");
+        print("banner Loaded");
         self.hideAdLoader();
         self.showActions();
         
@@ -318,7 +318,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func bannerView(banner:ADBannerView!, didFailToReceiveAdWithError:NSError!)
     {
-        Trace("banner FAILED");
+        print("banner FAILED");
         self.buildBanner();
     }
     
@@ -329,7 +329,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     func bannerViewActionDidFinish(banner:ADBannerView)
     {
-        Trace("bannerViewActionDidFinish");
+        print("bannerViewActionDidFinish");
     }
     //---------------------------------
     
@@ -440,7 +440,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
-        Trace("MenuView -> MenuView -> open game center");
+        print("MenuView -> MenuView -> open game center");
         GameCenterController.loadLeaderboard();
     }
     
@@ -521,7 +521,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     {
         if(_showActionsTimer != nil)
         {
-            Trace("kill actions timer");
+            print("kill actions timer");
             _showActionsTimer.invalidate();
             _showActionsTimer = nil;
         }
@@ -529,7 +529,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
     
     override func dismiss(completion: ((animated: Bool) -> Void)!)
     {
-        Trace("dismiss menu");
+        print("dismiss menu");
         NSNotificationCenter.defaultCenter().removeObserver(self);
         
         self.killTimer();

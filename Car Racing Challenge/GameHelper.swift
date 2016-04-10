@@ -38,13 +38,13 @@ class GameHelper
                         sheet.build(sheets[i]);
                         array.append(sheet);
                     }
-                    Trace("enemies array count:\(array.count)");
+                    print("enemies array count:\(array.count)");
                     return array;
                 }
             }
         }
         
-        Trace("enemies array ERROR for level \(level)");
+        print("enemies array ERROR for level \(level)");
         
         return nil;
     }

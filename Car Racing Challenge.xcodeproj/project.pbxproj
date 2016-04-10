@@ -34,7 +34,6 @@
 		DB384C241AC0D90E00C2BB32 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1A1AC0D90E00C2BB32 /* Extensions.swift */; };
 		DB384C251AC0D90E00C2BB32 /* GameCenterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */; };
 		DB384C261AC0D90E00C2BB32 /* SKExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1C1AC0D90E00C2BB32 /* SKExtensions.swift */; };
-		DB384C271AC0D90E00C2BB32 /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1D1AC0D90E00C2BB32 /* Trace.swift */; };
 		DB384C281AC0D90E00C2BB32 /* UICustomDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */; };
 		DB384C291AC0D90E00C2BB32 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */; };
 		DB384C2A1AC0D90E00C2BB32 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB384C201AC0D90E00C2BB32 /* Utils.swift */; };
@@ -104,7 +103,6 @@
 		DB384C1A1AC0D90E00C2BB32 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Extensions/Extensions.swift; sourceTree = "<group>"; };
 		DB384C1B1AC0D90E00C2BB32 /* GameCenterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameCenterController.swift; path = Extensions/GameCenterController.swift; sourceTree = "<group>"; };
 		DB384C1C1AC0D90E00C2BB32 /* SKExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SKExtensions.swift; path = Extensions/SKExtensions.swift; sourceTree = "<group>"; };
-		DB384C1D1AC0D90E00C2BB32 /* Trace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Trace.swift; path = Extensions/Trace.swift; sourceTree = "<group>"; };
 		DB384C1E1AC0D90E00C2BB32 /* UICustomDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UICustomDevice.swift; path = Extensions/UICustomDevice.swift; sourceTree = "<group>"; };
 		DB384C1F1AC0D90E00C2BB32 /* UIExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIExtensions.swift; path = Extensions/UIExtensions.swift; sourceTree = "<group>"; };
 		DB384C201AC0D90E00C2BB32 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Extensions/Utils.swift; sourceTree = "<group>"; };
@@ -257,7 +255,6 @@
 				DB1A2B7B1CADCF5400062D45 /* Reachability.swift */,
 				DB5E47F61ADF2B720029B8DD /* GameHelper.swift */,
 				DB5E47FE1ADF58E30029B8DD /* AsyncHelper.swift */,
-				DB384C1D1AC0D90E00C2BB32 /* Trace.swift */,
 				DB384C2B1AC0D92A00C2BB32 /* AudioHelper.swift */,
 				DB384C191AC0D90E00C2BB32 /* DataProvider.swift */,
 				DB9CBFD01AC2F40400A23BFE /* ImageHelper.swift */,
@@ -446,7 +443,6 @@
 				DB384C281AC0D90E00C2BB32 /* UICustomDevice.swift in Sources */,
 				DBB20A4B1ABE3D1C0050AA36 /* GameStatusView.swift in Sources */,
 				DB8C315F1AC620EB0027E949 /* PurchaseController.swift in Sources */,
-				DB384C271AC0D90E00C2BB32 /* Trace.swift in Sources */,
 				DB0600C11ADCABF700745AB8 /* AlertController.swift in Sources */,
 				DB384C291AC0D90E00C2BB32 /* UIExtensions.swift in Sources */,
 				DB384C221AC0D90E00C2BB32 /* Configs.swift in Sources */,

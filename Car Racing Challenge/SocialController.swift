@@ -103,7 +103,7 @@ class SocialController
         
         if(error)
         {
-            Trace("share error");
+            print("share error");
             let source:String = (type == SLServiceTypeTwitter) ? "Twitter" : "Facebook";
             AlertController.getInstance().showAlert(source, message: "Please login to a \(source) account to share.", action: "OK", completion: nil);
         }

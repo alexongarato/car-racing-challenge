@@ -25,7 +25,7 @@ class DataProvider
         {
             _private_nsuser_defaults = NSUserDefaults(suiteName: _private_domain);
             
-            Trace("DataProvider -> initialized \(_private_domain)");
+            print("DataProvider -> initialized \(_private_domain)");
         }
     }
     
@@ -40,6 +40,18 @@ class DataProvider
         var temp:String = "";
         
         if let str = getData(suiteName, key:key) as? String
+        {
+            temp  = str;
+        }
+        
+        return temp;
+    }
+    
+    class func getInteger(suiteName:String, key:String) -> Int
+    {
+        var temp:Int = -1;
+        
+        if let str = getData(suiteName, key:key) as? Int
         {
             temp  = str;
         }
@@ -91,6 +103,12 @@ class DataProvider
         return true;
     }
     
+    class func saveData(suiteName:String, key:String, value:Int)
+    {
+        _private_nsuser_defaults.setInteger(value, forKey: createKey(suiteName, key:key));
+        _private_nsuser_defaults.synchronize();
+    }
+    
     class func saveData(suiteName:String, key:String, value:Bool)
     {
         _private_nsuser_defaults.setBool(value, forKey: createKey(suiteName, key:key));
@@ -107,13 +125,13 @@ class DataProvider
             let key:String = keys[i] as! String;
             if(key.hasPrefix(suiteName))
             {
-                Trace("removing[\(i)]: \(key)");
+                print("removing[\(i)]: \(key)");
                 _private_nsuser_defaults.removeObjectForKey(key);
             }
         }
         
         _private_nsuser_defaults.synchronize();
-        Trace("DataProvider -> Cache cleaned.");
+        print("DataProvider -> Cache cleaned.");
     }
 }
 

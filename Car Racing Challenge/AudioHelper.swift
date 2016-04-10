@@ -67,7 +67,7 @@ class AudioHelper
             
         } else
         {
-            Trace("Sound file '\(name)' doesn't exist at '\(path)'");
+            print("Sound file '\(name)' doesn't exist at '\(path)'");
         }
     }
     
@@ -85,7 +85,7 @@ class AudioHelper
         }
         else
         {
-            Trace("Sound file '\(name)' error");
+            print("Sound file '\(name)' error");
         }
         
         return snd;
@@ -113,7 +113,7 @@ class AudioHelper
             }
             else
             {
-                Trace("Sound file '\(name)' error");
+                print("Sound file '\(name)' error");
             }
         });
     }

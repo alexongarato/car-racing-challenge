@@ -69,7 +69,7 @@ class ConfigsView:AbstractView
         _totalScore = data.floatValue;
         _animaTime = NSTimeInterval(0.005);
         
-        Trace("animatime:\(_animaTime)");
+        print("animatime:\(_animaTime)");
         
         self.bestScore = UILabel();
         self.bestScore.textColor = UIColor.blackColor();
@@ -129,16 +129,17 @@ class ConfigsView:AbstractView
     {
         self.actions.removeAll(keepCapacity: false);
         
-        addAction("SOUNDS", selector: "soundHandler", key:SuiteNames.KeySound, active:true);
+        addAction("SOUNDS", selector: #selector(soundHandler), key:SuiteNames.KeySound, active:true);
         
         if(PurchaseController.getInstance().userCanPurchase() && !PurchaseController.getInstance().hasPurchased())
         {
             addAction();
-            addAction("SUPPORT ME", selector: "adsHandler", key:nil, active:true);
+            addAction("SUPPORT ME", selector: #selector(adsHandler), key:nil, active:true);
             //addAction("RESTORE PURCHASE", selector: "restoreHandler", active:true);
             addAction();
         }
-        addAction("RATE THIS APP", selector: "rateHandler", key:nil, active:true);
+        
+        addAction("RATE THIS APP", selector: #selector(rateHandler), key:nil, active:true);
         
         if(PurchaseController.getInstance().hasPurchased() || Configs.FULL_VERSION_MODE)
         {
@@ -168,7 +169,7 @@ class ConfigsView:AbstractView
                 
                 if(model.selector != nil)
                 {
-                    action.addTarget(self, selector: Selector(model.selector));
+                    action.addTarget(self, selector: model.selector);
                 }
             }
             else
@@ -230,7 +231,7 @@ class ConfigsView:AbstractView
             }, completion: nil);
     }
     
-    func addAction(label:String! = nil, selector:String! = nil, key:String! = nil, active:Bool = false)
+    func addAction(label:String! = nil, selector:Selector! = nil, key:String! = nil, active:Bool = false)
     {
         let action:ActionModel = ActionModel();
         action.label = label;
@@ -245,13 +246,13 @@ class ConfigsView:AbstractView
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
-        Trace("ConfigsView -> open game center");
+        print("ConfigsView -> open game center");
         GameCenterController.loadLeaderboard();
     }
     
     func soundHandler()
     {
-        Trace("sound handler");
+        print("sound handler");
         DataProvider.saveData(SuiteNames.SuiteConfigs, key: SuiteNames.KeySound, value: !DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeySound));
         buildMenu();
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
@@ -259,8 +260,8 @@ class ConfigsView:AbstractView
     
     func adsHandler()
     {
-        Trace("ads handler");
-        if(!DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds))
+        print("ads handler");
+        if(!PurchaseController.getInstance().hasPurchased())
         {
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConfigsView.purchasedHandler), name: Events.AdsPurchased, object: nil);
             PurchaseController.getInstance().buyRemoveAds(false);
@@ -270,7 +271,7 @@ class ConfigsView:AbstractView
     
     func restoreHandler()
     {
-        Trace("restore handler");
+        print("restore handler");
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConfigsView.restoredHandler), name: Events.AdsPurchased, object: nil);
         PurchaseController.getInstance().buyRemoveAds(true);
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
@@ -299,15 +300,27 @@ class ConfigsView:AbstractView
     
     func rateHandler()
     {
-        Trace("rate handler");
+        print("rate handler");
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         let url:NSURL! = NSURL(string: Routes.RATE_US_URL)!;
         UIApplication.sharedApplication().openURL(url);
+        
+        if let checkURL = NSURL(string: "https://itunes.apple.com/app/car-racing-challenge/id979116721")
+        {
+            if UIApplication.sharedApplication().openURL(checkURL)
+            {
+                print("url sucefully opened");
+            }
+        }
+        else
+        {
+            print("invalid url");
+        }
     }
     
     func appsHandler()
     {
-        Trace("apps handler");
+        print("apps handler");
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         let url:NSURL! = NSURL(string: Routes.MY_APPS)!;
         UIApplication.sharedApplication().openURL(url);
@@ -317,7 +330,7 @@ class ConfigsView:AbstractView
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
-        Trace("facebook share");
+        print("facebook share");
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         shareBuilder(SocialController.facebookType);
     }
@@ -326,7 +339,7 @@ class ConfigsView:AbstractView
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
-        Trace("twitter share");
+        print("twitter share");
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         shareBuilder(SocialController.twitterType);
     }
@@ -341,7 +354,7 @@ class ConfigsView:AbstractView
     class ActionModel
     {
         var label:String!;
-        var selector:String!;
+        var selector:Selector!;
         var key:String!;
         var active:Bool = false;
     }
