@@ -11,17 +11,17 @@ import UIKit
 
 class Fonts
 {
-    static func DefaultFont(size:CGFloat) -> UIFont!
+    static func DefaultFont(_ size:CGFloat) -> UIFont!
     {
         return UIFont(name: FontNames.Default, size: size)!;
     }
     
-    static func BoldFont(size:CGFloat) -> UIFont!
+    static func BoldFont(_ size:CGFloat) -> UIFont!
     {
         return UIFont(name: FontNames.Bold, size: size)!;
     }
     
-    static func LightFont(size:CGFloat) -> UIFont!
+    static func LightFont(_ size:CGFloat) -> UIFont!
     {
         return UIFont(name: FontNames.Light, size: size)!;
     }

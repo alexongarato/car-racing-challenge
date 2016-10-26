@@ -32,7 +32,7 @@
             startingLineNumber = "38"
             endingLineNumber = "38"
             landmarkName = "imageScaledToFill(_:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -48,7 +48,7 @@
             startingLineNumber = "116"
             endingLineNumber = "116"
             landmarkName = "createRoadPixels(_:totalPixelsX:totalPixelsY:pixelSize:)"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

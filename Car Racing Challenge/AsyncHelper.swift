@@ -7,17 +7,17 @@
 //
 
 import Foundation
-private var _asynHelperWorkQueue:NSOperationQueue = NSOperationQueue();
+private var _asynHelperWorkQueue:OperationQueue = OperationQueue();
 
 class AsyncHelper
 {
-    class func addWorkBlock(block:dispatch_block_t!)
+    class func addWorkBlock(_ block:@escaping () -> Void)
     {
-        _asynHelperWorkQueue.addOperationWithBlock(block);
+        _asynHelperWorkQueue.addOperation(block);
     }
     
-    class func addMainBlock(block:dispatch_block_t!)
+    class func addMainBlock(_ block:@escaping () -> Void)
     {
-        NSOperationQueue.mainQueue().addOperationWithBlock(block);
+        OperationQueue.main.addOperation(block);
     }
 }

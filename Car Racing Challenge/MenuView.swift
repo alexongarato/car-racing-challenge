@@ -13,25 +13,25 @@ import SystemConfiguration
 
 class MenuView: AbstractView, ADBannerViewDelegate
 {
-    private var desc        : UITextView!;
-    private var title       : UITextView!;
-    private var instructs   : UITextView!;
-    private var instructImg : UIImageView!;
-    private var actions     : Array<UILabel>!;
-    private var fontColor   : UIColor = UIColor.blackColor();
-    private var scaleFactor : CGFloat = 1;
-    private var _bannerView : ADBannerView!;
-    private var _adLoaded   : Bool = false;
-    private var btConfig    : UIImageView!;
-    private var configView  : ConfigsView!;
-    private var DEFAULT_W   : CGFloat = 0;
-    private var _adLoader   : UILabel!;
-    private var _showActionsTimer: NSTimer!;
+    fileprivate var desc        : UITextView!;
+    fileprivate var title       : UITextView!;
+    fileprivate var instructs   : UITextView!;
+    fileprivate var instructImg : UIImageView!;
+    fileprivate var actions     : Array<UILabel>!;
+    fileprivate var fontColor   : UIColor = UIColor.black;
+    fileprivate var scaleFactor : CGFloat = 1;
+    fileprivate var _bannerView : ADBannerView!;
+    fileprivate var _adLoaded   : Bool = false;
+    fileprivate var btConfig    : UIImageView!;
+    fileprivate var configView  : ConfigsView!;
+    fileprivate var DEFAULT_W   : CGFloat = 0;
+    fileprivate var _adLoader   : UILabel!;
+    fileprivate var _showActionsTimer: Timer!;
     
     override func didMoveToSuperview()
     {
         super.didMoveToSuperview();
-        self.DEFAULT_W = UIScreen.mainScreen().applicationFrame.width;
+        self.DEFAULT_W = UIScreen.main.applicationFrame.width;
         
         var img:UIImage! = UIImage(named: ImagesNames.Background)!;
         let imgView:UIImageView = UIImageView(image: img);
@@ -40,24 +40,24 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         self.title = UITextView();
         self.title.textColor = fontColor;
-        self.title.scrollEnabled = false;
-        self.title.editable = false;
-        self.title.selectable = false;
+        self.title.isScrollEnabled = false;
+        self.title.isEditable = false;
+        self.title.isSelectable = false;
         self.addSubview(self.title);
-        self.title.editable = false;
+        self.title.isEditable = false;
         
         self.desc = UITextView();
         self.desc.textColor = fontColor;
-        self.desc.scrollEnabled = false;
-        self.desc.editable = false;
-        self.desc.selectable = false;
+        self.desc.isScrollEnabled = false;
+        self.desc.isEditable = false;
+        self.desc.isSelectable = false;
         self.addSubview(self.desc);
-        self.desc.editable = false;
+        self.desc.isEditable = false;
         
         self.instructs = UITextView();
         self.instructs.textColor = fontColor;
         self.addSubview(self.instructs);
-        self.instructs.editable = false;
+        self.instructs.isEditable = false;
         
         if(self.width > 375)// && self.width < 414)
         {
@@ -74,7 +74,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         btConfig.addTarget(self, selector: #selector(MenuView.configsHandler));
     }
     
-    private var _animating:Bool = false;
+    fileprivate var _animating:Bool = false;
     func configsHandler()
     {
         if(_animating)
@@ -95,9 +95,9 @@ class MenuView: AbstractView, ADBannerViewDelegate
             if(self._bannerView != nil)
             {
                 self.configView.height = self._bannerView.y;
-                self.bringSubviewToFront(self._bannerView);
+                self.bringSubview(toFront: self._bannerView);
             }
-            self.bringSubviewToFront(self.btConfig);
+            self.bringSubview(toFront: self.btConfig);
         }
         
         if(self.configView.x == self.width)
@@ -108,20 +108,20 @@ class MenuView: AbstractView, ADBannerViewDelegate
             rotateAnimation.fromValue = CGFloat(M_PI * 2.0);
             rotateAnimation.toValue = 0.0;
             rotateAnimation.duration = AnimationTime.Slow;
-            self.btConfig.layer.addAnimation(rotateAnimation, forKey: nil);
+            self.btConfig.layer.add(rotateAnimation, forKey: nil);
             
-            func completion(animated:Bool)
+            func completion(_ animated:Bool)
             {
                 self._animating = false;
             }
             
-            UIView.animateWithDuration(AnimationTime.Slow, delay: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animate(withDuration: AnimationTime.Slow, delay: 0.1, options: UIViewAnimationOptions(), animations: {
                 self.btConfig.alpha = 1;
                 self.btConfig.x = 0;
                 //self.btConfig.transform = CGAffineTransformRotate(self.btConfig.transform, 0);
                 }, completion: completion);
             
-            UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animate(withDuration: AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions(), animations: {
                 self.configView.x = 0;
                 }, completion: nil);
             
@@ -135,9 +135,9 @@ class MenuView: AbstractView, ADBannerViewDelegate
             rotateAnimation.fromValue = 0.0;
             rotateAnimation.toValue = CGFloat(M_PI * 2.0);
             rotateAnimation.duration = AnimationTime.Slow;
-            self.btConfig.layer.addAnimation(rotateAnimation, forKey: nil);
+            self.btConfig.layer.add(rotateAnimation, forKey: nil);
             
-            func completion(animated:Bool)
+            func completion(_ animated:Bool)
             {
                 self.configView.removeFromSuperview();
                 self.configView = nil;
@@ -145,12 +145,12 @@ class MenuView: AbstractView, ADBannerViewDelegate
                 self.width = self.DEFAULT_W;
             }
             
-            UIView.animateWithDuration(AnimationTime.Slow, delay: 0.1, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animate(withDuration: AnimationTime.Slow, delay: 0.1, options: UIViewAnimationOptions(), animations: {
                 self.btConfig.alpha = 0.4;
                 self.btConfigToClosedPosition();
                 }, completion:completion);
             
-            UIView.animateWithDuration(AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animate(withDuration: AnimationTime.Slow, delay: 0, options: UIViewAnimationOptions(), animations: {
                 self.configView.x = self.DEFAULT_W;
                 }, completion:nil);
             
@@ -158,18 +158,18 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
-    private func btConfigToClosedPosition()
+    fileprivate func btConfigToClosedPosition()
     {
         btConfig.x = self.DEFAULT_W - btConfig.width;
     }
     
-    private func updateConfigButtonPosition(posY:CGFloat)
+    fileprivate func updateConfigButtonPosition(_ posY:CGFloat)
     {
         btConfig.y = posY - btConfig.height;
     }
     
     //-------- banner functions --------------------
-    private func buildBanner()
+    fileprivate func buildBanner()
     {
         if(PurchaseController.getInstance().hasPurchased())
         {
@@ -179,9 +179,9 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         if(ConnectivityHelper.isReachable() && _bannerView != nil)
         {
-            _bannerView.cancelBannerViewAction();
+            _bannerView.cancelAction();
             _bannerView.removeFromSuperview();
-            _bannerView.hidden = true;
+            _bannerView.isHidden = true;
             _bannerView.delegate = nil;
             _bannerView = nil;
         }
@@ -189,10 +189,10 @@ class MenuView: AbstractView, ADBannerViewDelegate
         if(_bannerView == nil)
         {
             // On iOS 6 ADBannerView introduces a new initializer, use it when available.
-            if(ADBannerView.instancesRespondToSelector(#selector(ADBannerView.init(adType:))))
+            if(ADBannerView.instancesRespond(to: #selector(ADBannerView.init(adType:))))
             {
                 print("ADAdType banner");
-                _bannerView = ADBannerView(adType: ADAdType.Banner);
+                _bannerView = ADBannerView(adType: ADAdType.banner);
             }
             else
             {
@@ -250,16 +250,16 @@ class MenuView: AbstractView, ADBannerViewDelegate
         print("ShowBanner");
         
         var bannerFrame:CGRect = _bannerView.frame;
-        if (_bannerView.bannerLoaded)
+        if (_bannerView.isBannerLoaded)
         {
             print("presenting banner...");
             
-            func completion(animated:Bool)
+            func completion(_ animated:Bool)
             {
                 self.hideAdLoader();
             }
             self._bannerView.y = self.height;
-            UIView.animateWithDuration(AnimationTime.Default, delay:0, options:[], animations: {
+            UIView.animate(withDuration: AnimationTime.Default, delay:0, options:[], animations: {
                 self._bannerView.y = self.height - self._bannerView.height;
                 self.addSubview(self._bannerView);
                 self.updateConfigButtonPosition(self._bannerView.y);
@@ -274,15 +274,15 @@ class MenuView: AbstractView, ADBannerViewDelegate
     func hideBannerHandler()
     {
         print("hiding banner...");
-        NSNotificationCenter.defaultCenter().removeObserver(self);
+        NotificationCenter.default.removeObserver(self);
         self.hideAdLoader();
         
         if(_bannerView != nil)
         {
-            _bannerView.cancelBannerViewAction();
+            _bannerView.cancelAction();
             _bannerView.delegate = nil;
             
-            func completion(animated:Bool)
+            func completion(_ animated:Bool)
             {
                 self._bannerView.removeFromSuperview();
             }
@@ -292,7 +292,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
                 self._bannerView.y = self.height - self._bannerView.height;
             }
             
-            UIView.animateWithDuration(AnimationTime.Default, animations: {
+            UIView.animate(withDuration: AnimationTime.Default, animations: {
                 self._bannerView.y = self.height;
                 if(self.configView != nil)
                 {
@@ -303,7 +303,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
-    func bannerViewDidLoadAd(banner:ADBannerView)
+    func bannerViewDidLoadAd(_ banner:ADBannerView)
     {
         print("banner Loaded");
         self.hideAdLoader();
@@ -316,18 +316,18 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
-    func bannerView(banner:ADBannerView!, didFailToReceiveAdWithError:NSError!)
+    func bannerView(_ banner:ADBannerView!, didFailToReceiveAdWithError:Error!)
     {
         print("banner FAILED");
         self.buildBanner();
     }
     
-    func bannerViewActionShouldBegin(banner:ADBannerView, willLeaveApplication:Bool) -> Bool
+    func bannerViewActionShouldBegin(_ banner:ADBannerView, willLeaveApplication:Bool) -> Bool
     {
         return true;
     }
     
-    func bannerViewActionDidFinish(banner:ADBannerView)
+    func bannerViewActionDidFinish(_ banner:ADBannerView)
     {
         print("bannerViewActionDidFinish");
     }
@@ -346,12 +346,12 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
-    func setTitle(text:String)
+    func setTitle(_ text:String)
     {
         self.title.text = text;
         self.title.font = Fonts.LightFont(FontSize.Big * self.scaleFactor);
-        self.title.textAlignment = NSTextAlignment.Center;
-        self.title.backgroundColor = UIColor.clearColor();
+        self.title.textAlignment = NSTextAlignment.center;
+        self.title.backgroundColor = UIColor.clear;
         self.title.sizeToFit();
         self.title.width = self.width - 10;
         self.title.center = self.center;
@@ -362,19 +362,19 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
-    func setDescription(text:String)
+    func setDescription(_ text:String)
     {
         self.desc.text = text;
         self.desc.font = Fonts.LightFont(FontSize.Default * self.scaleFactor);
-        self.desc.textAlignment = NSTextAlignment.Center;
-        self.desc.backgroundColor = UIColor.clearColor();
+        self.desc.textAlignment = NSTextAlignment.center;
+        self.desc.backgroundColor = UIColor.clear;
         self.desc.sizeToFit();
         self.desc.width = self.width - 10;
         self.desc.center = self.center;
         self.desc.y = self.title.y + self.title.height - 10;
     }
     
-    func setInstructions(scoreToLifeUp:Int, scoreToLevelUp:Int)
+    func setInstructions(_ scoreToLifeUp:Int, scoreToLevelUp:Int)
     {
         let fitSize:CGSize = CGSize(width: self.frame.size.width + 40, height: self.frame.size.height);
         let image:UIImage! = ImageHelper.imageScaledToFit(UIImage(named: ImagesNames.Instructions), sizeToFit: fitSize);
@@ -386,8 +386,8 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         self.instructs.text = "";
         self.instructs.font = Fonts.DefaultFont(FontSize.Tiny * self.scaleFactor);
-        self.instructs.textAlignment = NSTextAlignment.Center;
-        self.instructs.backgroundColor = UIColor.clearColor();
+        self.instructs.textAlignment = NSTextAlignment.center;
+        self.instructs.backgroundColor = UIColor.clear;
         self.instructs.sizeToFit();
         self.instructs.width = self.width - 10;
         self.instructs.center = self.center;
@@ -413,7 +413,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         image.alpha = 0;
         self.addSubview(image);
         image.center = self.center;
-        UIView.animateWithDuration(AnimationTime.Default, delay: 2, options: [], animations: {
+        UIView.animate(withDuration: AnimationTime.Default, delay: 2, options: [], animations: {
             image.x -= image.width * 1.6;
             image.alpha = 1;
             }, completion: nil);
@@ -427,7 +427,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         image.alpha = 0;
         self.addSubview(image);
         image.center = self.center;
-        UIView.animateWithDuration(AnimationTime.Default, delay: 2, options: [], animations: {
+        UIView.animate(withDuration: AnimationTime.Default, delay: 2, options: [], animations: {
             image.x += image.width * 1.6;
             image.alpha = 1;
             }, completion: nil);
@@ -436,7 +436,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
     }
     
-    func openGameCenter(sender:AnyObject!)
+    func openGameCenter(_ sender:AnyObject!)
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
@@ -444,26 +444,26 @@ class MenuView: AbstractView, ADBannerViewDelegate
         GameCenterController.loadLeaderboard();
     }
     
-    func openFBHandler(sender:AnyObject!)
+    func openFBHandler(_ sender:AnyObject!)
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         shareBuilder(SocialController.facebookType);
     }
     
-    func openTTHandler(sender:AnyObject!)
+    func openTTHandler(_ sender:AnyObject!)
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         shareBuilder(SocialController.twitterType);
     }
     
-    private func shareBuilder(type:String)
+    fileprivate func shareBuilder(_ type:String)
     {
         SocialController.getInstance().share(type, text:"Level achieved: \(AppDelegate.getInstance().gameController.scene.currentLevel()) (\(AppDelegate.getInstance().gameController.scene.currentScore()) points) #CarRacingChallenge", url:Routes.ITUNES_URL);
     }
     
-    func setAction(text:String!, target:AnyObject, selector:Selector)
+    func setAction(_ text:String!, target:AnyObject, selector:Selector)
     {
         if(self.actions == nil)
         {
@@ -478,7 +478,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         
         newAction.text = text;
         newAction.font = Fonts.DefaultFont(FontSize.Medium * self.scaleFactor);
-        newAction.textAlignment = NSTextAlignment.Center;
+        newAction.textAlignment = NSTextAlignment.center;
         newAction.sizeToFit();
         newAction.width = self.width - 10;
         newAction.center = self.center;
@@ -500,9 +500,9 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
-    override func present(completion: ((animated: Bool) -> Void)!)
+    override func present(_ completion: ((_ animated: Bool) -> Void)!)
     {
-        self.bringSubviewToFront(self.btConfig);
+        self.bringSubview(toFront: self.btConfig);
         
         if(PurchaseController.getInstance().hasPurchased())
         {
@@ -527,10 +527,10 @@ class MenuView: AbstractView, ADBannerViewDelegate
         }
     }
     
-    override func dismiss(completion: ((animated: Bool) -> Void)!)
+    override func dismiss(_ completion: ((_ animated: Bool) -> Void)!)
     {
         print("dismiss menu");
-        NSNotificationCenter.defaultCenter().removeObserver(self);
+        NotificationCenter.default.removeObserver(self);
         
         self.killTimer();
         
@@ -540,7 +540,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             return;
         }
         
-        func completion(animated:Bool)
+        func completion(_ animated:Bool)
         {
             self._bannerView.removeFromSuperview();
             super.dismiss(completion);
@@ -551,7 +551,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
             self._bannerView.y = self.height - self._bannerView.height;
         }
         
-        UIView.animateWithDuration(AnimationTime.Default, animations: {
+        UIView.animate(withDuration: AnimationTime.Default, animations: {
             self._bannerView.y = self.height;
             self.updateConfigButtonPosition(self._bannerView.y);
             }, completion:completion);
@@ -562,7 +562,7 @@ class MenuView: AbstractView, ADBannerViewDelegate
         for i in 0 ..< self.actions.count
         {
             let action:UILabel = self.actions[i];
-            action.gestureRecognizers?.removeAll(keepCapacity: false);
+            action.gestureRecognizers?.removeAll(keepingCapacity: false);
         }
     }
 }

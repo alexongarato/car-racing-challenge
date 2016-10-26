@@ -30,39 +30,39 @@ struct ImagesNames
 
 class ImageHelper
 {
-    class func imageWithName(name:String) -> UIImage!
+    class func imageWithName(_ name:String) -> UIImage!
     {
         return UIImage(named: name);
     }
     
-    static func imageWithImage(image:UIImage!) -> UIImage
+    static func imageWithImage(_ image:UIImage!) -> UIImage
     {
         return ImageHelper.resizeImage(image, scale: 0.5);
     }
     
-    static func imageScaledWithImage(image:UIImage!, fitToWidth:CGFloat) -> UIImage
+    static func imageScaledWithImage(_ image:UIImage!, fitToWidth:CGFloat) -> UIImage
     {
         let scale:CGFloat = fitToWidth / image.size.width;
         return ImageHelper.resizeImage(image, scale: scale);
     }
     
-    static func imageScaledToFit(image:UIImage!, sizeToFit:CGSize) -> UIImage
+    static func imageScaledToFit(_ image:UIImage!, sizeToFit:CGSize) -> UIImage
     {
         let scale:CGFloat = (image.size.width > image.size.height || (sizeToFit.width < sizeToFit.height && image.size.width >= image.size.height)) ? sizeToFit.width / image.size.width : sizeToFit.height / image.size.height;
         return ImageHelper.resizeImage(image, scale: scale);
     }
     
-    static func imageScaledToFill(image:UIImage!, sizeToFill:CGSize) -> UIImage
+    static func imageScaledToFill(_ image:UIImage!, sizeToFill:CGSize) -> UIImage
     {
         let scale:CGFloat = (image.size.width < image.size.height || (sizeToFill.width > sizeToFill.height && image.size.width <= image.size.height)) ? sizeToFill.width / image.size.width : sizeToFill.height / image.size.height;
         return ImageHelper.resizeImage(image, scale: scale);
     }
     
-    static func resizeImage(image:UIImage!, scale:CGFloat) -> UIImage
+    static func resizeImage(_ image:UIImage!, scale:CGFloat) -> UIImage
     {
         let newSize:CGSize = CGSize(width: Int(image.size.width * scale), height: Int(image.size.height * scale));
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
-        image.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
+        image.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height));
         let newImage:UIImage! = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         

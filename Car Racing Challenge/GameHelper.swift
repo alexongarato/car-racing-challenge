@@ -22,15 +22,15 @@ class GameHelper
         return _instance;
     }
     
-    func enemiesForLevel(level:Int) -> Array<EnemySheet>!
+    func enemiesForLevel(_ level:Int) -> Array<EnemySheet>!
     {
-        if let url:NSURL = NSBundle.mainBundle().URLForResource("Levels",  withExtension:"plist")
+        if let url:URL = Bundle.main.url(forResource: "Levels",  withExtension:"plist")
         {
-            if let dict:NSDictionary = NSDictionary(contentsOfURL:url)
+            if let dict:NSDictionary = NSDictionary(contentsOf:url)
             {
-                if let str = dict.valueForKey("level\(level)") as? String
+                if let str = dict.value(forKey: "level\(level)") as? String
                 {
-                    let sheets = str.componentsSeparatedByString("-") as Array<String>;
+                    let sheets = str.components(separatedBy: "-") as Array<String>;
                     var array = Array<EnemySheet>();
                     for i in 0 ..< sheets.count
                     {
@@ -53,8 +53,8 @@ class GameHelper
 class EnemySheet
 {
     var lineArr:Array<String>!;
-    func build(str:String)
+    func build(_ str:String)
     {
-        self.lineArr = str.componentsSeparatedByString(".") as Array<String>;
+        self.lineArr = str.components(separatedBy: ".") as Array<String>;
     }
 }

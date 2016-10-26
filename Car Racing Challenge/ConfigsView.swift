@@ -18,10 +18,10 @@ class ConfigsView:AbstractView
     var tt:UIImageView!;
     var scaleFactor:CGFloat = 1;
     var bestScore: UILabel!;
-    var _timer:NSTimer!;
+    var _timer:Timer!;
     var _currentScore:Float = 0;
     var _totalScore:Float = 0;
-    var _animaTime:NSTimeInterval = 0;
+    var _animaTime:TimeInterval = 0;
     var _hasPurchasedCallback:(()->Void)!;
     
     override func didMoveToSuperview()
@@ -38,7 +38,7 @@ class ConfigsView:AbstractView
         
         self.container = AbstractView();
         self.addSubview(self.container);
-        self.container.frame = UIScreen.mainScreen().applicationFrame;
+        self.container.frame = UIScreen.main.applicationFrame;
         self.container.layer.masksToBounds = true;
         self.container.width = self.width;
         self.container.height = 200;
@@ -67,13 +67,13 @@ class ConfigsView:AbstractView
         //best score
         let data:NSString = DataProvider.getString(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore) as NSString;
         _totalScore = data.floatValue;
-        _animaTime = NSTimeInterval(0.005);
+        _animaTime = TimeInterval(0.005);
         
         print("animatime:\(_animaTime)");
         
         self.bestScore = UILabel();
-        self.bestScore.textColor = UIColor.blackColor();
-        self.bestScore.textAlignment = NSTextAlignment.Center;
+        self.bestScore.textColor = UIColor.black;
+        self.bestScore.textAlignment = NSTextAlignment.center;
         self.bestScore.font = Fonts.DefaultFont(FontSize.Default * self.scaleFactor);
         self.bestScore.text = "BEST SCORE:0";
         self.bestScore.sizeToFit();
@@ -83,7 +83,7 @@ class ConfigsView:AbstractView
         self.addSubview(self.bestScore);
         self.bestScore.alpha = 0.4;
         self.bestScore.layer.borderWidth = 0.5;
-        self.bestScore.layer.borderColor = UIColor.blackColor().alpha(0.2).CGColor;
+        self.bestScore.layer.borderColor = UIColor.black.alpha(0.2).cgColor;
         
         buildMenu();
         
@@ -121,13 +121,13 @@ class ConfigsView:AbstractView
             _timer = nil;
         }
         
-        NSNotificationCenter.defaultCenter().removeObserver(self);
+        NotificationCenter.default.removeObserver(self);
         super.removeFromSuperview();
     }
     
     func buildMenu()
     {
-        self.actions.removeAll(keepCapacity: false);
+        self.actions.removeAll(keepingCapacity: false);
         
         addAction("SOUNDS", selector: #selector(soundHandler), key:SuiteNames.KeySound, active:true);
         
@@ -161,8 +161,8 @@ class ConfigsView:AbstractView
             label = "";
             model = self.actions[i];
             action = UILabel();
-            action.textColor = UIColor.blackColor();
-            action.textAlignment = NSTextAlignment.Center;
+            action.textColor = UIColor.black;
+            action.textAlignment = NSTextAlignment.center;
             if(model.active)
             {
                 action.font = Fonts.LightFont(FontSize.Medium * self.scaleFactor);
@@ -189,7 +189,7 @@ class ConfigsView:AbstractView
                 action.bold(label);
             }
             
-            action.bold("S2", color: UIColor.magentaColor());
+            action.bold("S2", color: UIColor.magenta);
             
             self.container.addSubview(action);
             action.sizeToFit();
@@ -211,7 +211,7 @@ class ConfigsView:AbstractView
         
         self.container.height = lastY;
         self.container.center.x = self.center.x;
-        self.container.y = (UIScreen.mainScreen().applicationFrame.height - self.container.height).half - 25;
+        self.container.y = (UIScreen.main.applicationFrame.height - self.container.height).half - 25;
         self.podium.y = self.container.y + self.container.height;
         self.fb.y = self.podium.y;
         self.tt.y = self.podium.y;
@@ -223,7 +223,7 @@ class ConfigsView:AbstractView
             self.bestScore.y = self.container.y - self.bestScore.height * 1.5;
         }
         
-        UIView.animateWithDuration(AnimationTime.Default, delay: 0.3, options: [], animations: {
+        UIView.animate(withDuration: AnimationTime.Default, delay: 0.3, options: [], animations: {
             self.fb.center.x = self.podium.center.x - (self.podium.width * 1.15);
             self.tt.center.x = self.podium.center.x + (self.podium.width * 1.15);
             self.fb.alpha = 1;
@@ -231,7 +231,7 @@ class ConfigsView:AbstractView
             }, completion: nil);
     }
     
-    func addAction(label:String! = nil, selector:Selector! = nil, key:String! = nil, active:Bool = false)
+    func addAction(_ label:String! = nil, selector:Selector! = nil, key:String! = nil, active:Bool = false)
     {
         let action:ActionModel = ActionModel();
         action.label = label;
@@ -242,7 +242,7 @@ class ConfigsView:AbstractView
     }
     
     //----- HANDLERS ---------
-    func openGameCenter(sender:AnyObject!)
+    func openGameCenter(_ sender:AnyObject!)
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
@@ -263,7 +263,7 @@ class ConfigsView:AbstractView
         print("ads handler");
         if(!PurchaseController.getInstance().hasPurchased())
         {
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConfigsView.purchasedHandler), name: Events.AdsPurchased, object: nil);
+            NotificationCenter.default.addObserver(self, selector: #selector(ConfigsView.purchasedHandler), name: NSNotification.Name(rawValue: Events.AdsPurchased), object: nil);
             PurchaseController.getInstance().buyRemoveAds(false);
             AudioHelper.playSound(AudioHelper.MenuOpenSound);
         }
@@ -272,7 +272,7 @@ class ConfigsView:AbstractView
     func restoreHandler()
     {
         print("restore handler");
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ConfigsView.restoredHandler), name: Events.AdsPurchased, object: nil);
+        NotificationCenter.default.addObserver(self, selector: #selector(ConfigsView.restoredHandler), name: NSNotification.Name(rawValue: Events.AdsPurchased), object: nil);
         PurchaseController.getInstance().buyRemoveAds(true);
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
     }
@@ -280,7 +280,7 @@ class ConfigsView:AbstractView
     //----observer
     func purchasedHandler()
     {
-        NSNotificationCenter.defaultCenter().removeObserver(self);
+        NotificationCenter.default.removeObserver(self);
 //        NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
         _hasPurchasedCallback();
         PurchaseController.getInstance().hasPurchased(true);
@@ -290,7 +290,7 @@ class ConfigsView:AbstractView
     
     func restoredHandler()
     {
-        NSNotificationCenter.defaultCenter().removeObserver(self);
+        NotificationCenter.default.removeObserver(self);
 //        NSNotificationCenter.defaultCenter().postNotificationName(Events.removeAds, object:self);
         _hasPurchasedCallback();
         PurchaseController.getInstance().hasPurchased(true);
@@ -302,12 +302,12 @@ class ConfigsView:AbstractView
     {
         print("rate handler");
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
-        let url:NSURL! = NSURL(string: Routes.RATE_US_URL)!;
-        UIApplication.sharedApplication().openURL(url);
+        let url:URL! = URL(string: Routes.RATE_US_URL)!;
+        UIApplication.shared.openURL(url);
         
-        if let checkURL = NSURL(string: "https://itunes.apple.com/app/car-racing-challenge/id979116721")
+        if let checkURL = URL(string: "https://itunes.apple.com/app/car-racing-challenge/id979116721")
         {
-            if UIApplication.sharedApplication().openURL(checkURL)
+            if UIApplication.shared.openURL(checkURL)
             {
                 print("url sucefully opened");
             }
@@ -322,11 +322,11 @@ class ConfigsView:AbstractView
     {
         print("apps handler");
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
-        let url:NSURL! = NSURL(string: Routes.MY_APPS)!;
-        UIApplication.sharedApplication().openURL(url);
+        let url:URL! = URL(string: Routes.MY_APPS)!;
+        UIApplication.shared.openURL(url);
     }
     
-    func facebookHandler(sender:AnyObject!)
+    func facebookHandler(_ sender:AnyObject!)
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
@@ -335,7 +335,7 @@ class ConfigsView:AbstractView
         shareBuilder(SocialController.facebookType);
     }
     
-    func twitterHandler(sender:AnyObject!)
+    func twitterHandler(_ sender:AnyObject!)
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
@@ -344,7 +344,7 @@ class ConfigsView:AbstractView
         shareBuilder(SocialController.twitterType);
     }
     
-    private func shareBuilder(type:String)
+    fileprivate func shareBuilder(_ type:String)
     {
         SocialController.getInstance().share(type, text:"#CarRacingChallenge inspired by the old brick games. Try your best on this infinite car race!", url:Routes.ITUNES_URL, image:UIImage(named: "export_icon_180.png"));
     }

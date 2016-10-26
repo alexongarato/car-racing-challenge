@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 class GameStatusView:AbstractView
 {
-    private var scoreField:UILabel!;
-    private var statusField:UILabel!;
-    private var defaultBgColor:UIColor!;
-    private var defaultY:CGFloat = 0;
+    fileprivate var scoreField:UILabel!;
+    fileprivate var statusField:UILabel!;
+    fileprivate var defaultBgColor:UIColor!;
+    fileprivate var defaultY:CGFloat = 0;
     
     override func didMoveToSuperview()
     {
@@ -38,15 +38,15 @@ class GameStatusView:AbstractView
         self.addSubview(self.statusField);
         self.statusField.y = 5;
         self.statusField.font = Fonts.DefaultFont(FontSize.Small);
-        self.statusField.textColor = UIColor.blackColor();
-        self.statusField.textAlignment = NSTextAlignment.Center;
+        self.statusField.textColor = UIColor.black;
+        self.statusField.textAlignment = NSTextAlignment.center;
         self.layer.borderWidth = 0.5;
-        self.layer.borderColor = UIColor.whiteColor().alpha(0.5).CGColor;
+        self.layer.borderColor = UIColor.white.alpha(0.5).cgColor;
     }
     
     func show()
     {
-        UIView.animateWithDuration(AnimationTime.VerySlow, delay: AnimationTime.Slow, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: AnimationTime.VerySlow, delay: AnimationTime.Slow, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
             self.y = self.defaultY;
             self.alpha = 1;
             }, completion: nil);
@@ -54,13 +54,13 @@ class GameStatusView:AbstractView
     
     func hide()
     {
-        UIView.animateWithDuration(AnimationTime.Default, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+        UIView.animate(withDuration: AnimationTime.Default, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
             self.y = self.defaultY - self.height;
             self.alpha = 0;
             }, completion: nil);
     }
     
-    func update(level:Int, score:Int, nextScore:Int, lifes:Int, scoreNextLife:Int)
+    func update(_ level:Int, score:Int, nextScore:Int, lifes:Int, scoreNextLife:Int)
     {
 //        self.statusField.text = "LEVEL:\(level)  LIFES:\(lifes)  SCORE:\(score)/\(nextScore * level)";
         self.statusField.text = "LEVEL:\(level)        SCORE:\(score) / \(nextScore * level)";
@@ -75,15 +75,15 @@ class GameStatusView:AbstractView
     {
         self.backgroundColor = defaultBgColor;
         
-        func completion(animated:Bool)
+        func completion(_ animated:Bool)
         {
-            UIView.animateWithDuration(AnimationTime.Default, animations: {
+            UIView.animate(withDuration: AnimationTime.Default, animations: {
                 self.backgroundColor = self.defaultBgColor;
             }, completion: nil);
         }
         
-        UIView.animateWithDuration(AnimationTime.Default, animations: {
-            self.backgroundColor = UIColor.blackColor().alpha(0.2);
+        UIView.animate(withDuration: AnimationTime.Default, animations: {
+            self.backgroundColor = UIColor.black.alpha(0.2);
         }, completion: completion);
     }
     
@@ -91,15 +91,15 @@ class GameStatusView:AbstractView
     {
         self.backgroundColor = defaultBgColor;
         
-        func completion(animated:Bool)
+        func completion(_ animated:Bool)
         {
-            UIView.animateWithDuration(AnimationTime.Default, animations: {
+            UIView.animate(withDuration: AnimationTime.Default, animations: {
                 self.backgroundColor = self.defaultBgColor;
                 }, completion: nil);
         }
         
-        UIView.animateWithDuration(AnimationTime.Default, animations: {
-            self.backgroundColor = UIColor.blackColor().alpha(0.2);
+        UIView.animate(withDuration: AnimationTime.Default, animations: {
+            self.backgroundColor = UIColor.black.alpha(0.2);
             }, completion: completion);
     }
 }

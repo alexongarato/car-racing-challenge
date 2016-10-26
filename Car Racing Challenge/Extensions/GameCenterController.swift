@@ -22,7 +22,7 @@ class GameCenterController:NSObject
     {
         // Check for presence of GKLocalPlayer API.
         let gcClass:AnyClass! = NSClassFromString("GKLocalPlayer");
-        let systemVersion:NSString = UIDevice.currentDevice().systemVersion;
+        let systemVersion:NSString = UIDevice.current.systemVersion as NSString;
         return (gcClass != nil && systemVersion.floatValue >= 4.1);
     }
     
@@ -31,7 +31,7 @@ class GameCenterController:NSObject
         GameCenterController.authenticate(GameCenterController.fetchUserScores);
     }
     
-    class func setReadyStatus(value:Bool)
+    class func setReadyStatus(_ value:Bool)
     {
         isGameCenterAuthenticationComplete = value;
     }
@@ -41,7 +41,7 @@ class GameCenterController:NSObject
         return isGameCenterAuthenticationComplete;
     }
     
-    private class func leaderboardHandler(error:NSError?)
+    fileprivate class func leaderboardHandler(_ error:Error?)
     {
         if(error != nil)
         {
@@ -53,7 +53,7 @@ class GameCenterController:NSObject
         }
     }
     
-    class func authenticate(callback:(()->Void)!)
+    class func authenticate(_ callback:(()->Void)!)
     {
         if(!GameCenterController.isGameCenterAPIAvailable())
         {
@@ -82,7 +82,7 @@ class GameCenterController:NSObject
         Grand Central Dispatch to call the block asynchronously once authentication completes.
         */
         
-        func handler(view:UIViewController?, error:NSError?) -> Void
+        func handler(_ view:UIViewController?, error:Error?) -> Void
         {
             print("GameCenterController -> auth complete.");
             
@@ -95,16 +95,16 @@ class GameCenterController:NSObject
                     //showAuthenticationDialogWhenReasonable: is an example method name.
                     //Create your own method that displays an authentication view when appropriate for your app.
                     AppDelegate.getInstance().gameController.applicationWillResignActive();
-                    AppDelegate.getInstance().gameController.presentViewController(view!, animated: true, completion: {
+                    AppDelegate.getInstance().gameController.present(view!, animated: true, completion: {
                         AppDelegate.getInstance().gameController.applicationDidBecomeActive();
                     })
                 }
             }
-            else if (localPlayer.authenticated)
+            else if (localPlayer.isAuthenticated)
             {
                 // Enable Game Center Functionality
                 self.setReadyStatus(true);
-                currentPlayerID = localPlayer.playerID;
+                currentPlayerID = localPlayer.playerID as NSString!;
                 print("GameCenterController -> user authenticated (\(currentPlayerID))");
                 
                 if(callback != nil)
@@ -130,10 +130,10 @@ class GameCenterController:NSObject
         var leaderboardRequest:GKLeaderboard;
         leaderboardRequest =  GKLeaderboard(players: [localPlayer]);
         leaderboardRequest.identifier = leaderBoardID;
-        leaderboardRequest.playerScope = GKLeaderboardPlayerScope.Global;
-        leaderboardRequest.timeScope = GKLeaderboardTimeScope.AllTime;
+        leaderboardRequest.playerScope = GKLeaderboardPlayerScope.global;
+        leaderboardRequest.timeScope = GKLeaderboardTimeScope.allTime;
         leaderboardRequest.range = NSMakeRange(1,1);
-        leaderboardRequest.loadScoresWithCompletionHandler { (scores, error) -> Void in
+        leaderboardRequest.loadScores { (scores, error) -> Void in
             if (scores != nil)
             {
                 let newScore:NSInteger = NSInteger(leaderboardRequest.localPlayerScore!.value);
@@ -152,14 +152,13 @@ class GameCenterController:NSObject
             else
             {
                 print("GameCenterController -> gest score from leaderboard: error");
-                error;
             }
         }
     }
     
     class func loadLeaderboard()
     {
-        func completion(leaderboards:[GKLeaderboard]?, error:NSError?) -> Void
+        func completion(_ leaderboards:[GKLeaderboard]?, error:Error?) -> Void
         {
             //AlertController.getInstance().hideAlert({
                 let gameCenterController:GKGameCenterViewController! = GKGameCenterViewController();
@@ -167,10 +166,10 @@ class GameCenterController:NSObject
                 if (gameCenterController != nil)
                 {
                     gameCenterController.gameCenterDelegate = AppDelegate.getInstance().gameController;
-                    gameCenterController.viewState = GKGameCenterViewControllerState.Achievements;
+                    gameCenterController.viewState = GKGameCenterViewControllerState.achievements;
 //                    gameCenterController.leaderboardIdentifier = leaderBoardID;
                     AppDelegate.getInstance().gameController.applicationWillResignActive();
-                    AppDelegate.getInstance().gameController.presentViewController(gameCenterController, animated: true, completion: {
+                    AppDelegate.getInstance().gameController.present(gameCenterController, animated: true, completion: {
                         AlertController.getInstance().hideAlert(nil);
                     });
                 }
@@ -184,22 +183,22 @@ class GameCenterController:NSObject
         AudioHelper.playSound(AudioHelper.MenuOpenSound);
         
         //AlertController.getInstance().showAlert(message: "Loading...", action: nil, completion:{
-            GKLeaderboard.loadLeaderboardsWithCompletionHandler(completion);
+            GKLeaderboard.loadLeaderboards(completionHandler: completion);
         //});
     }
     
-    class func reportScore(score:Int)
+    class func reportScore(_ score:Int)
     {
         var scoreReporter:GKScore = GKScore(leaderboardIdentifier: leaderBoardID);
         scoreReporter.value = Int64(score);
         scoreReporter.context = 0;
         scoreReporter.shouldSetDefaultLeaderboard = !UICustomDevice.isIOS8OrHigher();
         
-        func completion(error:NSError?) -> Void
+        func completion(_ error:Error?) -> Void
         {
             print("GameCenterController -> score reported:\(score)");
         }
         
-        GKScore.reportScores([scoreReporter], withCompletionHandler: completion);
+        GKScore.report([scoreReporter], withCompletionHandler: completion);
     }
 }

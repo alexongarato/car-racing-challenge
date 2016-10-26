@@ -11,19 +11,19 @@ import Foundation
 struct AnimationTime
 {
     /** 1.00 sec */
-    static var VerySlow : NSTimeInterval = 1.00;
+    static var VerySlow : TimeInterval = 1.00;
     /** 0.50 secs */
-    static var Slow     : NSTimeInterval = 0.50;
+    static var Slow     : TimeInterval = 0.50;
     /** 0.30 secs */
-    static var Default  : NSTimeInterval = 0.30;//0.30
+    static var Default  : TimeInterval = 0.30;//0.30
     /** 0.25 secs */
-    static var Fast     : NSTimeInterval = 0.25;
+    static var Fast     : TimeInterval = 0.25;
     /** 0.20 secs */
-    static var VeryFast : NSTimeInterval = 0.20;
+    static var VeryFast : TimeInterval = 0.20;
 }
 
 enum AnimationStyle:Int
 {
-    case Scale     = 1
-    case SlideUp   = 2
+    case scale     = 1
+    case slideUp   = 2
 };

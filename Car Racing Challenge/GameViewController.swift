@@ -20,7 +20,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
     var snapshotView            : UIImageView!;
     var showResumeOnStartUp     : Bool = false;
     var touchAreasImgView       : UIImageView!;
-    private var _bestScore      : NSInteger = 0;
+    fileprivate var _bestScore      : NSInteger = 0;
     
     override func viewDidLoad()
     {
@@ -53,7 +53,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         super.viewDidLoad();
         
         self.scene = GameScene();
-        scene.size = UIScreen.mainScreen().applicationFrame.size;
+        scene.size = UIScreen.main.applicationFrame.size;
         scene.updateStatusHandler = self.updateGameStatusHandler;
         scene.gameOverHandler = self.gameOverHandler;
         scene.levelUpHandler = self.levelUpHandler;
@@ -71,7 +71,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         self.pauseArea.height = self.pauseArea.height * 0.8;
 //        self.pauseArea.backgroundColor = UIColor.redColor();
 //        self.pauseArea.alpha = 0.2;
-        self.pauseArea.backgroundColor = UIColor.clearColor();
+        self.pauseArea.backgroundColor = UIColor.clear;
         self.pauseArea.addTarget(self, selector: #selector(GameViewController.pauseGameHandler));
         self.view.addSubview(self.pauseArea);
         
@@ -93,7 +93,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         startGame();
     }
     
-    func showMenu(msg:String, desc:String, action:String, selector:Selector!, showInstructions:Bool = false, showExitButton:Bool = true, showGameOver:Bool = false)
+    func showMenu(_ msg:String, desc:String, action:String, selector:Selector!, showInstructions:Bool = false, showExitButton:Bool = true, showGameOver:Bool = false)
     {
         if(menuView != nil)
         {
@@ -103,7 +103,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         scene.stop();
         statusView.hide();
         menuView = MenuView();
-        menuView.animationStyle = AnimationStyle.Scale;
+        menuView.animationStyle = AnimationStyle.scale;
         self.view.addSubview(menuView);
         menuView.setTitle(msg);
         menuView.setDescription(desc);
@@ -137,14 +137,14 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         return _bestScore;
     }
     
-    func setBestScore(score:NSInteger)
+    func setBestScore(_ score:NSInteger)
     {
         print("GameViewController -> best score saved: \(score)");
-        DataProvider.saveData(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore, string: "\(score)");
+        DataProvider.saveData(SuiteNames.SuiteBestScore, key: SuiteNames.KeyBestScore, string: "\(score)" as NSString!);
         _bestScore = score;
     }
     
-    func exitHandler(sender:AnyObject!)
+    func exitHandler(_ sender:AnyObject!)
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
@@ -174,7 +174,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         self.showBanner();
     }
     
-    func testConnectivity(sender:AnyObject!)
+    func testConnectivity(_ sender:AnyObject!)
     {
         /* as acoes do menu agora só aparecem quando o banner é carregado (MenuView).
         if(ConnectivityHelper.isReachable() || PurchaseController.getInstance().hasPurchased())
@@ -192,14 +192,14 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         self.startGameHandler(sender);
     }
     
-    func startGameHandler(sender:AnyObject!)
+    func startGameHandler(_ sender:AnyObject!)
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
         menuView.disableAction();
         statusView.show();
         
-        func complete(animated:Bool)
+        func complete(_ animated:Bool)
         {
             if(self.menuView != nil)
             {
@@ -226,11 +226,11 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
             self.scene.start();
             
             self.touchAreasImgView.scale(0.5);
-            UIView.animateWithDuration(AnimationTime.Default, animations: {
+            UIView.animate(withDuration: AnimationTime.Default, animations: {
                 self.touchAreasImgView.alpha = 1;
                 self.touchAreasImgView.scale(1);
                 },completion: { (animated) -> Void in
-                    UIView.animateWithDuration(AnimationTime.Default, delay:AnimationTime.VerySlow + AnimationTime.Default, options:[], animations: {
+                    UIView.animate(withDuration: AnimationTime.Default, delay:AnimationTime.VerySlow + AnimationTime.Default, options:[], animations: {
                         self.touchAreasImgView.alpha = 0;
                         self.touchAreasImgView.scale(0.5);
                         }, completion:{ (animated) -> Void in
@@ -287,14 +287,14 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         AudioHelper.playSound(AudioHelper.LevelUpSound);
     }
     
-    func resumeLevelUp(sender:AnyObject!)
+    func resumeLevelUp(_ sender:AnyObject!)
     {
         (sender as! UITapGestureRecognizer).view?.onTouchAnima();
         
         menuView.disableAction();
         statusView.show();
         
-        func complete(animated:Bool)
+        func complete(_ animated:Bool)
         {
             if(self.menuView != nil)
             {
@@ -320,7 +320,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         }
     }
     
-    override func viewDidAppear(animated: Bool)
+    override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated);
     }
@@ -343,11 +343,11 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         showMenu("GAME PAUSED\n\n", desc: " \n \n \nARE YOU READY?", action: "RESUME", selector: #selector(GameViewController.resumeLevelUp(_:)), showExitButton:false);
     }
     
-    func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController)
+    func gameCenterViewControllerDidFinish(_ gameCenterViewController: GKGameCenterViewController)
     {
         print("GameViewController -> GameCenter did finish");
         
-        gameCenterViewController.dismissViewControllerAnimated(true, completion:{
+        gameCenterViewController.dismiss(animated: true, completion:{
                 self.applicationDidBecomeActive();
         });
     }
@@ -360,14 +360,14 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         }
     }
 
-    override func shouldAutorotate() -> Bool
+    override var shouldAutorotate : Bool
     {
         return false;
     }
     
-    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask
     {
-        return UIInterfaceOrientationMask.Portrait;
+        return UIInterfaceOrientationMask.portrait;
     }
     
     override func didReceiveMemoryWarning()
@@ -376,7 +376,7 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate
         // Release any cached data, images, etc that aren't in use.
     }
     
-    override func prefersStatusBarHidden() -> Bool
+    override var prefersStatusBarHidden : Bool
     {
         return true;
     }

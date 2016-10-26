@@ -22,20 +22,20 @@ class Utils
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate));
     }
     
-    class func random(i:Int) -> Int
+    class func random(_ i:Int) -> Int
     {
         return Int(arc4random_uniform(UInt32(1+i)));
     }
     
-    class func delayedCall(interval:NSTimeInterval, target:AnyObject, selector:Selector, repeats:Bool) -> NSTimer
+    class func delayedCall(_ interval:TimeInterval, target:AnyObject, selector:Selector, repeats:Bool) -> Timer
     {
-        return NSTimer.scheduledTimerWithTimeInterval(interval, target: target, selector: selector, userInfo: nil, repeats: repeats);
+        return Timer.scheduledTimer(timeInterval: interval, target: target, selector: selector, userInfo: nil, repeats: repeats);
     }
     
-    class func createCarTexture(size:CGSize, pixelWidth:CGFloat, pixelHeight:CGFloat) -> SKTexture
+    class func createCarTexture(_ size:CGSize, pixelWidth:CGFloat, pixelHeight:CGFloat) -> SKTexture
     {
         //var pixelFrame:CGRect = CGRect(x: 0, y: 0, width: pixelWidth, height: pixelHeight);
-        let pixelOn:CGImageRef = UIImage(named:ImagesNames.PixelOn)!.CGImage!;
+        let pixelOn:CGImage = UIImage(named:ImagesNames.PixelOn)!.cgImage!;
         
         var pixelVect:Array<Pixel> = Array<Pixel>();
         pixelVect.append(Pixel(x: 0,                y: 0,                active: false));
@@ -55,7 +55,7 @@ class Utils
         pixelVect.append(Pixel(x: pixelWidth * 2,   y: pixelHeight * 3,  active: true));
         
         UIGraphicsBeginImageContext(size);
-        let context:CGContextRef = UIGraphicsGetCurrentContext()!
+        let context:CGContext = UIGraphicsGetCurrentContext()!
         
         for i in 0 ..< pixelVect.count
         {
@@ -63,26 +63,26 @@ class Utils
             {
                 let pnt:CGPoint = CGPoint(x: pixelVect[i].x, y:pixelVect[i].y);
                 let rect:CGRect = CGRect(origin: pnt, size: CGSize(width: pixelWidth, height: pixelHeight));
-                CGContextDrawImage(context, rect, pixelOn);
+                context.draw(pixelOn, in: rect);
             }
         }
-        let tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        let tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
         UIGraphicsEndImageContext();
         
-        let tempTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage!);
-        tempTexture.filteringMode = SKTextureFilteringMode.Nearest;
+        let tempTexture:SKTexture = SKTexture(cgImage: tiledPixels.cgImage!);
+        tempTexture.filteringMode = SKTextureFilteringMode.nearest;
 //        tempTexture.usesMipmaps = true;
         
         return tempTexture;
     }
     
-    class func createPixelsGrid(size:CGSize, totalPixelsX:Int, totalPixelsY:Int, pixelSize:CGFloat) -> SKTexture
+    class func createPixelsGrid(_ size:CGSize, totalPixelsX:Int, totalPixelsY:Int, pixelSize:CGFloat) -> SKTexture
     {
 //        var pixelFrame:CGRect = CGRect(x: 0, y: 0, width: pixelSize, height: pixelSize);
-        let pixelOff:CGImageRef = UIImage(named:ImagesNames.PixelOff)!.CGImage!;
+        let pixelOff:CGImage = UIImage(named:ImagesNames.PixelOff)!.cgImage!;
         
         UIGraphicsBeginImageContext(size);
-        let context:CGContextRef = UIGraphicsGetCurrentContext()!;
+        let context:CGContext = UIGraphicsGetCurrentContext()!;
         
         for x in 0 ..< totalPixelsX
         {
@@ -90,58 +90,58 @@ class Utils
             {
                 let pnt:CGPoint = CGPoint(x: pixelSize * x.floatValue, y:pixelSize * y.floatValue);
                 let rect:CGRect = CGRect(origin: pnt, size: CGSize(width: pixelSize, height: pixelSize));
-                CGContextDrawImage(context, rect, pixelOff);
+                context.draw(pixelOff, in: rect);
             }
         }
         
-        let tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        let tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
         UIGraphicsEndImageContext();
         
-        let tempTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage!);
-        tempTexture.filteringMode = SKTextureFilteringMode.Nearest;
+        let tempTexture:SKTexture = SKTexture(cgImage: tiledPixels.cgImage!);
+        tempTexture.filteringMode = SKTextureFilteringMode.nearest;
         
         return tempTexture;
     }
     
-    class func createRoadPixels(size:CGSize, totalPixelsX:Int, totalPixelsY:Int, pixelSize:CGFloat) -> SKTexture
+    class func createRoadPixels(_ size:CGSize, totalPixelsX:Int, totalPixelsY:Int, pixelSize:CGFloat) -> SKTexture
     {
         //var pixelFrame:CGRect = CGRect(x: 0, y: 0, width: pixelSize, height: pixelSize);
-        let pixelOn:CGImageRef = UIImage(named:ImagesNames.PixelOn)!.CGImage!;
+        let pixelOn:CGImage = UIImage(named:ImagesNames.PixelOn)!.cgImage!;
         
         UIGraphicsBeginImageContext(size);
-        let context:CGContextRef = UIGraphicsGetCurrentContext()!;
+        let context:CGContext = UIGraphicsGetCurrentContext()!;
         var pnt:CGPoint!;
         var rect:CGRect!;
-        for x in 0.stride(to: totalPixelsX, by: totalPixelsX-1)
+        for x in stride(from: 0, to: totalPixelsX, by: totalPixelsX-1)
         {
             for var y in 0 ..< totalPixelsY
             {
                 pnt = CGPoint(x: pixelSize * x.floatValue, y:pixelSize * y.floatValue);
                 rect = CGRect(origin: pnt, size: CGSize(width: pixelSize, height: pixelSize));
-                CGContextDrawImage(context, rect, pixelOn);
+                context.draw(pixelOn, in: rect);
                 
                 y += 1;
                 
                 pnt = CGPoint(x: pixelSize * x.floatValue, y:pixelSize * y.floatValue);
                 rect = CGRect(origin: pnt, size: CGSize(width: pixelSize, height: pixelSize));
-                CGContextDrawImage(context, rect, pixelOn);
+                context.draw(pixelOn, in: rect);
                 
                 y += 1;
                 
                 pnt = CGPoint(x: pixelSize * x.floatValue, y:pixelSize * y.floatValue);
                 rect = CGRect(origin: pnt, size: CGSize(width: pixelSize, height: pixelSize));
-                CGContextDrawImage(context, rect, pixelOn);
+                context.draw(pixelOn, in: rect);
                 
                 y += 1;
                 
             }
         }
         
-        let tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        let tiledPixels:UIImage = UIGraphicsGetImageFromCurrentImageContext()!;
         UIGraphicsEndImageContext();
         
-        let tempTexture:SKTexture = SKTexture(CGImage: tiledPixels.CGImage!);
-        tempTexture.filteringMode = SKTextureFilteringMode.Nearest;
+        let tempTexture:SKTexture = SKTexture(cgImage: tiledPixels.cgImage!);
+        tempTexture.filteringMode = SKTextureFilteringMode.nearest;
         
         return tempTexture;
     }
@@ -149,13 +149,13 @@ class Utils
     class func printFontNames()
     {
 //        #if DEBUG
-        for family:AnyObject in UIFont.familyNames()
+        for family:String in UIFont.familyNames
         {
-            print("Font family: \(family as? String)");
+            print("Font family: \(family)");
             
-            for name:AnyObject in UIFont.fontNamesForFamilyName(family as! String)
+            for name:String in UIFont.fontNames(forFamilyName: family)
             {
-                print("  - Font name: \(name as! String)");
+                print("  - Font name: \(name)");
             }
         }
 //        #endif

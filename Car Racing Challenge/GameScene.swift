@@ -13,17 +13,17 @@ class GameScene: SKScene
     //-- configs --
     let SCORE_TO_LEVEL_UP               : Int = 150;//500
     let SCORE_TO_EARN_LIFE              : Int = 999999;//100
-    private let MAX_COLUMNS             : Int = 5;
-    private let MIN_COLUMNS             : Int = 5;
-    private let ID_BT_LEFT              : String = "bt_left";
-    private let ID_BT_RIGHT             : String = "bt_right";
-    private let INT_BETWEEN_LEVELS      : CFTimeInterval = 0.01;
-    private let PIXELS_BETWEEN_ENEMIES_1: Int = 19;
-    private let MIN_PX_BT_ENEMIES_1     : Int = 10;
-    private let IS_LIFE_BONUS_MODE      : Bool = false;
-    private let IS_LEVEL_MODE           : Bool = true;
-    private let INITIAL_USER_LIFES      : Int = 0;
-    private let ROAD_PIXELS_INTERVAL    : Int = 4;
+    fileprivate let MAX_COLUMNS             : Int = 5;
+    fileprivate let MIN_COLUMNS             : Int = 5;
+    fileprivate let ID_BT_LEFT              : String = "bt_left";
+    fileprivate let ID_BT_RIGHT             : String = "bt_right";
+    fileprivate let INT_BETWEEN_LEVELS      : CFTimeInterval = 0.01;
+    fileprivate let PIXELS_BETWEEN_ENEMIES_1: Int = 19;
+    fileprivate let MIN_PX_BT_ENEMIES_1     : Int = 10;
+    fileprivate let IS_LIFE_BONUS_MODE      : Bool = false;
+    fileprivate let IS_LEVEL_MODE           : Bool = true;
+    fileprivate let INITIAL_USER_LIFES      : Int = 0;
+    fileprivate let ROAD_PIXELS_INTERVAL    : Int = 4;
     
     
     //-- pointers --
@@ -32,37 +32,37 @@ class GameScene: SKScene
     var levelUpHandler                  : (()->Void)!;
     var lifeUpHandler                   : (()->Void)!;
     var lifeDownHandler                 : (()->Void)!;
-    private var leftButton              : SKSpriteNode!;
-    private var rightButton             : SKSpriteNode!;
-    private var mainCharacter           : CustomSpriteNode!;
-    private var poolOfEnemiesSprites    : Array<CustomSpriteNode> = Array<CustomSpriteNode>();
-    private var buttonSize              : CGSize = CGSize();
-    private var charactersSize          : CGSize = CGSize();
-    private var pixelSize               : CGFloat = 0;
-    private var defaultFrame            : CGRect!;
-    private var totalColumns            : Int = -1;
-    private var totalScoreCounter       : Int = 0;
-    private var currentScoreCounter     : Int = 0;
-    private var totalLifesCounter       : Int = -1;
-    private var currentLifeCounter      : Int = -1;
-    private var ready                   : Bool = false;
-    private var builded                 : Bool = false;
-    private var loopsTimeCounter        : CFTimeInterval = -1;
-    private var intervalBetweenLoops    : CFTimeInterval = 0.5;
-    private var minIntervalForThisDevice: CFTimeInterval = 0.5;
-    private var pixelDistanceCounter    : Int = -1;
-    private var currentMainCharColumn   : Int = -1;
-    private var currentLevelCounter     : Int = 1;
-    private var trackTexture               : SKSpriteNode!;
-    private var sideNodeFlag            : Bool = false;
-    private var sideNodeVelCounter      : CFTimeInterval = 0;
-    private var currentVelSound         : Float = 0;
-    private var pixelsGridTexture              : SKSpriteNode!;
-    private var lcdTexture                      : SKSpriteNode!;
-    private var isGameOver              : Bool = false;
-    private var currentEnemiesVector    : Array<EnemySheet>!;
-    private var currEnemiesVectorCounter: Int = 0;
-    private var mainTimer               : NSTimer!;
+    fileprivate var leftButton              : SKSpriteNode!;
+    fileprivate var rightButton             : SKSpriteNode!;
+    fileprivate var mainCharacter           : CustomSpriteNode!;
+    fileprivate var poolOfEnemiesSprites    : Array<CustomSpriteNode> = Array<CustomSpriteNode>();
+    fileprivate var buttonSize              : CGSize = CGSize();
+    fileprivate var charactersSize          : CGSize = CGSize();
+    fileprivate var pixelSize               : CGFloat = 0;
+    fileprivate var defaultFrame            : CGRect!;
+    fileprivate var totalColumns            : Int = -1;
+    fileprivate var totalScoreCounter       : Int = 0;
+    fileprivate var currentScoreCounter     : Int = 0;
+    fileprivate var totalLifesCounter       : Int = -1;
+    fileprivate var currentLifeCounter      : Int = -1;
+    fileprivate var ready                   : Bool = false;
+    fileprivate var builded                 : Bool = false;
+    fileprivate var loopsTimeCounter        : CFTimeInterval = -1;
+    fileprivate var intervalBetweenLoops    : CFTimeInterval = 0.5;
+    fileprivate var minIntervalForThisDevice: CFTimeInterval = 0.5;
+    fileprivate var pixelDistanceCounter    : Int = -1;
+    fileprivate var currentMainCharColumn   : Int = -1;
+    fileprivate var currentLevelCounter     : Int = 1;
+    fileprivate var trackTexture               : SKSpriteNode!;
+    fileprivate var sideNodeFlag            : Bool = false;
+    fileprivate var sideNodeVelCounter      : CFTimeInterval = 0;
+    fileprivate var currentVelSound         : Float = 0;
+    fileprivate var pixelsGridTexture              : SKSpriteNode!;
+    fileprivate var lcdTexture                      : SKSpriteNode!;
+    fileprivate var isGameOver              : Bool = false;
+    fileprivate var currentEnemiesVector    : Array<EnemySheet>!;
+    fileprivate var currEnemiesVectorCounter: Int = 0;
+    fileprivate var mainTimer               : Timer!;
     
     func currentScoreToNextLife() -> Int
     {
@@ -74,7 +74,7 @@ class GameScene: SKScene
         return self.totalColumns;
     }
     
-    func setTotalColumns(value:Int)
+    func setTotalColumns(_ value:Int)
     {
         if(value >= self.MIN_COLUMNS && value <= self.MAX_COLUMNS)
         {
@@ -111,7 +111,7 @@ class GameScene: SKScene
     {
         if let thisView = self.view
         {
-            return thisView.paused;
+            return thisView.isPaused;
         }
         
         return true;
@@ -151,8 +151,8 @@ class GameScene: SKScene
         
         if(self.poolOfEnemiesSprites.count > 0)
         {
-            self.removeChildrenInArray(self.poolOfEnemiesSprites);
-            self.poolOfEnemiesSprites.removeAll(keepCapacity: false);
+            self.removeChildren(in: self.poolOfEnemiesSprites);
+            self.poolOfEnemiesSprites.removeAll(keepingCapacity: false);
         }
         
         print("GameScene -> pixelSize:\(self.pixelSize)");
@@ -245,7 +245,7 @@ class GameScene: SKScene
         self.rightButton.zPosition = 22;
         
         self.ready = false;
-        self.view?.paused = true;
+        self.view?.isPaused = true;
         
         self.builded = true;
     }
@@ -262,7 +262,7 @@ class GameScene: SKScene
     func resetIntervalBetweenLoops()
     {
         self.intervalBetweenLoops = 0.5;
-        if(UIDevice.currentDevice().model == "iPad")
+        if(UIDevice.current.model == "iPad")
         {
             self.minIntervalForThisDevice = 0.035;
         }
@@ -277,7 +277,7 @@ class GameScene: SKScene
         self.resetTimer();
         self.totalColumns = -1;
         self.ready = false;
-        self.view?.paused = true;
+        self.view?.isPaused = true;
         self.builded = false;
         self.pixelDistanceCounter = -1;
         self.currentMainCharColumn = -1;
@@ -294,9 +294,9 @@ class GameScene: SKScene
     {
         self.resetTimer();
         self.ready = false;
-        self.view?.paused = true;
+        self.view?.isPaused = true;
         self.trackTexture.removeAllActions();
-        self.trackTexture.paused = true;
+        self.trackTexture.isPaused = true;
         //self.resetIntervalBetweenLoops();
         //self.currentVelSound = 0;
         AudioHelper.stopSound(AudioHelper.Vel4Sound);
@@ -313,14 +313,14 @@ class GameScene: SKScene
         AudioHelper.playSound("vel_\(Int(self.currentVelSound)).wav");
         
         self.ready = true;
-        self.paused = false;
-        self.view?.paused = false;
-        self.trackTexture.paused = false;
+        self.isPaused = false;
+        self.view?.isPaused = false;
+        self.trackTexture.isPaused = false;
         self.updateStatusHandler();
         /*startTrackAnima();*/
     }
     
-    override func update(currentTime: CFTimeInterval)
+    override func update(_ currentTime: TimeInterval)
     {
         if(!self.ready)
         {
@@ -335,7 +335,7 @@ class GameScene: SKScene
         }
     }
     
-    private var newDistance:Int = -1;
+    fileprivate var newDistance:Int = -1;
     func update()
     {
         //self.mainTimer = Utils.delayedCall(self.intervalBetweenLoops, target: self, selector: Selector("update"), repeats: false);
@@ -453,7 +453,7 @@ class GameScene: SKScene
             }
         }
         
-        for i in (self.poolOfEnemiesSprites.count-1).stride(to:0, by:-1)
+        for i in stride(from: (self.poolOfEnemiesSprites.count-1), to:0, by:-1)
         {
             let enemyBlock = self.poolOfEnemiesSprites[i];
             if(enemyBlock.isDead)
@@ -467,10 +467,10 @@ class GameScene: SKScene
         }
     }
     
-    private func addNewEnemy()
+    fileprivate func addNewEnemy()
     {
         var newEnemy:CustomSpriteNode!;
-        func createEnemy(col:CGFloat)
+        func createEnemy(_ col:CGFloat)
         {
             //            newEnemy = self.poolOfEnemiesSprites[0];
             newEnemy = CustomSpriteNode(texture: Utils.createCarTexture(self.charactersSize, pixelWidth: self.pixelSize, pixelHeight: self.pixelSize), size: self.charactersSize);
@@ -532,7 +532,7 @@ class GameScene: SKScene
     //----------
     
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
         if(!self.ready)
         {
@@ -542,8 +542,8 @@ class GameScene: SKScene
         /* Called when a touch begins */
         for touch: AnyObject in touches
         {
-            let location = touch.locationInNode(self)
-            let node:SKNode = self.nodeAtPoint(location);
+            let location = touch.location(in: self)
+            let node:SKNode = self.atPoint(location);
             if(node.name == self.ID_BT_LEFT)
             {
                 AudioHelper.playSound(AudioHelper.SelectSound);

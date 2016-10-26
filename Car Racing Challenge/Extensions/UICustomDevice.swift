@@ -13,15 +13,15 @@ class UICustomDevice
 {
     class func isIOS8OrHigher() -> Bool
     {
-        let systemVersion:NSString = UIDevice.currentDevice().systemVersion;
+        let systemVersion:NSString = UIDevice.current.systemVersion as NSString;
         return systemVersion.floatValue >= 8.0;
     }
     
     
     class func avoidTexture() -> Bool
     {
-        let systemVersion:NSString = UIDevice.currentDevice().systemVersion;
-        let height:Bool = UIScreen.mainScreen().applicationFrame.height == 480;
+        let systemVersion:NSString = UIDevice.current.systemVersion as NSString;
+        let height:Bool = UIScreen.main.applicationFrame.height == 480;
         return systemVersion.floatValue < 8.0 && height;
     }
     /*

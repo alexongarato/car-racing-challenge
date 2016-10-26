@@ -44,16 +44,16 @@ class AudioHelper
         buildAudio(lostLifeSound,   volume: 0.2, timeStart: 0, rate: 1.0, loops: 0);
     }
     
-    private class func buildAudio(name:String, volume:Float, timeStart:NSTimeInterval, rate:Float, loops:Int)
+    fileprivate class func buildAudio(_ name:String, volume:Float, timeStart:TimeInterval, rate:Float, loops:Int)
     {
-        let path    : String! = ((NSBundle.mainBundle().resourcePath)! as NSString).stringByAppendingPathComponent(name);
+        let path    : String! = ((Bundle.main.resourcePath)! as NSString).appendingPathComponent(name);
         //var err     : NSError!;
         //var snd      :CustomAVAudioPlayer!;
         
-        if (NSFileManager.defaultManager().fileExistsAtPath(path))
+        if (FileManager.default.fileExists(atPath: path))
         {
-            let url = NSURL(fileURLWithPath: path);
-            let snd:CustomAVAudioPlayer! = try? CustomAVAudioPlayer(contentsOfURL: url);
+            let url = URL(fileURLWithPath: path);
+            let snd:CustomAVAudioPlayer! = try? CustomAVAudioPlayer(contentsOf: url);
             if(snd != nil)
             {
                 snd.volume = volume;
@@ -71,9 +71,9 @@ class AudioHelper
         }
     }
     
-    class func stopSound(name:String) -> CustomAVAudioPlayer!
+    class func stopSound(_ name:String) -> CustomAVAudioPlayer!
     {
-        let tmp:AnyObject! = snds.valueForKey(name);
+        let tmp:AnyObject! = snds.value(forKey: name) as AnyObject!;
         var snd:CustomAVAudioPlayer!;
         if (tmp != nil)
         {
@@ -91,29 +91,27 @@ class AudioHelper
         return snd;
     }
     
-    class func playSound(name:String)
+    class func playSound(_ name:String)
     {
         AsyncHelper.addWorkBlock({
-            if(!DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeySound))
+            if(DataProvider.getBoolData(SuiteNames.SuiteConfigs, key: SuiteNames.KeySound))
             {
-                return;
-            }
-            
-            let tmp:AnyObject! = snds.valueForKey(name);
-            if (tmp != nil)
-            {
-                if let snd = tmp as? CustomAVAudioPlayer
+                let tmp:AnyObject! = snds.value(forKey: name) as AnyObject!;
+                if (tmp != nil)
                 {
-                    if(!snd.playing)
+                    if let snd = tmp as? CustomAVAudioPlayer
                     {
-                        snd.prepareToPlay();
-                        snd.play();
+                        if(!snd.isPlaying)
+                        {
+                            snd.prepareToPlay();
+                            snd.play();
+                        }
                     }
                 }
-            }
-            else
-            {
-                print("Sound file '\(name)' error");
+                else
+                {
+                    print("Sound file '\(name)' error");
+                }
             }
         });
     }
@@ -121,7 +119,7 @@ class AudioHelper
 
 class CustomAVAudioPlayer:AVAudioPlayer, AVAudioPlayerDelegate
 {
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool)
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool)
     {
 //        self.finalize();
     }

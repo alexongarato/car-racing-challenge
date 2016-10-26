@@ -16,7 +16,7 @@ private var _productsRequest    : SKProductsRequest!;
 
 class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransactionObserver
 {
-    private var productsIDs:NSDictionary!;
+    fileprivate var productsIDs:NSDictionary!;
     
     class func getInstance() -> PurchaseController
     {
@@ -31,9 +31,9 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     {
         super.init();
         
-        if let url:NSURL = NSBundle.mainBundle().URLForResource("Products",  withExtension:"plist")
+        if let url:URL = Bundle.main.url(forResource: "Products",  withExtension:"plist")
         {
-            if let dict:NSDictionary = NSDictionary(contentsOfURL:url)
+            if let dict:NSDictionary = NSDictionary(contentsOf:url)
             {
                 self.productsIDs = dict;
             }
@@ -47,7 +47,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         return (Configs.FULL_VERSION_MODE) ? true : DataProvider.getInteger(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds) >= 2;
     }
     
-    func hasPurchased(value:Bool)
+    func hasPurchased(_ value:Bool)
     {
         DataProvider.saveData(SuiteNames.SuiteConfigs, key: SuiteNames.KeyAds, value: (value == true) ? 2 : 0);
         _hasPurchased = value;
@@ -63,7 +63,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         AlertController.getInstance().showAlert(title: "FREE VERSION", message: "It's Only available while online.\nTry the full version now!", action: "OK", completion: completion);
     }
     */
-    func buyRemoveAds(tryRestore:Bool)
+    func buyRemoveAds(_ tryRestore:Bool)
     {
         if(self.productsIDs == nil)
         {
@@ -75,7 +75,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         
         print("Remove Ads handler");
         
-        if let id = self.productsIDs.valueForKey("remove_ads") as? String
+        if let id = self.productsIDs.value(forKey: "remove_ads") as? String
         {
             print("validating Remove Ads ID:\(id)...");
             AlertController.getInstance().showAlert(nil, message: "please wait...", action: nil, completion:nil);// {
@@ -89,7 +89,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         }
     }
     
-    private func validateProductIdentifiers(productIdentifiers:Set<String>!)
+    fileprivate func validateProductIdentifiers(_ productIdentifiers:Set<String>!)
     {
         if(!ConnectivityHelper.isReachable())
         {
@@ -113,23 +113,23 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
     
     
     //---------------- observers --------------
-    @objc func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse)
+    @objc func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse)
     {
-        if let valid:NSArray = response.products
+        if let valid:NSArray = response.products as NSArray?
         {
             for validIdentifier in valid
             {
                 if let prod = validIdentifier as? SKProduct
                 {
-                    var numberFormatter:NSNumberFormatter = NSNumberFormatter();
-                    numberFormatter.formatterBehavior = NSNumberFormatterBehavior.Behavior10_4;
-                    numberFormatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle;
+                    var numberFormatter:NumberFormatter = NumberFormatter();
+                    numberFormatter.formatterBehavior = NumberFormatter.Behavior.behavior10_4;
+                    numberFormatter.numberStyle = NumberFormatter.Style.currency;
                     numberFormatter.locale = prod.priceLocale;
-                    var formattedPrice:NSString = numberFormatter.stringFromNumber(prod.price)!;
+                    var formattedPrice:NSString = numberFormatter.string(from: prod.price)! as NSString;
                     
                     func startPayment()
                     {
-                        SKPaymentQueue.defaultQueue().addTransactionObserver(self);
+                        SKPaymentQueue.default().add(self);
                         
                         AlertController.getInstance().hideAlert(nil);
                         
@@ -138,12 +138,12 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                             print("starting payment process...");
                             let payment:SKMutablePayment = SKMutablePayment(product: prod);
                             payment.quantity = 1;
-                            SKPaymentQueue.defaultQueue().addPayment(payment);
+                            SKPaymentQueue.default().add(payment);
                         }
                         else if(_transactionType == 1)
                         {
                             print("starting restore payment process...");
-                            SKPaymentQueue.defaultQueue().restoreCompletedTransactions();
+                            SKPaymentQueue.default().restoreCompletedTransactions();
                         }
                         
                         _transactionType = -1;
@@ -162,7 +162,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
             print("valid products count:\(valid.count)");
         }
         
-        if let invalid:NSArray = response.invalidProductIdentifiers
+        if let invalid:NSArray = response.invalidProductIdentifiers as NSArray?
         {
             for _ in invalid
             {
@@ -174,7 +174,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         }
     }
     
-    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction])
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction])
     {
         
         var failed:Bool = false;
@@ -182,7 +182,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         
         print("paymentQueue updateTransactions");
         
-        if let prodID = self.productsIDs.valueForKey("remove_ads") as? String
+        if let prodID = self.productsIDs.value(forKey: "remove_ads") as? String
         {
             for transaction in transactions
             {
@@ -192,23 +192,23 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
                 {
                     switch (transaction.transactionState)
                     {
-                    case SKPaymentTransactionState.Purchasing:
+                    case SKPaymentTransactionState.purchasing:
                         print("Purchasing");
                         
-                    case SKPaymentTransactionState.Deferred:
+                    case SKPaymentTransactionState.deferred:
                         print("Deferred");
                         failed = true;
                         AlertController.getInstance().hideAlert(nil);
-                    case SKPaymentTransactionState.Failed:
+                    case SKPaymentTransactionState.failed:
                         print("Failed");
 //                                failed = true;
                         AlertController.getInstance().hideAlert(nil);
                         
-                    case SKPaymentTransactionState.Purchased:
+                    case SKPaymentTransactionState.purchased:
                         print("Purchased");
                         purchased = true;
                         break;
-                    case SKPaymentTransactionState.Restored:
+                    case SKPaymentTransactionState.restored:
                         print("Restored");
                         purchased = true;
                         break;
@@ -229,7 +229,7 @@ class PurchaseController:NSObject, SKProductsRequestDelegate, SKPaymentTransacti
         if(purchased)
         {
             AlertController.getInstance().hideAlert(nil);
-            NSNotificationCenter.defaultCenter().postNotificationName(Events.AdsPurchased, object:self);
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Events.AdsPurchased), object:self);
             return;
         }
     }

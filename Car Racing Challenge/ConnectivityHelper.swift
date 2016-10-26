@@ -15,17 +15,18 @@ class ConnectivityHelper
 {
     class func isReachable() -> Bool
     {
-        var reachability: Reachability;
-        do
-        {
-            reachability = try Reachability.reachabilityForInternetConnection();
-        } catch
-        {
-            NSLog("Unable to create Reachability");
-            return false;
-        }
-        
-        return reachability.isReachable();
+        return true;
+//        var reachability: Reachability;
+//        do
+//        {
+//            reachability = try reachability.reachabilityForInternetConnection();
+//        } catch
+//        {
+//            NSLog("Unable to create Reachability");
+//            return false;
+//        }
+//        
+//        return reachability.isReachable();
     }
     
     class func showDefaultOfflineMessage()

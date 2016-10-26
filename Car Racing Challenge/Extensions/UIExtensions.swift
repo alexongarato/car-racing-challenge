@@ -19,13 +19,13 @@ extension UIImage
         return self.resizeImage(0.5);
     }
     
-    func imageScaled(fitToWidth:CGFloat) -> UIImage
+    func imageScaled(_ fitToWidth:CGFloat) -> UIImage
     {
         let scale:CGFloat = fitToWidth / self.width;
         return self.resizeImage(scale);
     }
     
-    func imageScaledToFit(sizeToFit:CGSize) -> UIImage
+    func imageScaledToFit(_ sizeToFit:CGSize) -> UIImage
     {
         let scale:CGFloat = (self.width > self.height || (sizeToFit.width < sizeToFit.height && self.width >= self.height))
             ? sizeToFit.width / self.width
@@ -33,7 +33,7 @@ extension UIImage
         return self.resizeImage(scale);
     }
     
-    func imageScaledToFill(sizeToFill:CGSize) -> UIImage
+    func imageScaledToFill(_ sizeToFill:CGSize) -> UIImage
     {
         let scale:CGFloat = (self.width < self.height || (sizeToFill.width > sizeToFill.height && self.width <= self.height))
             ? sizeToFill.width / self.width
@@ -41,11 +41,11 @@ extension UIImage
         return self.resizeImage(scale);
     }
     
-    func resizeImage(scale:CGFloat) -> UIImage
+    func resizeImage(_ scale:CGFloat) -> UIImage
     {
         let newSize:CGSize = CGSize(width: Int(self.width * scale), height: Int(self.height * scale));
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
-        self.drawInRect(CGRectMake(0, 0, newSize.width, newSize.height));
+        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height));
         let newImage:UIImage! = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
@@ -55,65 +55,65 @@ extension UIImage
 
 class AbstractView:UIView
 {
-    var animationStyle:AnimationStyle = AnimationStyle.SlideUp;
-    private var _callback:(()->Void)!;
+    var animationStyle:AnimationStyle = AnimationStyle.slideUp;
+    fileprivate var _callback:(()->Void)!;
     
     override func didMoveToSuperview()
     {
         self.inflate(false);
         
-        if(self.animationStyle == .Scale)
+        if(self.animationStyle == .scale)
         {
             self.alpha = 0;
         }
     }
     
-    func present(completion:((animated:Bool)->Void)!)
+    func present(_ completion:((_ animated:Bool)->Void)!)
     {
-        var vel:NSTimeInterval = 0;
-        if(self.animationStyle == .Scale)
+        var vel:TimeInterval = 0;
+        if(self.animationStyle == .scale)
         {
             self.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1);
             vel = AnimationTime.Fast;
         }
-        else if(self.animationStyle == .SlideUp)
+        else if(self.animationStyle == .slideUp)
         {
             self.y = self.height;
             vel = AnimationTime.Slow;
         }
         
-        UIView.animateWithDuration(vel, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            if(self.animationStyle == .Scale)
+        UIView.animate(withDuration: vel, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            if(self.animationStyle == .scale)
             {
                 self.layer.transform = CATransform3DMakeScale(1, 1, 1);
                 self.alpha = 1;
             }
-            else if(self.animationStyle == .SlideUp)
+            else if(self.animationStyle == .slideUp)
             {
                 self.y = 0;
             }
         }, completion: completion);
     }
     
-    func dismiss(completion:((animated:Bool)->Void)!)
+    func dismiss(_ completion:((_ animated:Bool)->Void)!)
     {
-        var vel:NSTimeInterval = 0;
-        if(self.animationStyle == .Scale)
+        var vel:TimeInterval = 0;
+        if(self.animationStyle == .scale)
         {
             vel = AnimationTime.Fast;
         }
-        else if(self.animationStyle == .SlideUp)
+        else if(self.animationStyle == .slideUp)
         {
             vel = AnimationTime.Slow;
         }
         
-        UIView.animateWithDuration(vel, delay: 0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
-            if(self.animationStyle == .Scale)
+        UIView.animate(withDuration: vel, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+            if(self.animationStyle == .scale)
             {
                 self.layer.transform = CATransform3DMakeScale(0.5, 0.5, 1);
                 self.alpha = 0;
             }
-            else if(self.animationStyle == .SlideUp)
+            else if(self.animationStyle == .slideUp)
             {
                 self.y = self.height;
             }
@@ -131,7 +131,7 @@ extension UIView
     /**
     Auto inflate only the with property and optionaly propagate the changes to superviews recursively.
     */
-    func inflate(propagate:Bool)
+    func inflate(_ propagate:Bool)
     {
         inflate(width: -1, height: -1, propagate: propagate);
     }
@@ -171,7 +171,7 @@ extension UIView
             
             if(self.y + newHeight + 90 >= superFrame.height)
             {
-                if(self.superview!.isKindOfClass(UIScrollView))
+                if(self.superview!.isKind(of: UIScrollView.self))
                 {
                     //print("inflate -> reached the scrollview");
                     
@@ -192,38 +192,38 @@ extension UIView
         }
     }
     
-    func addTarget(target:AnyObject, selector:Selector)
+    func addTarget(_ target:AnyObject, selector:Selector)
     {
-        self.userInteractionEnabled = true;
+        self.isUserInteractionEnabled = true;
         self.addGestureRecognizer(UITapGestureRecognizer(target: target, action: selector));
     }
     
     func onTouchAnima()
     {
-        func completion1(animated:Bool)
+        func completion1(_ animated:Bool)
         {
-            UIView.animateWithDuration(AnimationTime.VeryFast, delay:0, options:UIViewAnimationOptions.CurveEaseIn, animations: {
+            UIView.animate(withDuration: AnimationTime.VeryFast, delay:0, options:UIViewAnimationOptions.curveEaseIn, animations: {
                 self.layer.transform = CATransform3DMakeScale(1, 1, 1);
                 }, completion: nil);
         }
         
-        UIView.animateWithDuration(AnimationTime.VeryFast, delay:0, options:UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animate(withDuration: AnimationTime.VeryFast, delay:0, options:UIViewAnimationOptions.curveEaseOut, animations: {
             self.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1);
             }, completion: completion1);
     }
     
     func removeTargets()
     {
-        self.gestureRecognizers?.removeAll(keepCapacity: false);
+        self.gestureRecognizers?.removeAll(keepingCapacity: false);
     }
     
     @available(iOS 8.0, *)
-    func enableBlur(style:UIBlurEffectStyle)
+    func enableBlur(_ style:UIBlurEffectStyle)
     {
         //only apply the blur if the user hasn't disabled transparency effects
         if(!UICustomDevice.isIOS8OrHigher())
         {
-            self.backgroundColor = UIColor.whiteColor().alpha(0.9);
+            self.backgroundColor = UIColor.white.alpha(0.9);
             return;
         }
         
@@ -237,7 +237,7 @@ extension UIView
     {
         if(!UICustomDevice.isIOS8OrHigher())
         {
-            self.backgroundColor = UIColor.blackColor().alpha(0.9);
+            self.backgroundColor = UIColor.black.alpha(0.9);
             return;
         }
         
@@ -247,12 +247,12 @@ extension UIView
         }
         else
         {
-            self.backgroundColor = UIColor.blackColor().alpha(0.9);
+            self.backgroundColor = UIColor.black.alpha(0.9);
         }
         
     }
     
-    func scale(value:CGFloat)
+    func scale(_ value:CGFloat)
     {
         self.layer.transform = CATransform3DMakeScale(value, value, 1);
 //        self.width = self.width * value;
@@ -268,36 +268,36 @@ extension UIView
     }
     
     func takeSnapshot() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.mainScreen().scale)
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, UIScreen.main.scale)
         
-        drawViewHierarchyInRect(self.bounds, afterScreenUpdates: true)
+        drawHierarchy(in: self.bounds, afterScreenUpdates: true)
         
         // old style: layer.renderInContext(UIGraphicsGetCurrentContext())
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return image
+        return image!
     }
 }
 
 extension UIColor
 {
-    func alpha(val:CGFloat) -> UIColor
+    func alpha(_ val:CGFloat) -> UIColor
     {
-        return self.colorWithAlphaComponent(val);
+        return self.withAlphaComponent(val);
     }
     
     var HEXColor : NSString {
         get {
             var str:NSString = "";
             
-            let numComponents:Int = CGColorGetNumberOfComponents(self.CGColor);
+            let numComponents:Int = self.cgColor.numberOfComponents;
             
             if (numComponents == 4)
             {
-                let components:UnsafePointer<CGFloat> = CGColorGetComponents(self.CGColor);
-                str = NSString(format:"#%2X%2X%2X", Int(components[0] * 255), Int(components[1] * 255), Int(components[2] * 255));
-                str = str.stringByReplacingOccurrencesOfString(" ", withString: "0");
+                let components = self.cgColor.components;
+                str = NSString(format:"#%2X%2X%2X", Int((components?[0])! * 255), Int((components?[1])! * 255), Int((components?[2])! * 255));
+                str = str.replacingOccurrences(of: " ", with: "0") as NSString;
             }
             
             return str;
@@ -307,7 +307,7 @@ extension UIColor
 
 extension CGSize
 {
-    var description : NSString { get { return "CGSize(width:\(self.width), height:\(self.height))"; } };
+    var description : NSString { get { return "CGSize(width:\(self.width), height:\(self.height))" as NSString; } };
     var doubleValue : CGSize { get { return CGSize(width: self.width * 2, height: self.height * 2); } };
     var halfValue   : CGSize { get { return CGSize(width: self.width * 0.5, height: self.height * 0.5); } };
 }
@@ -326,20 +326,20 @@ extension Int
 
 extension UILabel
 {
-    func bold(word:String)
+    func bold(_ word:String)
     {
         self.bold(word, color: self.textColor);
     }
     
-    func bold(word:String, color:UIColor!)
+    func bold(_ word:String, color:UIColor!)
     {
         let temp:NSMutableAttributedString = self.attributedText as! NSMutableAttributedString;
-        let main_string:NSString = temp.string;
-        let range:NSRange = (main_string as NSString).rangeOfString(word);
+        let main_string:NSString = temp.string as NSString;
+        let range:NSRange = (main_string as NSString).range(of: word);
         if(range.length > 0)
         {
             let format:NSDictionary = [NSFontAttributeName : Fonts.BoldFont(self.font.pointSize), NSForegroundColorAttributeName: color];
-            temp.addAttributes(format as! [String : AnyObject], range: (main_string as NSString).rangeOfString(word));
+            temp.addAttributes(format as! [String : AnyObject], range: (main_string as NSString).range(of: word));
             self.attributedText = temp;
         }
     }

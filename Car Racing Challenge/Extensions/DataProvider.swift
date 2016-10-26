@@ -9,33 +9,33 @@
 import Foundation
 import CoreData
 
-private var _private_nsuser_defaults    : NSUserDefaults!;
+private var _private_nsuser_defaults    : UserDefaults!;
 private var _private_domain             : String = ".cacheDomain";
 class DataProvider
 {
     class func didFinishLaunchingWithOptions()
     {
         
-        if let bundle = NSBundle.mainBundle().bundleIdentifier
+        if let bundle = Bundle.main.bundleIdentifier
         {
             _private_domain = "\(bundle)\(_private_domain)";
         }
         
         if(_private_nsuser_defaults == nil)
         {
-            _private_nsuser_defaults = NSUserDefaults(suiteName: _private_domain);
+            _private_nsuser_defaults = UserDefaults(suiteName: _private_domain);
             
             print("DataProvider -> initialized \(_private_domain)");
         }
     }
     
-    class func createKey(suiteName:NSString, key:NSString) -> String
+    class func createKey(_ suiteName:NSString, key:NSString) -> String
     {
         return "\(suiteName)-\(key)";
     }
     
     //################## USER DEFAULTS #####################
-    class func getString(suiteName:String, key:String) -> String
+    class func getString(_ suiteName:String, key:String) -> String
     {
         var temp:String = "";
         
@@ -47,7 +47,7 @@ class DataProvider
         return temp;
     }
     
-    class func getInteger(suiteName:String, key:String) -> Int
+    class func getInteger(_ suiteName:String, key:String) -> Int
     {
         var temp:Int = -1;
         
@@ -59,9 +59,9 @@ class DataProvider
         return temp;
     }
     
-    class func getData(suiteName:String, key:String) -> AnyObject!
+    class func getData(_ suiteName:String, key:String) -> AnyObject!
     {
-        if let object: AnyObject = _private_nsuser_defaults.objectForKey(createKey(suiteName, key:key))
+        if let object: AnyObject = _private_nsuser_defaults.object(forKey: createKey(suiteName as NSString, key:key as NSString)) as AnyObject?
         {
             return object;
         }
@@ -71,53 +71,53 @@ class DataProvider
         }
     }
     
-    class func getBoolData(suiteName:String, key:String) -> Bool
+    class func getBoolData(_ suiteName:String, key:String) -> Bool
     {
-        let object: Bool = _private_nsuser_defaults.boolForKey(createKey(suiteName, key:key))
+        let object: Bool = _private_nsuser_defaults.bool(forKey: createKey(suiteName as NSString, key:key as NSString))
         return object;
     }
     
-    class func saveData(suiteName:String, key:String, object:AnyObject!) -> Bool
+    class func saveData(_ suiteName:String, key:String, object:AnyObject!) -> Bool
     {
         if(object == nil)
         {
             return false;
         }
         
-        _private_nsuser_defaults.setObject(object, forKey: createKey(suiteName, key:key));
+        _private_nsuser_defaults.set(object, forKey: createKey(suiteName as NSString, key:key as NSString));
         _private_nsuser_defaults.synchronize();
         
         return true;
     }
     
-    class func saveData(suiteName:String, key:String, string:NSString!) -> Bool
+    class func saveData(_ suiteName:String, key:String, string:NSString!) -> Bool
     {
         if(string == nil)
         {
             return false;
         }
         
-        _private_nsuser_defaults.setValue(string, forKey: createKey(suiteName, key:key));
+        _private_nsuser_defaults.setValue(string, forKey: createKey(suiteName as NSString, key:key as NSString));
         _private_nsuser_defaults.synchronize();
         
         return true;
     }
     
-    class func saveData(suiteName:String, key:String, value:Int)
+    class func saveData(_ suiteName:String, key:String, value:Int)
     {
-        _private_nsuser_defaults.setInteger(value, forKey: createKey(suiteName, key:key));
+        _private_nsuser_defaults.set(value, forKey: createKey(suiteName as NSString, key:key as NSString));
         _private_nsuser_defaults.synchronize();
     }
     
-    class func saveData(suiteName:String, key:String, value:Bool)
+    class func saveData(_ suiteName:String, key:String, value:Bool)
     {
-        _private_nsuser_defaults.setBool(value, forKey: createKey(suiteName, key:key));
+        _private_nsuser_defaults.set(value, forKey: createKey(suiteName as NSString, key:key as NSString));
         _private_nsuser_defaults.synchronize();
     }
     
-    private class func emptySpaceForName(suiteName:String)
+    fileprivate class func emptySpaceForName(_ suiteName:String)
     {
-        let keys:NSArray = NSDictionary(dictionary: _private_nsuser_defaults.dictionaryRepresentation()).allKeys;
+        let keys:NSArray = NSDictionary(dictionary: _private_nsuser_defaults.dictionaryRepresentation()).allKeys as NSArray;
 
         for i in 0 ..< keys.count
         {
@@ -126,7 +126,7 @@ class DataProvider
             if(key.hasPrefix(suiteName))
             {
                 print("removing[\(i)]: \(key)");
-                _private_nsuser_defaults.removeObjectForKey(key);
+                _private_nsuser_defaults.removeObject(forKey: key);
             }
         }
         

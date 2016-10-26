@@ -8,7 +8,6 @@
 
 import Foundation
 import Social
-import Twitter
 import Accounts
 import UIKit
 
@@ -18,8 +17,8 @@ class SocialController
 {
     static var twitterType:String = SLServiceTypeTwitter;
     static var facebookType:String = SLServiceTypeFacebook;
-    private var _isTwitterAvailable:Bool = false;
-    private var _isFacebookAvailable:Bool = false;
+    fileprivate var _isTwitterAvailable:Bool = false;
+    fileprivate var _isFacebookAvailable:Bool = false;
     var _currentScreenShot:UIImage!;
     
     class func getInstance() -> SocialController
@@ -34,12 +33,12 @@ class SocialController
     
     func didFinishLaunchingWithOptions()
     {
-        if let _:SLComposeViewController! = SLComposeViewController(forServiceType: SocialController.twitterType)
+        if let _:SLComposeViewController? = SLComposeViewController(forServiceType: SocialController.twitterType)
         {
             _isTwitterAvailable = true;
         }
         
-        if let _:SLComposeViewController! = SLComposeViewController(forServiceType: SocialController.facebookType)
+        if let _:SLComposeViewController? = SLComposeViewController(forServiceType: SocialController.facebookType)
         {
             _isFacebookAvailable = true;
         }
@@ -55,39 +54,39 @@ class SocialController
         return _isFacebookAvailable;
     }
     
-    func share(type:String, text:String, url:String! = nil, image:UIImage! = nil)
+    func share(_ type:String, text:String, url:String! = nil, image:UIImage! = nil)
     {
         AlertController.getInstance().showAlert(message: "loading...");
         
         var error:Bool = false;
-        if(SLComposeViewController.isAvailableForServiceType(type))
+        if(SLComposeViewController.isAvailable(forServiceType: type))
         {
-            if let sheet:SLComposeViewController! = SLComposeViewController(forServiceType: type)
+            if let sheet:SLComposeViewController? = SLComposeViewController(forServiceType: type)
             {
-                sheet.setInitialText(text);
+                sheet?.setInitialText(text);
                 
                 if(image == nil && self._currentScreenShot != nil)
                 {
-                    sheet.addImage(self._currentScreenShot);
+                    sheet?.add(self._currentScreenShot);
                     if(url != nil)
                     {
-                        sheet.setInitialText("\(text) \(url)");
+                        sheet?.setInitialText("\(text) \(url)");
                     }
                 }
                 else
                 {
                     if(image != nil)
                     {
-                        sheet.addImage(image);
+                        sheet?.add(image);
                     }
                     
                     if(url != nil)
                     {
-                        sheet.addURL(NSURL(string: url));
+                        sheet?.add(URL(string: url));
                     }
                 }
                 
-                AppDelegate.getInstance().gameController.presentViewController(sheet, animated: true, completion: {
+                AppDelegate.getInstance().gameController.present(sheet!, animated: true, completion: {
                     AlertController.getInstance().hideAlert(nil);
                 });
             }
@@ -109,7 +108,7 @@ class SocialController
         }
     }
     
-    func screenShot(view:UIView)
+    func screenShot(_ view:UIView)
     {
         self._currentScreenShot = view.takeSnapshot();
     }
